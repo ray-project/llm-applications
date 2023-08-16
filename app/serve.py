@@ -3,14 +3,15 @@
 
 import os
 
-from fastapi import FastAPI
 import query
 import ray
+from fastapi import FastAPI
 from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 app = FastAPI()
+
 
 @ray.remote
 class SlackApp:
@@ -20,7 +21,7 @@ class SlackApp:
 
         @slack_app.event("app_mention")
         def event_mention(body, say):
-            text = body["event"]["text"][15:] # strip slack user id of bot mention
+            text = body["event"]["text"][15:]  # strip slack user id of bot mention
             result = self.agent.get_response(text)
             reply = result["answer"] + "\n" + "\n".join(result["sources"])
             say(reply)
@@ -30,12 +31,18 @@ class SlackApp:
     def run(self):
         SocketModeHandler(self.slack_app, os.environ["SLACK_APP_TOKEN"]).start()
 
-ray.init(runtime_env={"env_vars": {
-    "DB_CONNECTION_STRING": os.environ["DB_CONNECTION_STRING"],
-    "OPENAI_API_KEY": os.environ["OPENAI_API_KEY"],
-    "SLACK_APP_TOKEN": os.environ["SLACK_APP_TOKEN"],
-    "SLACK_BOT_TOKEN": os.environ["SLACK_BOT_TOKEN"],
-}})
+
+ray.init(
+    runtime_env={
+        "env_vars": {
+            "DB_CONNECTION_STRING": os.environ["DB_CONNECTION_STRING"],
+            "OPENAI_API_KEY": os.environ["OPENAI_API_KEY"],
+            "SLACK_APP_TOKEN": os.environ["SLACK_APP_TOKEN"],
+            "SLACK_BOT_TOKEN": os.environ["SLACK_BOT_TOKEN"],
+        }
+    }
+)
+
 
 @serve.deployment()
 @serve.ingress(app)
@@ -44,6 +51,7 @@ class RayAssistantDeployment:
         self.app = SlackApp.remote()
         # Run the slack app in the background
         self.runner = self.app.run.remote()
+
 
 # Deploy the Ray Serve application.
 deployment = RayAssistantDeployment.bind()
