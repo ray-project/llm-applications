@@ -1,4 +1,4 @@
-# Ray-QA: RAG-based LLM Application
+# Ray Assistant
 
 ## Setup
 
@@ -23,6 +23,8 @@ wget -e robots=off --recursive --no-clobber --page-requisites --html-extension -
 ```bash
 pip install --user -r requirements.txt
 export PYTHONPATH=$PYTHONPATH:$PWD
+pre-commit install
+pre-commit autoupdate
 export OPENAI_API_KEY=""  # https://platform.openai.com/account/api-keys
 export DB_CONNECTION_STRING="dbname=postgres user=postgres host=localhost password=postgres"
 ```
@@ -107,6 +109,9 @@ streamlit run dashboard/Home.py
 
 
 ### TODO
-- Experiments
-- Serving
+- notebook cleanup
+- evaluator (ex. GPT4) response script
+- DB dump & load
+- experiments
+- routing b/w LLMs
 - CI/CD workflows

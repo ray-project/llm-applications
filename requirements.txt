@@ -3,12 +3,14 @@ fastapi
 langchain
 matplotlib
 openai
+pre-commit
 psycopg[binary,pool]
 pgvector
 ray
 sentence_transformers
 slack_bolt
 streamlit
+typer
 
 # Styling
 black
@@ -16,8 +18,3 @@ flake8
 Flake8-pyproject
 isort
 pyupgrade
-
-# Development
-fastapi
-pre-commit
-typer
