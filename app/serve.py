@@ -20,7 +20,7 @@ class SlackApp:
 
         @slack_app.event("app_mention")
         def event_mention(body, say):
-            text = body["event"]["text"][15:]
+            text = body["event"]["text"][15:] # strip slack user id of bot mention
             result = self.agent.get_response(text)
             reply = result["answer"] + "\n" + "\n".join(result["sources"])
             say(reply)
