@@ -1,0 +1,12 @@
+{
+    "experiment_name": "gpt3.5-with-context",
+    "docs_path": "/efs/shared_storage/pcmoritz/docs.ray.io/en/master/",
+    "data_path": "/home/ray/ray-qa/datasets/eval-dataset-v1.jsonl",
+    "embedding_model": "thenlper/gte-base",
+    "chunk_size": 300,
+    "chunk_overlap": 50,
+    "llm": "gpt-3.5-turbo-16k",
+    "max_context_length": 16000,
+    "system_content": "\n        Your job is {answer} a {query} using the additional {context} provided.\n        Then, you must {score} your response between 1 and 5.\n        You must return your response in a line with only the score. Do not add any more deatils.\n        On a separate line provide your {reasoning} for the score as well.\n        Return your response following the exact format outlined below, do not add or remove anything.\n        And all of this must be in a valid JSON format.\n        \n        {answer: answer,\n        score: score,\n        reasoning: reasoning}\n        ",
+    "assistant_content": ""
+}

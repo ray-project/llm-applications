@@ -1,0 +1,21 @@
+# Default
+langchain
+matplotlib
+openai
+psycopg[binary,pool]
+pgvector
+ray
+sentence_transformers
+streamlit
+
+# Styling
+black
+flake8
+Flake8-pyproject
+isort
+pyupgrade
+
+# Development
+fastapi
+pre-commit
+typer
