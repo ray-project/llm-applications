@@ -22,10 +22,12 @@ class SlackApp:
 
         @slack_app.event("app_mention")
         def event_mention(body, say):
-            text = body["event"]["text"][15:]  # strip slack user id of bot mention
+            event = body["event"]
+            thread_ts = event.get("thread_ts", None) or event["ts"]
+            text = event["text"][15:]  # strip slack user id of bot mention
             result = requests.post("http://127.0.0.1:8000/query/", json={"query": text}).json()
             reply = result["answer"] + "\n" + "\n".join(result["sources"])
-            say(reply)
+            say(reply, thread_ts=thread_ts)
 
         self.slack_app = slack_app
 
