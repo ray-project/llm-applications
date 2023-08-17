@@ -1,4 +1,6 @@
-# Ray Assistant
+# LLM Applications
+
+An end-to-end guide for scaling and serving LLM application in production.
 
 ## Setup
 
@@ -9,8 +11,8 @@ Start a new workspace using an `g3.8xlarge` head node
 ### Repository
 ```bash
 git clone https://github.com/anyscale/ray-qa.git .
-git config --global user.email "EMAIL"
-git config --global user.name "NAME"
+git config --global user.email <YOUR_EMAIL>
+git config --global user.name <YOUR_NAME>
 ```
 
 ### Data
@@ -22,9 +24,9 @@ wget -e robots=off --recursive --no-clobber --page-requisites --html-extension -
 ### Environment
 ```bash
 pip install --user -r requirements.txt
-export PYTHONPATH=$PYTHONPATH:$PWD
 pre-commit install
 pre-commit autoupdate
+export PYTHONPATH=$PYTHONPATH:$PWD
 export OPENAI_API_KEY=""  # https://platform.openai.com/account/api-keys
 export DB_CONNECTION_STRING="dbname=postgres user=postgres host=localhost password=postgres"
 ```
@@ -55,38 +57,40 @@ result = agent.get_response(query=query)
 print(json.dumps(result, indent=2))
 ```
 
-### Experiment
+### Experiments
 
 1. Generate responses
 ```bash
 python app/main.py generate-responses \
     --experiment-name "gpt3.5-with-context" \
     --docs-path "/efs/shared_storage/pcmoritz/docs.ray.io/en/master/" \
-    --data-path "/home/ray/ray-qa/datasets/eval-dataset-v1.jsonl" \
+    --data-path "datasets/eval-dataset-v1.jsonl" \
     --embedding-model "thenlper/gte-base" \
     --chunk-size 300 \
     --chunk-overlap 50 \
     --llm "gpt-3.5-turbo-16k" \
     --max-context-length 16000 \
     --system-content """
-        Your job is {answer} a {query} using the additional {context} provided.
-        Then, you must {score} your response between 1 and 5.
-        You must return your response in a line with only the score. Do not add any more deatils.
-        On a separate line provide your {reasoning} for the score as well.
-        Return your response following the exact format outlined below, do not add or remove anything.
-        And all of this must be in a valid JSON format.
+    Your job is {answer} a {query} using the additional {context} provided.
+    Then, you must {score} your response between 1 and 5.
+    You must return your response in a line with only the score.
+    Do not add any more details.
+    On a separate line provide your {reasoning} for the score as well.
+    Return your response following the exact format outlined below.
+    Do not add or remove anything.
+    And all of this must be in a valid JSON format.
 
-        {"answer": answer,
-        "score": score,
-        "reasoning": reasoning}
-        """
+    {"answer": answer,
+    "score": score,
+    "reasoning": reasoning}
+    """
 ```
 
 2. Evaluate responses
 ```bash
 python app/main.py evaluate-responses \
-    --reference-loc "/home/ray/ray-qa/datasets/gpt4-with-context.json" \
-    --generated-loc "/home/ray/ray-qa/responses/gpt3.5-with-context.json" \
+    --reference-loc "datasets/gpt4-with-source.json" \
+    --generated-loc "experiments/gpt3.5-with-context/responses.json" \
     --llm "gpt-4" \
     --max-context-length 8192 \
     --system-content """
