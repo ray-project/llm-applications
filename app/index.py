@@ -176,6 +176,8 @@ def create_index(
         compute=ActorPoolStrategy(size=20),
     ).count()
 
+    return sections
+
 
 @app.command()
 def reset_index():
