@@ -15,17 +15,21 @@ st.header("Summary")
 experiments_dir = Path(ROOT_DIR, "experiments")
 experiments = {}
 for experiment_name in [file for file in os.listdir(experiments_dir)]:
-    evaluation = load_dict(path=f"{experiments_dir}/{experiment_name}/evaluation.json")
-    experiments[experiment_name] = {
-        "retrieval_score": evaluation["retrieval_score"],
-        "quality_score": evaluation["quality_score"],
-    }
+    evaluation_fp = f"{experiments_dir}/{experiment_name}/evaluation.json"
+    if os.path.exists(evaluation_fp):
+        evaluation = load_dict(path=evaluation_fp)
+        experiments[experiment_name] = {
+            "retrieval_score": evaluation["retrieval_score"],
+            "quality_score": evaluation["quality_score"],
+        }
 st.write(pd.DataFrame(experiments).T)
 
 # Load
 experiment_name = st.selectbox(label="Experiments", options=list(experiments.keys()))
 experiment_dir = Path(ROOT_DIR, "experiments", experiment_name)
+gen_config = load_dict(path=f"{experiments_dir}/{experiment_name}/gen_config.json")
 responses = load_dict(path=f"{experiments_dir}/{experiment_name}/responses.json")
+eval_config = load_dict(path=f"{experiments_dir}/{experiment_name}/eval_config.json")
 evaluation = load_dict(path=f"{experiments_dir}/{experiment_name}/evaluation.json")
 
 # Quality score
@@ -57,3 +61,10 @@ for i in range(len(references)):
             }
         )
 st.write(errors)
+
+# Configs
+st.header("Configurations")
+st.subheader("Generation")
+st.write(gen_config)
+st.subheader("Evaluation")
+st.write(eval_config)

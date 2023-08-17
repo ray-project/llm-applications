@@ -30,7 +30,7 @@ def generate_responses(
     # TODO: create multiple indexes (efficient)
     reset_index()
 
-    # Create index
+    # # Create index
     create_index(
         docs_path=docs_path,
         embedding_model=embedding_model,
@@ -139,7 +139,7 @@ def evaluate_responses(
         results.append(result)
 
     # Save to file
-    experiment_name = generated_loc.split("/")[-1].split(".json")[0]
+    experiment_name = generated_loc.split("/")[-2]
     experiment_dir = Path(ROOT_DIR, "experiments", experiment_name)
     experiment_dir.mkdir(parents=True, exist_ok=True)
     evaluation = {
