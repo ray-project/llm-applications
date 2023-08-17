@@ -10,7 +10,7 @@ Start a new workspace using an `g3.8xlarge` head node
 
 ### Repository
 ```bash
-git clone https://github.com/anyscale/ray-qa.git .
+git clone https://github.com/ray-project/llm-applications.git .
 git config --global user.email <YOUR_EMAIL>
 git config --global user.name <YOUR_NAME>
 ```
