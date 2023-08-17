@@ -1,4 +1,5 @@
 # Default
+beautifulsoup4
 fastapi
 langchain
 matplotlib
