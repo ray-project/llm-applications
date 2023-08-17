@@ -2,11 +2,19 @@
 
 An end-to-end guide for scaling and serving LLM application in production.
 
+This repo currently contains one such application: a retrieval-augmented generation (RAG)
+app for answering questions about supplied information. By default, the app uses
+the [Ray documentation](https://docs.ray.io/en/master/) as the source of information.
+This app first [indexes the documentation in a vector database](./app/index.py)
+and then uses an LLM to generate responses for questions that got augmented with
+relevant info retrieved from the index.
+
 ## Setup
 
 ### Compute
-Start a new workspace using an `g3.8xlarge` head node
-(creating the index will be faster if you also use some GPU worker nodes) and use the [`default_cluster_env_2.6.2_py39`](https://docs.anyscale.com/reference/base-images/ray-262/py39#ray-2-6-2-py39) cluster environment.
+Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces)
+using an `g3.8xlarge` head node (creating the index will be faster if you also use
+some GPU worker nodes) and use the [`default_cluster_env_2.6.2_py39`](https://docs.anyscale.com/reference/base-images/ray-262/py39#ray-2-6-2-py39) cluster environment.
 
 ### Repository
 ```bash
@@ -18,7 +26,11 @@ git config --global user.name <YOUR_NAME>
 ### Data
 Our data is already ready at `/efs/shared_storage/pcmoritz/docs.ray.io/en/master/` (on Staging) but if you wanted to load it yourself, run this bash command (change `/desired/output/directory`):
 ```bash
-wget -e robots=off --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --domains docs.ray.io --no-parent --accept=html -P /desired/output/directory https://docs.ray.io/en/master/
+wget -e robots=off --recursive --no-clobber --page-requisites \
+  --html-extension --convert-links --restrict-file-names=windows \
+  --domains docs.ray.io --no-parent --accept=html \
+  -P /desired/output/directory \
+  https://docs.ray.io/en/master/
 ```
 
 ### Environment
