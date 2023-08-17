@@ -45,7 +45,7 @@ class QueryAgent:
         self,
         embedding_model="thenlper/gte-base",
         llm="gpt-3.5-turbo-16k",
-        max_context_length=16000,
+        max_context_length=16384,
         system_content="",
         assistant_content="",
     ):

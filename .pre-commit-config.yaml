@@ -13,6 +13,11 @@ repos:
         exclude: "notebooks"
     -   id: check-yaml
         exclude: "mkdocs.yml"
+-   repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+    -   id: detect-secrets
+        exclude: "notebooks"
 -   repo: local
     hooks:
     -   id: clean

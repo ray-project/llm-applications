@@ -18,11 +18,11 @@ def generate_responses(
     experiment_name: Annotated[str, typer.Option(help="experiment name")] = "",
     docs_path: Annotated[str, typer.Option(help="location of docs to index")] = "",
     data_path: Annotated[str, typer.Option(help="location of dataset with questions")] = "",
-    embedding_model: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
     chunk_size: Annotated[int, typer.Option(help="chunk size")] = 300,
     chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = 50,
+    embedding_model: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
     llm: Annotated[str, typer.Option(help="name of LLM")] = "gpt-3.5-turbo-16k",
-    max_context_length: Annotated[int, typer.Option(help="max context length")] = 16000,
+    max_context_length: Annotated[int, typer.Option(help="max context length")] = 16384,
     system_content: Annotated[str, typer.Option(help="system content")] = "",
     assistant_content: Annotated[str, typer.Option(help="assistant content")] = "",
 ):
@@ -30,7 +30,7 @@ def generate_responses(
     # TODO: create multiple indexes (efficient)
     reset_index()
 
-    # # Create index
+    # Create index
     create_index(
         docs_path=docs_path,
         embedding_model=embedding_model,
@@ -66,9 +66,9 @@ def generate_responses(
         "experiment_name": experiment_name,
         "docs_path": docs_path,
         "data_path": data_path,
-        "embedding_model": embedding_model,
         "chunk_size": chunk_size,
         "chunk_overlap": chunk_overlap,
+        "embedding_model": embedding_model,
         "llm": llm,
         "max_context_length": max_context_length,
         "system_content": system_content,
@@ -81,8 +81,8 @@ def generate_responses(
 @app.command()
 def evaluate_responses(
     reference_loc: Annotated[str, typer.Option(help="location of reference responses")] = "",
-    generated_loc: Annotated[str, typer.Option(help="location of generated responses")] = "",
-    llm: Annotated[str, typer.Option(help="name of LLM")] = "gpt-4",
+    response_loc: Annotated[str, typer.Option(help="location of generated responses")] = "",
+    evaluator: Annotated[str, typer.Option(help="name of evaluator LLM")] = "gpt-4",
     max_context_length: Annotated[int, typer.Option(help="max context length")] = 8192,
     system_content: Annotated[str, typer.Option(help="system content")] = "",
     assistant_content: Annotated[str, typer.Option(help="assistant content")] = "",
@@ -90,7 +90,7 @@ def evaluate_responses(
     # Load answers
     with open(Path(reference_loc), "r") as f:
         references = [item for item in json.load(f)]
-    with open(Path(generated_loc), "r") as f:
+    with open(Path(response_loc), "r") as f:
         generated = [item for item in json.load(f)]
     assert len(references) == len(generated)
 
@@ -122,7 +122,10 @@ def evaluate_responses(
 
         # Generate response
         response = generate_response(
-            llm=llm, system_content=system_content, assistant_content="", user_content=user_content
+            llm=evaluator,
+            system_content=system_content,
+            assistant_content=assistant_content,
+            user_content=user_content,
         )
 
         # Extract from response
@@ -139,9 +142,8 @@ def evaluate_responses(
         results.append(result)
 
     # Save to file
-    experiment_name = generated_loc.split("/")[-2]
+    experiment_name = response_loc.split("/")[-2]
     experiment_dir = Path(ROOT_DIR, "experiments", experiment_name)
-    experiment_dir.mkdir(parents=True, exist_ok=True)
     evaluation = {
         "retrieval_score": retrieval_score,
         "quality_score": np.mean([item["score"] for item in results]),
@@ -154,8 +156,8 @@ def evaluate_responses(
     config = {
         "experiment_name": experiment_name,
         "reference_loc": reference_loc,
-        "generated_loc": generated_loc,
-        "llm": llm,
+        "response_loc": response_loc,
+        "evaluator": evaluator,
         "max_context_length": max_context_length,
         "system_content": system_content,
         "assistant_content": assistant_content,
