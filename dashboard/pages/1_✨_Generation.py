@@ -94,7 +94,7 @@ with st.expander("View chunks"):
 
 # Retrieval
 st.header("Retrieval")
-st.text("Retieve the top N closest chunks (nodes) based on your query.")
+st.text("Retieve the top N closest chunks based on your query.")
 st.markdown("The index is built for `chunk_size=300` and `chunk_overlap=50`")
 embedding_model = st.text_input("Embedding model", "thenlper/gte-base")
 embedding_model = HuggingFaceEmbeddings(model_name=embedding_model)
