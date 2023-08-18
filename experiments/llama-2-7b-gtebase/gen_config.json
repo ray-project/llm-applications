@@ -1,11 +1,11 @@
 {
-    "experiment_name": "gpt3.5-4k-gtebase",
+    "experiment_name": "llama-2-7b-gtebase",
     "docs_path": "/efs/shared_storage/pcmoritz/docs.ray.io/en/master/",
     "data_path": "datasets/eval-dataset-v1.jsonl",
     "chunk_size": 300,
     "chunk_overlap": 50,
     "embedding_model": "thenlper/gte-base",
-    "llm": "gpt-3.5-turbo",
+    "llm": "meta-llama/Llama-2-7b-chat-hf",
     "max_context_length": 4096,
     "system_content": "Answer the {query} using the additional {context} provided.",
     "assistant_content": ""

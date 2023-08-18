@@ -1,7 +1,7 @@
 {
-    "experiment_name": "gpt4-8k-gtebase",
-    "reference_loc": "datasets/gpt4-with-source.json",
-    "response_loc": "experiments/gpt4-8k-gtebase/responses.json",
+    "experiment_name": "gpt-3.5-4k-gtebase",
+    "reference_loc": "datasets/gpt-4-with-source.json",
+    "response_loc": "experiments/gpt-3.5-4k-gtebase/responses.json",
     "evaluator": "gpt-4",
     "max_context_length": 8192,
     "system_content": "\n    Your job is to rate the quality of our generated answer {generated_answer}\n    given a query {query} and a reference answer {reference_answer}.\n    Your score has to be between 1 and 5.\n    You must return your response in a line with only the score.\n    Do not return answers in any other format.\n    On a separate line provide your reasoning for the score as well.\n    ",

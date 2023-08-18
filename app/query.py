@@ -17,14 +17,12 @@ def generate_response(
     user_content,
     max_retries=3,
     retry_interval=60,
-    api_base="https://api.openai.com/v1",
 ):
     """Generate response from an LLM."""
     retry_count = 0
     while retry_count < max_retries:
         try:
             response = openai.ChatCompletion.create(
-                api_base=api_base,
                 model=llm,
                 messages=[
                     {"role": "system", "content": system_content},
