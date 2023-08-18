@@ -87,7 +87,7 @@ def parse_file(record):
     ]
 
 
-class EmbedNodes:
+class EmbedChunks:
     def __init__(self, model_name):
         self.embedding_model = HuggingFaceEmbeddings(
             model_name=model_name,
@@ -160,8 +160,8 @@ def create_index(
     )
 
     # Embed data
-    embedded_nodes = chunks_ds.map_batches(
-        EmbedNodes,
+    embedded_chunks = chunks_ds.map_batches(
+        EmbedChunks,
         fn_constructor_kwargs={"model_name": embedding_model},
         batch_size=100,
         num_gpus=1,
@@ -169,7 +169,7 @@ def create_index(
     )
 
     # Index data
-    embedded_nodes.map_batches(
+    embedded_chunks.map_batches(
         StoreResults,
         batch_size=128,
         num_cpus=1,

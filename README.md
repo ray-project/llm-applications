@@ -41,7 +41,8 @@ pip install --user -r requirements.txt
 pre-commit install
 pre-commit autoupdate
 export PYTHONPATH=$PYTHONPATH:$PWD
-export OPENAI_API_KEY=""  # https://platform.openai.com/account/api-keys
+export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
+export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
 export DB_CONNECTION_STRING="dbname=postgres user=postgres host=localhost password=postgres"
 # Change to /desired/output/directory/docs.ray.io/en/master/ if you downloaded the data yourself
 export DOCS_PATH="/efs/shared_storage/pcmoritz/docs.ray.io/en/master/"
@@ -63,8 +64,8 @@ query = "What is the default batch size for map_batches?"
 system_content = "Your job is to answer a question using the additional context provided."
 agent = QueryAgent(
     embedding_model="thenlper/gte-base",
-    llm="gpt-3.5-turbo-16k",
-    max_context_length=16384,
+    llm="meta-llama/Llama-2-7b-chat-hf",
+    max_context_length=4096,
     system_content=system_content,
 )
 result = agent.get_response(query=query)
@@ -75,14 +76,15 @@ print(json.dumps(result, indent=2))
 
 #### Generate responses
 ```bash
-export EXPERIMENT_NAME="gpt3.5-16k-gtebase"
-export DOCS_PATH="/efs/shared_storage/pcmoritz/docs.ray.io/en/master/"
+export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
+export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
+export EXPERIMENT_NAME="llama-2-13b-gtebase"
 export DATA_PATH="datasets/eval-dataset-v1.jsonl"
 export CHUNK_SIZE=300
 export CHUNK_OVERLAP=50
 export EMBEDDING_MODEL="thenlper/gte-base"
-export LLM="gpt-3.5-turbo-16k"
-export MAX_CONTEXT_LENGTH=16384
+export LLM="meta-llama/Llama-2-13b-chat-hf"
+export MAX_CONTEXT_LENGTH=4096
 ```
 ```bash
 python app/main.py generate-responses \
@@ -99,7 +101,9 @@ python app/main.py generate-responses \
 
 #### Evaluate responses
 ```bash
-export REFERENCE_LOC="datasets/gpt4-with-source.json"
+export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
+export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
+export REFERENCE_LOC="datasets/gpt-4-with-source.json"
 export RESPONSE_LOC="experiments/$EXPERIMENT_NAME/responses.json"
 export EVALUATOR="gpt-4"
 export EVALUATOR_MAX_CONTEXT_LENGTH=8192
@@ -131,16 +135,27 @@ streamlit run dashboard/Home.py
 - [x] notebook cleanup
 - [x] evaluator (ex. GPT4) response script
 - [x] DB dump & load
-- [x] experiments
-    - [x] Closed (gpt3.5-4k-gtebase, gpt3.5-16k-gtebase, gpt4-8k-gtebase)
-    - [ ] OSS LLMs (llama-7b, 13b, 70b)
-    - [ ] Embedding (top 3 in leaderboard)
-    - [ ] Temperature variance
-    - [ ] Kapa answers
-    - [ ] Prompt
+- [ ] experiments (in order and fixing choices along the way)
+    - Evaluator
+        - [ ] GPT-4 best experiment
+        - [ ] Llama-70b consistency with GPT4
+    - [ ] OSS vs. Closed (gpt-3.5 vs. llama)
+    - [ ] w/ and w/out context (value of RAG)
+    - [ ] # of chunks to use in context
+        - Does using more resources help/harm?
+        - 1, 5, 10 will all fit in smallest context length of 4K)
     - [ ] Chunking size/overlap
-    - [ ] W/ and w/out context
-    - [ ] # of nodes to use in context
-    - [x] Context lengths
-- [x] routing b/w LLMs
-- [x] CI/CD workflows
+        - related to # of chunks + context length but we'll treat as indepdent variable
+    - [ ] Embedding (top 3 in leaderboard)
+        - global leaderboard may not be your leaderboard (empirically validate)
+    - Later
+        - [ ] Commercial Assistant evaluation
+        - [ ] Human Assistant evaluation
+        - [ ] Data sources
+    - Much later
+        - [ ] Data sources
+        - [ ] Prompt
+        - [ ] Prompt-tuning on query
+        - [ ] Embedding vs. LLM for retreival
+- [ ] Ray Tune to tweak a subset of components
+- [ ] CI/CD workflows
