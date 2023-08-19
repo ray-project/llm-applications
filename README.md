@@ -105,13 +105,6 @@ python app/main.py generate-responses \
 ```bash
 export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
 export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-
-
-
-
-
-export EXPERIMENT_NAME="gpt-4-8k-gtebase"
-
 export REFERENCE_LOC="experiments/responses/gpt-4-with-source.json"
 export RESPONSE_LOC="experiments/responses/$EXPERIMENT_NAME.json"
 export EVALUATOR="meta-llama/Llama-2-70b-chat-hf"
