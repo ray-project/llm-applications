@@ -1,9 +1,7 @@
 import os
-import time
 from pathlib import Path
 
 import numpy as np
-import openai
 import psycopg
 import ray
 import streamlit as st
@@ -12,6 +10,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from pgvector.psycopg import register_vector
 
 from app.index import parse_file
+from app.query import generate_response
 
 
 @st.cache_data
@@ -19,33 +18,6 @@ def get_ds(docs_path):
     return ray.data.from_items(
         [{"path": path} for path in docs_path.rglob("*.html") if not path.is_dir()]
     )
-
-
-@st.cache_data
-def generate_response(
-    llm,
-    system_content,
-    assistant_content,
-    user_content,
-    max_retries=3,
-    retry_interval=60,
-):
-    """Generate response from an LLM."""
-    retry_count = 0
-    while retry_count < max_retries:
-        try:
-            response = openai.ChatCompletion.create(
-                model=llm,
-                messages=[
-                    {"role": "system", "content": system_content},
-                    {"role": "assistant", "content": assistant_content},
-                    {"role": "user", "content": user_content},
-                ],
-            )
-            return response["choices"][-1]["message"]["content"]
-        except Exception as e:  # NOQA: F841
-            time.sleep(retry_interval)  # default is per-minute rate limits
-            retry_count += 1
 
 
 # Title
@@ -112,13 +84,13 @@ with st.expander("View context"):
 
 # Generation
 st.header("Generation")
-llm = st.text_input("Name of LLM to use", "gpt-3.5-turbo-16k")
-system_content = st.text_input(
-    "Instructions for the LLM", "Answer the {query} using the provided {context}"
-)
+llm = st.text_input("LLM", "meta-llama/Llama-2-7b-chat-hf")
+system_content = st.text_input("System content", "Answer the {query} using the provided {context}")
 user_content = f"query: {query}, context: {context}"
+system_content = st.text_input("User content", user_content)
 response = generate_response(
     llm=llm,
+    temperature=0,
     system_content=system_content,
     assistant_content="",
     user_content=user_content,

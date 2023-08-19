@@ -78,12 +78,13 @@ print(json.dumps(result, indent=2))
 ```bash
 export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
 export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export EXPERIMENT_NAME="llama-2-13b-gtebase"
+export EXPERIMENT_NAME="llama-2-7b-gtebase"
 export DATA_PATH="datasets/eval-dataset-v1.jsonl"
 export CHUNK_SIZE=300
 export CHUNK_OVERLAP=50
 export EMBEDDING_MODEL="thenlper/gte-base"
-export LLM="meta-llama/Llama-2-13b-chat-hf"
+export LLM="meta-llama/Llama-2-7b-chat-hf"
+export TEMPERATURE 0
 export MAX_CONTEXT_LENGTH=4096
 ```
 ```bash
@@ -95,6 +96,7 @@ python app/main.py generate-responses \
     --chunk-overlap $CHUNK_OVERLAP \
     --embedding-model $EMBEDDING_MODEL \
     --llm $LLM \
+    --temperature $TEMPERATURE \
     --max-context-length $MAX_CONTEXT_LENGTH \
     --system-content "Answer the {query} using the additional {context} provided."
 ```
@@ -103,16 +105,19 @@ python app/main.py generate-responses \
 ```bash
 export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
 export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export REFERENCE_LOC="datasets/gpt-4-with-source.json"
-export RESPONSE_LOC="experiments/$EXPERIMENT_NAME/responses.json"
-export EVALUATOR="gpt-4"
-export EVALUATOR_MAX_CONTEXT_LENGTH=8192
+export REFERENCE_LOC="experiments/responses/gpt-4-with-source.json"
+export RESPONSE_LOC="experiments/responses/$EXPERIMENT_NAME.json"
+export EVALUATOR="meta-llama/Llama-2-70b-chat-hf"
+export EVALUATOR_TEMPERATURE=0
+export EVALUATOR_MAX_CONTEXT_LENGTH=4096
 ```
 ```bash
 python app/main.py evaluate-responses \
+    --experiment-name $EXPERIMENT_NAME \
     --reference-loc $REFERENCE_LOC \
     --response-loc $RESPONSE_LOC \
     --evaluator $EVALUATOR \
+    --temperature $EVALUATOR_TEMPERATURE \
     --max-context-length $EVALUATOR_MAX_CONTEXT_LENGTH \
     --system-content """
     Your job is to rate the quality of our generated answer {generated_answer}

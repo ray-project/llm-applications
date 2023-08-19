@@ -22,6 +22,7 @@ def generate_responses(
     chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = 50,
     embedding_model: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
     llm: Annotated[str, typer.Option(help="name of LLM")] = "gpt-3.5-turbo-16k",
+    temperature: Annotated[float, typer.Option(help="temperature")] = 0,
     max_context_length: Annotated[int, typer.Option(help="max context length")] = 16384,
     system_content: Annotated[str, typer.Option(help="system content")] = "",
     assistant_content: Annotated[str, typer.Option(help="assistant content")] = "",
@@ -42,6 +43,7 @@ def generate_responses(
     agent = QueryAgent(
         embedding_model=embedding_model,
         llm=llm,
+        temperature=temperature,
         max_context_length=max_context_length,
         system_content=system_content,
         assistant_content=assistant_content,
@@ -56,12 +58,8 @@ def generate_responses(
         results.append(result)
 
     # Save to file
-    experiment_dir = Path(ROOT_DIR, "experiments", experiment_name)
-    experiment_dir.mkdir(parents=True, exist_ok=True)
-    with open(Path(experiment_dir, "responses.json"), "w") as fp:
-        json.dump(results, fp, indent=4)
-
-    # Save config
+    responses_fp = Path(ROOT_DIR, "experiments", "responses", f"{experiment_name}.json")
+    responses_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
         "experiment_name": experiment_name,
         "docs_path": docs_path,
@@ -70,19 +68,57 @@ def generate_responses(
         "chunk_overlap": chunk_overlap,
         "embedding_model": embedding_model,
         "llm": llm,
+        "temperature": temperature,
         "max_context_length": max_context_length,
         "system_content": system_content,
         "assistant_content": assistant_content,
     }
-    with open(Path(experiment_dir, "gen_config.json"), "w") as fp:
-        json.dump(config, fp, indent=4)
+    responses = {
+        "config": config,
+        "results": results,
+    }
+    with open(responses_fp, "w") as fp:
+        json.dump(responses, fp, indent=4)
+
+
+def get_retrieval_score(references, generated):
+    matches = np.zeros(len(references))
+    for i in range(len(references)):
+        reference_source = references[i]["source"].split("#")[0]
+        if not reference_source:
+            matches[i] = 1
+            continue
+        for source in generated[i]["sources"]:
+            # sections don't have to perfectly match
+            if reference_source == source.split("#")[0]:
+                matches[i] = 1
+                continue
+    retrieval_score = np.mean(matches)
+    return retrieval_score
+
+
+def clean_score(score):
+    """For LLMs that aren't so great at following instructions."""
+    score = score.lower()
+    if len(score) == 1:
+        return float(score)
+    elif score.startswith("score: "):
+        score = score.split("score: ")[-1]
+        if "/" in score:
+            return float(score.split("/")[0])
+        return float(score)
+    else:
+        print(score)
+        return 0.0
 
 
 @app.command()
 def evaluate_responses(
+    experiment_name: Annotated[str, typer.Option(help="experiment name")] = "",
     reference_loc: Annotated[str, typer.Option(help="location of reference responses")] = "",
     response_loc: Annotated[str, typer.Option(help="location of generated responses")] = "",
     evaluator: Annotated[str, typer.Option(help="name of evaluator LLM")] = "gpt-4",
+    temperature: Annotated[float, typer.Option(help="temperature")] = 0,
     max_context_length: Annotated[int, typer.Option(help="max context length")] = 8192,
     system_content: Annotated[str, typer.Option(help="system content")] = "",
     assistant_content: Annotated[str, typer.Option(help="assistant content")] = "",
@@ -91,21 +127,8 @@ def evaluate_responses(
     with open(Path(reference_loc), "r") as f:
         references = [item for item in json.load(f)]
     with open(Path(response_loc), "r") as f:
-        generated = [item for item in json.load(f)]
+        generated = [item for item in json.load(f)["results"]]
     assert len(references) == len(generated)
-
-    # Retrieval score
-    matches = np.zeros(len(references))
-    for i in range(len(references)):
-        reference_source = references[i]["source"].split("#")[0]
-        if not reference_source:
-            matches[i] = 1
-            continue
-        for source in generated[i]["sources"]:
-            if reference_source == source.split("#")[0]:  # sections don't have to perfectly match
-                matches[i] = 1
-                continue
-    retrieval_score = np.mean(matches)
 
     # Quality score
     results = []
@@ -123,6 +146,7 @@ def evaluate_responses(
         # Generate response
         response = generate_response(
             llm=evaluator,
+            temperature=temperature,
             system_content=system_content,
             assistant_content=assistant_content,
             user_content=user_content,
@@ -136,34 +160,39 @@ def evaluate_responses(
             "question": gen["question"],
             "generated_answer": gen["answer"],
             "reference_answer": ref["answer"],
-            "score": float(score),
+            "score": clean_score(score=score),
             "reasoning": reasoning.lstrip("\n"),
+            "sources": gen["sources"],
         }
         results.append(result)
 
     # Save to file
-    experiment_name = response_loc.split("/")[-2]
-    experiment_dir = Path(ROOT_DIR, "experiments", experiment_name)
-    evaluation = {
-        "retrieval_score": retrieval_score,
-        "quality_score": np.mean([item["score"] for item in results]),
-        "results": results,
-    }
-    with open(Path(experiment_dir, "evaluation.json"), "w") as fp:
-        json.dump(evaluation, fp, indent=4)
-
-    # Save config
+    evaluation_fp = Path(
+        ROOT_DIR,
+        "experiments",
+        "evaluations",
+        evaluator.split("/")[-1].lower(),
+        f"{experiment_name}.json",
+    )
+    evaluation_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
         "experiment_name": experiment_name,
         "reference_loc": reference_loc,
         "response_loc": response_loc,
         "evaluator": evaluator,
+        "temperature": temperature,
         "max_context_length": max_context_length,
         "system_content": system_content,
         "assistant_content": assistant_content,
     }
-    with open(Path(experiment_dir, "eval_config.json"), "w") as fp:
-        json.dump(config, fp, indent=4)
+    evaluation = {
+        "config": config,
+        "retrieval_score": get_retrieval_score(references, generated),
+        "quality_score": np.mean([item["score"] for item in results]),
+        "results": results,
+    }
+    with open(evaluation_fp, "w") as fp:
+        json.dump(evaluation, fp, indent=4)
 
 
 if __name__ == "__main__":
