@@ -12,9 +12,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_response(
     llm,
-    system_content,
-    assistant_content,
-    user_content,
+    temperature=0.0,
+    system_content="",
+    assistant_content="",
+    user_content="",
     max_retries=3,
     retry_interval=60,
 ):
@@ -24,6 +25,7 @@ def generate_response(
         try:
             response = openai.ChatCompletion.create(
                 model=llm,
+                temperature=temperature,
                 messages=[
                     {"role": "system", "content": system_content},
                     {"role": "assistant", "content": assistant_content},
@@ -43,12 +45,14 @@ class QueryAgent:
         self,
         embedding_model="thenlper/gte-base",
         llm="gpt-3.5-turbo-16k",
+        temperature=0.0,
         max_context_length=16384,
         system_content="",
         assistant_content="",
     ):
         self.embedding_model = HuggingFaceEmbeddings(model_name=embedding_model)
         self.llm = llm
+        self.temperature = temperature
         self.context_length = max_context_length - len(system_content + assistant_content)
         self.system_content = system_content
         self.assistant_content = assistant_content
@@ -70,6 +74,7 @@ class QueryAgent:
         user_content = f"query: {query}, context: {context}"
         answer = generate_response(
             llm=self.llm,
+            temperature=self.temperature,
             system_content=self.system_content,
             assistant_content=self.assistant_content,
             user_content=user_content[: self.context_length],
