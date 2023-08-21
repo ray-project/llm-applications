@@ -7,6 +7,7 @@ openai
 pre-commit
 psycopg[binary,pool]
 pgvector
+python-dotenv
 ray
 sentence_transformers
 slack_bolt
