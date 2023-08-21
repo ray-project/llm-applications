@@ -4,10 +4,12 @@ import time
 import numpy as np
 import openai
 import psycopg
+from dotenv import load_dotenv
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from pgvector.psycopg import register_vector
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Load env vars
+load_dotenv()
 
 
 def generate_response(

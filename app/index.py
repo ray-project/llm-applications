@@ -5,6 +5,7 @@ import psycopg
 import ray
 import typer
 from bs4 import BeautifulSoup, NavigableString, Tag
+from dotenv import load_dotenv
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from pgvector.psycopg import register_vector
@@ -12,6 +13,7 @@ from ray.data import ActorPoolStrategy
 from typing_extensions import Annotated
 
 app = typer.Typer()
+load_dotenv()
 
 
 def load_html_file(path):

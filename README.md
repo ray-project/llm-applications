@@ -12,46 +12,40 @@ relevant info retrieved from the index.
 ## Setup
 
 ### Compute
-Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces)
-using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node. The current version of the app requires at least one GPU.
-Creating the index will be faster if you also use  some GPU worker nodes.
-Use the [`default_cluster_env_2.6.2_py39`](https://docs.anyscale.com/reference/base-images/ray-262/py39#ray-2-6-2-py39) cluster environment.
+- Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces) using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node.
+- Use the [`default_cluster_env_2.6.2_py39`](https://docs.anyscale.com/reference/base-images/ray-262/py39#ray-2-6-2-py39) cluster environment.
+-
 
 ### Repository
 ```bash
 git clone https://github.com/ray-project/llm-applications.git .
-git config --global user.email <YOUR_EMAIL>
-git config --global user.name <YOUR_NAME>
 ```
 
 ### Data
 Our data is already ready at `/efs/shared_storage/pcmoritz/docs.ray.io/en/master/` (on Staging) but if you wanted to load it yourself, run this bash command (change `/desired/output/directory`, but make sure it's on the shared storage,
 so that it's accessible to the workers)
 ```bash
+export DOCS_PATH=/desired/output/directory
 wget -e robots=off --recursive --no-clobber --page-requisites \
   --html-extension --convert-links --restrict-file-names=windows \
   --domains docs.ray.io --no-parent --accept=html \
-  -P /desired/output/directory \
+  -P $DOCS_PATH \
   https://docs.ray.io/en/master/
 ```
 
 ### Environment
 ```bash
+source .env
 pip install --user -r requirements.txt
 pre-commit install
 pre-commit autoupdate
-export PYTHONPATH=$PYTHONPATH:$PWD
-export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
-export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export DB_CONNECTION_STRING="dbname=postgres user=postgres host=localhost password=postgres"
-# Change to /desired/output/directory/docs.ray.io/en/master/ if you downloaded the data yourself
-export DOCS_PATH="/efs/shared_storage/pcmoritz/docs.ray.io/en/master/"
 ```
 
 ### Vector DB
 ```bash
 bash setup-pgvector.sh
 sudo -u postgres psql -f migrations/initial.sql
+export DOCS_PATH="/efs/shared_storage/pcmoritz/docs.ray.io/en/master/"
 python app/index.py create-index --docs-path $DOCS_PATH
 ```
 
