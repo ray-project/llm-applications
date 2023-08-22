@@ -14,8 +14,14 @@ from app.config import (
     CHUNK_OVERLAP,
     CHUNK_SIZE,
     DB_CONNECTION_STRING,
+    DEVICE,
     DOCS_PATH,
+    EMBEDDING_ACTORS,
+    EMBEDDING_BATCH_SIZE,
     EMBEDDING_MODEL,
+    INDEXING_ACTORS,
+    INDEXING_BATCH_SIZE,
+    NUM_GPUS,
 )
 
 app = typer.Typer()
@@ -50,7 +56,7 @@ class TaggedStr:
 
 
 def convert_to_tagged_text(path, element, section=None):
-    "Recursively convert a BeautifulSoup element to text, keeping track of sections."
+    """Recursively convert a BeautifulSoup element to text, keeping track of sections."""
     results = []
     for child in element.children:
         if isinstance(child, NavigableString):
@@ -98,8 +104,8 @@ class EmbedChunks:
     def __init__(self, model_name):
         self.embedding_model = HuggingFaceEmbeddings(
             model_name=model_name,
-            model_kwargs={"device": "cuda"},
-            encode_kwargs={"device": "cuda", "batch_size": 100},
+            model_kwargs={"device": DEVICE},
+            encode_kwargs={"device": DEVICE, "batch_size": EMBEDDING_BATCH_SIZE},
         )
 
     def __call__(self, batch):
@@ -168,17 +174,17 @@ def create_index(
     embedded_chunks = chunks_ds.map_batches(
         EmbedChunks,
         fn_constructor_kwargs={"model_name": embedding_model},
-        batch_size=100,
-        num_gpus=1,
-        compute=ActorPoolStrategy(size=2),
+        batch_size=EMBEDDING_BATCH_SIZE,
+        num_gpus=NUM_GPUS,
+        compute=ActorPoolStrategy(size=EMBEDDING_ACTORS),
     )
 
     # Index data
     embedded_chunks.map_batches(
         StoreResults,
-        batch_size=128,
+        batch_size=INDEXING_BATCH_SIZE,
         num_cpus=1,
-        compute=ActorPoolStrategy(size=20),
+        compute=ActorPoolStrategy(size=INDEXING_ACTORS),
     ).count()
 
     return sections
