@@ -12,13 +12,28 @@ relevant info retrieved from the index.
 ## Setup
 
 ### Compute
-- Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces) using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node.
+- Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces) using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node on an AWS cloud.
 - Use the [`default_cluster_env_2.6.2_py39`](https://docs.anyscale.com/reference/base-images/ray-262/py39#ray-2-6-2-py39) cluster environment.
--
+
 
 ### Repository
+
+First, clone this repository.
+
 ```bash
 git clone https://github.com/ray-project/llm-applications.git .
+```
+
+### Environment
+
+Then set up the environment correctly.
+
+```bash
+cp .env_template .env # Fill in all the values
+source .env
+pip install --user -r requirements.txt
+pre-commit install
+pre-commit autoupdate
 ```
 
 ### Data
@@ -31,14 +46,6 @@ wget -e robots=off --recursive --no-clobber --page-requisites \
   --domains docs.ray.io --no-parent --accept=html \
   -P $DOCS_PATH \
   https://docs.ray.io/en/master/
-```
-
-### Environment
-```bash
-source .env
-pip install --user -r requirements.txt
-pre-commit install
-pre-commit autoupdate
 ```
 
 ### Vector DB
@@ -69,18 +76,7 @@ print(json.dumps(result, indent=2))
 ### Experiments
 
 #### Generate responses
-```bash
-export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
-export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export EXPERIMENT_NAME="llama-2-7b-gtebase"
-export DATA_PATH="datasets/eval-dataset-v1.jsonl"
-export CHUNK_SIZE=300
-export CHUNK_OVERLAP=50
-export EMBEDDING_MODEL="thenlper/gte-base"
-export LLM="meta-llama/Llama-2-7b-chat-hf"
-export TEMPERATURE 0
-export MAX_CONTEXT_LENGTH=4096
-```
+
 ```bash
 python app/main.py generate-responses \
     --experiment-name $EXPERIMENT_NAME \
@@ -96,15 +92,7 @@ python app/main.py generate-responses \
 ```
 
 #### Evaluate responses
-```bash
-export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
-export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export REFERENCE_LOC="experiments/responses/gpt-4-with-source.json"
-export RESPONSE_LOC="experiments/responses/$EXPERIMENT_NAME.json"
-export EVALUATOR="meta-llama/Llama-2-70b-chat-hf"
-export EVALUATOR_TEMPERATURE=0
-export EVALUATOR_MAX_CONTEXT_LENGTH=4096
-```
+
 ```bash
 python app/main.py evaluate-responses \
     --experiment-name $EXPERIMENT_NAME \
@@ -142,9 +130,9 @@ streamlit run dashboard/Home.py
     - [ ] w/ and w/out context (value of RAG)
     - [ ] # of chunks to use in context
         - Does using more resources help/harm?
-        - 1, 5, 10 will all fit in smallest context length of 4K)
+        - 1, 5, 10 will all fit in the smallest context length of 4K)
     - [ ] Chunking size/overlap
-        - related to # of chunks + context length but we'll treat as indepdent variable
+        - related to # of chunks + context length, but we'll treat as independent variable
     - [ ] Embedding (top 3 in leaderboard)
         - global leaderboard may not be your leaderboard (empirically validate)
     - Later
