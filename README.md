@@ -15,7 +15,6 @@ relevant info retrieved from the index.
 - Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces) using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node on an AWS cloud.
 - Use the [`default_cluster_env_2.6.2_py39`](https://docs.anyscale.com/reference/base-images/ray-262/py39#ray-2-6-2-py39) cluster environment.
 
-
 ### Repository
 
 First, clone this repository.
@@ -79,15 +78,6 @@ print(json.dumps(result, indent=2))
 
 ```bash
 python app/main.py generate-responses \
-    --experiment-name $EXPERIMENT_NAME \
-    --docs-path $DOCS_PATH \
-    --data-path $DATA_PATH \
-    --chunk-size $CHUNK_SIZE \
-    --chunk-overlap $CHUNK_OVERLAP \
-    --embedding-model $EMBEDDING_MODEL \
-    --llm $LLM \
-    --temperature $TEMPERATURE \
-    --max-context-length $MAX_CONTEXT_LENGTH \
     --system-content "Answer the {query} using the additional {context} provided."
 ```
 
@@ -95,12 +85,6 @@ python app/main.py generate-responses \
 
 ```bash
 python app/main.py evaluate-responses \
-    --experiment-name $EXPERIMENT_NAME \
-    --reference-loc $REFERENCE_LOC \
-    --response-loc $RESPONSE_LOC \
-    --evaluator $EVALUATOR \
-    --temperature $EVALUATOR_TEMPERATURE \
-    --max-context-length $EVALUATOR_MAX_CONTEXT_LENGTH \
     --system-content """
     Your job is to rate the quality of our generated answer {generated_answer}
     given a query {query} and a reference answer {reference_answer}.
@@ -140,7 +124,6 @@ streamlit run dashboard/Home.py
         - [ ] Human Assistant evaluation
         - [ ] Data sources
     - Much later
-        - [ ] Data sources
         - [ ] Prompt
         - [ ] Prompt-tuning on query
         - [ ] Embedding vs. LLM for retreival

@@ -1,19 +1,24 @@
-import os
 from pathlib import Path
 
 import psycopg
 import ray
 import typer
 from bs4 import BeautifulSoup, NavigableString, Tag
-from dotenv import load_dotenv
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from pgvector.psycopg import register_vector
 from ray.data import ActorPoolStrategy
 from typing_extensions import Annotated
 
+from app.config import (
+    CHUNK_OVERLAP,
+    CHUNK_SIZE,
+    DB_CONNECTION_STRING,
+    DOCS_PATH,
+    EMBEDDING_MODEL,
+)
+
 app = typer.Typer()
-load_dotenv()
 
 
 def load_html_file(path):
@@ -108,7 +113,7 @@ class EmbedChunks:
 
 class StoreResults:
     def __call__(self, batch):
-        with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+        with psycopg.connect(DB_CONNECTION_STRING) as conn:
             register_vector(conn)
             with conn.cursor() as cur:
                 for text, source, embedding in zip(
@@ -127,15 +132,13 @@ class StoreResults:
 
 @app.command()
 def create_index(
-    docs_path: Annotated[str, typer.Option(help="location of data")] = "",
-    embedding_model: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
-    chunk_size: Annotated[int, typer.Option(help="chunk size")] = 300,
-    chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = 50,
+    docs_path: Annotated[str, typer.Option(help="location of data")] = DOCS_PATH,
+    embedding_model: Annotated[str, typer.Option(help="embedder")] = EMBEDDING_MODEL,
+    chunk_size: Annotated[int, typer.Option(help="chunk size")] = CHUNK_SIZE,
+    chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = CHUNK_OVERLAP,
 ):
     # Initialize ray
-    ray.init(
-        runtime_env={"env_vars": {"DB_CONNECTION_STRING": os.environ["DB_CONNECTION_STRING"]}}
-    )
+    ray.init(runtime_env={"env_vars": {"DB_CONNECTION_STRING": DB_CONNECTION_STRING}})
 
     # Dataset
     ds = ray.data.from_items(
@@ -183,7 +186,7 @@ def create_index(
 
 @app.command()
 def reset_index():
-    with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+    with psycopg.connect(DB_CONNECTION_STRING) as conn:
         register_vector(conn)
         with conn.cursor() as cur:
             cur.execute("DELETE FROM document")
