@@ -6,7 +6,23 @@ import typer
 from tqdm import tqdm
 from typing_extensions import Annotated
 
-from app.config import ROOT_DIR
+from app.config import (
+    CHUNK_OVERLAP,
+    CHUNK_SIZE,
+    DATA_PATH,
+    DOCS_PATH,
+    EMBEDDING_MODEL,
+    EVALUATOR,
+    EVALUATOR_MAX_CONTEXT_LENGTH,
+    EVALUATOR_TEMPERATURE,
+    EXPERIMENT_NAME,
+    LLM,
+    MAX_CONTEXT_LENGTH,
+    REFERENCE_LOC,
+    RESPONSE_LOC,
+    ROOT_DIR,
+    TEMPERATURE,
+)
 from app.index import create_index, reset_index
 from app.query import QueryAgent, generate_response
 
@@ -15,17 +31,19 @@ app = typer.Typer()
 
 @app.command()
 def generate_responses(
-    experiment_name: Annotated[str, typer.Option(help="experiment name")] = "",
-    docs_path: Annotated[str, typer.Option(help="location of docs to index")] = "",
-    data_path: Annotated[str, typer.Option(help="location of dataset with questions")] = "",
-    chunk_size: Annotated[int, typer.Option(help="chunk size")] = 300,
-    chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = 50,
-    embedding_model: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
-    llm: Annotated[str, typer.Option(help="name of LLM")] = "gpt-3.5-turbo-16k",
-    temperature: Annotated[float, typer.Option(help="temperature")] = 0,
-    max_context_length: Annotated[int, typer.Option(help="max context length")] = 16384,
     system_content: Annotated[str, typer.Option(help="system content")] = "",
     assistant_content: Annotated[str, typer.Option(help="assistant content")] = "",
+    experiment_name: Annotated[str, typer.Option(help="experiment name")] = EXPERIMENT_NAME,
+    docs_path: Annotated[str, typer.Option(help="location of docs to index")] = DOCS_PATH,
+    data_path: Annotated[str, typer.Option(help="location of dataset with questions")] = DATA_PATH,
+    chunk_size: Annotated[int, typer.Option(help="chunk size")] = CHUNK_SIZE,
+    chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = CHUNK_OVERLAP,
+    embedding_model: Annotated[str, typer.Option(help="embedder")] = EMBEDDING_MODEL,
+    llm: Annotated[str, typer.Option(help="name of LLM")] = LLM,
+    temperature: Annotated[float, typer.Option(help="temperature")] = TEMPERATURE,
+    max_context_length: Annotated[
+        int, typer.Option(help="max context length")
+    ] = MAX_CONTEXT_LENGTH,
 ):
     # Reset index (if any)
     # TODO: create multiple indexes (efficient)
@@ -114,14 +132,20 @@ def clean_score(score):
 
 @app.command()
 def evaluate_responses(
-    experiment_name: Annotated[str, typer.Option(help="experiment name")] = "",
-    reference_loc: Annotated[str, typer.Option(help="location of reference responses")] = "",
-    response_loc: Annotated[str, typer.Option(help="location of generated responses")] = "",
-    evaluator: Annotated[str, typer.Option(help="name of evaluator LLM")] = "gpt-4",
-    temperature: Annotated[float, typer.Option(help="temperature")] = 0,
-    max_context_length: Annotated[int, typer.Option(help="max context length")] = 8192,
     system_content: Annotated[str, typer.Option(help="system content")] = "",
     assistant_content: Annotated[str, typer.Option(help="assistant content")] = "",
+    experiment_name: Annotated[str, typer.Option(help="experiment name")] = EXPERIMENT_NAME,
+    reference_loc: Annotated[
+        str, typer.Option(help="location of reference responses")
+    ] = REFERENCE_LOC,
+    response_loc: Annotated[
+        str, typer.Option(help="location of generated responses")
+    ] = RESPONSE_LOC,
+    evaluator: Annotated[str, typer.Option(help="name of evaluator LLM")] = EVALUATOR,
+    temperature: Annotated[float, typer.Option(help="temperature")] = EVALUATOR_TEMPERATURE,
+    max_context_length: Annotated[
+        int, typer.Option(help="max context length")
+    ] = EVALUATOR_MAX_CONTEXT_LENGTH,
 ):
     # Load answers
     with open(Path(reference_loc), "r") as f:
