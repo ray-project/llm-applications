@@ -1,15 +1,12 @@
-import os
 import time
 
 import numpy as np
 import openai
 import psycopg
-from dotenv import load_dotenv
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from pgvector.psycopg import register_vector
 
-# Load env vars
-load_dotenv()
+from app.config import DB_CONNECTION_STRING
 
 
 def generate_response(
@@ -60,7 +57,7 @@ class QueryAgent:
         self.assistant_content = assistant_content
 
         # VectorDB connection
-        self.conn = psycopg.connect(os.getenv("DB_CONNECTION_STRING"))
+        self.conn = psycopg.connect(DB_CONNECTION_STRING)
         register_vector(self.conn)
 
     def get_response(self, query):

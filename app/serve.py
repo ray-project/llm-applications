@@ -12,6 +12,13 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
+from app.config import (
+    DB_CONNECTION_STRING,
+    OPENAI_API_KEY,
+    SLACK_APP_TOKEN,
+    SLACK_BOT_TOKEN,
+)
+
 app = FastAPI()
 
 
@@ -32,16 +39,16 @@ class SlackApp:
         self.slack_app = slack_app
 
     def run(self):
-        SocketModeHandler(self.slack_app, os.environ["SLACK_APP_TOKEN"]).start()
+        SocketModeHandler(self.slack_app, SLACK_APP_TOKEN).start()
 
 
 ray.init(
     runtime_env={
         "env_vars": {
-            "DB_CONNECTION_STRING": os.environ["DB_CONNECTION_STRING"],
-            "OPENAI_API_KEY": os.environ["OPENAI_API_KEY"],
-            "SLACK_APP_TOKEN": os.environ["SLACK_APP_TOKEN"],
-            "SLACK_BOT_TOKEN": os.environ["SLACK_BOT_TOKEN"],
+            "DB_CONNECTION_STRING": DB_CONNECTION_STRING,
+            "OPENAI_API_KEY": OPENAI_API_KEY,
+            "SLACK_APP_TOKEN": SLACK_APP_TOKEN,
+            "SLACK_BOT_TOKEN": SLACK_BOT_TOKEN,
         }
     },
     ignore_reinit_error=True,
@@ -64,7 +71,7 @@ class RayAssistantDeployment:
     def __init__(self):
         self.agent = query.QueryAgent()
         self.app = SlackApp.remote()
-        # Run the slack app in the background
+        # Run the Slack app in the background
         self.runner = self.app.run.remote()
 
     @app.post("/query")
