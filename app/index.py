@@ -87,7 +87,7 @@ def path_to_uri(path, scheme="https://", domain="docs.ray.io"):
     return scheme + domain + path.split(domain)[-1]
 
 
-def parse_file(record):
+def parse_html_file(record):
     html_content = load_html_file(record["path"])
     if not html_content:
         return []
@@ -97,6 +97,17 @@ def parse_file(record):
             "text": chunk.value,
         }
         for chunk in group_tagged_text(convert_to_tagged_text(record["path"], html_content))
+    ]
+
+
+def parse_text_file(record):
+    with open(record["path"]) as f:
+        text = f.read()
+    return [
+        {
+            "source": str(record["path"]),
+            "text": text,
+        }
     ]
 
 
@@ -139,6 +150,7 @@ class StoreResults:
 @app.command()
 def create_index(
     docs_path: Annotated[str, typer.Option(help="location of data")] = DOCS_PATH,
+    extension_type: Annotated[str, typer.Option(help="type of data")] = "html",
     embedding_model: Annotated[str, typer.Option(help="embedder")] = EMBEDDING_MODEL,
     chunk_size: Annotated[int, typer.Option(help="chunk size")] = CHUNK_SIZE,
     chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = CHUNK_OVERLAP,
@@ -148,11 +160,17 @@ def create_index(
 
     # Dataset
     ds = ray.data.from_items(
-        [{"path": path} for path in Path(docs_path).rglob("*.html") if not path.is_dir()]
+        [
+            {"path": path}
+            for path in Path(docs_path).rglob(f"*.{extension_type}")
+            if not path.is_dir()
+        ]
     )
 
     # Sections
-    sections_ds = ds.flat_map(parse_file)
+    parser = parse_html_file if extension_type == "html" else parse_text_file
+    sections_ds = ds.flat_map(parser)
+    # TODO: do we really need to take_all()? Bring the splitter to the cluster
     sections = sections_ds.take_all()
 
     # Chunking

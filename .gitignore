@@ -107,3 +107,6 @@ airflow/airflow.db
 
 # scraped folders
 docs.ray.io/
+
+# book and other source folders
+data/

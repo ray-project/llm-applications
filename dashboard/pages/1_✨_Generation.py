@@ -9,7 +9,7 @@ from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from pgvector.psycopg import register_vector
 
-from app.index import parse_file
+from app.index import parse_html_file
 from app.query import generate_response
 
 
@@ -38,7 +38,7 @@ st.text("View the sections for a particular docs page")
 docs_page_url = st.text_input("Docs page URL", "https://docs.ray.io/en/master/train/faq.html")
 docs_page_path = docs_path_str + docs_page_url.split("docs.ray.io/en/master/")[-1]
 with st.expander("View sections"):
-    sections = parse_file({"path": docs_page_path})
+    sections = parse_html_file({"path": docs_page_path})
     st.write(sections)
 
 # Chunks
