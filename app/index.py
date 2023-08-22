@@ -175,18 +175,10 @@ def create_index(
         StoreResults,
         batch_size=128,
         num_cpus=1,
-        compute=ActorPoolStrategy(size=20),
+        compute=ActorPoolStrategy(size=28),
     ).count()
 
     return sections
-
-
-@app.command()
-def reset_index():
-    with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
-        register_vector(conn)
-        with conn.cursor() as cur:
-            cur.execute("DELETE FROM document")
 
 
 if __name__ == "__main__":

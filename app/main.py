@@ -7,7 +7,6 @@ from tqdm import tqdm
 from typing_extensions import Annotated
 
 from app.config import ROOT_DIR
-from app.index import create_index, reset_index
 from app.query import QueryAgent, generate_response
 
 app = typer.Typer()
@@ -27,18 +26,6 @@ def generate_responses(
     system_content: Annotated[str, typer.Option(help="system content")] = "",
     assistant_content: Annotated[str, typer.Option(help="assistant content")] = "",
 ):
-    # Reset index (if any)
-    # TODO: create multiple indexes (efficient)
-    reset_index()
-
-    # Create index
-    create_index(
-        docs_path=docs_path,
-        embedding_model=embedding_model,
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap,
-    )
-
     # Query agent
     agent = QueryAgent(
         embedding_model=embedding_model,
