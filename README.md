@@ -12,7 +12,8 @@ relevant info retrieved from the index.
 ## Setup
 
 ### Compute
-- Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces) using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node on an AWS cloud.
+- Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces)
+  using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node on an AWS cloud.
 - Use the [`default_cluster_env_2.6.2_py39`](https://docs.anyscale.com/reference/base-images/ray-262/py39#ray-2-6-2-py39) cluster environment.
 
 ### Repository
@@ -25,34 +26,47 @@ git clone https://github.com/ray-project/llm-applications.git .
 
 ### Environment
 
-Then set up the environment correctly.
+Then set up the environment correctly by specifying the values in your `.env` file,
+and installing the dependencies:
 
 ```bash
-cp .env_template .env # Fill in all the values
-source .env
+cp ./envs/.env_template .envs
+source .envs
 pip install --user -r requirements.txt
 pre-commit install
 pre-commit autoupdate
 ```
 
 ### Data
-Our data is already ready at `/efs/shared_storage/pcmoritz/docs.ray.io/en/master/` (on Staging) but if you wanted to load it yourself, run this bash command (change `/desired/output/directory`, but make sure it's on the shared storage,
-so that it's accessible to the workers)
+
+Our data is already ready at `/efs/shared_storage/pcmoritz/docs.ray.io/en/master/`
+(on Staging) but if you wanted to load it yourself, run this bash command:
+
 ```bash
-export DOCS_PATH=/desired/output/directory
-wget -e robots=off --recursive --no-clobber --page-requisites \
-  --html-extension --convert-links --restrict-file-names=windows \
-  --domains docs.ray.io --no-parent --accept=html \
-  -P $DOCS_PATH \
-  https://docs.ray.io/en/master/
+bash scrape-docs.sh
 ```
 
 ### Vector DB
+
+<details>
+<summary>Local installation with brew on MacOS</summary>
+
+```bash
+brew install postgresql
+brew install pgvector
+psql -c "CREATE USER postgres WITH SUPERUSER;"
+# pragma: allowlist nextline secret
+psql -c "ALTER USER postgres with password 'postgres';"
+psql -c "CREATE EXTENSION vector;"
+psql -f migrations/initial.sql
+python app/index.py create-index
+```
+</details>
+
 ```bash
 bash setup-pgvector.sh
 sudo -u postgres psql -f migrations/initial.sql
-export DOCS_PATH="/efs/shared_storage/pcmoritz/docs.ray.io/en/master/"
-python app/index.py create-index --docs-path $DOCS_PATH
+python app/index.py create-index
 ```
 
 ### Query
@@ -126,6 +140,6 @@ streamlit run dashboard/Home.py
     - Much later
         - [ ] Prompt
         - [ ] Prompt-tuning on query
-        - [ ] Embedding vs. LLM for retreival
+        - [ ] Embedding vs. LLM for retrieval
 - [ ] Ray Tune to tweak a subset of components
 - [ ] CI/CD workflows
