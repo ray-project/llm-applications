@@ -1,3 +1,4 @@
+#!/bin/bash
 # Install postgres
 sudo apt install -y wget ca-certificates
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -9,5 +10,6 @@ pushd /tmp && git clone --branch v0.4.4 https://github.com/pgvector/pgvector.git
 # Activate pgvector and the database
 echo 'ray ALL=(ALL:ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers
 sudo service postgresql start
+# pragma: allowlist nextline secret
 sudo -u postgres psql -c "ALTER USER postgres with password 'postgres';"
 sudo -u postgres psql -c "CREATE EXTENSION vector;"
