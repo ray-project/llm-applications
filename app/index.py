@@ -128,7 +128,7 @@ class StoreResults:
 @app.command()
 def create_index(
     docs_path: Annotated[str, typer.Option(help="location of data")] = "",
-    embedding_model: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
+    embedding_model_name: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
     chunk_size: Annotated[int, typer.Option(help="chunk size")] = 300,
     chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = 50,
 ):
@@ -164,7 +164,7 @@ def create_index(
     # Embed data
     embedded_chunks = chunks_ds.map_batches(
         EmbedChunks,
-        fn_constructor_kwargs={"model_name": embedding_model},
+        fn_constructor_kwargs={"model_name": embedding_model_name},
         batch_size=100,
         num_gpus=1,
         compute=ActorPoolStrategy(size=2),

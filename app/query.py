@@ -35,7 +35,7 @@ def generate_response(
                 ],
             )
             return response["choices"][-1]["message"]["content"]
-        except Exception as e:  # NOQA: F841
+        except Exception as e:
             print(e)
             time.sleep(retry_interval)  # default is per-minute rate limits
             retry_count += 1
@@ -45,14 +45,14 @@ def generate_response(
 class QueryAgent:
     def __init__(
         self,
-        embedding_model="thenlper/gte-base",
+        embedding_model_name="thenlper/gte-base",
         llm="gpt-3.5-turbo-16k",
         temperature=0.0,
         max_context_length=16384,
         system_content="",
         assistant_content="",
     ):
-        self.embedding_model = HuggingFaceEmbeddings(model_name=embedding_model)
+        self.embedding_model = HuggingFaceEmbeddings(model_name=embedding_model_name)
         self.llm = llm
         self.temperature = temperature
         self.context_length = max_context_length - len(system_content + assistant_content)
@@ -60,7 +60,7 @@ class QueryAgent:
         self.assistant_content = assistant_content
 
         # VectorDB connection
-        self.conn = psycopg.connect(os.getenv("DB_CONNECTION_STRING"))
+        self.conn = psycopg.connect(os.environ["DB_CONNECTION_STRING"])
         register_vector(self.conn)
 
     def get_response(self, query):

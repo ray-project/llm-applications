@@ -19,7 +19,7 @@ def generate_responses(
     data_path: Annotated[str, typer.Option(help="location of dataset with questions")] = "",
     chunk_size: Annotated[int, typer.Option(help="chunk size")] = 300,
     chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = 50,
-    embedding_model: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
+    embedding_model_name: Annotated[str, typer.Option(help="embedder")] = "thenlper/gte-base",
     llm: Annotated[str, typer.Option(help="name of LLM")] = "gpt-3.5-turbo-16k",
     temperature: Annotated[float, typer.Option(help="temperature")] = 0,
     max_context_length: Annotated[int, typer.Option(help="max context length")] = 16384,
@@ -28,7 +28,7 @@ def generate_responses(
 ):
     # Query agent
     agent = QueryAgent(
-        embedding_model=embedding_model,
+        embedding_model_name=embedding_model_name,
         llm=llm,
         temperature=temperature,
         max_context_length=max_context_length,
@@ -53,7 +53,7 @@ def generate_responses(
         "data_path": data_path,
         "chunk_size": chunk_size,
         "chunk_overlap": chunk_overlap,
-        "embedding_model": embedding_model,
+        "embedding_model_name": embedding_model_name,
         "llm": llm,
         "temperature": temperature,
         "max_context_length": max_context_length,

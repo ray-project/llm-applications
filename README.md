@@ -22,7 +22,7 @@ We'll be using [OpenAI](https://platform.openai.com/docs/models/){:target="_blan
 ### Repository
 ```bash
 git clone https://github.com/ray-project/llm-applications.git .
-git config --gloabl user.name <GITHUB-USERNAME>
+git config --global user.name <GITHUB-USERNAME>
 git config --global user.email <EMAIL-ADDRESS>
 ```
 
@@ -58,15 +58,17 @@ source .env
 ```
 
 ### Vector DB
+Preload from saved SQL dump:
 ```bash
 bash setup-pgvector.sh
-sudo -u postgres psql -f migrations/initial.sql
 export SQL_DUMP="/efs/shared_storage/pcmoritz/gtebase-300-50.sql"
 psql "$DB_CONNECTION_STRING" -f $SQL_DUMP
 ```
 
-To create a new index:
+Create new index:
 ```bash
+bash setup-pgvector.sh
+sudo -u postgres psql -f migrations/initial.sql
 export DOCS_PATH="/efs/shared_storage/pcmoritz/docs.ray.io/en/master/"
 python app/index.py create-index \
     --docs-path $DOCS_PATH \
@@ -75,14 +77,14 @@ python app/index.py create-index \
     --chunk-overlap 50
 ```
 
-We can inspect our vector DB:
+Inspect DB:
 ```bash
 psql "$DB_CONNECTION_STRING" -c "SELECT count(*) FROM document;"  # rows
 psql "$DB_CONNECTION_STRING" -c "\d document;"  # columns
 psql "$DB_CONNECTION_STRING" -c "SELECT source FROM document LIMIT 1;"  # sample
 ```
 
-We also easily save/load our DB (we name our sql files by `{embedding_model}-{chunk_size}-{chunk_overlap}.sql`):
+Save/load DB (`{embedding_model_name}-{chunk_size}-{chunk_overlap}.sql`):
 ```bash
 export SQL_DUMP="/efs/shared_storage/pcmoritz/gtebase-300-50.sql"
 sudo -u postgres pg_dump > $SQL_DUMP  # save
@@ -105,7 +107,7 @@ openai.api_key = os.environ["ANYSCALE_API_KEY"]
 query = "What is the default batch size for map_batches?"
 system_content = "Your job is to answer a question using the additional context provided."
 agent = QueryAgent(
-    embedding_model="thenlper/gte-base",
+    embedding_model_name="thenlper/gte-base",
     llm="meta-llama/Llama-2-7b-chat-hf",
     max_context_length=4096,
     system_content=system_content,
@@ -124,7 +126,7 @@ export EXPERIMENT_NAME="llama-2-7b-gtebase"
 export DATA_PATH="datasets/eval-dataset-v1.jsonl"
 export CHUNK_SIZE=300
 export CHUNK_OVERLAP=50
-export EMBEDDING_MODEL="thenlper/gte-base"
+export EMBEDDING_MODEL_NAME="thenlper/gte-base"
 export LLM="meta-llama/Llama-2-7b-chat-hf"
 export TEMPERATURE 0
 export MAX_CONTEXT_LENGTH=4096
@@ -136,7 +138,7 @@ python app/main.py generate-responses \
     --data-path $DATA_PATH \
     --chunk-size $CHUNK_SIZE \
     --chunk-overlap $CHUNK_OVERLAP \
-    --embedding-model $EMBEDDING_MODEL \
+    --embedding-model-name $EMBEDDING_MODEL_NAME \
     --llm $LLM \
     --temperature $TEMPERATURE \
     --max-context-length $MAX_CONTEXT_LENGTH \
