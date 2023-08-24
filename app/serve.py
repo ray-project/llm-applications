@@ -2,10 +2,7 @@
 # serve run serve:deployment
 
 import os
-from pathlib import Path
-import sys; sys.path.append(Path(__file__).parent.parent.absolute() / "..")
 
-import query
 import ray
 import requests
 from fastapi import FastAPI
@@ -14,6 +11,7 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
+from app import query
 from app.config import (
     DB_CONNECTION_STRING,
     OPENAI_API_KEY,
