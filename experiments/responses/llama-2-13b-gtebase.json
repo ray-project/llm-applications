@@ -1,7 +1,6 @@
 {
     "config": {
         "experiment_name": "llama-2-13b-gtebase",
-        "docs_path": "/efs/shared_storage/pcmoritz/docs.ray.io/en/master/",
         "data_path": "datasets/eval-dataset-v1.jsonl",
         "chunk_size": 300,
         "chunk_overlap": 50,

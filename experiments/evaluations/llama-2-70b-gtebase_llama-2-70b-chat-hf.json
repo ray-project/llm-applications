@@ -1,7 +1,7 @@
 {
     "config": {
         "experiment_name": "llama-2-70b-gtebase",
-        "reference_loc": "experiments/responses/gpt-4-with-source.json",
+        "reference_loc": "experiments/references/gpt-4-with-source.json",
         "response_loc": "experiments/responses/llama-2-70b-gtebase.json",
         "evaluator": "meta-llama/Llama-2-70b-chat-hf",
         "temperature": 0.0,
@@ -10,7 +10,7 @@
         "assistant_content": ""
     },
     "retrieval_score": 0.42857142857142855,
-    "quality_score": 4.042328042328043,
+    "quality_score": 4.027777777777778,
     "results": [
         {
             "question": "I\u2019m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?",

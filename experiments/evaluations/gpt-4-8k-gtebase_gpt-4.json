@@ -1,7 +1,7 @@
 {
     "config": {
         "experiment_name": "gpt-4-8k-gtebase",
-        "reference_loc": "datasets/gpt-4-with-source.json",
+        "reference_loc": "experiments/references/gpt-4-with-source.json",
         "response_loc": "experiments/gpt-4-8k-gtebase/responses.json",
         "evaluator": "gpt-4",
         "temperature": 0,
@@ -10,7 +10,7 @@
         "assistant_content": ""
     },
     "retrieval_score": 0.42857142857142855,
-    "quality_score": 3.692857142857143,
+    "quality_score": 3.6719444444444447,
     "results": [
         {
             "question": "I\u2019m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?",

@@ -27,7 +27,7 @@ git config --global user.email <EMAIL-ADDRESS>
 ```
 
 ### Data
-Our data is already ready at `/efs/shared_storage/pcmoritz/docs.ray.io/en/master/` (on Staging, `us-east-1`) but if you wanted to load it yourself, run this bash command (change `/desired/output/directory`, but make sure it's on the shared storage,
+Our data is already ready at `/efs/shared_storage/goku/docs.ray.io/en/master/` (on Staging, `us-east-1`) but if you wanted to load it yourself, run this bash command (change `/desired/output/directory`, but make sure it's on the shared storage,
 so that it's accessible to the workers)
 ```bash
 export DOCS_PATH=/desired/output/directory
@@ -61,7 +61,7 @@ source .env
 Preload from saved SQL dump:
 ```bash
 bash setup-pgvector.sh
-export SQL_DUMP="/efs/shared_storage/pcmoritz/gtebase-300-50.sql"
+export SQL_DUMP="/efs/shared_storage/goku/gtebase-300-50-with-sections.sql"
 psql "$DB_CONNECTION_STRING" -f $SQL_DUMP
 ```
 
@@ -69,7 +69,7 @@ Create new index:
 ```bash
 bash setup-pgvector.sh
 sudo -u postgres psql -f migrations/initial.sql
-export DOCS_PATH="/efs/shared_storage/pcmoritz/docs.ray.io/en/master/"
+export DOCS_PATH="/efs/shared_storage/goku/docs.ray.io/en/master/"
 python app/index.py create-index \
     --docs-path $DOCS_PATH \
     --embedding-model "thenlper/gte-base" \
@@ -86,7 +86,7 @@ psql "$DB_CONNECTION_STRING" -c "SELECT source FROM document LIMIT 1;"  # sample
 
 Save/load DB (`{embedding_model_name}-{chunk_size}-{chunk_overlap}.sql`):
 ```bash
-export SQL_DUMP="/efs/shared_storage/pcmoritz/gtebase-300-50.sql"
+export SQL_DUMP="/efs/shared_storage/goku/gtebase-300-50.sql"
 sudo -u postgres pg_dump > $SQL_DUMP  # save
 psql "$DB_CONNECTION_STRING" -c "DELETE FROM document;"
 psql "$DB_CONNECTION_STRING" -f $SQL_DUMP  # load
@@ -112,7 +112,7 @@ agent = QueryAgent(
     max_context_length=4096,
     system_content=system_content,
 )
-result = agent.get_response(query=query)
+result = agent(query=query)
 print(json.dumps(result, indent=2))
 ```
 
@@ -134,7 +134,6 @@ export MAX_CONTEXT_LENGTH=4096
 ```bash
 python app/main.py generate-responses \
     --experiment-name $EXPERIMENT_NAME \
-    --docs-path $DOCS_PATH \
     --data-path $DATA_PATH \
     --chunk-size $CHUNK_SIZE \
     --chunk-overlap $CHUNK_OVERLAP \
@@ -149,7 +148,7 @@ python app/main.py generate-responses \
 ```bash
 export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
 export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export REFERENCE_LOC="experiments/responses/gpt-4-with-source.json"
+export REFERENCE_LOC="experiments/references/gpt-4-with-source.json"
 export RESPONSE_LOC="experiments/responses/$EXPERIMENT_NAME.json"
 export EVALUATOR="meta-llama/Llama-2-70b-chat-hf"
 export EVALUATOR_TEMPERATURE=0
@@ -173,53 +172,39 @@ python app/main.py evaluate-responses \
     """
 ```
 
-### Dashboard
-```bash
-export APP_PORT=8501
-echo https://$APP_PORT-port-$ANYSCALE_SESSION_DOMAIN
-streamlit run dashboard/Home.py
-```
-
-### TODO
-- [x] notebook cleanup
-- [x] evaluator (ex. GPT4) response script
-- [x] DB dump & load
-- experiments (in order and fixing choices along the way)
-    - Evaluator
-        - [x] `gpt-4`
-        - [x] `Llama-2-70b`
-    - Context (value of RAG)
-        - [ ] without context
-        - [ ] with context
-    - Sections
-        - [ ] without sections
-        - [ ] with sections
-    - Chunking size
-        - [ ] Chunk-size: 100, 300, 600
-        - Fix chunk overlap to 50
-        - related to # of chunks + context length but we'll treat as indepdent variable
-        - larger chunk size [isn't always](https://arxiv.org/pdf/2307.03172.pdf) better
-    - Number of chunks
-        - [ ] # chunks: 1, 5, 10
-        - based on chunk size chosen from experiment and needs to fit in context length
-        - Does using more resources help/harm?
-    - Embedding models
-        - [ ] `text-embedding-ada-002` (OpenAI)
-        - [ ] `gte-base` ([MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard))
-        - global leaderboard may not be your leaderboard (empirically validate)
-    - OSS vs. Closed
-        - [ ] `gpt-3.5-turbo`
-        - [ ] `gpt-4`
-        - [ ] `Llama-2-7b`
-        - [ ] `Llama-2-13b`
-        - [ ] `Llama-2-70b`
-    - Later
-        - [ ] Commercial Assistant evaluation
-        - [ ] Human Assistant evaluation
-        - [ ] Data sources
-    - Much later
-        - [ ] Prompt itself
-        - [ ] Prompt-tuning on query
-        - [ ] Embedding vs. LLM for retreival
-- [ ] Ray Tune to tweak a subset of components
-- [ ] CI/CD workflows
+### Experiments
+- Evaluator
+    - `gpt-4`
+    - `Llama-2-70b`
+- Context (prove value of RAG)
+    - without context
+    - with context
+- Sections
+    - without sections
+    - with sections
+- Chunking size
+    - Chunk-size: 100, 300, 600
+    - Fix chunk overlap to 50
+    - related to # of chunks + context length but we'll treat as indepdent variable
+- Number of chunks
+    - number of chunks in context: 1, 5, 10
+    - based on chunk size chosen from experiment and needs to fit in context length
+    - does using more resources help/harm?
+- Embedding models
+    - `text-embedding-ada-002` (OpenAI)
+    - `gte-base` ([MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard))
+    - global leaderboard may not be your leaderboard (empirically validate it)
+- OSS vs. Closed
+    - `gpt-3.5-turbo`
+    - `gpt-4`
+    - `Llama-2-7b`
+    - `Llama-2-13b`
+    - `Llama-2-70b`
+- Miscellaneous
+    - Hybrid LLMs (routing)
+    - Additional data sources
+    - reranking with LLMs
+    - different prompts
+    - sub-queries
+- Ray Tune to tweak a subset of components
+- CI/CD workflows

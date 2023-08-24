@@ -69,7 +69,7 @@ class RayAssistantDeployment:
 
     @app.post("/query")
     def query(self, query: Query) -> Answer:
-        result = self.agent.get_response(query.query)
+        result = self.agent(query.query)
         return Answer.parse_obj(result)
 
 

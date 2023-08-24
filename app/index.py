@@ -80,13 +80,14 @@ def parse_file(record):
     html_content = load_html_file(record["path"])
     if not html_content:
         return []
-    return [
+    parsed_data = [
         {
             "source": path_to_uri(str(record["path"])) + ("#" + chunk.tag if chunk.tag else ""),
             "text": chunk.value,
         }
         for chunk in group_tagged_text(convert_to_tagged_text(record["path"], html_content))
     ]
+    return parsed_data
 
 
 class EmbedChunks:

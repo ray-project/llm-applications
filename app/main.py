@@ -15,7 +15,6 @@ app = typer.Typer()
 @app.command()
 def generate_responses(
     experiment_name: Annotated[str, typer.Option(help="experiment name")] = "",
-    docs_path: Annotated[str, typer.Option(help="location of docs to index")] = "",
     data_path: Annotated[str, typer.Option(help="location of dataset with questions")] = "",
     chunk_size: Annotated[int, typer.Option(help="chunk size")] = 300,
     chunk_overlap: Annotated[int, typer.Option(help="chunk overlap")] = 50,
@@ -41,7 +40,7 @@ def generate_responses(
     with open(Path(ROOT_DIR, data_path), "r") as f:
         questions = [json.loads(item)["question"] for item in list(f)]
     for query in tqdm(questions):
-        result = agent.get_response(query=query)
+        result = agent(query=query)
         results.append(result)
 
     # Save to file
@@ -49,7 +48,6 @@ def generate_responses(
     responses_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
         "experiment_name": experiment_name,
-        "docs_path": docs_path,
         "data_path": data_path,
         "chunk_size": chunk_size,
         "chunk_overlap": chunk_overlap,
@@ -154,12 +152,12 @@ def evaluate_responses(
         results.append(result)
 
     # Save to file
+    evaluator_name = evaluator.split("/")[-1].lower()
     evaluation_fp = Path(
         ROOT_DIR,
         "experiments",
         "evaluations",
-        evaluator.split("/")[-1].lower(),
-        f"{experiment_name}.json",
+        f"{experiment_name}_{evaluator_name}.json",
     )
     evaluation_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
