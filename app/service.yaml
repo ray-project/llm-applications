@@ -5,7 +5,6 @@ ray_serve_config:
   runtime_env:
     working_dir: "https://github.com/ray-project/llm-applications/archive/refs/tags/v0.0.2.zip"
     env_vars: {
-      DB_CONNECTION_STRING: "dbname=postgres user=postgres host=localhost password=postgres",
       RAY_ASSISTANT_AWS_SECRET_ID: "ray-assistant",
       RAY_ASSISTANT_AWS_REGION: "us-west-2"
     }

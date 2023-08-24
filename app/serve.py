@@ -61,7 +61,7 @@ class SlackApp:
 ray.init(
     runtime_env={
         "env_vars": {
-            "DB_CONNECTION_STRING": DB_CONNECTION_STRING,
+            "DB_CONNECTION_STRING": get_secret("DB_CONNECTION_STRING"),
             "OPENAI_API_KEY": OPENAI_API_KEY,
         }
     },
