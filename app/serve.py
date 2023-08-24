@@ -19,13 +19,29 @@ from app.config import (
     SLACK_BOT_TOKEN,
 )
 
+
+def get_secret(secret_name):
+    aws_secret_id = os.environ.get("RAY_ASSISTANT_AWS_SECRET_ID")
+    if aws_secret_id:
+        import boto3
+        client = boto3.client(
+            "secretsmanager", region_name=os.environ["RAY_ASSISTANT_AWS_REGION"]
+        )
+        response = client.get_secret_value(SecretId=aws_secret_id)
+        return json.loads(response["SecretString"])[secret_name]
+    else:
+        raise NotImplemented(
+            "Currently only AWS is supported "
+            "and you need to set RAY_ASSISTANT_AWS_SECRET_ID")
+
+
 app = FastAPI()
 
 
 @ray.remote
 class SlackApp:
     def __init__(self):
-        slack_app = App(token=os.environ["SLACK_BOT_TOKEN"])
+        slack_app = App(token=get_secret("SLACK_BOT_TOKEN"))
 
         @slack_app.event("app_mention")
         def event_mention(body, say):
@@ -39,16 +55,14 @@ class SlackApp:
         self.slack_app = slack_app
 
     def run(self):
-        SocketModeHandler(self.slack_app, SLACK_APP_TOKEN).start()
+        SocketModeHandler(self.slack_app, get_secret("SLACK_APP_TOKEN")).start()
 
 
 ray.init(
     runtime_env={
         "env_vars": {
-            "DB_CONNECTION_STRING": DB_CONNECTION_STRING,
+            "DB_CONNECTION_STRING": get_secret("DB_CONNECTION_STRING"),
             "OPENAI_API_KEY": OPENAI_API_KEY,
-            "SLACK_APP_TOKEN": SLACK_APP_TOKEN,
-            "SLACK_BOT_TOKEN": SLACK_BOT_TOKEN,
         }
     },
     ignore_reinit_error=True,
