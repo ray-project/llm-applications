@@ -2,6 +2,8 @@
 # serve run serve:deployment
 
 import os
+from pathlib import Path
+import sys; sys.path.append(Path(__file__).parent.parent.absolute() / "..")
 
 import query
 import ray
@@ -69,7 +71,10 @@ class Answer(BaseModel):
 @serve.ingress(app)
 class RayAssistantDeployment:
     def __init__(self):
-        self.agent = query.QueryAgent()
+        self.agent = query.QueryAgent(
+            llm="meta-llama/Llama-2-70b-chat-hf",
+            max_context_length=4096,
+        )
         self.app = SlackApp.remote()
         # Run the Slack app in the background
         self.runner = self.app.run.remote()
