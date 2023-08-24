@@ -14,32 +14,11 @@
         "reasoning": "The full context was incorporated into the detailed answer which explains the autoscaling process very precisely."
     },
     {
-        "question": "can i create my own ray image with custom python version",
-        "source": "",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
-    },
-    {
         "question": "how do I get the address of a ray node",
         "source": "https://docs.ray.io/en/master/ray-core/miscellaneous.html#node-information",
         "answer": "To get the address of a ray node, you can utilize the `ray.nodes()` function, which will display a list of nodes in your cluster along with detailed information about each one. This information includes the NodeID, current status (if it's alive or not), the NodeManagerAddress which is essentially the private IP address of the node, as well as the total resource capacity on the node among others. Below is the sample code:\\n```python\\nimport ray\\n\\nray.init()\\nprint(ray.nodes())\\n```\\nFrom the output, the `NodeManagerAddress` field is the address of the Ray node.",
         "score": 5.0,
         "reasoning": "The score is 5 because the information provided is a complete, accurate, and detailed answer to the asked question about how to get the address of a ray node. It provides a clear way how to get this information and also elaborates what kind of output the user should expect."
-    },
-    {
-        "question": "are you based on GPT-4?",
-        "source": "",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
-    },
-    {
-        "question": "why it takes 10 mins for you to answer my question?",
-        "source": "",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
     },
     {
         "question": "Does Ray support NCCL?",
@@ -96,20 +75,6 @@
         "answer": "To scatter actors across the cluster, you can use the 'SPREAD' strategy. This will distribute the tasks or actors among available nodes. In the context of Ray, you can specify this when defining your function or class with @ray.remote, and also when deploying instances of your actors with .options(scheduling_strategy=\\",
         "score": 5.0,
         "reasoning": "The explanation is technically correct, well detailed, and covers the use of 'SPREAD' strategy in both functions and classes. This response contains information that adequately answers the query considering the context provided."
-    },
-    {
-        "question": "how can i go about fine tuning a LLM with Ray?",
-        "source": "https://raw.githubusercontent.com/ray-project/ray/master/doc/source/templates/04_finetuning_llms_with_deepspeed/README.md",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
-    },
-    {
-        "question": "can you create a tweet thread from chapter 8, \"Online Inference with Ray Serve\" of the book \"Learning Ray\"?",
-        "source": "",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
     },
     {
         "question": "On remote ray cluster, when I do `ray debug` I'm getting connection refused error. Why ?",
@@ -208,13 +173,6 @@
         "answer": "In Ray datasets, a Dataset is a sequence of Ray object references to blocks. Each block holds a disjoint subset of rows, with Ray Data managing and transforming these blocks in parallel. For instance, a dataset might comprise of three blocks, each containing 1000 rows. Essentially, the Dataset is the larger structure which comprises multiple smaller structures, or blocks. Each block holds a specific portion of the data, allowing for efficient parallel operations.",
         "score": 4.0,
         "reasoning": "The answer is mostly correct and provides a good distinction between a Dataset and a block in Ray datasets. However, it didn't include the information that the dataset is the larger structure, which is composed of multiple blocks."
-    },
-    {
-        "question": "what might be the reason for  \"ray up\" not staring worker nodes (after ray up a cluster configuration). The connection between nodes works well, I can ssh from head to workers. The ray config has correct ssh key listed.",
-        "source": "https://discuss.ray.io/t/6677",
-        "answer": "There could be multiple reasons 'ray up' is not starting worker nodes. It might be due to incorrect configurations, network restrictions, or software/hardware failures. Without more specific details or error messages, it's difficult to determine the exact cause.",
-        "score": 3.0,
-        "reasoning": "The information provided is not sufficient to give a definitive or accurate answer. More specific details or error messages would have helped in giving a more precise answer."
     },
     {
         "question": "How to setup the development environments for ray project?",
@@ -348,13 +306,6 @@
         "answer": "To compose a map function that returns a list of objects utilizing the `map_batches` approach you have to define a function, which is to be applied to each batch of data in the dataset. After defining this function you just use `map_batches` method with your function as an argument on your Dataset.\n\nAn example of this:\n```python\nfrom typing import Dict\nimport numpy as np\nimport ray\n\ndef add_dog_years(batch: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:\n    batch['age_in_dog_years'] = 7 * batch['age']\n    return batch\n\nds = (\n    ray.data.from_items([\n        {'name': 'Luna', 'age': 4},\n        {'name': 'Rory', 'age': 14},\n        {'name': 'Scout', 'age': 9},\n    ])\n    .map_batches(add_dog_years)\n)\n\nds.show()\n```\n\nIn above example, `add_dog_years` is the function that used by `map_batches` to compute age in dog years for each object in the dataset. The resulting objects are then returned as the new Dataset.",
         "score": 5.0,
         "reasoning": "This answer provides comprehensive explanation on how to write a map function that returns a list of objects for `map_batches` along with a detailed python example, hence the score of 5."
-    },
-    {
-        "question": "Can you tell me more about the strict_mode in Ray Data? Why it is introduced and what code changes do we need?",
-        "source": "https://raw.githubusercontent.com/ray-project/enhancements/main/reps/2023-04-27-data-strict-mode.md",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
     },
     {
         "question": "How do I set a maximum episode length when training with Rllib?",
@@ -1071,13 +1022,6 @@
         "reasoning": "The instruction provided accurately addresses the query on how to find the local ray address. It not only demonstrates how to do it but also provides supplementary information on what the output signifies and how it connects to Ray Core API. Therefore, it merits a top score of 5."
     },
     {
-        "question": "ray crashing with AttributeError: module 'pydantic.fields' has no attribute 'ModelField",
-        "source": "https://github.com/ray-project/ray/issues/36990",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
-    },
-    {
         "question": "How to start ray cluster on multiple node via CLI?",
         "source": "https://docs.ray.io/en/master/cluster/vms/user-guides/launching-clusters/on-premises.html#manually-set-up-a-ray-cluster",
         "answer": "You can start a Ray cluster on multiple nodes via CLI by following these steps:\\n1. Ensure that you have a list of machines and the nodes in the cluster are on the same network.\\n2. Make sure Ray is installed on each machine in the cluster. Install Ray through pip:\\n `pip install -U \\",
@@ -1246,13 +1190,6 @@
         "reasoning": "This answer provides a practical approach to debug and resolve the issue. It includes the necessary steps to identify the problem using the provided context about system logs of the Ray system. Although it should be generally applicable and helpful, it is based on the assumption that the error might be network-related or transient, which may not be always true. Thus, it gets a score of 4, not full marks."
     },
     {
-        "question": "What is the working of `PowerOfTwoChoicesReplicaScheduler` ?",
-        "source": "https://github.com/ray-project/ray/pull/36501",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
-    },
-    {
         "question": "Do you need the DAGDriver to deploy a serve application using RayServe?",
         "source": "https://docs.ray.io/en/master/serve/key-concepts.html#deployment",
         "answer": "No, you do not need the DAGDriver to deploy a serve application using RayServe.",
@@ -1314,12 +1251,5 @@
         "answer": "To kill a specific Serve application replica, the health check mechanism can be used. By defining custom application-level health-checks via the `check_health` method in your deployment class, the Serve controller can be signaled to consider a replica unhealthy which prompts it to kill the replica. For example, if a database connection related health-check fails, an exception can be raised inside the `check_health` method. The Serve controller then captures this exception, kills the unhealthy replica and subsequently restarts them.",
         "score": 4.0,
         "reasoning": "The response is able to accurately address the query by citing the health check mechanism and offering an illustrative example. However, the score is not perfect because the implementation specifics for 'killing' a specific replica (like accessing a specific replica for health-check) is not expressly answered."
-    },
-    {
-        "question": "What exactly is rayjob? How is it handled in kuberay? Can you give an example of what a Rayjob will look like?",
-        "source": "https://ray-project.github.io/kuberay/guidance/rayjob/",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
     }
 ]

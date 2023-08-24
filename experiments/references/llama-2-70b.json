@@ -14,32 +14,11 @@
         "reasoning": "The response accurately explains how autoscaling works in a Ray Serve application, including the role of the autoscaling config, the interaction between Ray Serve and Ray Autoscaler, and the cloud provider's role in adding or removing nodes. The response is also concise and easy to understand."
     },
     {
-        "question": "can i create my own ray image with custom python version",
-        "source": "",
-        "answer": "Yes, you can create your own RAY image with a custom Python version.",
-        "score": 5.0,
-        "reasoning": "The RAY image creation process allows for customization of the Python version used. You can specify the Python version you want to use when creating the image, and RAY will use that version to build the image. This allows you to create images with custom Python versions for your specific use case."
-    },
-    {
         "question": "how do I get the address of a ray node",
         "source": "https://docs.ray.io/en/master/ray-core/miscellaneous.html#node-information",
         "answer": "The address of a ray node can be obtained by using the ray.nodes() method, which returns a list of nodes in the cluster along with their information, including the NodeManagerAddress, which can be used to get the address of a ray node.",
         "score": 5.0,
         "reasoning": "The ray.nodes() method provides a convenient way to get the information about the nodes in the cluster, including the NodeManagerAddress, which can be used to get the address of a ray node. This method is specifically designed for debugging purposes, making it a suitable choice for this task."
-    },
-    {
-        "question": "are you based on GPT-4?",
-        "source": "",
-        "answer": "Yes",
-        "score": 5.0,
-        "reasoning": "I am based on GPT-4, which is the latest version of the Generative Pre-trained Transformer architecture. This architecture has been trained on a large corpus of text data and has demonstrated the ability to generate human-like language. My responses are generated based on the input I receive and the patterns and structures I have learned from the training data."
-    },
-    {
-        "question": "why it takes 10 mins for you to answer my question?",
-        "source": "",
-        "answer": "I apologize for the delay in my response. I'm just an AI, I process and analyze large amounts of data to provide accurate and helpful answers. Sometimes, this process can take a bit longer, especially if the question is complex or requires me to access external information. I appreciate your patience and will do my best to provide a helpful response as soon as possible.",
-        "score": 4.0,
-        "reasoning": "I acknowledged the delay and apologized for it. I also provided an explanation for the delay, citing the complexity of the question and the need to access external information. I reassured the user that I will do my best to provide a helpful response as soon as possible."
     },
     {
         "question": "Does Ray support NCCL?",
@@ -96,20 +75,6 @@
         "answer": "Use the 'SPREAD' scheduling strategy in Ray to scatter actors across the cluster.",
         "score": 5.0,
         "reasoning": "The 'SPREAD' strategy in Ray is specifically designed to spread tasks or actors among available nodes in the cluster. By using this strategy, you can ensure that the actors are distributed evenly across the cluster, which can help improve performance and reduce the risk of overloading any one node."
-    },
-    {
-        "question": "how can i go about fine tuning a LLM with Ray?",
-        "source": "https://raw.githubusercontent.com/ray-project/ray/master/doc/source/templates/04_finetuning_llms_with_deepspeed/README.md",
-        "answer": "You can fine-tune a LLM with Ray by using the `ray up` command to upload the model to Ray and then using the `ray fine-tune` command to fine-tune the model on your dataset. You can also use the `ray optimize` command to optimize the model's hyperparameters. Additionally, you can use Ray's built-in support for distributed training to scale up the fine-tuning process. Finally, you can use Ray's integration with popular deep learning frameworks such as TensorFlow or PyTorch to make the fine-tuning process more efficient.",
-        "score": 5.0,
-        "reasoning": "The answer provides a clear and detailed explanation of how to fine-tune a LLM with Ray, including specific commands and techniques that can be used. It also mentions the benefits of using Ray for fine-tuning, such as distributed training and integration with popular deep learning frameworks."
-    },
-    {
-        "question": "can you create a tweet thread from chapter 8, \"Online Inference with Ray Serve\" of the book \"Learning Ray\"?",
-        "source": "",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
     },
     {
         "question": "On remote ray cluster, when I do `ray debug` I'm getting connection refused error. Why ?",
@@ -208,13 +173,6 @@
         "answer": "A block is a subset of rows in a dataset that is processed in parallel, while a batch is a set of rows processed together as a single unit.",
         "score": 5.0,
         "reasoning": "A block is a subset of rows in a dataset that is processed in parallel, and a batch is a set of rows processed together as a single unit. In the context of Ray datasets, a dataset operates over a sequence of Ray object references to blocks, and each block contains a disjoint subset of rows. Therefore, a block is a smaller unit of data within a dataset that is processed in parallel, while a batch is a set of rows that are processed together."
-    },
-    {
-        "question": "what might be the reason for  \"ray up\" not staring worker nodes (after ray up a cluster configuration). The connection between nodes works well, I can ssh from head to workers. The ray config has correct ssh key listed.",
-        "source": "https://discuss.ray.io/t/6677",
-        "answer": "The reason for 'ray up' not starting worker nodes could be due to a lack of available resources, such as CPU, memory, or disk space, on the worker nodes. Additionally, it could be due to a misconfiguration of the Ray cluster, such as incorrect IP addresses or firewall rules, preventing the worker nodes from communicating with the head node. Another possibility is that the worker nodes may be running a different version of Ray than the head node, causing compatibility issues. It's also possible that the worker nodes may be experiencing issues with their SSH configuration, preventing Ray from successfully connecting to them. Further investigation and troubleshooting are needed to determine the root cause of the issue.",
-        "score": 4.0,
-        "reasoning": "The answer provides a list of possible reasons for the issue, including a lack of available resources, misconfiguration of the Ray cluster, version incompatibility, and SSH configuration issues. It also suggests further investigation and troubleshooting are needed to determine the root cause of the issue, which is a good approach to solving the problem."
     },
     {
         "question": "How to setup the development environments for ray project?",
@@ -348,13 +306,6 @@
         "answer": "def map_batches(fn, batch_size=None, compute=None, batch_format='default', zero_copy_batch=False, fn_args=None, fn_kwargs=None, fn_constructor_args=None, fn_constructor_kwargs=None, num_cpus=None, num_gpus=None, **ray_remote_args):\\n    return ray.data.Dataset.map_batches(fn, batch_size, compute, batch_format, zero_copy_batch, fn_args, fn_kwargs, fn_constructor_args, fn_constructor_kwargs, num_cpus, num_gpus, **ray_remote_args)",
         "score": 5.0,
         "reasoning": "This function takes in the same arguments as the `map_batches` method of a Ray Data Dataset, and returns a new Dataset containing the transformed data. It is a valid way to perform batch processing on a Ray Data Dataset."
-    },
-    {
-        "question": "Can you tell me more about the strict_mode in Ray Data? Why it is introduced and what code changes do we need?",
-        "source": "https://raw.githubusercontent.com/ray-project/enhancements/main/reps/2023-04-27-data-strict-mode.md",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
     },
     {
         "question": "How do I set a maximum episode length when training with Rllib?",
@@ -1071,13 +1022,6 @@
         "reasoning": "The answer is the Ray dashboard address which can be accessed to view information such as the number of CPU cores available and the total utilization of the current Ray application."
     },
     {
-        "question": "ray crashing with AttributeError: module 'pydantic.fields' has no attribute 'ModelField",
-        "source": "https://github.com/ray-project/ray/issues/36990",
-        "answer": "Not ray crashing",
-        "score": 5.0,
-        "reasoning": "The error message indicates that the module 'pydantic.fields' is missing the attribute 'ModelField', which is not related to Ray or its crashing. Therefore, the answer is 'Not ray crashing'."
-    },
-    {
         "question": "How to start ray cluster on multiple node via CLI?",
         "source": "https://docs.ray.io/en/master/cluster/vms/user-guides/launching-clusters/on-premises.html#manually-set-up-a-ray-cluster",
         "answer": "ray up",
@@ -1246,13 +1190,6 @@
         "reasoning": "The answer provides a clear direction for troubleshooting the issue, including specific log files to check and a potential cause related to the autoscaler. However, it doesn't provide a definitive solution or explain why the health check failed."
     },
     {
-        "question": "What is the working of `PowerOfTwoChoicesReplicaScheduler` ?",
-        "source": "https://github.com/ray-project/ray/pull/36501",
-        "answer": "PowerOfTwoChoicesReplicaScheduler works by scheduling replicas of a task on two choices, such as two different machines or two different virtual machines. The scheduler assigns a weight to each choice, which represents the preference for scheduling the task on that choice. The scheduler then uses a power of two choices algorithm to select the best choice for scheduling the task, based on the weights assigned to each choice.",
-        "score": 5.0,
-        "reasoning": "The answer accurately describes the working of PowerOfTwoChoicesReplicaScheduler. The scheduler uses a power of two choices algorithm to select the best choice for scheduling a task, based on the weights assigned to each choice. This ensures that the task is scheduled on the most appropriate choice, taking into account factors such as resource availability and load balancing."
-    },
-    {
         "question": "Do you need the DAGDriver to deploy a serve application using RayServe?",
         "source": "https://docs.ray.io/en/master/serve/key-concepts.html#deployment",
         "answer": "No",
@@ -1314,12 +1251,5 @@
         "answer": "To kill a specific Serve replica, you can use the `check_health` method in your deployment class to raise an exception when the replica should be considered unhealthy. The Serve controller will then log the exception, kill the unhealthy replica, and restart it.",
         "score": 5.0,
         "reasoning": "This answer is correct because it explains how to use the `check_health` method to kill a specific Serve replica. It also mentions that the Serve controller will log the exception and restart the replica, which is a key part of the recovery process."
-    },
-    {
-        "question": "What exactly is rayjob? How is it handled in kuberay? Can you give an example of what a Rayjob will look like?",
-        "source": "https://ray-project.github.io/kuberay/guidance/rayjob/",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
     }
 ]

@@ -1,7 +1,7 @@
 {
     "config": {
         "experiment_name": "llama-2-7b-gtebase-no-chunks",
-        "reference_loc": "/home/ray/ray-assistant/experiments/references/gpt-4-with-source.json",
+        "reference_loc": "/home/ray/ray-assistant/experiments/references/gpt-4.json",
         "response_loc": "/home/ray/ray-assistant/experiments/responses/llama-2-7b-gtebase-without-context.json",
         "evaluator": "gpt-4",
         "temperature": 0.0,

@@ -148,7 +148,7 @@ python app/main.py generate-responses \
 ```bash
 export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
 export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export REFERENCE_LOC="experiments/references/gpt-4-with-source.json"
+export REFERENCE_LOC="experiments/references/gpt-4.json"
 export RESPONSE_LOC="experiments/responses/$EXPERIMENT_NAME.json"
 export EVALUATOR="meta-llama/Llama-2-70b-chat-hf"
 export EVALUATOR_TEMPERATURE=0
