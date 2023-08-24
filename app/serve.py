@@ -12,13 +12,8 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
+import app
 from app import query
-from app.config import (
-    DB_CONNECTION_STRING,
-    OPENAI_API_KEY,
-    SLACK_APP_TOKEN,
-    SLACK_BOT_TOKEN,
-)
 
 
 def get_secret(secret_name):
@@ -59,17 +54,6 @@ class SlackApp:
         SocketModeHandler(self.slack_app, get_secret("SLACK_APP_TOKEN")).start()
 
 
-ray.init(
-    runtime_env={
-        "env_vars": {
-            "DB_CONNECTION_STRING": get_secret("DB_CONNECTION_STRING"),
-            "OPENAI_API_KEY": OPENAI_API_KEY,
-        }
-    },
-    ignore_reinit_error=True,
-)
-
-
 class Query(BaseModel):
     query: str
 
@@ -84,6 +68,7 @@ class Answer(BaseModel):
 @serve.ingress(app)
 class RayAssistantDeployment:
     def __init__(self):
+        app.config.DB_CONNECTION_STRING = get_secret("DB_CONNECTION_STRING")
         self.agent = query.QueryAgent(
             llm="meta-llama/Llama-2-70b-chat-hf",
             max_context_length=4096,
