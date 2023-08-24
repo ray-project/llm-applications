@@ -3,7 +3,6 @@
 
 import os
 
-import query
 import ray
 import requests
 from fastapi import FastAPI
@@ -12,6 +11,7 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
+from app import query
 from app.config import (
     DB_CONNECTION_STRING,
     OPENAI_API_KEY,
@@ -69,7 +69,10 @@ class Answer(BaseModel):
 @serve.ingress(app)
 class RayAssistantDeployment:
     def __init__(self):
-        self.agent = query.QueryAgent()
+        self.agent = query.QueryAgent(
+            llm="meta-llama/Llama-2-70b-chat-hf",
+            max_context_length=4096,
+        )
         self.app = SlackApp.remote()
         # Run the Slack app in the background
         self.runner = self.app.run.remote()
