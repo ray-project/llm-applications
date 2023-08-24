@@ -3,7 +3,7 @@ cluster_env: ray-assistant:2
 ray_serve_config:
   import_path: app.serve:deployment
   runtime_env:
-    working_dir: "https://github.com/ray-project/llm-applications/archive/refs/tags/v0.0.2.zip"
+    working_dir: "https://github.com/ray-project/llm-applications/archive/refs/tags/v0.0.3.zip"
     env_vars: {
       RAY_ASSISTANT_AWS_SECRET_ID: "ray-assistant",
       RAY_ASSISTANT_AWS_REGION: "us-west-2"
