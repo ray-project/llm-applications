@@ -1,5 +1,5 @@
 # You can run the whole script locally with
-# serve run serve:deployment
+# serve run app.serve:deployment
 
 import json
 import os
@@ -17,18 +17,10 @@ from app import query
 
 
 def get_secret(secret_name):
-    aws_secret_id = os.environ.get("RAY_ASSISTANT_AWS_SECRET_ID")
-    if aws_secret_id:
-        import boto3
-        client = boto3.client(
-            "secretsmanager", region_name=os.environ["RAY_ASSISTANT_AWS_REGION"]
-        )
-        response = client.get_secret_value(SecretId=aws_secret_id)
-        return json.loads(response["SecretString"])[secret_name]
-    else:
-        raise NotImplemented(
-            "Currently only AWS is supported "
-            "and you need to set RAY_ASSISTANT_AWS_SECRET_ID")
+    import boto3
+    client = boto3.client("secretsmanager", region_name="us-west-2")
+    response = client.get_secret_value(SecretId="ray-assistant")
+    return json.loads(response["SecretString"])[secret_name]
 
 
 application = FastAPI()
