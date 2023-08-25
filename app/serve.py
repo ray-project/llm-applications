@@ -1,9 +1,10 @@
 # You can run the whole script locally with
-# serve run serve:deployment
+# serve run app.serve:deployment
 
 import json
 import os
 
+import openai
 import ray
 import requests
 from fastapi import FastAPI
@@ -17,18 +18,10 @@ from app import query
 
 
 def get_secret(secret_name):
-    aws_secret_id = os.environ.get("RAY_ASSISTANT_AWS_SECRET_ID")
-    if aws_secret_id:
-        import boto3
-        client = boto3.client(
-            "secretsmanager", region_name=os.environ["RAY_ASSISTANT_AWS_REGION"]
-        )
-        response = client.get_secret_value(SecretId=aws_secret_id)
-        return json.loads(response["SecretString"])[secret_name]
-    else:
-        raise NotImplemented(
-            "Currently only AWS is supported "
-            "and you need to set RAY_ASSISTANT_AWS_SECRET_ID")
+    import boto3
+    client = boto3.client("secretsmanager", region_name="us-west-2")
+    response = client.get_secret_value(SecretId="ray-assistant")
+    return json.loads(response["SecretString"])[secret_name]
 
 
 application = FastAPI()
@@ -69,6 +62,8 @@ class Answer(BaseModel):
 class RayAssistantDeployment:
     def __init__(self):
         app.config.DB_CONNECTION_STRING = get_secret("DB_CONNECTION_STRING")
+        openai.api_key = get_secret("OPENAI_API_KEY")
+        openai.api_base = "https://api.endpoints.anyscale.com/v1"
         self.agent = query.QueryAgent(
             llm="meta-llama/Llama-2-70b-chat-hf",
             max_context_length=4096,
