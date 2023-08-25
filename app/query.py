@@ -6,8 +6,7 @@ import psycopg
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from pgvector.psycopg import register_vector
 
-from app.config import DB_CONNECTION_STRING
-
+import app.config
 
 def generate_response(
     llm,
@@ -57,7 +56,7 @@ class QueryAgent:
         self.assistant_content = assistant_content
 
         # VectorDB connection
-        self.conn = psycopg.connect(DB_CONNECTION_STRING)
+        self.conn = psycopg.connect(app.config.DB_CONNECTION_STRING)
         register_vector(self.conn)
 
     def get_response(self, query):

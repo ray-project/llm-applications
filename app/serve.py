@@ -4,6 +4,7 @@
 import json
 import os
 
+import openai
 import ray
 import requests
 from fastapi import FastAPI
@@ -61,6 +62,8 @@ class Answer(BaseModel):
 class RayAssistantDeployment:
     def __init__(self):
         app.config.DB_CONNECTION_STRING = get_secret("DB_CONNECTION_STRING")
+        openai.api_key = get_secret("OPENAI_API_KEY")
+        openai.api_base = "https://api.endpoints.anyscale.com/v1"
         self.agent = query.QueryAgent(
             llm="meta-llama/Llama-2-70b-chat-hf",
             max_context_length=4096,
