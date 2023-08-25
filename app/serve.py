@@ -31,7 +31,7 @@ def get_secret(secret_name):
             "and you need to set RAY_ASSISTANT_AWS_SECRET_ID")
 
 
-app = FastAPI()
+application = FastAPI()
 
 
 @ray.remote
@@ -65,7 +65,7 @@ class Answer(BaseModel):
 
 
 @serve.deployment()
-@serve.ingress(app)
+@serve.ingress(application)
 class RayAssistantDeployment:
     def __init__(self):
         app.config.DB_CONNECTION_STRING = get_secret("DB_CONNECTION_STRING")
@@ -77,7 +77,7 @@ class RayAssistantDeployment:
         # Run the Slack app in the background
         self.runner = self.app.run.remote()
 
-    @app.post("/query")
+    @application.post("/query")
     def query(self, query: Query) -> Answer:
         result = self.agent.get_response(query.query)
         return Answer.parse_obj(result)
