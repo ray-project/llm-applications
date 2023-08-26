@@ -800,9 +800,9 @@
     {
         "question": "how do I specify the log directory when starting Ray?",
         "source": "https://docs.ray.io/en/master/ray-core/configure.html#logging-and-debugging",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
+        "answer": "--temp-dir={your temp path}",
+        "score": 5.0,
+        "reasoning": "This option specifies the root temporary directory for Ray, which will contain subdirectories for each session. By changing the root temporary directory, the log directory for each session will also change."
     },
     {
         "question": "how to launch a ray cluster with 10 nodes, without setting the min worker as 10",
@@ -919,9 +919,9 @@
     {
         "question": "ray serve returns generic internal service error when there is an internal failure, how do I get it to emit more detailed errors or logs?",
         "source": "https://docs.ray.io/en/master/serve/monitoring.html#ray-logging",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
+        "answer": "To get Ray Serve to emit more detailed errors or logs, you can leverage Ray logging. Ray Serve uses Python's standard logging module with a logger named 'ray.serve'. By default, logs are emitted from actors both to stderr and on disk on each node at /tmp/ray/session_latest/logs/serve/. You can configure the 'ray.serve' logger inside the deployment constructor to silence replica-level logs or otherwise configure logging.",
+        "score": 5.0,
+        "reasoning": "The answer provides a clear and accurate explanation of how to use Ray logging to get more detailed errors or logs from Ray Serve. It mentions the default logging behavior of Ray Serve, the location of the logs, and how to configure the 'ray.serve' logger to silence replica-level logs or otherwise configure logging. The answer also includes additional information about log rotation and custom logging, which can be useful for troubleshooting and debugging purposes."
     },
     {
         "question": "how do i track an uncaught exception in ray serve",
@@ -982,9 +982,9 @@
     {
         "question": "how to rerun a canceled ray task",
         "source": "https://docs.ray.io/en/master/ray-core/api/doc/ray.cancel.html#ray-cancel",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
+        "answer": "You can rerun a canceled Ray task by resubmitting the task. If the task is pending execution, it will be executed. If the task is already finished, nothing will happen. Only non-actor tasks can be canceled. Canceled tasks will not be retried (max_retries will not be respected).",
+        "score": 5.0,
+        "reasoning": "The answer accurately explains how to rerun a canceled Ray task and highlights the conditions under which a task can be canceled, including the fact that only non-actor tasks can be canceled and that canceled tasks will not be retried. It also mentions the consequence of force-killing a running task. Therefore, it receives a score of 5."
     },
     {
         "question": "How do I set the max parallel concurrent scheduled tasks in map_batches?",
@@ -1234,9 +1234,9 @@
     {
         "question": "Does ray support cron job",
         "source": "https://docs.ray.io/en/master/cluster/running-applications/job-submission/index.html#ray-jobs-api",
-        "answer": "",
-        "score": "",
-        "reasoning": ""
+        "answer": "yes",
+        "score": 5.0,
+        "reasoning": "The Ray Jobs API allows you to submit locally developed applications to a remote Ray cluster for execution, simplifying the experience of packaging, deploying, and managing a Ray application, and allowing jobs to be submitted by a remote client that lives outside of the Ray cluster."
     },
     {
         "question": "can you give me the dependencies list for api read_images?",

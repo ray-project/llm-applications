@@ -61,14 +61,15 @@ source .env
 Preload from saved SQL dump:
 ```bash
 bash setup-pgvector.sh
-export SQL_DUMP="/efs/shared_storage/goku/gtebase-300-50-with-sections.sql"
-psql "$DB_CONNECTION_STRING" -f $SQL_DUMP
+sudo -u postgres psql -f migrations/vector-768.sql
+export SQL_DUMP_FP="/efs/shared_storage/goku/sql_dumps/gte-base_300_50.sql"
+psql "$DB_CONNECTION_STRING" -f $SQL_DUMP_FP
 ```
 
 Create new index:
 ```bash
 bash setup-pgvector.sh
-sudo -u postgres psql -f migrations/initial.sql
+sudo -u postgres psql -f migrations/vector-768.sql
 export DOCS_PATH="/efs/shared_storage/goku/docs.ray.io/en/master/"
 python app/index.py create-index \
     --docs-path $DOCS_PATH \
@@ -86,12 +87,17 @@ psql "$DB_CONNECTION_STRING" -c "SELECT source FROM document LIMIT 1;"  # sample
 
 Save/load DB (`{embedding_model_name}-{chunk_size}-{chunk_overlap}.sql`):
 ```bash
-export SQL_DUMP="/efs/shared_storage/goku/gtebase-300-50.sql"
-sudo -u postgres pg_dump > $SQL_DUMP  # save
-psql "$DB_CONNECTION_STRING" -c "DELETE FROM document;"
-psql "$DB_CONNECTION_STRING" -f $SQL_DUMP  # load
+export SQL_DUMP_FP="/efs/shared_storage/goku/sql_dumps/gte-base_300_50.sql"
+sudo -u postgres pg_dump -c > $SQL_DUMP_FP  # save
+psql "$DB_CONNECTION_STRING" -c "DROP TABLE document;"
+sudo -u postgres psql -f migrations/vector-768.sql
+psql "$DB_CONNECTION_STRING" -f $SQL_DUMP_FP  # load
 ```
 
+# Debug hanging DB
+```bash
+psql "$DB_CONNECTION_STRING" -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE state = 'idle in transaction';"
+```
 
 
 ### Query
@@ -114,62 +120,6 @@ agent = QueryAgent(
 )
 result = agent(query=query)
 print(json.dumps(result, indent=2))
-```
-
-### Experiments
-
-#### Generate responses
-```bash
-export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
-export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export EXPERIMENT_NAME="llama-2-7b-gtebase"
-export DATA_PATH="datasets/eval-dataset-v1.jsonl"
-export CHUNK_SIZE=300
-export CHUNK_OVERLAP=50
-export EMBEDDING_MODEL_NAME="thenlper/gte-base"
-export LLM="meta-llama/Llama-2-7b-chat-hf"
-export TEMPERATURE 0
-export MAX_CONTEXT_LENGTH=4096
-```
-```bash
-python app/main.py generate-responses \
-    --experiment-name $EXPERIMENT_NAME \
-    --data-path $DATA_PATH \
-    --chunk-size $CHUNK_SIZE \
-    --chunk-overlap $CHUNK_OVERLAP \
-    --embedding-model-name $EMBEDDING_MODEL_NAME \
-    --llm $LLM \
-    --temperature $TEMPERATURE \
-    --max-context-length $MAX_CONTEXT_LENGTH \
-    --system-content "Answer the {query} using the additional {context} provided."
-```
-
-#### Evaluate responses
-```bash
-export OPENAI_API_BASE="https://api.endpoints.anyscale.com/v1"
-export OPENAI_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-export REFERENCE_LOC="experiments/references/gpt-4.json"
-export RESPONSE_LOC="experiments/responses/$EXPERIMENT_NAME.json"
-export EVALUATOR="meta-llama/Llama-2-70b-chat-hf"
-export EVALUATOR_TEMPERATURE=0
-export EVALUATOR_MAX_CONTEXT_LENGTH=4096
-```
-```bash
-python app/main.py evaluate-responses \
-    --experiment-name $EXPERIMENT_NAME \
-    --reference-loc $REFERENCE_LOC \
-    --response-loc $RESPONSE_LOC \
-    --evaluator $EVALUATOR \
-    --temperature $EVALUATOR_TEMPERATURE \
-    --max-context-length $EVALUATOR_MAX_CONTEXT_LENGTH \
-    --system-content """
-    Your job is to rate the quality of our generated answer {generated_answer}
-    given a query {query} and a reference answer {reference_answer}.
-    Your score has to be between 1 and 5.
-    You must return your response in a line with only the score.
-    Do not return answers in any other format.
-    On a separate line provide your reasoning for the score as well.
-    """
 ```
 
 ### Experiments
