@@ -5,9 +5,10 @@ import ray
 import typer
 from bs4 import BeautifulSoup, NavigableString, Tag
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter, TextSplitter
 from pgvector.psycopg import register_vector
 from ray.data import ActorPoolStrategy
+from typing import Any, List, Optional
 from typing_extensions import Annotated
 
 from app.config import (
@@ -97,6 +98,7 @@ def parse_html_file(record):
             "text": chunk.value,
         }
         for chunk in group_tagged_text(convert_to_tagged_text(record["path"], html_content))
+        if chunk.value.strip() != ""
     ]
 
 
@@ -109,6 +111,48 @@ def parse_text_file(record):
             "text": text,
         }
     ]
+
+
+class SimpleTextSplitter(TextSplitter):
+    def __init__(
+        self,
+        separators: Optional[List[str]] = None,
+        min_chunk_size = 100,
+        max_chunk_size = 300,
+        keep_separator: bool = True,
+        **kwargs: Any,
+    ) -> None:
+        """Create a new SimpleTextSplitter."""
+        super().__init__(keep_separator=keep_separator, **kwargs)
+        self._min_chunk_size = min_chunk_size
+        self._max_chunk_size = max_chunk_size
+        self._separators = separators or ["\n\n", "\n", " "]
+
+    def _split_text(self, text: str, separators: List[str]) -> List[str]:
+        chunks = []
+        index = -1
+        while len(text) > 0:
+            # First see if the text is already small enough
+            if len(text) <= self._max_chunk_size:
+                chunks.append(text)
+                break
+            # If not, try to break it up
+            for separator in separators:
+                index = text.find(separator, self._min_chunk_size)
+                if index != -1 and index <= self._max_chunk_size:
+                    chunks.append(text[:index])
+                    text = text[index:]
+                    break
+            if index == -1 or index > self._max_chunk_size:
+                # In this case, none of the separators was applicable,
+                # so we just make a hard cut
+                chunks.append(text[:self._max_chunk_size])
+                text = text[self._max_chunk_size:]
+        return chunks
+
+
+    def split_text(self, text: str) -> List[str]:
+        return self._split_text(text, self._separators)
 
 
 class EmbedChunks:
