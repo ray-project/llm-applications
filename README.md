@@ -12,7 +12,7 @@ relevant info retrieved from the index.
 ## Setup
 
 ### API keys
-We'll be using [OpenAI](https://platform.openai.com/docs/models/){:target="_blank"} to access ChatGPT models like `gpt-3.5-turbo`, `gpt-4`, etc. and [Anyscale Endpoints](https://endpoints.anyscale.com/){:target="_blank"} to access OSS LLMs like `Llama-2-70b`. Be sure to create your accounts for both and have your credentials ready.
+We'll be using [OpenAI](https://platform.openai.com/docs/models/) to access ChatGPT models like `gpt-3.5-turbo`, `gpt-4`, etc. and [Anyscale Endpoints](https://endpoints.anyscale.com/) to access OSS LLMs like `Llama-2-70b`. Be sure to create your accounts for both and have your credentials ready.
 
 ### Compute
 - Start a new [Anyscale workspace on staging](https://console.anyscale-staging.com/o/anyscale-internal/workspaces) using an [`g3.8xlarge`](https://instances.vantage.sh/aws/ec2/g3.8xlarge) head node (you can also add GPU worker nodes to run the workloads faster).
@@ -21,7 +21,7 @@ We'll be using [OpenAI](https://platform.openai.com/docs/models/){:target="_blan
 
 ### Repository
 ```bash
-git clone https://github.com/ray-project/llm-applications.git .
+git clone https://github.com/ray-project/llm-applications.git .  # git checkout -b goku origin/goku
 git config --global user.name <GITHUB-USERNAME>
 git config --global user.email <EMAIL-ADDRESS>
 ```
