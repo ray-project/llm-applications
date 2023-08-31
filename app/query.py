@@ -63,7 +63,7 @@ class QueryAgent:
         self.conn = psycopg.connect(os.environ["DB_CONNECTION_STRING"])
         register_vector(self.conn)
 
-    def __call__(self, query, num_chunks=5):
+    def __call__(self, query, num_chunks=6):
         # Get context
         embedding = np.array(self.embedding_model.embed_query(query))
         with self.conn.cursor() as cur:

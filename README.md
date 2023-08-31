@@ -71,10 +71,10 @@ Create new index:
 bash setup-pgvector.sh
 sudo -u postgres psql -f migrations/vector-768.sql
 export DOCS_PATH="/efs/shared_storage/goku/docs.ray.io/en/master/"
-python app/index.py create-index \
+python app/index.py \
     --docs-path $DOCS_PATH \
-    --embedding-model "thenlper/gte-base" \
-    --chunk-size 300 \
+    --embedding-model-name "thenlper/gte-base" \
+    --chunk-size 600 \
     --chunk-overlap 50
 ```
 

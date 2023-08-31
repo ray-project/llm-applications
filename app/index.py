@@ -168,7 +168,7 @@ def create_index(
         fn_constructor_kwargs={"model_name": embedding_model_name},
         batch_size=100,
         num_gpus=1,
-        compute=ActorPoolStrategy(size=2),
+        compute=ActorPoolStrategy(size=1),
     )
 
     # Index data
