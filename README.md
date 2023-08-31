@@ -34,6 +34,7 @@ wget -e robots=off --recursive --no-clobber --page-requisites \
 ### Environment
 ```bash
 pip install --user -r requirements.txt
+export PYTHONPATH=$PYTHONPATH:$PWD
 pre-commit install
 pre-commit autoupdate
 ```
@@ -48,4 +49,25 @@ ANYSCALE_API_BASE="https://api.endpoints.anyscale.com/v1"
 ANYSCALE_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
 DB_CONNECTION_STRING="dbname=postgres user=postgres host=localhost password=postgres"
 source .env
+```
+
+## Steps
+
+1. Open [rag.ipynb](notebooks/rag.ipynb) to interactively go through all the concepts and run experiments.
+2. Use the best configuration (in `serve.py`) from the notebook experiments to serve the LLM.
+```bash
+python app/main.py
+```
+3. Query your service.
+```python
+import json
+import requests
+data = {"query": "What is the default batch size for map_batches?"}
+response = requests.post("http://127.0.0.1:8000/query", json=data)
+print(response.text)
+```
+3. Shutdown the service
+```python
+from ray import serve
+serve.shutdown()
 ```

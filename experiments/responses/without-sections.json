@@ -8,7 +8,7 @@
         "llm": "meta-llama/Llama-2-70b-chat-hf",
         "temperature": 0.0,
         "max_context_length": 4096,
-        "system_content": "Answer the {query} using the additional {context} provided.",
+        "system_content": "Answer the query using the context provided.",
         "assistant_content": ""
     },
     "results": [
