@@ -23,15 +23,14 @@ git config --global user.email <EMAIL-ADDRESS>
 Our data is already ready at `/efs/shared_storage/goku/docs.ray.io/en/master/` (on Staging, `us-east-1`) but if you wanted to load it yourself, run this bash command (change `/desired/output/directory`, but make sure it's on the shared storage,
 so that it's accessible to the workers)
 ```bash
-export DOCS_PATH=/desired/output/directory
-wget -e robots=off --recursive --no-clobber --page-requisites \
-  --html-extension --convert-links --restrict-file-names=windows \
-  --domains docs.ray.io --no-parent --accept=html \
-  -P $DOCS_PATH \
-  https://docs.ray.io/en/master/
+git clone https://github.com/ray-project/llm-applications.git .
 ```
 
 ### Environment
+
+Then set up the environment correctly by specifying the values in your `.env` file,
+and installing the dependencies:
+
 ```bash
 pip install --user -r requirements.txt
 export PYTHONPATH=$PYTHONPATH:$PWD

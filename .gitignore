@@ -104,3 +104,9 @@ airflow/airflow.db
 
 # Clean up
 .trash/
+
+# scraped folders
+docs.ray.io/
+
+# book and other source folders
+data/
