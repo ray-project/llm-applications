@@ -1,12 +1,13 @@
+import os
 import time
 
 import numpy as np
 import openai
 import psycopg
+from langchain.embeddings import OpenAIEmbeddings
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from pgvector.psycopg import register_vector
 
-import app.config
 
 def generate_response(
     llm,
@@ -31,7 +32,7 @@ def generate_response(
                 ],
             )
             return response["choices"][-1]["message"]["content"]
-        except Exception as e:  # NOQA: F841
+        except Exception as e:
             print(e)
             time.sleep(retry_interval)  # default is per-minute rate limits
             retry_count += 1
@@ -41,14 +42,32 @@ def generate_response(
 class QueryAgent:
     def __init__(
         self,
-        embedding_model="thenlper/gte-base",
-        llm="gpt-3.5-turbo-16k",
+        embedding_model_name="thenlper/gte-base",
+        llm="meta-llama/Llama-2-70b-chat-hf",
         temperature=0.0,
-        max_context_length=16384,
+        max_context_length=4096,
         system_content="",
         assistant_content="",
     ):
-        self.embedding_model = HuggingFaceEmbeddings(model_name=embedding_model)
+        # Embedding model
+        model_kwargs = {"device": "cuda"}
+        encode_kwargs = {"device": "cuda", "batch_size": 100}
+        if embedding_model_name == "text-embedding-ada-002":
+            self.embedding_model = OpenAIEmbeddings(
+                model=embedding_model_name,
+                model_kwargs=model_kwargs,
+                encode_kwargs=encode_kwargs,
+                openai_api_base=os.environ["OPENAI_API_BASE"],
+                openai_api_key=os.environ["OPENAI_API_KEY"],
+            )
+        else:
+            self.embedding_model = HuggingFaceEmbeddings(
+                model_name=embedding_model_name,
+                model_kwargs=model_kwargs,
+                encode_kwargs=encode_kwargs,
+            )
+
+        # LLM
         self.llm = llm
         self.temperature = temperature
         self.context_length = max_context_length - len(system_content + assistant_content)
@@ -56,14 +75,17 @@ class QueryAgent:
         self.assistant_content = assistant_content
 
         # VectorDB connection
-        self.conn = psycopg.connect(app.config.DB_CONNECTION_STRING)
+        self.conn = psycopg.connect(os.environ["DB_CONNECTION_STRING"])
         register_vector(self.conn)
 
-    def get_response(self, query):
+    def __call__(self, query, num_chunks=5):
         # Get context
         embedding = np.array(self.embedding_model.embed_query(query))
         with self.conn.cursor() as cur:
-            cur.execute("SELECT * FROM document ORDER BY embedding <-> %s LIMIT 5", (embedding,))
+            cur.execute(
+                "SELECT * FROM document ORDER BY embedding <-> %s LIMIT %s",
+                (embedding, num_chunks),
+            )
             rows = cur.fetchall()
             context = [{"text": row[1]} for row in rows]
             sources = [row[2] for row in rows]

@@ -13,6 +13,7 @@ sentence_transformers
 slack_bolt
 streamlit
 typer
+tiktoken
 
 # Styling
 black
