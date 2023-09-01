@@ -1,6 +1,6 @@
 # Black formatting
 [tool.black]
-line-length = 99
+line-length = 120
 include = '\.pyi?$'
 exclude = '''
 /(
