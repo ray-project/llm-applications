@@ -1,0 +1,189 @@
+{"question": "I’m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?", "source": "https://docs.ray.io/en/master/data/transforming-data.html#configuring-batch-format"}
+{"question": "How does autoscaling work in a Ray Serve application?", "source": "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling"}
+{"question": "can i create my own ray image with custom python version", "source": ""}
+{"question": "how do I get the address of a ray node", "source": "https://docs.ray.io/en/master/ray-core/miscellaneous.html#node-information"}
+{"question": "are you based on GPT-4?", "source": ""}
+{"question": "why it takes 10 mins for you to answer my question?", "source": ""}
+{"question": "Does Ray support NCCL?", "source": "https://docs.ray.io/en/master/ray-more-libs/ray-collective.html"}
+{"question": "could you give me an example of using this library for data-parallel training of CNNs on Ray?", "source": "https://docs.ray.io/en/master/ray-air/computer-vision.html#training-vision-models"}
+{"question": "Is Ray integrated with DeepSpeed?", "source": "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#fine-tuning-the-model-with-ray-air-a-name-train-a"}
+{"question": "what will happen if I use AsyncIO's await to wait for a Ray future like `await x.remote()`", "source": "https://docs.ray.io/en/master/ray-core/actors/async_api.html#objectrefs-as-asyncio-futures"}
+{"question": "How would you compare Spark, Ray, Dask?", "source": "https://docs.ray.io/en/master/data/overview.html#how-does-ray-data-compare-to-x-for-offline-inference"}
+{"question": "why would ray overload a node w/ more task that the resources allow ?", "source": "https://docs.ray.io/en/master/ray-core/scheduling/resources.html#physical-resources-and-logical-resources"}
+{"question": "when should I use Ray Client?", "source": "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#when-to-use-ray-client"}
+{"question": "how to scatter actors across the cluster?", "source": "https://docs.ray.io/en/master/ray-core/scheduling/index.html#spread"}
+{"question": "how can i go about fine tuning a LLM with Ray?", "source": "https://raw.githubusercontent.com/ray-project/ray/master/doc/source/templates/04_finetuning_llms_with_deepspeed/README.md"}
+{"question": "can you create a tweet thread from chapter 8, \"Online Inference with Ray Serve\" of the book \"Learning Ray\"?", "source": ""}
+{"question": "On remote ray cluster, when I do `ray debug` I'm getting connection refused error. Why ?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/debug-apps/ray-debugging.html#running-on-a-cluster"}
+{"question": "How does Ray AIR set up the model to communicate gradient updates across machines?", "source": "https://docs.ray.io/en/master/train/train.html#intro-to-ray-train"}
+{"question": "Why would I use Ray Serve instead of Modal or Seldon? Why can't I just do it via containers?", "source": "https://docs.ray.io/en/master/serve/index.html"}
+{"question": "How do I deploy an LLM workload on top of Ray Serve?", "source": "https://docs.ray.io/en/master/ray-air/examples/gptj_serving.html"}
+{"question": "what size of memory should I need for this if I am setting set the `model_id` to “EleutherAI/gpt-j-6B”?", "source": "https://docs.ray.io/en/master/ray-air/examples/gptj_serving.html"}
+{"question": "How do I log the results from multiple distributed workers into a single tensorboard?", "source": "https://docs.ray.io/en/master/tune/tutorials/tune-output.html#how-to-log-your-tune-runs-to-tensorboard"}
+{"question": "how do you config SyncConfig for a Ray AIR job?", "source": "https://docs.ray.io/en/master/tune/tutorials/tune-storage.html#on-a-multi-node-cluster-deprecated"}
+{"question": "how can I quickly narrow down the root case of a failed ray job, assuming I have access to all the logs", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-files-in-logging-directory"}
+{"question": "How do I specify how many GPUs a serve deployment needs?", "source": "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#resource-management-cpus-gpus"}
+{"question": "One of my worker nodes keeps dying on using TensorflowTrainer with around 1500 workers, I observe SIGTERM has been received to the died node's raylet. How can I debug this?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-files-in-logging-directory"}
+{"question": "what are the possible reasons for nodes dying in a cluster?", "source": "https://docs.ray.io/en/master/ray-core/scheduling/ray-oom-prevention.html"}
+{"question": "how do I programatically get ray remote cluster to a target size immediately without scaling up through autoscaler ?", "source": "https://docs.ray.io/en/master/cluster/running-applications/autoscaling/reference.html#ray-autoscaler-sdk-request-resources"}
+{"question": "how do you disable async iter_batches with Ray Dataset?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.iter_batches.html#ray-data-dataset-iter-batches"}
+{"question": "what is the different between a batch and a block, for ray datasets?", "source": "https://docs.ray.io/en/master/data/data-internals.html#datasets-and-blocks"}
+{"question": "what might be the reason for  \"ray up\" not staring worker nodes (after ray up a cluster configuration). The connection between nodes works well, I can ssh from head to workers. The ray config has correct ssh key listed.", "source": "https://discuss.ray.io/t/6677"}
+{"question": "How to setup the development environments for ray project?", "source": "https://docs.ray.io/en/master/ray-contribute/development.html"}
+{"question": "how do I debug why ray rollout workers are deadlocking when using the sample API in `ray/rllib/evaluation/rollout_worker.py`", "source": "https://docs.ray.io/en/master/rllib/rllib-dev.html#troubleshooting"}
+{"question": "how do I join two ray datasets?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.zip.html"}
+{"question": "Is there a way to retrieve an object ref from its id?", "source": "https://docs.ray.io/en/master/ray-core/objects.html"}
+{"question": "how to create model Checkpoint from the model in memory?", "source": "https://docs.ray.io/en/master/train/api/doc/ray.train.torch.TorchCheckpoint.from_model.html#ray-train-torch-torchcheckpoint-from-model"}
+{"question": "what is Deployment in Ray Serve?", "source": "https://docs.ray.io/en/master/serve/key-concepts.html#deployment"}
+{"question": "What is user config in Ray Serve? how do I use it?", "source": "https://docs.ray.io/en/master/serve/configure-serve-deployment.html#configure-ray-serve-deployments"}
+{"question": "What is the difference between PACK and SPREAD strategy?", "source": "https://docs.ray.io/en/master/ray-core/scheduling/placement-group.html#placement-strategy"}
+{"question": "What’s the best way to run ray across multiple machines?", "source": "https://docs.ray.io/en/master/ray-core/cluster/index.html"}
+{"question": "how do I specify ScalingConfig for a Tuner run?", "source": "https://docs.ray.io/en/master/tune/api/doc/ray.tune.Tuner.html"}
+{"question": "how to utilize ‘zero-copy’ feature ray provide for numpy?", "source": "https://docs.ray.io/en/master/ray-core/objects/serialization.html#numpy-arrays"}
+{"question": "if there are O(millions) of keys that all have state, is it ok to spin up 1=1 actors? Or would it be advised to create ‘key pools’ where an actor can hold 1=many keys?", "source": "https://docs.ray.io/en/master/ray-core/patterns/too-fine-grained-tasks.html"}
+{"question": "How to get the best AIR checkpoint after training without a Result object?", "source": "https://docs.ray.io/en/master/tune/api/doc/ray.air.Result.html#ray-air-result"}
+{"question": "How to find the best checkpoint from the trial directory?", "source": "https://docs.ray.io/en/master/tune/api/doc/ray.tune.ExperimentAnalysis.html"}
+{"question": "what are the advantage and disadvantage of using singleton Actor ?", "source": "https://docs.ray.io/en/master/ray-core/actors/named-actors.html"}
+{"question": "what are the advantages of using a named actor?", "source": "https://docs.ray.io/en/master/ray-core/actors/named-actors.html"}
+{"question": "How do I read a text file stored on S3 using Ray Data?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.read_text.html"}
+{"question": "how do I get the IP of the head node for my Ray cluster?", "source": "https://docs.ray.io/en/master/ray-core/miscellaneous.html#node-information"}
+{"question": "How to write a map function that returns a list of object for `map_batches`?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html#ray-data-dataset-map-batches"}
+{"question": "Can you tell me more about the strict_mode in Ray Data? Why it is introduced and what code changes do we need?", "source": "https://raw.githubusercontent.com/ray-project/enhancements/main/reps/2023-04-27-data-strict-mode.md"}
+{"question": "How do I set a maximum episode length when training with Rllib?", "source": "https://docs.ray.io/en/master/rllib/key-concepts.html"}
+{"question": "how do I make a Ray Tune trial retry on failures?", "source": "https://docs.ray.io/en/master/tune/tutorials/tune-fault-tolerance.html"}
+{"question": "For the supervised actor pattern, can we keep the Worker Actor up if the Supervisor passes a reference to the Actor to another Actor, to allow the worker actor to remain even on Supervisor / Driver failure?", "source": "https://docs.ray.io/en/master/ray-core/patterns/tree-of-actors.html"}
+{"question": "How do I read a large text file in S3 with Ray?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.read_text.html"}
+{"question": "how do I get a ray dataset from pandas", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.from_pandas.html"}
+{"question": "can you give me an example of using `ray.data.map` ?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map.html"}
+{"question": "can you give me an example of using `ray.data.map` , with a callable class as input?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map.html"}
+{"question": "How to set memory limit for each trial in Ray Tuner?", "source": "https://docs.ray.io/en/master/tune/tutorials/tune-resources.html"}
+{"question": "how do I get the actor id of an actor", "source": "https://docs.ray.io/en/master/ray-core/api/doc/ray.runtime_context.get_runtime_context.html"}
+{"question": "can ray.init() can check if ray is all-ready initiated ?", "source": "https://docs.ray.io/en/master/ray-core/api/doc/ray.init.html"}
+{"question": "What does the `compute=actor`  argument do within `ray.data.map_batches` ?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html"}
+{"question": "how do I use wandb logger with accelerateTrainer?", "source": "https://docs.ray.io/en/master/ray-air/api/doc/ray.air.integrations.wandb.WandbLoggerCallback.html"}
+{"question": "What will be implicitly put into object store?", "source": "https://docs.ray.io/en/master/ray-core/objects.html#objects"}
+{"question": "How do I kill or cancel a ray task that I already started?", "source": "https://docs.ray.io/en/master/ray-core/fault_tolerance/tasks.html#cancelling-misbehaving-tasks"}
+{"question": "how to send  extra arguments in dataset.map_batches function?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html#ray-data-dataset-map-batches"}
+{"question": "where does ray GCS store the history of jobs run on a kuberay cluster? What type of database and format does it use for this?", "source": "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/static-ray-cluster-without-kuberay.html#external-redis-integration-for-fault-tolerance"}
+{"question": "How to resolve ValueError: The actor ImplicitFunc is too large?", "source": "https://docs.ray.io/en/master/ray-core/patterns/closure-capture-large-objects.html"}
+{"question": "How do I use ray to distribute training for my custom neural net written using Keras in Databricks?", "source": "https://docs.ray.io/en/master/train/examples/tf/tensorflow_mnist_example.html"}
+{"question": "how to use ray.put and ray,get?", "source": "https://docs.ray.io/en/master/ray-core/objects.html#fetching-object-data"}
+{"question": "how do I use Ray Data to pre process many files?", "source": "https://docs.ray.io/en/master/data/transforming-data.html#transforming-batches-with-tasks"}
+{"question": "can’t pickle SSLContext objects", "source": "https://docs.ray.io/en/master/ray-core/objects/serialization.html#customized-serialization"}
+{"question": "How do I install CRDs in Kuberay?", "source": "https://docs.ray.io/en/master/cluster/kubernetes/getting-started.html#deploying-the-kuberay-operator"}
+{"question": "Why the function for Ray data batch inference has to be named as _`__call__()`_ ?", "source": "https://docs.ray.io/en/master/data/examples/nyc_taxi_basic_processing.html#parallel-batch-inference"}
+{"question": "How to disconnnect ray client?", "source": "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#connect-to-multiple-ray-clusters-experimental"}
+{"question": "how to submit job with python with local files?", "source": "https://docs.ray.io/en/master/cluster/running-applications/job-submission/quickstart.html#submitting-a-job"}
+{"question": "How do I do inference from a model trained by Ray tune.fit()?", "source": "https://docs.ray.io/en/master/data/batch_inference.html#using-models-from-ray-train"}
+{"question": "is there a way to load and run inference without using pytorch or tensorflow directly?", "source": "https://docs.ray.io/en/master/serve/index.html"}
+{"question": "what does ray do", "source": "https://docs.ray.io/en/master/ray-overview/index.html#overview"}
+{"question": "If I specify a fractional GPU in the resource spec, what happens if I use more than that?", "source": "https://docs.ray.io/en/master/ray-core/tasks/using-ray-with-gpus.html#fractional-gpus"}
+{"question": "how to pickle a variable defined in actor’s init method", "source": "https://docs.ray.io/en/master/ray-core/objects/serialization.html#customized-serialization"}
+{"question": "how do I do an all_reduce operation among a list of actors", "source": "https://docs.ray.io/en/master/ray-core/examples/map_reduce.html#shuffling-and-reducing-data"}
+{"question": "What will happen if we specify a bundle with `{\"CPU\":0}` in the PlacementGroup?", "source": "https://docs.ray.io/en/master/ray-core/scheduling/placement-group.html#bundles"}
+{"question": "How to cancel job from UI?", "source": "https://docs.ray.io/en/master/cluster/running-applications/job-submission/cli.html#ray-job-stop"}
+{"question": "how do I get my project files on the cluster when using Ray Serve? My workflow is to call `serve deploy config.yaml --address <remote dashboard agent address>`", "source": "https://docs.ray.io/en/master/serve/advanced-guides/dev-workflow.html#testing-on-a-remote-cluster"}
+{"question": "how do i install ray nightly wheel", "source": "https://docs.ray.io/en/master/ray-overview/installation.html#daily-releases-nightlies"}
+{"question": "how do i install the latest ray nightly wheel?", "source": "https://docs.ray.io/en/master/ray-overview/installation.html#daily-releases-nightlies"}
+{"question": "how can I write unit tests for Ray code?", "source": "https://docs.ray.io/en/master/ray-core/examples/testing-tips.html#tip-2-sharing-the-ray-cluster-across-tests-if-possible"}
+{"question": "How I stop Ray from spamming lots of Info updates on stdout?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#disable-logging-to-the-driver"}
+{"question": "how to deploy stable diffusion 2.1 with Ray Serve?", "source": "https://docs.ray.io/en/master/serve/tutorials/stable-diffusion.html#serving-a-stable-diffusion-model"}
+{"question": "what is actor_handle?", "source": "https://docs.ray.io/en/master/ray-core/actors.html#passing-around-actor-handles"}
+{"question": "how to kill a r detached actors?", "source": "https://docs.ray.io/en/master/ray-core/actors/named-actors.html#actor-lifetimes"}
+{"question": "How to force upgrade the pip package in the runtime environment if an old version exists?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#api-reference"}
+{"question": "How do I do global shuffle with Ray?", "source": "https://docs.ray.io/en/master/data/transforming-data.html#shuffling-rows"}
+{"question": "How to find namespace of an Actor?", "source": "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.list_actors.html#ray-util-state-list-actors"}
+{"question": "How does Ray work with async.io ?", "source": "https://docs.ray.io/en/master/ray-core/actors/async_api.html#asyncio-for-actors"}
+{"question": "How do I debug a hanging `ray.get()` call? I have it reproduced locally.", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/debug-apps/debug-hangs.html"}
+{"question": "can you show me an example of ray.actor.exit_actor()", "source": "https://docs.ray.io/en/master/ray-core/actors/terminating-actors.html#manual-termination-within-the-actor"}
+{"question": "how to add log inside actor?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#customizing-worker-process-loggers"}
+{"question": "can you write a script to do batch inference with GPT-2 on text data from an S3 bucket?", "source": "https://docs.ray.io/en/master/data/working-with-text.html#performing-inference-on-text"}
+{"question": "How do I enable Ray debug logs?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#using-rays-logger"}
+{"question": "How do I list the current Ray actors from python?", "source": "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.list_actors.html#ray-util-state-list-actors"}
+{"question": "I want to kill the replica actor from Python. how do I do it?", "source": "https://docs.ray.io/en/master/ray-core/actors/terminating-actors.html#manual-termination-via-an-actor-handle"}
+{"question": "how do I specify in my remote function declaration that I want the task to run on a V100 GPU type?", "source": "https://docs.ray.io/en/master/ray-core/tasks/using-ray-with-gpus.html#accelerator-types"}
+{"question": "How do I get started?", "source": "https://docs.ray.io/en/master/ray-overview/getting-started.html#getting-started"}
+{"question": "How to specify python version in runtime_env?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#api-reference"}
+{"question": "how to create a Actor in a namespace?", "source": "https://docs.ray.io/en/master/ray-core/namespaces.html#using-namespaces"}
+{"question": "Can I specify multiple working directories?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#using-local-files"}
+{"question": "what if I set num_cpus=0 for tasks", "source": "https://docs.ray.io/en/master/ray-core/scheduling/resources.html#fractional-resource-requirements"}
+{"question": "is it possible to have ray on k8s without using kuberay? especially with the case that autoscaler is enabled.", "source": "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/static-ray-cluster-without-kuberay.html"}
+{"question": "how to manually configure and manage Ray cluster on Kubernetes", "source": "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/static-ray-cluster-without-kuberay.html#deploying-a-static-ray-cluster"}
+{"question": "If I shutdown a raylet, will the tasks and workers on that node also get killed?", "source": "https://docs.ray.io/en/master/ray-core/fault_tolerance/nodes.html#node-fault-tolerance"}
+{"question": "If I’d like to debug out of memory, how do I Do that, and which documentation should I look?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/debug-apps/debug-memory.html#detecting-out-of-memory-errors"}
+{"question": "How to use callback in Trainer?", "source": "https://docs.ray.io/en/master/tune/api/doc/ray.tune.Callback.html#ray-tune-callback"}
+{"question": "How to provide current working directory to ray?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#remote-uris"}
+{"question": "how to create an actor instance with parameter?", "source": "https://docs.ray.io/en/master/ray-core/actors.html#actors"}
+{"question": "how to push a custom module to ray which is using by Actor ?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#library-development"}
+{"question": "how to print ray working directory?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#runtime-environments"}
+{"question": "why I can not see log.info in ray log?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#customizing-worker-process-loggers"}
+{"question": "when you use ray dataset to read a file, can you make sure the order of the data is preserved?", "source": "https://docs.ray.io/en/master/data/performance-tips.html#deterministic-execution"}
+{"question": "Can you explain what \"Ray will *not* retry tasks upon exceptions thrown by application code\" means ?", "source": "https://docs.ray.io/en/master/ray-core/fault_tolerance/tasks.html#retrying-failed-tasks"}
+{"question": "how do I specify the log directory when starting Ray?", "source": "https://docs.ray.io/en/master/ray-core/configure.html#logging-and-debugging"}
+{"question": "how to launch a ray cluster with 10 nodes, without setting the min worker as 10", "source": "https://docs.ray.io/en/master/cluster/vms/user-guides/launching-clusters/on-premises.html#start-worker-nodes"}
+{"question": "how to use ray api to scale up a cluster", "source": "https://docs.ray.io/en/master/cluster/running-applications/autoscaling/reference.html#ray-autoscaler-sdk-request-resources"}
+{"question": "we plan to use Ray cloud launcher to start a cluster in AWS. How can we specify a subnet in the deployment file?", "source": "https://docs.ray.io/en/master/cluster/vms/references/ray-cluster-configuration.html#full-configuration"}
+{"question": "where I can find HTTP server error code log for Ray serve", "source": "https://docs.ray.io/en/master/serve/monitoring.html#ray-logging"}
+{"question": "I am running ray cluster on amazon and I have troubles displaying the dashboard. When a I tunnel the dashboard port from the headnode to my machine, the dashboard opens, and then it disappears (internal refresh fails). Is it a known problem? What am I doing wrong?", "source": "https://docs.ray.io/en/master/cluster/configure-manage-dashboard.html#viewing-ray-dashboard-in-browsers"}
+{"question": "In the Ray cluster launcher YAML, does `max_workers` include the head node, or only worker nodes?", "source": "https://docs.ray.io/en/master/cluster/vms/references/ray-cluster-configuration.html"}
+{"question": "How to update files in working directory ?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#using-local-files"}
+{"question": "How I can update working directory file when ray allready initiated ?", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#using-local-files"}
+{"question": "how can I force ray head node to use custom pem file to ssh worker node?", "source": "https://docs.ray.io/en/master/cluster/vms/references/ray-cluster-configuration.html#full-configuration"}
+{"question": "what doess the GCS server do, and why is my GCS server taking up so much memory on the head node?", "source": "https://docs.ray.io/en/master/ray-references/glossary.html"}
+{"question": "when starting cluster with ray up, there are few nodes \"pending\" for a long time. how can I debug this?", "source": "https://docs.ray.io/en/master/ray-observability/getting-started.html#ray-status"}
+{"question": "how to install Ray 2.5.1 from github or wheel?", "source": "https://docs.ray.io/en/master/ray-overview/installation.html#from-wheels"}
+{"question": "How do I use `worker_setup_hook` in a runtime env to set do some setup on worker node creation?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#customizing-worker-process-loggers"}
+{"question": "how to use Ray dataset on aws", "source": "https://docs.ray.io/en/master/data/key-concepts.html"}
+{"question": "How do I avoid my dataset shuffling during a ray.data.map_batches?", "source": "https://docs.ray.io/en/master/data/performance-tips.html#deterministic-execution"}
+{"question": "Is the order of the input data preserved after a map_batches operation?", "source": "https://docs.ray.io/en/master/data/performance-tips.html#deterministic-execution"}
+{"question": "ray serve returns generic internal service error when there is an internal failure, how do I get it to emit more detailed errors or logs?", "source": "https://docs.ray.io/en/master/serve/monitoring.html#ray-logging"}
+{"question": "how do i track an uncaught exception in ray serve", "source": "https://docs.ray.io/en/master/serve/monitoring.html#ray-logging"}
+{"question": "where do I view logs using python logger emitted by my ray serve endpoint in the ray cluster", "source": "https://docs.ray.io/en/master/serve/monitoring.html#ray-logging"}
+{"question": "where can I see logs for a failed ray serve deployment", "source": "https://docs.ray.io/en/master/ray-observability/getting-started.html#serve-view"}
+{"question": "How to take a subset of a Ray Dataset?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.limit.html#ray-data-dataset-limit"}
+{"question": "How do I load all checkpoints from trials of a Tune experiment launched with `tune.run`? I ran my initial experiment with cloud checkpointing, so I’d need to download all the checkpoints to analyze them.", "source": "https://docs.ray.io/en/master/tune/tutorials/tune_get_data_in_and_out.html#how-do-i-access-tune-results-after-i-am-finished"}
+{"question": "How can I kill a \"detached\" Actor ?", "source": "https://docs.ray.io/en/master/ray-core/actors/named-actors.html#actor-lifetimes"}
+{"question": "How do I set env variables in ray init? Let’ say it’s export foo=“foo”", "source": "https://docs.ray.io/en/master/ray-core/api/doc/ray.runtime_env.RuntimeEnv.html#ray-runtime-env-runtimeenv"}
+{"question": "What is the rest api for getting the head node id?", "source": "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.list_nodes.html#ray-util-state-list-nodes"}
+{"question": "how to rerun a canceled ray task", "source": "https://docs.ray.io/en/master/ray-core/api/doc/ray.cancel.html#ray-cancel"}
+{"question": "How do I set the max parallel concurrent scheduled tasks in map_batches?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html#ray-data-dataset-map-batches"}
+{"question": "How do I get the number of cpus from ray cluster?", "source": "https://docs.ray.io/en/master/ray-core/miscellaneous.html#resource-information"}
+{"question": "How to use the exclude option to the runtime_env", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#api-reference"}
+{"question": "show a map batch example with batch_format", "source": "https://docs.ray.io/en/master/data/transforming-data.html#configuring-batch-format"}
+{"question": "how to find local ray address", "source": "https://docs.ray.io/en/master/ray-core/examples/gentle_walkthrough.html#ray-core"}
+{"question": "ray crashing with AttributeError: module 'pydantic.fields' has no attribute 'ModelField", "source": "https://github.com/ray-project/ray/issues/36990"}
+{"question": "How to start ray cluster on multiple node via CLI?", "source": "https://docs.ray.io/en/master/cluster/vms/user-guides/launching-clusters/on-premises.html#manually-set-up-a-ray-cluster"}
+{"question": "my ray tuner shows \"running\" but CPU usage is almost 0%. why ?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/debug-apps/optimize-performance.html#no-speedup"}
+{"question": "should the Ray head node and all workers have the same object store memory size allocated?", "source": "https://docs.ray.io/en/master/cluster/vms/user-guides/large-cluster-best-practices.html#configuring-the-head-node"}
+{"question": "In Ray Serve, how to specify whether to set up an httpproxy on each node, or just the head node?", "source": "https://docs.ray.io/en/master/serve/architecture.html#how-does-serve-ensure-horizontal-scalability-and-availability"}
+{"question": "Want to embed Grafana into the Ray Dashboard, given that I am using KubeRay\n\nGiven the context that Prometheus and Grafana are not running on my Head node, and that I am using KubeRay, how should I be setting the following variables?\n• `RAY_GRAFANA_HOST`\n• `RAY_PROMETHEUS_HOST`\nAnd is there a way to set them more intelligently, given that head node IP is changing every time we reconfigure our cluster?", "source": "https://docs.ray.io/en/master/cluster/metrics.html"}
+{"question": "How the GCS determines which Kubernetes pod to kill when using KubeRay autoscaling?", "source": "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/configuring-autoscaling.html"}
+{"question": "How can I set the `request_timeout_s` in `http_options` section of a Ray Serve YAML config file?", "source": "https://docs.ray.io/en/master/serve/production-guide/config.html#serve-config-files-serve-build"}
+{"question": "How do I make the GPU available on my M1 laptop to ray?", "source": "https://docs.ray.io/en/master/ray-overview/installation.html#m1-mac-apple-silicon-support"}
+{"question": "How can I add a timeout for the Ray job?", "source": "https://docs.ray.io/en/master/cluster/running-applications/job-submission/quickstart.html#interacting-with-long-running-jobs"}
+{"question": "how do I set custom /tmp directory for remote cluster?", "source": "https://docs.ray.io/en/master/cluster/cli.html#ray-start"}
+{"question": "if I set --temp-dir to a different directory than /tmp, will ray object spill to the custom directory ?", "source": "https://docs.ray.io/en/master/ray-core/objects/object-spilling.html"}
+{"question": "can you give me an example for *`--runtime-env-json`*", "source": "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#specifying-a-runtime-environment-per-job"}
+{"question": "What should be the value of `maxConcurrentReplicas` if autoscaling configuration is specified?", "source": "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling-config-parameters"}
+{"question": "Yes what should be the value of `max_concurrent_queries` when `target_num_ongoing_requests_per_replica` is specified?", "source": "https://docs.ray.io/en/master/serve/architecture.html#ray-serve-autoscaling"}
+{"question": "what is a `smoothing_factor`", "source": "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling-config-parameters"}
+{"question": "What is the reason actors change their state to unhealthy?", "source": "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.common.ActorState.html#ray-util-state-common-actorstate"}
+{"question": "How do I access logs for a dead node?", "source": "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/logging.html#log-persistence"}
+{"question": "What are the reasons for a node to change it’s status to dead?", "source": "https://docs.ray.io/en/master/ray-core/fault_tolerance/nodes.html"}
+{"question": "What are the reasons for spikes in node CPU utilization", "source": "https://docs.ray.io/en/master/ray-core/patterns/limit-running-tasks.html#pattern-using-resources-to-limit-the-number-of-concurrently-running-tasks"}
+{"question": "What AWS machine type is recommended to deploy a RayService on EKS?", "source": "https://docs.ray.io/en/master/cluster/vms/user-guides/large-cluster-best-practices.html#configuring-the-head-node"}
+{"question": "Is there a way to configure the session name generated by ray?", "source": "https://docs.ray.io/en/master/ray-core/configure.html#logging-and-debugging"}
+{"question": "can I use the Python SDK to get a link to Ray dashboard for a given job?", "source": "https://docs.ray.io/en/master/ray-observability/getting-started.html#set-up-dashboard"}
+{"question": "What may possible cause the node where this task was running crashed unexpectedly. This can happen if: (1) the instance where the node was running failed, (2) raylet crashes unexpectedly (OOM, preempted node, etc).", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/debug-apps/debug-memory.html#debugging-memory-issues"}
+{"question": "Do you know how to resolve (gcs_server) gcs_health_check_manager.cc:108: Health check failed for node? I observed that the node is still up and running.", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#system-component-logs"}
+{"question": "What is the working of `PowerOfTwoChoicesReplicaScheduler` ?", "source": "https://github.com/ray-project/ray/pull/36501"}
+{"question": "Do you need the DAGDriver to deploy a serve application using RayServe?", "source": "https://docs.ray.io/en/master/serve/key-concepts.html#deployment"}
+{"question": "What’s the import path that I need to provide to a simple RayServe deployment?", "source": "https://docs.ray.io/en/master/serve/production-guide/config.html#serve-config-files-serve-build"}
+{"question": "do you have any documents / examples showing the usage of RayJob in Kuberay?", "source": "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/experimental.html#rayjobs"}
+{"question": "Does Ray metrics have to be exported via an actor?", "source": "https://docs.ray.io/en/master/cluster/metrics.html#processing-and-exporting-metrics"}
+{"question": "how can I avoid objects not getting spilled?", "source": "https://docs.ray.io/en/master/ray-core/objects/object-spilling.html#single-node"}
+{"question": "what’s ray core", "source": "https://docs.ray.io/en/master/ray-core/walkthrough.html#what-is-ray-core"}
+{"question": "Does ray support cron job", "source": "https://docs.ray.io/en/master/cluster/running-applications/job-submission/index.html#ray-jobs-api"}
+{"question": "can you give me the dependencies list for api read_images?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.read_images.html#ray-data-read-images"}
+{"question": "how do I kill a specific serve replica", "source": "https://docs.ray.io/en/master/serve/production-guide/fault-tolerance.html"}
+{"question": "What exactly is rayjob? How is it handled in kuberay? Can you give an example of what a Rayjob will look like?", "source": "https://ray-project.github.io/kuberay/guidance/rayjob/"}
