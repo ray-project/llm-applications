@@ -28,13 +28,6 @@
         "reasoning": "The Ray Collective Communication Lib documentation states that it uses NCCL as an optional high-performance communication backend. Therefore, Ray supports NCCL."
     },
     {
-        "question": "could you give me an example of using this library for data-parallel training of CNNs on Ray?",
-        "source": "https://docs.ray.io/en/master/ray-air/computer-vision.html#training-vision-models",
-        "answer": "To use Ray for data-parallel training of CNNs, you can define a training loop per worker using either Torch or TensorFlow. With Torch, you can use the `train.torch.prepare_model` function to prepare the model, and the `train.torch.iter_torch_batches` function to iterate over the training data in parallel. With TensorFlow, you can use the `tf.distribute.experimental.MultiWorkerMirroredStrategy` to distribute the training across multiple workers. Then, create a Trainer instance and call the `fit` method to start training.",
-        "score": 5.0,
-        "reasoning": "The answer provides a clear and concise explanation of how to use Ray for data-parallel training of CNNs, including specific examples and code snippets for both Torch and TensorFlow. It also mentions the importance of defining a training loop per worker and using a Trainer instance to start training."
-    },
-    {
         "question": "Is Ray integrated with DeepSpeed?",
         "source": "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#fine-tuning-the-model-with-ray-air-a-name-train-a",
         "answer": "",
@@ -58,9 +51,9 @@
     {
         "question": "why would ray overload a node w/ more task that the resources allow ?",
         "source": "https://docs.ray.io/en/master/ray-core/scheduling/resources.html#physical-resources-and-logical-resources",
-        "answer": "Ray overloads a node with more tasks than resources allow because the resources are logical and don't need to have a 1-to-1 mapping with physical resources. Ray provides logical resources for admission control during scheduling, but it's the responsibility of the user to ensure tasks or actors use no more resources than specified via resource requirements. Ray doesn't provide CPU isolation for tasks or actors, but it does provide GPU isolation in the form of visible devices.",
+        "answer": "Ray overloads a node with more tasks than resources allow because the resources are logical and don't need to have a 1-to-1 mapping with physical resources. The fact that resources are logical has several implications, including that resource requirements of tasks or actors do not impose limits on actual physical resource usage, and Ray doesn't provide CPU isolation for tasks or actors. Ray does provide GPU isolation in the form of visible devices by automatically setting the CUDA_VISIBLE_DEVICES environment variable.",
         "score": 5.0,
-        "reasoning": "The answer accurately explains the difference between physical and logical resources in Ray and how it affects the way tasks are scheduled. It also mentions the responsibility of the user to ensure tasks or actors use no more resources than specified via resource requirements. Additionally, it notes that Ray provides GPU isolation in the form of visible devices, which is a key feature of Ray's resource management."
+        "reasoning": "The answer accurately explains why Ray overloads a node with more tasks than resources allow, citing the fact that resources are logical and don't need to have a 1-to-1 mapping with physical resources. The answer also mentions the implications of resources being logical, including that resource requirements of tasks or actors do not impose limits on actual physical resource usage, and Ray doesn't provide CPU isolation for tasks or actors. Finally, the answer notes that Ray does provide GPU isolation in the form of visible devices by automatically setting the CUDA_VISIBLE_DEVICES environment variable."
     },
     {
         "question": "when should I use Ray Client?",
@@ -68,5 +61,12 @@
         "answer": "Use Ray Client when you want to connect an interactive Python shell to a remote cluster, and you have a stable connection to the remote cluster. Use Ray Jobs API for interactive development on ML projects or for long running workloads.",
         "score": 4.0,
         "reasoning": "The answer accurately summarizes the information provided in the context about when to use Ray Client. It emphasizes the importance of a stable connection to the remote cluster and mentions the limitation of Ray Client in terminating the workload if the connection is lost. Additionally, it recommends using Ray Jobs API for interactive development on ML projects or for long running workloads, which is consistent with the information provided in the context."
+    },
+    {
+        "question": "how to scatter actors across the cluster?",
+        "source": "https://docs.ray.io/en/master/ray-core/scheduling/index.html#spread",
+        "answer": "Use the 'SPREAD' scheduling strategy in Ray to scatter actors across the cluster.",
+        "score": 5.0,
+        "reasoning": "The 'SPREAD' strategy is specifically designed to spread tasks or actors among available nodes in the cluster, ensuring even distribution and efficient utilization of resources."
     }
 ]

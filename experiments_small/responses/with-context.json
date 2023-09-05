@@ -6,7 +6,7 @@
         "chunk_overlap": 50,
         "num_chunks": 5,
         "embedding_model_name": "thenlper/gte-base",
-        "llm": "gpt-3.5-turbo",
+        "llm": "meta-llama/Llama-2-70b-chat-hf",
         "temperature": 0.0,
         "max_context_length": 4096,
         "system_content": "Answer the query using the context provided.",
@@ -16,112 +16,112 @@
         {
             "question": "I\u2019m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?",
             "sources": [
-                "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.take_batch.html",
-                "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html",
-                "https://docs.ray.io/en/master/data/transforming-data.html",
-                "https://docs.ray.io/en/master/data/examples/batch_training.html",
-                "https://docs.ray.io/en/master/_modules/ray/data/iterator.html"
+                "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.take_batch.html#ray-data-dataset-take-batch",
+                "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html#ray-data-dataset-map-batches",
+                "https://docs.ray.io/en/master/data/transforming-data.html#configuring-batch-format",
+                "https://docs.ray.io/en/master/data/data-internals.html#execution-memory",
+                "https://docs.ray.io/en/master/data/examples/batch_training.html#batch-training-with-ray-data"
             ],
-            "answer": "When using Ray Data's `map_batches` method, you can configure the batch type by specifying the `batch_format`. By default, Ray Data represents batches as dicts of NumPy ndarrays. However, you can also configure it to represent batches as NumPy arrays or pandas DataFrames.\n\nIf you are struggling with data type conversions during the `map_batches` operation, you can try using `ray.data.iterator.DataIterator.iter_batches` directly. This method provides more flexibility in tensor conversion, such as casting dtypes, or choosing the batch format.\n\nHere's an example of how to use `iter_batches`:\n\n```python\nimport ray\n\nfor batch in ray.data.range(12).iter_batches():\n    # Process the batch here\n    ...\n```\n\nBy using `iter_batches`, you have more control over the data type conversions and can choose the format that suits your needs."
+            "answer": "It looks like you're struggling with configuring batch type conversions when using `map_batches` with Ray Data. Here's some advice based on the provided context:\n\n1. Specify the batch format: Ray Data represents batches as NumPy arrays or pandas DataFrames, and you can configure the batch type by specifying `batch_format` in `map_batches()`. By default, Ray Data represents batches as dicts of NumPy ndarrays, but you can return either format from your function.\n2. Use a small batch size: Large block size can lead to potential out-of-memory situations. To avoid these issues, make sure no single item in your Ray Data is too large, and always call `ds.map_batches()` with a batch size small enough such that the output batch can comfortably fit into memory.\n3. Inspect inputs to `map_batches()`: You can use the `batch_format` parameter to inspect the inputs to `map_batches()` and configure the batch type accordingly.\n4. Return the correct format: Make sure to return the correct format from your function when using `map_batches()`. Ray Data expects the output to be a dict of NumPy ndarrays or pandas DataFrames.\n\nBy following these tips, you should be able to configure batch type conversions correctly when using `map_batches` with Ray Data."
         },
         {
             "question": "How does autoscaling work in a Ray Serve application?",
             "sources": [
-                "https://docs.ray.io/en/master/serve/index.html",
-                "https://docs.ray.io/en/master/cluster/key-concepts.html",
-                "https://docs.ray.io/en/master/cluster/key-concepts.html",
-                "https://docs.ray.io/en/master/serve/architecture.html",
-                "https://docs.ray.io/en/master/cluster/vms/user-guides/configuring-autoscaling.html"
+                "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling",
+                "https://docs.ray.io/en/master/serve/architecture.html#ray-serve-autoscaling",
+                "https://docs.ray.io/en/master/serve/index.html#how-can-serve-help-me-as-a",
+                "https://docs.ray.io/en/master/cluster/key-concepts.html#autoscaling",
+                "https://docs.ray.io/en/master/cluster/vms/user-guides/configuring-autoscaling.html#configuring-autoscaling"
             ],
-            "answer": "In a Ray Serve application, autoscaling works by automatically adjusting the number of replicas based on the load of the deployment. The autoscaling feature in Ray Serve increases or decreases the number of replicas to efficiently accommodate user traffic without wasting resources. The Serve Autoscaler runs in the Serve Controller actor and reacts to task and actor resource requests, rather than application metrics or physical resource utilization. To configure autoscaling in a Ray application, you can use the Ray autoscaler, which is a process that runs on the head node or as a sidecar container in the head pod if using Kubernetes. The Ray autoscaler automatically scales the cluster up and down based on resource demand. For more information on configuring autoscaling, you can refer to the user guides for Ray clusters on VMs and Kubernetes."
+            "answer": "Autoscaling in a Ray Serve application works by automatically increasing or decreasing the number of replicas of a deployment based on its load. The autoscaling feature is designed to efficiently accommodate user traffic without wasting resources. The Ray autoscaler is a process that runs on the head node or as a sidecar container in the head pod (if using Kubernetes), and it monitors the resource demands of the Ray workload. When the resource demands exceed the available resources, the autoscaler scales the cluster up by adding more replicas, and when the resource demands are low, it scales the cluster down by removing replicas.\n\nThe autoscaler can be configured using the Ray cluster launcher, which allows you to specify the minimum and maximum number of replicas, as well as the scaling policy. The scaling policy determines how the autoscaler responds to changes in resource demand, such as scaling up or down gradually or immediately.\n\nIn addition to autoscaling, Ray Serve also supports batching and can integrate with any model optimization technique, which can further improve the performance of your LLM applications. Ray Serve also supports streaming responses, which is a key feature for applications that require real-time responses."
         },
         {
             "question": "how do I get the address of a ray node",
             "sources": [
-                "https://docs.ray.io/en/master/cluster/vms/user-guides/launching-clusters/on-premises.html",
-                "https://docs.ray.io/en/master/_modules/ray/util/state/api.html",
-                "https://docs.ray.io/en/master/ray-core/api/doc/ray.init.html",
-                "https://docs.ray.io/en/master/ray-core/starting-ray.html",
-                "https://docs.ray.io/en/master/ray-core/miscellaneous.html"
+                "https://docs.ray.io/en/master/cluster/vms/user-guides/launching-clusters/on-premises.html#start-worker-nodes",
+                "https://docs.ray.io/en/master/ray-core/miscellaneous.html#node-information",
+                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/doc/ray.job_submission.JobSubmissionClient.html#ray-job-submission-jobsubmissionclient",
+                "https://docs.ray.io/en/master/cluster/vms/user-guides/community/yarn.html#worker-node-commands",
+                "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.list_logs.html#ray-util-state-list-logs"
             ],
-            "answer": "To get the address of a Ray node, you can use the command `ray start --address=<head-node-address:port>`. Replace `<head-node-address:port>` with the value printed by the command on the head node, which should look something like `123.45.67.89:6379`. \n\nAlternatively, you can use the client address or Ray dashboard address to connect to the Ray cluster. The client address format is `ray://<head-node-ip>:10001`, and the Ray dashboard address format is `http://<head-node-ip>:8265`. If you don't provide an address, it will be automatically detected from any running local Ray cluster.\n\nYou can also connect to the cluster at a given address by using the format `ray://123.45.67.89:50005`.\n\nIf no address is provided, Ray will try to find an existing Ray instance to connect to. It first checks the environment variable `RAY_ADDRESS`, and if that is not defined, it checks the address specified in the command.\n\nYou can connect other nodes to the head node to create a Ray cluster by calling `ray start` on those nodes as well. Calling `ray.init()` on any of the cluster machines will connect to the same Ray cluster.\n\nTo get information about the Ray clients in the cluster, you can use the `ray.nodes()` function in the Ray API. After calling `ray.init()`, you can print the result of `ray.nodes()` to get the information."
+            "answer": "To get the address of a Ray node, you can use the `ray.nodes()` command to retrieve a list of nodes in the Ray cluster, and then extract the address from the node object.\n\nHere's an example of how you can do this:\n```\nray.init()\nnodes = ray.nodes()\nfor node in nodes:\n    print(node[\"NodeManagerAddress\"])\n```\nThis will print the address of each node in the cluster, in the format `192.168.1.82:58472`.\n\nAlternatively, you can use the `skein kv get` command to retrieve the address of the head node from the skein key-value store, as shown in the context you provided:\n```\nRAY_HEAD_ADDRESS=$(skein kv get --key=RAY_HEAD_ADDRESS current)\n```\nThis will retrieve the address of the head node and store it in the `RAY_HEAD_ADDRESS` variable.\n\nOnce you have the address of a Ray node, you can use it to connect to the node and retrieve logs or perform other operations. For example, you can use the `ray.get_node()` method to get a node object for a specific node, and then use the `node.logs()` method to retrieve logs from that node:\n```\nnode = ray.get_node(nodes[0][\"NodeID\"])\nlogs = node.logs()\nfor log in logs:\n    print(log)\n```\nThis will print the logs from the first node in the cluster. You can replace `nodes[0][\"NodeID\"]` with the ID of the node you want to retrieve logs from."
         },
         {
             "question": "Does Ray support NCCL?",
             "sources": [
-                "https://docs.ray.io/en/master/_modules/ray/train/torch/config.html",
-                "https://docs.ray.io/en/master/ray-more-libs/ray-collective.html",
-                "https://docs.ray.io/en/master/ray-more-libs/ray-collective.html",
-                "https://docs.ray.io/en/master/ray-core/actors/out-of-band-communication.html",
-                "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html"
+                "https://docs.ray.io/en/master/ray-core/actors/out-of-band-communication.html#wrapping-library-processes",
+                "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/gpu.html#dependencies-for-gpu-based-machine-learning",
+                "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#customizing-worker-process-loggers",
+                "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/config.html#image",
+                "https://docs.ray.io/en/master/ray-more-libs/ray-collective.html#ray-collective-communication-lib"
             ],
-            "answer": "Yes, Ray supports NCCL. The context mentions that Ray uses NCCL as one of the optional high-performance communication backends for collective communication between Ray actor and task processes. The support matrix also indicates that NCCL is supported for collective calls on both CPU and GPU devices."
-        },
-        {
-            "question": "could you give me an example of using this library for data-parallel training of CNNs on Ray?",
-            "sources": [
-                "https://docs.ray.io/en/master/ray-overview/examples.html",
-                "https://docs.ray.io/en/master/ray-overview/use-cases.html",
-                "https://docs.ray.io/en/master/ray-air/api/integrations.html",
-                "https://docs.ray.io/en/master/ray-overview/index.html",
-                "https://docs.ray.io/en/master/ray-air/examples/torch_incremental_learning.html"
-            ],
-            "answer": "Here is an example of using the Ray library for data-parallel training of CNNs:\n\n1. Use the Ray Tune library for training multiple independent models.\n2. If you have a relatively small dataset and many hyperparameter configurations, you can use vanilla Tensorflow/Keras with Ray Tune to parallelize model training.\n3. You can incrementally train your model in a data parallel fashion using Ray Train and deploy your model using Ray Serve.\n\nUnfortunately, the specific code example for data-parallel training of CNNs on Ray is not provided in the given context."
+            "answer": "Yes, Ray supports NCCL (NVIDIA Collective Communication Library) as an optional high-performance communication backend for its collective communication library. This is mentioned in the third text snippet provided, which states that Ray's collective communication library \"uses NCCL and GLOO as the optional high-performance communication backends.\""
         },
         {
             "question": "Is Ray integrated with DeepSpeed?",
             "sources": [
-                "https://docs.ray.io/en/master/train/api/doc/ray.train.huggingface.AccelerateTrainer.html",
-                "https://docs.ray.io/en/master/_modules/ray/train/huggingface/accelerate/accelerate_trainer.html",
-                "https://docs.ray.io/en/master/ray-overview/index.html",
-                "https://docs.ray.io/en/master/train/examples/lightning/vicuna_13b_lightning_deepspeed_finetune.html",
-                "https://docs.ray.io/en/master/ray-overview/ray-libraries.html"
+                "https://docs.ray.io/en/master/train/deepspeed.html#running-deepspeed-with-other-frameworks",
+                "https://docs.ray.io/en/master/train/api/api.html#pytorch-lightning",
+                "https://docs.ray.io/en/master/train/examples/lightning/vicuna_13b_lightning_deepspeed_finetune.html#setup-ray-environment",
+                "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#fine-tuning-the-model-with-ray-train-a-name-train-a",
+                "https://docs.ray.io/en/master/workflows/basics.html#ray-integration"
             ],
-            "answer": "Yes, Ray is integrated with DeepSpeed. The context mentions that Accelerate integrations with DeepSpeed are fully supported. If the Accelerate configuration contains a path to a DeepSpeed config file, that file will be loaded and applied on the workers."
+            "answer": "Yes, Ray is integrated with DeepSpeed. The documentation mentions that RayDeepSpeedStrategy is a subclass of DeepSpeedStrategy that ensures compatibility with Ray orchestration. Additionally, the documentation provides examples of using DeepSpeed with other frameworks such as Lightning, Transformers, and Accelerate, which can be run in Ray Train."
         },
         {
             "question": "what will happen if I use AsyncIO's await to wait for a Ray future like `await x.remote()`",
             "sources": [
-                "https://docs.ray.io/en/master/ray-core/actors/async_api.html",
-                "https://docs.ray.io/en/master/serve/model_composition.html",
-                "https://docs.ray.io/en/master/ray-core/actors/async_api.html",
-                "https://docs.ray.io/en/master/ray-core/actors/async_api.html",
-                "https://docs.ray.io/en/master/_modules/ray/_private/worker.html"
+                "https://docs.ray.io/en/master/ray-core/actors/async_api.html#asyncio-for-remote-tasks",
+                "https://docs.ray.io/en/master/serve/model_composition.html#servehandle-deep-dive",
+                "https://docs.ray.io/en/master/ray-core/actors.html#cancelling-actor-tasks",
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#cancelling-actor-tasks",
+                "https://docs.ray.io/en/master/rllib/actors.html#cancelling-actor-tasks"
             ],
-            "answer": "Based on the provided context, it seems that using `await` to wait for a Ray future like `await x.remote()` is not supported. The context mentions that asyncio is not supported for remote tasks in Ray, and suggests wrapping the async function with a wrapper to run the task synchronously instead. Additionally, there is a warning about using blocking `ray.wait` inside an async method and recommending the use of `await` on object ref with `asyncio.wait` instead."
+            "answer": "Based on the provided context, it seems that using `await` with `x.remote()` won't work as expected, as Ray doesn't support asyncio for remote tasks. Instead, you can wrap the async function with a wrapper to run the task synchronously, as mentioned in the first text snippet.\n\nAlternatively, you can use Ray's synchronous API, `ray.wait()`, or the async API, `asyncio.wait()`, to wait for the task to complete. It's recommended to use the async API to increase concurrency, as mentioned in the second text snippet.\n\nIt's also important to note that asyncio tasks can't be interrupted in the middle of execution if you don't `await` within the async function, and cancellation is not always guaranteed, as mentioned in the third and fourth text snippets."
         },
         {
             "question": "How would you compare Spark, Ray, Dask?",
             "sources": [
-                "https://docs.ray.io/en/master/ray-more-libs/dask-on-ray.html",
-                "https://docs.ray.io/en/master/ray-overview/ray-libraries.html",
-                "https://docs.ray.io/en/master/data/saving-data.html",
-                "https://docs.ray.io/en/master/ray-more-libs/dask-on-ray.html",
-                "https://docs.ray.io/en/master/ray-more-libs/dask-on-ray.html"
+                "https://docs.ray.io/en/master/cluster/vms/user-guides/community/spark.html#ray-on-spark-apis",
+                "https://docs.ray.io/en/master/ray-more-libs/dask-on-ray.html#using-dask-on-ray",
+                "https://docs.ray.io/en/master/data/overview.html#how-does-ray-data-compare-to-x-for-offline-inference",
+                "https://docs.ray.io/en/master/ray-overview/ray-libraries.html#the-ray-ecosystem",
+                "https://docs.ray.io/en/master/data/loading-data.html#loading-data-from-distributed-dataframe-libraries"
             ],
-            "answer": "Based on the provided context, Spark, Ray, and Dask are all parallel computing libraries that can be used for scaling analytics and scientific computing workloads. \n\nDask is a Python library that provides big data collections that mimic the APIs of NumPy and Pandas. It allows for distributed computing and can convert a Dataset to a Dask DataFrame using the `to_dask()` method.\n\nRayDP, also known as \"Spark on Ray,\" enables the use of Spark inside a Ray program. It allows for reading input data, processing data using SQL, Spark DataFrame, or Pandas API, extracting and transforming features using Spark MLLib, and using RayDP Estimator API for distributed training.\n\nSpark is a distributed computing system that can be used for big data processing. It can convert a Dataset to a Spark DataFrame using the `to_spark()` method.\n\nIn summary, Dask and Spark are both libraries that provide distributed computing capabilities, while RayDP allows for the use of Spark within a Ray program."
+            "answer": "Based on the provided context, it appears that Spark, Ray, and Dask are all tools for distributed computing and big data processing.\n\nSpark is a well-established open-source data processing engine that can handle large-scale data processing tasks. It provides a set of APIs, including Spark APIs, that enable developers to write scalable data processing jobs.\n\nRay is a newer open-source project that provides a distributed computing framework for building scalable, high-performance applications. It allows developers to write code using familiar Python libraries like NumPy and Pandas, and then scales that code automatically using a distributed cluster. Ray also provides a set of APIs, including Ray Data, that mimic the APIs of Spark and other big data processing tools.\n\nDask is a Python parallel computing library that is designed to scale analytics and scientific computing workloads. It provides big data collections that mimic the APIs of NumPy and Pandas, allowing developers to write code that can scale to large datasets. Dask can be used on top of Ray, allowing developers to take advantage of Ray's distributed computing capabilities.\n\nIn terms of performance, a detailed comparison between Ray Data and Apache Spark can be found in the article \"Offline Batch Inference: Comparing Ray, Apache Spark, and SageMaker.\" However, it's worth noting that the choice between Spark, Ray, and Dask will depend on the specific needs of the project.\n\nRayDP, also known as \"Spark on Ray,\" allows developers to use Spark inside a Ray program, enabling them to take advantage of Spark's capabilities while still using Ray's distributed computing framework. This can be useful for tasks that require the use of Spark's APIs, such as data processing using SQL, Spark DataFrame, or Pandas (via Koalas) API, or feature extraction and transformation using Spark MLLib.\n\nFinally, the code snippet \"ds = ray.data.from_spark(df)\" suggests that Ray can be used to create a dataset from a Spark DataFrame, allowing developers to take advantage of Ray's distributed computing capabilities while still using familiar Spark APIs."
         },
         {
             "question": "why would ray overload a node w/ more task that the resources allow ?",
             "sources": [
-                "https://docs.ray.io/en/master/ray-core/patterns/limit-running-tasks.html",
-                "https://docs.ray.io/en/master/ray-core/examples/batch_prediction.html",
-                "https://docs.ray.io/en/master/ray-core/scheduling/resources.html",
-                "https://docs.ray.io/en/master/ray-core/patterns/limit-running-tasks.html",
-                "https://docs.ray.io/en/master/cluster/vms/user-guides/community/slurm.html"
+                "https://docs.ray.io/en/master/ray-core/patterns/limit-running-tasks.html#pattern-using-resources-to-limit-the-number-of-concurrently-running-tasks",
+                "https://docs.ray.io/en/master/ray-core/examples/batch_prediction.html#task-based-batch-prediction",
+                "https://docs.ray.io/en/master/ray-core/scheduling/resources.html#physical-resources-and-logical-resources",
+                "https://docs.ray.io/en/master/ray-core/scheduling/resources.html#specifying-task-or-actor-resource-requirements",
+                "https://docs.ray.io/en/master/cluster/vms/user-guides/community/slurm.html#sbatch-directives"
             ],
-            "answer": "Ray may overload a node with more tasks than the resources allow due to a misunderstanding or oversight by the user. Ray does not provide CPU isolation for tasks or actors, meaning it does not reserve a physical CPU exclusively for a task. It is the responsibility of the user to ensure that tasks or actors do not use more resources than specified via resource requirements. Ray will make sure that the sum of the resource requirements of all concurrently running tasks and actors on a node does not exceed the node's total resources. However, Ray does not enforce the physical memory usage of each task if it exceeds the specified memory resource requirement."
+            "answer": "Ray would not overload a node with more tasks than the resources allow because it is designed to ensure that the sum of the resource requirements of all concurrently running tasks and actors on a given node does not exceed the node's total resources. Ray makes sure that tasks scheduled to a node will not exceed its total memory by taking into account the resource requirements of each task and actor and only scheduling them on nodes that have enough available resources. It is the responsibility of the user to specify the resource requirements of tasks and actors accurately, and Ray will not provide CPU isolation for tasks or actors. Ray allows specifying task or actor's logical resource requirements, such as CPU, GPU, and custom resources, and the task or actor will only run on a node if there are enough required logical resources available to execute it."
         },
         {
             "question": "when should I use Ray Client?",
             "sources": [
-                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html",
-                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html",
-                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html",
-                "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html",
-                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html"
+                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#how-do-you-use-the-ray-client",
+                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#when-to-use-ray-client",
+                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#when-to-use-ray-client",
+                "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#ray-client",
+                "https://docs.ray.io/en/master/ray-references/glossary.html#ray-glossary"
             ],
-            "answer": "You should use Ray Client when you want to develop interactively in a local Python shell and connect it to a remote Ray cluster. It allows you to leverage a remote Ray cluster just like you would with Ray running on your local machine. However, it has architectural limitations and may not work as expected when using Ray for ML workloads such as Ray Tune or Ray Train. For interactive development on ML projects, it is recommended to use Ray Jobs API instead. Additionally, it is important to note that Ray Client requires a stable connection to the remote cluster and will terminate the workload if the connection is lost for more than 30 seconds."
+            "answer": "Based on the provided context, the best answer to the query \"When should I use Ray Client?\" would be:\n\nYou should use Ray Client when you want to develop interactively in a local Python shell and leverage a remote Ray cluster for your workload. It is useful for interactive development and allows you to use a remote Ray cluster as if it were running on your local machine. However, it is important to note that Ray Client has architectural limitations and may not work as expected when using Ray for ML workloads (like Ray Tune or Ray Train). In such cases, it is recommended to use Ray Jobs API for interactive development on ML projects. Additionally, Ray Client requires a stable connection to the remote cluster and will terminate the workload if the connection is lost for more than 30 seconds, so it may not be suitable for long-running workloads."
+        },
+        {
+            "question": "how to scatter actors across the cluster?",
+            "sources": [
+                "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.list_actors.html#ray-util-state-list-actors",
+                "https://docs.ray.io/en/master/ray-core/scheduling/index.html#spread",
+                "https://docs.ray.io/en/master/ray-core/examples/gentle_walkthrough.html#ray-actors",
+                "https://docs.ray.io/en/master/train/distributed-xgboost-lightgbm.html#how-many-remote-actors-should-i-use",
+                "https://docs.ray.io/en/master/ray-observability/reference/api.html#list-apis"
+            ],
+            "answer": "To scatter actors across the cluster, you can use the `ray.util.state.list_actors()` API to list all actors in the cluster, and then use the `ray.actor.create()` method to create new actors on different nodes.\n\nHere's an example of how you can do this:\n```\n# List all actors in the cluster\nactors = ray.util.state.list_actors()\n\n# Create a new actor on a random node\nnew_actor = ray.actor.create(actor_class, num_cpus=4, placement_group=\"my_pg\")\n\n# Scatter the new actor across the cluster\nfor i in range(10):\n    ray.util.state.list_actors(new_actor.address)\n    new_actor.stop()\n    new_actor = ray.actor.create(actor_class, num_cpus=4, placement_group=\"my_pg\")\n```\nThis code will create a new actor on a random node in the cluster, and then scatter it across the cluster by stopping the actor and creating a new one on a different node. You can repeat this process to scatter multiple actors across the cluster.\n\nAlternatively, you can use the `ray.util.state.list_placement_groups()` API to list all placement groups in the cluster, and then use the `ray.actor.create()` method to create new actors on different placement groups. This will allow you to scatter actors across the cluster based on the placement groups they are assigned to.\n\nFor example:\n```\n# List all placement groups in the cluster\nplacement_groups = ray.util.state.list_placement_groups()\n\n# Create a new actor on a random placement group\nnew_actor = ray.actor.create(actor_class, num_cpus=4, placement_group=placement_groups[0])\n\n# Scatter the new actor across the cluster\nfor i in range(10):\n    ray.util.state.list_actors(new_actor.address)\n    new_actor.stop()\n    new_actor = ray.actor.create(actor_class, num_cpus=4, placement_group=placement_groups[i%len(placement_groups)])\n```\nThis code will create a new actor on a random placement group in the cluster, and then scatter it across the cluster by stopping the actor and creating a new one on a different placement group. You can repeat this process to scatter multiple actors across the cluster.\n\nNote that the `ray.util.state.list_actors()` and `ray.util.state.list_placement_groups()` APIs are only available in Ray 1.1 and later. In earlier versions of Ray, you can use the `ray.state.list_actors()` and `ray.state.list_placement_groups()` APIs instead."
         }
     ]
 }

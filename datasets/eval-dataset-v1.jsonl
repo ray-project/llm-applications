@@ -2,7 +2,6 @@
 {"question": "How does autoscaling work in a Ray Serve application?", "source": "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling"}
 {"question": "how do I get the address of a ray node", "source": "https://docs.ray.io/en/master/ray-core/miscellaneous.html#node-information"}
 {"question": "Does Ray support NCCL?", "source": "https://docs.ray.io/en/master/ray-more-libs/ray-collective.html"}
-{"question": "could you give me an example of using this library for data-parallel training of CNNs on Ray?", "source": "https://docs.ray.io/en/master/ray-air/computer-vision.html#training-vision-models"}
 {"question": "Is Ray integrated with DeepSpeed?", "source": "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#fine-tuning-the-model-with-ray-air-a-name-train-a"}
 {"question": "what will happen if I use AsyncIO's await to wait for a Ray future like `await x.remote()`", "source": "https://docs.ray.io/en/master/ray-core/actors/async_api.html#objectrefs-as-asyncio-futures"}
 {"question": "How would you compare Spark, Ray, Dask?", "source": "https://docs.ray.io/en/master/data/overview.html#how-does-ray-data-compare-to-x-for-offline-inference"}
@@ -35,7 +34,6 @@
 {"question": "how do I specify ScalingConfig for a Tuner run?", "source": "https://docs.ray.io/en/master/tune/api/doc/ray.tune.Tuner.html"}
 {"question": "how to utilize ‘zero-copy’ feature ray provide for numpy?", "source": "https://docs.ray.io/en/master/ray-core/objects/serialization.html#numpy-arrays"}
 {"question": "if there are O(millions) of keys that all have state, is it ok to spin up 1=1 actors? Or would it be advised to create ‘key pools’ where an actor can hold 1=many keys?", "source": "https://docs.ray.io/en/master/ray-core/patterns/too-fine-grained-tasks.html"}
-{"question": "How to get the best AIR checkpoint after training without a Result object?", "source": "https://docs.ray.io/en/master/tune/api/doc/ray.air.Result.html#ray-air-result"}
 {"question": "How to find the best checkpoint from the trial directory?", "source": "https://docs.ray.io/en/master/tune/api/doc/ray.tune.ExperimentAnalysis.html"}
 {"question": "what are the advantage and disadvantage of using singleton Actor ?", "source": "https://docs.ray.io/en/master/ray-core/actors/named-actors.html"}
 {"question": "what are the advantages of using a named actor?", "source": "https://docs.ray.io/en/master/ray-core/actors/named-actors.html"}
@@ -53,7 +51,7 @@
 {"question": "how do I get the actor id of an actor", "source": "https://docs.ray.io/en/master/ray-core/api/doc/ray.runtime_context.get_runtime_context.html"}
 {"question": "can ray.init() can check if ray is all-ready initiated ?", "source": "https://docs.ray.io/en/master/ray-core/api/doc/ray.init.html"}
 {"question": "What does the `compute=actor`  argument do within `ray.data.map_batches` ?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html"}
-{"question": "how do I use wandb logger with accelerateTrainer?", "source": "https://docs.ray.io/en/master/ray-air/api/doc/ray.air.integrations.wandb.WandbLoggerCallback.html"}
+{"question": "how do I use wandb logger with accelerateTrainer?", "source": "https://docs.ray.io/en/master/tune/examples/tune-wandb.html"}
 {"question": "What will be implicitly put into object store?", "source": "https://docs.ray.io/en/master/ray-core/objects.html#objects"}
 {"question": "How do I kill or cancel a ray task that I already started?", "source": "https://docs.ray.io/en/master/ray-core/fault_tolerance/tasks.html#cancelling-misbehaving-tasks"}
 {"question": "how to send  extra arguments in dataset.map_batches function?", "source": "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html#ray-data-dataset-map-batches"}
