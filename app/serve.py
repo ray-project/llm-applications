@@ -23,15 +23,11 @@ application = FastAPI()
 
 
 def get_secret(secret_name):
-    try:
-        import boto3
+    import boto3
 
-        client = boto3.client("secretsmanager", region_name="us-west-2")
-        response = client.get_secret_value(SecretId="ray-assistant")
-        return json.loads(response["SecretString"])[secret_name]
-    except Exception as e:
-        print(e)
-        return os.environ[secret_name]
+    client = boto3.client("secretsmanager", region_name="us-west-2")
+    response = client.get_secret_value(SecretId="ray-assistant")
+    return json.loads(response["SecretString"])[secret_name]
 
 
 def execute_bash(command):
