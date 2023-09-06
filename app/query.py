@@ -62,9 +62,7 @@ class QueryAgent:
             )
         else:
             self.embedding_model = HuggingFaceEmbeddings(
-                model_name=embedding_model_name,
-                model_kwargs=model_kwargs,
-                encode_kwargs=encode_kwargs,
+                model_name=embedding_model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
             )
 
         # LLM
@@ -74,21 +72,16 @@ class QueryAgent:
         self.system_content = system_content
         self.assistant_content = assistant_content
 
-        # VectorDB connection
-        self.conn = psycopg.connect(os.environ["DB_CONNECTION_STRING"])
-        register_vector(self.conn)
-
     def __call__(self, query, num_chunks=5):
         # Get context
         embedding = np.array(self.embedding_model.embed_query(query))
-        with self.conn.cursor() as cur:
-            cur.execute(
-                "SELECT * FROM document ORDER BY embedding <-> %s LIMIT %s",
-                (embedding, num_chunks),
-            )
-            rows = cur.fetchall()
-            context = [{"text": row[1]} for row in rows]
-            sources = [row[2] for row in rows]
+        with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+            register_vector(conn)
+            with conn.cursor() as cur:
+                cur.execute("SELECT * FROM document ORDER BY embedding <-> %s LIMIT %s", (embedding, num_chunks))
+                rows = cur.fetchall()
+                context = [{"text": row[1]} for row in rows]
+                sources = [row[2] for row in rows]
 
         # Generate response
         user_content = f"query: {query}, context: {context}"

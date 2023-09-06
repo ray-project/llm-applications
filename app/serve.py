@@ -37,9 +37,6 @@ def execute_bash(command):
 
 def load_index(embedding_model_name, chunk_size, chunk_overlap):
     # Drop current Vector DB and prepare for new one
-    execute_bash(
-        f'''psql "{os.environ["DB_CONNECTION_STRING"]}" -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE state = 'idle in transaction';"'''
-    )
     execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -c "DROP TABLE document;"')
     execute_bash(f"sudo -u postgres psql -f ../migrations/vector-{EMBEDDING_DIMENSIONS[embedding_model_name]}.sql")
     SQL_DUMP_FP = Path(EFS_DIR, "sql_dumps", f"{embedding_model_name.split('/')[-1]}_{chunk_size}_{chunk_overlap}.sql")
@@ -85,9 +82,11 @@ class Answer(BaseModel):
 @serve.ingress(application)
 class RayAssistantDeployment:
     def __init__(self, chunk_size, chunk_overlap, num_chunks, embedding_model_name, llm):
+        # Set credentials
         os.environ["DB_CONNECTION_STRING"] = get_secret("DB_CONNECTION_STRING")
         openai.api_key = get_secret("ANYSCALE_API_KEY")
         openai.api_base = "https://api.endpoints.anyscale.com/v1"
+
         # Load index
         load_index(
             embedding_model_name=embedding_model_name,
