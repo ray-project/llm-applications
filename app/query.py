@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 
 import numpy as np
@@ -12,6 +13,7 @@ from pgvector.psycopg import register_vector
 def generate_response(
     llm,
     temperature=0.0,
+    stream=False,
     system_content="",
     assistant_content="",
     user_content="",
@@ -25,15 +27,28 @@ def generate_response(
             response = openai.ChatCompletion.create(
                 model=llm,
                 temperature=temperature,
+                stream=stream,
                 messages=[
                     {"role": "system", "content": system_content},
                     {"role": "assistant", "content": assistant_content},
                     {"role": "user", "content": user_content},
                 ],
             )
-            return response["choices"][-1]["message"]["content"]
+
+            if stream:
+                answer = []
+                for chunk in response:
+                    if "content" in chunk["choices"][0]["delta"].keys():
+                        content = chunk["choices"][0]["delta"]["content"]
+                        answer.append(content)
+                        sys.stdout.write(content)
+                        sys.stdout.flush()
+                return "".join([item for item in answer])
+            else:
+                return response["choices"][-1]["message"]["content"]
+
         except Exception as e:
-            print(e)
+            print(f"Exception: {e}")
             time.sleep(retry_interval)  # default is per-minute rate limits
             retry_count += 1
     return ""
@@ -88,6 +103,7 @@ class QueryAgent:
         answer = generate_response(
             llm=self.llm,
             temperature=self.temperature,
+            stream=True,
             system_content=self.system_content,
             assistant_content=self.assistant_content,
             user_content=user_content[: self.context_length],
