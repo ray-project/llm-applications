@@ -1,4 +1,5 @@
 # Default
+asyncpg
 beautifulsoup4
 fastapi
 langchain
@@ -7,11 +8,13 @@ matplotlib
 openai
 pre-commit
 psycopg[binary,pool]
+psycopg2-binary
 pgvector
 python-dotenv
 ray
 sentence_transformers
 slack_bolt
+sqlalchemy[asyncio]
 streamlit
 typer
 tiktoken
