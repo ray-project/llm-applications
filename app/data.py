@@ -1,16 +1,17 @@
 from bs4 import BeautifulSoup, NavigableString, Tag
 
+
 def extract_text_from_section(section):
     texts = []
     for elem in section.children:
         if isinstance(elem, NavigableString):
             if elem.strip():
                 texts.append(elem.strip())
-        elif elem.name == 'section':
+        elif elem.name == "section":
             continue
         else:
             texts.append(elem.get_text().strip())
-    return '\n'.join(texts)
+    return "\n".join(texts)
 
 
 def path_to_uri(path, scheme="https://", domain="docs.ray.io"):

@@ -25,9 +25,15 @@ def prepare_response(response, stream):
 
 
 def generate_response(
-    llm, temperature=0.0, stream=False,
-    system_content="", assistant_content="", user_content="", 
-    max_retries=3, retry_interval=60):
+    llm,
+    temperature=0.0,
+    stream=False,
+    system_content="",
+    assistant_content="",
+    user_content="",
+    max_retries=3,
+    retry_interval=60,
+):
     """Generate response from an LLM."""
     retry_count = 0
     while retry_count < max_retries:
@@ -40,11 +46,12 @@ def generate_response(
                     {"role": "system", "content": system_content},
                     {"role": "assistant", "content": assistant_content},
                     {"role": "user", "content": user_content},
-                ])
+                ],
+            )
             return prepare_response(response=response, stream=stream)
 
         except Exception as e:
-            print (f"Exception: {e}")
+            print(f"Exception: {e}")
             time.sleep(retry_interval)  # default is per-minute rate limits
             retry_count += 1
     return ""
@@ -57,12 +64,12 @@ def get_embedding_model(embedding_model_name, model_kwargs, encode_kwargs):
             model_kwargs=model_kwargs,
             encode_kwargs=encode_kwargs,
             openai_api_base=os.environ["OPENAI_API_BASE"],
-            openai_api_key=os.environ["OPENAI_API_KEY"])
+            openai_api_key=os.environ["OPENAI_API_KEY"],
+        )
     else:
         embedding_model = HuggingFaceEmbeddings(
-            model_name=embedding_model_name,
-            model_kwargs=model_kwargs,
-            encode_kwargs=encode_kwargs)
+            model_name=embedding_model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
+        )
     return embedding_model
 
 
@@ -144,27 +151,33 @@ class QueryAgent:
 
 # Generate responses
 def generate_responses(
-    experiment_name, data_path, sections,
-    chunk_size, chunk_overlap, num_chunks,
-    embedding_model_name, 
-    llm, temperature, max_context_length, 
-    system_content, assistant_content="",
-    num_samples=None):
-    
+    experiment_name,
+    data_path,
+    sections,
+    chunk_size,
+    chunk_overlap,
+    num_chunks,
+    embedding_model_name,
+    llm,
+    temperature,
+    max_context_length,
+    system_content,
+    assistant_content="",
+    num_samples=None,
+):
     # Build index
     set_index(
-        sections=sections,
-        embedding_model_name=embedding_model_name,
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap)
-    
+        sections=sections, embedding_model_name=embedding_model_name, chunk_size=chunk_size, chunk_overlap=chunk_overlap
+    )
+
     # Query agent
     agent = QueryAgent(
         embedding_model_name=embedding_model_name,
         llm=llm,
         temperature=temperature,
         system_content=system_content,
-        assistant_content=assistant_content)
+        assistant_content=assistant_content,
+    )
 
     # Generate responses
     results = []

@@ -1,5 +1,6 @@
 import re
 
+
 def extract_from_response(response):
     # Define regular expressions for extracting values
     answer_pattern = r'"answer"\s*:\s*"([^"]*)"'
@@ -22,14 +23,19 @@ def extract_from_response(response):
 
 
 def evaluate_responses(
-    experiment_name, reference_loc, response_loc,
-    evaluator, temperature, max_context_length,
-    system_content, assistant_content="",
-    num_samples=None):
-    
+    experiment_name,
+    reference_loc,
+    response_loc,
+    evaluator,
+    temperature,
+    max_context_length,
+    system_content,
+    assistant_content="",
+    num_samples=None,
+):
     # Set credentials
     set_credentials(llm=evaluator)
-    
+
     # Load answers
     with open(Path(reference_loc), "r") as f:
         references = [item for item in json.load(f)][:num_samples]
@@ -56,7 +62,8 @@ def evaluate_responses(
             temperature=temperature,
             system_content=system_content,
             assistant_content=assistant_content,
-            user_content=user_content,)
+            user_content=user_content,
+        )
 
         # Extract from response
         score, reasoning = response.split("\n", 1)
