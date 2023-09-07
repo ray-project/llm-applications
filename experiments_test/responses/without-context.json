@@ -1,0 +1,23 @@
+{
+    "config": {
+        "experiment_name": "without-context",
+        "data_path": "/home/ray/ray-assistant/notebooks/../datasets/eval-dataset-v1.jsonl",
+        "chunk_size": 100,
+        "chunk_overlap": 50,
+        "num_chunks": 0,
+        "embedding_model_name": "thenlper/gte-base",
+        "llm": "gpt-3.5-turbo",
+        "temperature": 0.0,
+        "max_context_length": 4096,
+        "system_content": "Answer the query using the context provided.",
+        "assistant_content": ""
+    },
+    "results": [
+        {
+            "question": "I\u2019m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?",
+            "sources": [],
+            "answer": "When working with Ray Data type conversions during map_batches, there are a few things you can keep in mind to make the process smoother:\n\n1. Ensure that the input data is in a compatible format: Make sure that the data you are passing to map_batches is in a format that can be easily converted to the desired output data type. For example, if you want to convert a list of integers to floats, ensure that the input list contains only integers.\n\n2. Use appropriate conversion functions: Ray provides various conversion functions that you can use to convert data types. For example, you can use `ray.put()` to convert a Python object to a Ray object, or `ray.get()` to convert a Ray object back to a Python object.\n\n3. Handle errors and exceptions: When performing data type conversions, it's important to handle any errors or exceptions that may occur. For example, if a conversion fails due to incompatible data types, you can catch the exception and handle it gracefully.\n\n4. Test and debug: It's always a good practice to test your code and debug any issues that arise during the data type conversion process. You can use print statements or logging to track the flow of data and identify any potential issues.\n\nBy following these tips, you should be able to handle Ray Data type conversions more effectively when using map_batches.",
+            "llm": "gpt-3.5-turbo"
+        }
+    ]
+}
