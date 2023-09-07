@@ -5,15 +5,21 @@ langchain
 matplotlib
 openai
 pre-commit
-psycopg[binary,pool]
-pgvector
 python-dotenv
 ray
 sentence_transformers
 slack_bolt
+spacy
 streamlit
 typer
 tiktoken
+
+# Vector DB
+asyncpg
+pgvector
+psycopg[binary,pool]
+psycopg2-binary
+sqlalchemy[asyncio]
 
 # Styling
 black

@@ -1,0 +1,574 @@
+{"question": "explain each and every parameter in this", "target": 1, "score": 5.0}
+{"question": "tune.run", "target": 1, "score": 2.0}
+{"question": "rollouts", "target": 0, "score": 3.5}
+{"question": "can't remove dependency of tasks that are not queued", "target": 1, "score": 2.0}
+{"question": "raylet", "target": 0, "score": 4.0}
+{"question": "why do we need use ray with deepspeed", "target": 1, "score": 4.0}
+{"question": "How to early stop PBT tuning via patience parameter? like this: import os import ray from ray import tune from ray.rllib.algorithms.ppo import PPO from ray.tune.schedulers import PopulationBasedTraining from ray.tune.stopper import EarlyStoppingStopper # initialize Ray ray.init(address='auto') # set the environment env = \"Taxi-v3\" # set the directory to store the results storage_path = '~/ray_results/' # set up the configuration config = { \"env\": env, \"framework\": \"torch\", \"num_workers\": 94, # set to the number of CPUs you want to use \"model\": { \"fcnet_hiddens\": [256, 256] # start with the smallest hidden layer sizes }, \"lr\": 1e-3, # start with the smallest learning rate } # initialize the scheduler pbt = PopulationBasedTraining( time_attr=\"training_iteration\", metric=\"episode_reward_mean\", mode=\"max\", perturbation_interval=5, # perturb hyperparameters every 5 iterations hyperparam_mutations={ \"model\": { \"fcnet_hiddens\": [[256, 256], [512, 512]] }, \"lr\": lambda: tune.loguniform(1e-3, 1e-1).func(None) } ) # start the hyperparameter search analysis = tune.run( PPO, local_dir=storage_path, # stop={\"training_iteration\": 1000}, # stop the training after 5000 iterations stop=EarlyStoppingStopper(patience=100), config=config, checkpoint_at_end=True, # save a checkpoint of the model at the end of training scheduler=pbt # use the Population Based Training scheduler ) # print the best trial (the one with the highest mean reward) best_trial = analysis.get_best_trial(\"episode_reward_mean\") print(f\"Best trial config: {best_trial.config}\") print(f\"Best trial final mean reward: {best_trial.last_result['episode_reward_mean']}\")", "target": 0, "score": 3.5}
+{"question": "grpc", "target": 0, "score": 2.0}
+{"question": "stream", "target": 0, "score": 1.0}
+{"question": "This line incurs a warning in vsc: from ray.tune.suggest.bayesopt import BayesOptSearch. How to fix?", "target": 1, "score": 3.5}
+{"question": "No module named 'ray.rllib.agents'", "target": 1, "score": 1.0}
+{"question": "Stream", "target": 0, "score": 1.0}
+{"question": "Can `tune.report` be called in the environment, in the trainer, in the algorithm, or somewhere else?", "target": 1, "score": 5.0}
+{"question": "When analysis reports the best agent after RL training, how does it account for curriculum environments which get more challenging? Won't the \"best\" agent always be from the early/easy environments?", "target": 1, "score": 4.5}
+{"question": "how can I check all of the running serve applications by name?", "target": 1, "score": 3.5}
+{"question": "what does the environment variable RAY_SCHEDULER_EVENTS does?", "target": 1, "score": 4.0}
+{"question": "how do I get the names of all active ray serve deployments", "target": 1, "score": 5.0}
+{"question": "i can apply a transform on just a specific column?", "target": 1, "score": 4.0}
+{"question": "can a live status of the asha scheduler be accessed, specifying whether or not early stopping or termination has occured?", "target": 1, "score": 3.5}
+{"question": "how to print something if asha scheduler does early stopping?", "target": 1, "score": 3.5}
+{"question": "ray serve distributed on different nodes", "target": 1, "score": 5.0}
+{"question": "how do I kill a ray serve deployment?", "target": 1, "score": 4.0}
+{"question": "I\u2019m trying to figure out how to use ray datasets for strided batch processing, where some of the batches would overlap neighboring batches. For instance, trying to do a distributed version of a rolling window aggregation. How can I do this?", "target": 1, "score": 4.0}
+{"question": "View the dashboard is taking me to a site with an error. How to fix this?", "target": 1, "score": 4.0}
+{"question": "can you give me the dependencies list for api read_images?", "target": 1, "score": 4.0}
+{"question": "tune.tuner does not get action/observation space", "target": 1, "score": 4.0}
+{"question": "what is tune.run vs tune.tuner", "target": 1, "score": 4.5}
+{"question": "how to set the log level of rllib?", "target": 1, "score": 5.0}
+{"question": "how to install ray for gpu", "target": 1, "score": 5.0}
+{"question": "I'd like to learn about the checkpoint configurations to store the training results in RLlib. I can set checkpoint_freq and the path. But, I want to only save 10 best models. For example, during the first 10 iterations of the training, we save all the model trained. At the end of 11-th iteration of the training, we can compare the episode reward mean value of the iteration over the saved models. If the new one is better than one of the saved model, then we can replace the worst stored model with the new one. In the other case, ignore to store the 11-th new model. Can I do this with tune.run() in RLlib?", "target": 0, "score": 2.0}
+{"question": "how to use ray serve autoscale serve models", "target": 1, "score": 4.0}
+{"question": "how to make ray serve and ray cluster working together", "target": 1, "score": 4.0}
+{"question": "I am getting this error. The data i am using is the load_breast_cancer dataset from sklearn. How do i correct this: Detail: [Windows error 32] The process cannot access the file because it is being used by another process.", "target": 1, "score": 2.0}
+{"question": "I am getting the following error. How do i correct this: You asked for 2.0 CPUs and 2.0 GPUs per trial, but the cluster only has 12.0 CPUs and 1.0 GPUs available. Stop the tuning and adjust the required resources (e.g. via the `ScalingConfig` or `resources_per_trial`, or `num_workers` for rllib), or add more resources to your cluster.", "target": 0, "score": 5.0}
+{"question": "kl_coeff in param_space", "target": 1, "score": 4.0}
+{"question": "k1_coeff in param_space", "target": 1, "score": 3.0}
+{"question": "k1_coeff", "target": 1, "score": 5.0}
+{"question": "what is local_mode=True", "target": 1, "score": 4.5}
+{"question": "How do I use ray tune", "target": 1, "score": 4.5}
+{"question": "how do I allocate multiple cpus per worker when using Ray train", "target": 1, "score": 5.0}
+{"question": "this is my observation and action space, i have added action masking, fix the next_observation function to match the spaces. def _next_observation(self): try: # Get the next `window_size` data points from the DataFrame, starting from the current step obs_df = self.rl_df.iloc[self.current_step: self.current_step + self.window_size] # Convert to float first obs_df = obs_df.astype(float) # Replace infinity and NaN values obs_df.replace([np.inf, -np.inf, np.nan], 0, inplace=True) # Assert that there are no NaN or inf values left assert not np.any(np.isnan(obs_df)) assert not np.any(np.isinf(obs_df)) # Replace any infinity or NaN values before padding for i in range(len(obs_df.columns)): obs_df.iloc[:, i] = obs_df.iloc[:, i].astype(float) obs_df.iloc[:, i] = obs_df.iloc[:, i].replace([np.inf, -np.inf, np.nan], 0) # If there are fewer than `window_size` data points, pad the observation with zeros if len(obs_df) < self.window_size: obs_df = pd.concat([obs_df, pd.DataFrame( np.zeros((self.window_size - len(obs_df), self.num_features)), columns=obs_df.columns)], ignore_index=True) # Convert the observation DataFrame to a numpy array observation = obs_df.to_numpy() assert not np.any(np.isnan(observation)) assert not np.any(np.isinf(observation)) # Add the action mask to the observation observation = { 'obs': observation, 'action_mask': self.observation_space['action_mask'] } # The observation should have a shape that matches `self.observation_space` assert observation['obs'].shape == self.observation_space['obs'].shape, f\"Expected observation shape {self.observation_space['obs'].shape}, but got {observation['obs'].shape}\" # Convert the observation to the appropriate data type observation['obs'] = observation['obs'].astype(np.float32) return observation except Exception as e: self.logger.exception(f\"Error occurred during next_observation: {e}\") self.logger.exception(traceback.format_exc())", "target": 0, "score": 2.0}
+{"question": "I have written a method which uses lru cache , ray is throwing not able to pickle it", "target": 1, "score": 3.5}
+{"question": "In what order do the runtime env arguments get applied", "target": 1, "score": 5.0}
+{"question": "how to write objects to disk directly without object store memory?", "target": 1, "score": 2.0}
+{"question": "what is parameter_space in ray.Tuner()? how is it different from hyperparameter_mutations ?", "target": 1, "score": 5.0}
+{"question": "give me ray serve use cases", "target": 1, "score": 5.0}
+{"question": "How do I implement learning rate scheduler?", "target": 1, "score": 4.0}
+{"question": "when training a RL agent, how / when to use action masking? example: i have a trading environment, if there is an open position, rather than reward/penalize, i want to only allow close or hold actions, or adjust hedge, how to do this", "target": 1, "score": 4.5}
+{"question": "what is scheduler in hyperparameter tuning ?", "target": 1, "score": 5.0}
+{"question": "how to set resources in tune.Tuner if I also use air.RunConfig for run_config?", "target": 1, "score": 2.5}
+{"question": "what do checkpoint contains ?", "target": 1, "score": 4.0}
+{"question": "I'm working on a project using RLlib. Particularly I use PPO. I don't want to start the training from scratch. I know a heuristic (i.e. rule-based) policy. So, I want to collect the training data from the policy and train the policy and value model with the data first, which would be a supervised training way, And then I can start with the RL training from the pre-trained networks with PPO. Assume that I have already trained with the policy and value models then please let me learn about how to load the (supervised) trained models and start the training (with tune.run()).", "target": 0, "score": 3.0}
+{"question": "how to train RL model after you have run a training session to get hyper parameters and a saved policy", "target": 1, "score": 3.5}
+{"question": "Does head node also work?", "target": 1, "score": 4.5}
+{"question": "include curiosity based exploration in ppo", "target": 1, "score": 5.0}
+{"question": "code to include exploration with default params in ppo", "target": 1, "score": 3.5}
+{"question": "What is feature_dim in exploration", "target": 1, "score": 5.0}
+{"question": "ray ppo exploration driven by curiosity", "target": 1, "score": 4.0}
+{"question": "does ray have curiosity driven exploration", "target": 1, "score": 5.0}
+{"question": "i start my ray cluster using ray start --head --port 4896, i even verified that its running on 4896, but why when i connect to 4896 it show connection error, but when i connect to port 52365, it show correct", "target": 1, "score": 4.0}
+{"question": "I have a Trainable class with an implementation of a step() Method. I return tune.result.DONE in this method. Will this finish just the specific configuration execution or the complete tune run?", "target": 1, "score": 4.0}
+{"question": "Manual ray cluster", "target": 1, "score": 5.0}
+{"question": "What if I don't want to continue from scratch, but from where the PBT run finished?", "target": 1, "score": 4.0}
+{"question": "I started ray cluster using ray start --head --port 1234, how do I deploy a remote serve application connect to it?", "target": 1, "score": 5.0}
+{"question": "i started ray cluster using ray start --head --port 1234, how do remote serve application connect to it?", "target": 1, "score": 4.0}
+{"question": "how to implement rllib for a unity environment", "target": 1, "score": 4.0}
+{"question": "I have a ray serve applications, why when i use serve deploy it can deploy successfully, but when i package it into a docker image and use entrypoint ENTRYPOINT [\"serve\", \"deploy\",\"mass_serve_config.yaml\"] i show ConnectionError: Failed to connect to Ray at address: http://localhost:4896. ChatGPT", "target": 1, "score": 4.0}
+{"question": "How do I submit an image using \"ray submit\"?", "target": 1, "score": 4.0}
+{"question": "serve deploy show error ConnectionError: Failed to connect to Ray at address: http://localhost:52365. why?", "target": 1, "score": 4.0}
+{"question": "how to set num_cpus when ray start", "target": 1, "score": 5.0}
+{"question": "can i replace ray start --head with ray.init() to start a cluster? is it the same?", "target": 1, "score": 2.0}
+{"question": "install", "target": 1, "score": 4.0}
+{"question": "what is http_options in ray serve config?", "target": 1, "score": 2.0}
+{"question": "how to use serve build?", "target": 1, "score": 4.0}
+{"question": "ray serve an post request", "target": 1, "score": 3.5}
+{"question": "how to change prometheus url for grafana", "target": 1, "score": 4.5}
+{"question": "how to use ray.rllib.policy.Policy.export_model API", "target": 1, "score": 5.0}
+{"question": "how to use a API", "target": 1, "score": 4.5}
+{"question": "In our organization, we are currently using Metaflow as our managed training infrastructure and leveraging the @batch decorator for compute. Using Batch, we also have access to multi-node parallel jobs (@parallel decorator) for distributed training and we've used it to great effect for fine-tuning some LLMs. We are now thinking of adopting Ray Train since it seems to be very popular nowadays and is gaining lots of traction. Wondering how Ray Train compares to Metaflow (AWS Batch) and what the pros/cons are for both, particularly in the context of scalable training of models. Would Batch be sufficient for training foundational models. Please kindly share any insights. Thanks in advance!", "target": 0, "score": 5.0}
+{"question": "when we use serve deploy, should we package it in dockerfile? or we can directly use serve deploy in production?", "target": 1, "score": 5.0}
+{"question": "How to get the memory of every worker?", "target": 1, "score": 3.5}
+{"question": "is there a way to start ray cluster from scripts instead of ray start --head?", "target": 1, "score": 3.5}
+{"question": "how to determine total number of timesteps my agent trains for ppo", "target": 1, "score": 3.5}
+{"question": "number of workers and number of envs per worker number", "target": 1, "score": 5.0}
+{"question": "when i run docker container with ray serve, it show ConnectionError: Failed to connect to Ray at address: http://localhost:52365. My entrypoint is ENTRYPOINT [\"serve\", \"deploy\",\"mass_serve_config.yaml\"]", "target": 1, "score": 4.0}
+{"question": "i am using serve deploy to deploy a serve application, how to remove it?", "target": 1, "score": 3.5}
+{"question": "for ppo what does train_batch_size do", "target": 1, "score": 4.5}
+{"question": "Print the configuration of all work logs", "target": 1, "score": 4.0}
+{"question": "how to get ip of ray head", "target": 1, "score": 4.0}
+{"question": "what does policy.train() return", "target": 1, "score": 2.0}
+{"question": "What version of ray and rllib will work with Torch 1.0.0?", "target": 0, "score": 2.0}
+{"question": "Is it possible to run ray and rllib on a GPU with compute capability 2.1?", "target": 1, "score": 4.0}
+{"question": "Is compute_single_action with explore=False good way of evaluating", "target": 1, "score": 4.0}
+{"question": "Can ray load data from oracle database?", "target": 1, "score": 2.0}
+{"question": "for ppo use_critic = True, how to define critic and reward", "target": 1, "score": 4.0}
+{"question": "does Ray on YARN support auto scaling?", "target": 1, "score": 2.0}
+{"question": "what is the performance overhead of Ray", "target": 1, "score": 4.0}
+{"question": "does Ray support terraform", "target": 1, "score": 2.0}
+{"question": "how ray futures and ray.get() work", "target": 1, "score": 5.0}
+{"question": "when i call ray get even process get completed it doesnt return anything", "target": 1, "score": 3.5}
+{"question": "How do I set a mean std filter to my algorithm input?", "target": 1, "score": 2.0}
+{"question": "how can I stop logging to a results folder from ray tune", "target": 1, "score": 5.0}
+{"question": "how can i Curiosity-driven exploration in rllib?", "target": 1, "score": 5.0}
+{"question": "ValueError: RLlib tried to convert a multi agent-batch with data from more than one policy to a single-agent batch. This is not supported and may be due to a number of issues. Here are two possible ones:1) Off-Policy Estimation is not implemented for multi-agent batches. You can set `off_policy_estimation_methods: {}` to resolve this.2) Loading multi-agent data for offline training is not implemented.Load single-agent data instead to resolve this.", "target": 1, "score": 1.0}
+{"question": "RLlib tried to convert a multi agent-batch with data from more than one policy to a single-agent batch.", "target": 1, "score": 5.0}
+{"question": "how to train a high frequency cryptocurrency market making program", "target": 1, "score": 4.5}
+{"question": "How do I get started?", "target": 1, "score": 5.0}
+{"question": "what\u2019s ray core", "target": 1, "score": 5.0}
+{"question": "I have a case where i have two arms attached to a common stand and each arm will get its own target to reach to. once the arm reaches its target, it can get a new target irrespective of other arm. other than multi-agent which way is suitable for this case", "target": 1, "score": 2.5}
+{"question": "To implement the behavior where an agent resets and gets a new goal once it's done in multi-agent env. when will the episode is considered over?", "target": 1, "score": 2.0}
+{"question": "a multi agent env where each agent can independently learn", "target": 1, "score": 4.5}
+{"question": "In ray remote if we encounter error the programs shutdowns, I want the errors to be visible", "target": 1, "score": 4.0}
+{"question": "How can i limit a tune trial to stop after a certain amount of hours?", "target": 1, "score": 4.5}
+{"question": "ray init envvars", "target": 1, "score": 4.0}
+{"question": "how to add telemetry to ray", "target": 1, "score": 5.0}
+{"question": "In RLlib, I use PPO in an environment with continuous action space. I know a simple heuristic policy. But, it seems that the RL agent cannot find the policy in most of the trials. So, I'd like to incorporate some experiences from the policy I know. Can I do this in RLlib?", "target": 1, "score": 4.0}
+{"question": "In RLlib, what exploration does the default PPO with continuous action space use?", "target": 1, "score": 1.0}
+{"question": "how to specify the image when starting the ray cluster", "target": 1, "score": 4.0}
+{"question": "data preprogress", "target": 1, "score": 4.0}
+{"question": "How to send requests to ray serve in parallel", "target": 1, "score": 4.0}
+{"question": "In this code in the document: from ray.rllib.algorithms.cql import CQLConfig config = CQLConfig().training(gamma=0.9, lr=0.01) config = config.resources(num_gpus=0) config = config.rollouts(num_rollout_workers=4) print(config.to_dict()) # Build a Algorithm object from the config and run 1 training iteration. algo = config.build(env=\"CartPole-v1\") algo.train() How to visualize the training result?", "target": 0, "score": 4.0}
+{"question": "What is dependency on installation?", "target": 1, "score": 4.0}
+{"question": "what is the _metadata key word argument in the python client", "target": 1, "score": 4.0}
+{"question": "lora tunning", "target": 1, "score": 1.0}
+{"question": "send job with external dependencies", "target": 1, "score": 4.0}
+{"question": "parser = argparse.ArgumentParser() parser.add_argument(\"--test-local\", action=\"store_true\", default=False) what doese this do ?", "target": 1, "score": 5.0}
+{"question": "how to dockerize my ray serve application?", "target": 1, "score": 5.0}
+{"question": "can we make a function ray serve deployment? will it be beneficial?", "target": 1, "score": 5.0}
+{"question": "what is ray start", "target": 1, "score": 5.0}
+{"question": "for ray serve, when we make a class deployment, it is better to make its function async and call it with await?", "target": 1, "score": 4.0}
+{"question": "what is objct_store_memory?", "target": 1, "score": 5.0}
+{"question": "How to make ray serve and ray cluster working together", "target": 1, "score": 4.0}
+{"question": "how do I delete all the logs", "target": 1, "score": 2.0}
+{"question": "how to serve run with configs from serve build", "target": 1, "score": 4.0}
+{"question": "how many application in", "target": 1, "score": 4.0}
+{"question": "serve application", "target": 1, "score": 4.0}
+{"question": "can I pass a function which is defined in my actor into another actor as a parameter?", "target": 1, "score": 4.0}
+{"question": "What is the param count_steps_by == \"agent_steps\" doing?", "target": 1, "score": 4.5}
+{"question": "how to run pip install -U \"ray[defauklt]\" ... from requrement.txt", "target": 1, "score": 4.5}
+{"question": "Does ray support python 3.6.8?", "target": 1, "score": 2.0}
+{"question": "ray demo", "target": 1, "score": 2.0}
+{"question": "In a multi threaded actor can I pass an object reference from the actor's thread #1 into the same actor's function on thread #2 and have that function wait for the thread #1 to complete?", "target": 1, "score": 2.0}
+{"question": "how do i block until actor is created?", "target": 1, "score": 3.5}
+{"question": "ray tensorboard no dashboards active for current data set", "target": 1, "score": 3.0}
+{"question": "ray ppo mean reward per episode graph", "target": 1, "score": 3.0}
+{"question": "https ray serve", "target": 1, "score": 5.0}
+{"question": "how to get preprocessors and transform observation", "target": 1, "score": 4.0}
+{"question": "what are the imports needed to run this code: CustomTrainer = PPOTrainer.with_updates( default_policy=CustomPolicy)", "target": 1, "score": 2.0}
+{"question": "multi-node cluster", "target": 1, "score": 5.0}
+{"question": "why is my learn throughput slow for custom_loss?", "target": 1, "score": 4.0}
+{"question": "how to load audio files using ray", "target": 1, "score": 2.5}
+{"question": "how can I use gRPC with serve ?", "target": 1, "score": 5.0}
+{"question": "Can I use apple m1 gpu to accelerate ray training", "target": 1, "score": 3.0}
+{"question": "how can Iuese https on ray serve", "target": 1, "score": 5.0}
+{"question": "how can i extract the policy nework from an algorithm?", "target": 1, "score": 4.0}
+{"question": "how can i setup the seed of ppo in rllib, to compare performances?", "target": 1, "score": 2.0}
+{"question": "what is the default module custom network in rllib. Ist shared actor critic or seperated?", "target": 1, "score": 4.0}
+{"question": "does rllib support keras_core?", "target": 1, "score": 5.0}
+{"question": "Does rllib save all agents in the same checkpoint?", "target": 1, "score": 2.0}
+{"question": "how do i use ray timeline with ray.tune?", "target": 1, "score": 4.5}
+{"question": "how to get the latest checkpoint version with : algo = Algorithm.from_checkpoint(checkpoint_path)", "target": 1, "score": 4.0}
+{"question": "how to add latest checkpoint from a distrubution?", "target": 1, "score": 4.0}
+{"question": "What are potential values for \"replay_mode\" in the replay_buffer_config?", "target": 1, "score": 1.0}
+{"question": "yeilding from actor method", "target": 1, "score": 2.0}
+{"question": "how can I avoid objects not getting spilled?", "target": 1, "score": 5.0}
+{"question": "How is object store memory calculated?", "target": 1, "score": 5.0}
+{"question": "I get the following error The remote function __main__.get_processed_feats is too large (1235 MiB > FUNCTION_SIZE_ERROR_THRESHOLD=95 MiB).", "target": 1, "score": 5.0}
+{"question": "cuda with tasks", "target": 1, "score": 5.0}
+{"question": "Does Ray metrics have to be exported via an actor?", "target": 1, "score": 5.0}
+{"question": "how can i use ray objects and actors across processes", "target": 1, "score": 5.0}
+{"question": "Can you create an actor that uses other non actor class?", "target": 1, "score": 4.0}
+{"question": "which imports do I need to run this code:", "target": 1, "score": 2.0}
+{"question": "what imports do I need to run this code:", "target": 0, "score": 1.0}
+{"question": "how to pass actor to task", "target": 1, "score": 5.0}
+{"question": "Unable to connect to GCS (ray head) at 127.0.0.1:6379.", "target": 1, "score": 5.0}
+{"question": "RuntimeError: Unknown keyword argument(s): redis_address", "target": 1, "score": 2.0}
+{"question": "stable baseline has n_steps as ppo parameter. what is this called in rllib?", "target": 0, "score": 1.0}
+{"question": "ppo has usually n_steps or total_steps. what is it called in rllib?", "target": 1, "score": 5.0}
+{"question": "How would I get an actor name from the actor handle?", "target": 1, "score": 3.5}
+{"question": "what is ratio_clip in rllib?", "target": 1, "score": 1.0}
+{"question": "how to parallel tasks of an actor?", "target": 1, "score": 4.0}
+{"question": "does evaluation contribute to learning of an agent in rllib?", "target": 1, "score": 4.0}
+{"question": "if there is a job submitted to a cluster by a worker node and another worker node connects to that cluster, how to distribute the workload", "target": 1, "score": 4.5}
+{"question": "how to use ray actor?", "target": 1, "score": 5.0}
+{"question": "Timeout for ray serve?", "target": 1, "score": 5.0}
+{"question": "if i only have one machine, is it useful to have ray train?", "target": 1, "score": 5.0}
+{"question": "RAY_ENABLE_CLUSTER_STATUS_LOG", "target": 1, "score": 4.0}
+{"question": "how to evaluation during training in rllib?", "target": 1, "score": 4.0}
+{"question": "deplyijg ray on databricks", "target": 1, "score": 4.0}
+{"question": "algo = ( PPOConfig() .rollouts(num_rollout_workers=1) .resources(num_gpus=0) .environment(env=\"CartPole-v1\") .build() )", "target": 1, "score": 3.5}
+{"question": "meta learning", "target": 1, "score": 2.0}
+{"question": "when restoring a ray tune run, how do you specify the run configuration? It is not an argument to the restore() method", "target": 1, "score": 2.0}
+{"question": "Demands: {'CPU': 6, 'GPU': 2}: 1+ from request_resources() what does demand here mean", "target": 1, "score": 4.0}
+{"question": "how to seed for ray tune", "target": 1, "score": 5.0}
+{"question": "Code to implement ray tune and wandb and PyTorch lightning", "target": 0, "score": 1.0}
+{"question": "How can I find the number of gpus?", "target": 1, "score": 5.0}
+{"question": "how to create a self playing agent using PPO algorithm in ray", "target": 1, "score": 4.5}
+{"question": "how to design a good network for given RL problem", "target": 1, "score": 5.0}
+{"question": "I want to reduce the log output in /tmp/ray logs", "target": 1, "score": 4.0}
+{"question": "getting an error, could not find tuner state in the restore directory", "target": 1, "score": 4.5}
+{"question": "what experiment tracking 3rd party tools are available in ray 2.1?", "target": 1, "score": 4.5}
+{"question": "how to register custom policies?", "target": 1, "score": 4.0}
+{"question": "how to apply self play using PPO", "target": 1, "score": 4.0}
+{"question": "How to set num_cpus for ray tasks", "target": 1, "score": 4.0}
+{"question": "how can i print algorithm config after this step: algo = Algorithm.from_checkpoint(checkpoint_path)", "target": 1, "score": 3.5}
+{"question": "how to use ray to parallel tasks?", "target": 1, "score": 5.0}
+{"question": "in tune.Tuner.restore there is a trainable. What is this?", "target": 1, "score": 5.0}
+{"question": "should I save the ray tuner results? if so how?", "target": 1, "score": 4.0}
+{"question": "how to turn off rllib exploration ?", "target": 1, "score": 4.0}
+{"question": "Conv_filters value for input with shape (25,25,6)", "target": 1, "score": 3.0}
+{"question": "If everything is just messured in waves code for", "target": 0, "score": 1.0}
+{"question": "Figgure out why people use things like data and information to there own gain", "target": 1, "score": 5.0}
+{"question": "Can observations return a list of floats or should it be a dict", "target": 1, "score": 2.0}
+{"question": "What data type does an observation need to be", "target": 1, "score": 2.0}
+{"question": "Can I use Ray to fine-tune a causal language model?", "target": 1, "score": 5.0}
+{"question": "ray start", "target": 1, "score": 5.0}
+{"question": "how to use OPT model in a ray cluster, give me an example pls", "target": 0, "score": 4.0}
+{"question": "ray serve performance", "target": 1, "score": 5.0}
+{"question": "in ray tune, if i am running sac, how would i set the batch size and training intensity", "target": 1, "score": 2.5}
+{"question": "how can i make multiple workers share the same pytorch model on the gpu", "target": 1, "score": 3.5}
+{"question": "how can i make ray think there are many more gpu than really present", "target": 1, "score": 5.0}
+{"question": "in ray tune, how do i specify the number of gpus per worker", "target": 1, "score": 4.5}
+{"question": "how do i prevent this error, i want to use a cuda instance outside of ray for my environment in a reinforcement learning application \u2190[2m\u2190[36m(RolloutWorker pid=7228)\u2190[0m RuntimeError: Attempting to deserialize object on CUDA device 0 but torch.cuda.device_count() is 0. Please use torch.load with map_location to map your storages to an existing device.\u2190[32m [repeated 17x across cluster]\u2190[0m", "target": 1, "score": 5.0}
+{"question": "how do i make ray do the training steps on a dedicated gpu thread", "target": 1, "score": 5.0}
+{"question": "can I get a demo of anyscale?", "target": 0, "score": 1.0}
+{"question": "How can I configure min and max worker number of nodes when I\u2019m using Ray on Databricks?", "target": 1, "score": 3.5}
+{"question": "what does ray health-check do?", "target": 1, "score": 4.0}
+{"question": "how to debug the env, vscode gives launch settings error if trying to debug", "target": 1, "score": 3.0}
+{"question": "how do i have a ray actor producer that infinitely produces items into a queue and a consumer that consumes?", "target": 1, "score": 5.0}
+{"question": "What data does kuberay read from volcano?", "target": 1, "score": 2.0}
+{"question": "how does kuberay talk to volcano?", "target": 1, "score": 2.0}
+{"question": "will ray.autoscaler.sdk.request_resources take account of resource specified in ray.remote()", "target": 1, "score": 5.0}
+{"question": "how to change the rl tune save path?", "target": 1, "score": 4.0}
+{"question": "Do you have any document/guide which shows how to setup the local development environment for kuberay on a arm64 processor based machine?", "target": 1, "score": 4.0}
+{"question": "how ray cluster distributes the work between worker nodes", "target": 1, "score": 5.0}
+{"question": "do you have any documents / examples showing the usage of RayJob in Kuberay?", "target": 0, "score": 5.0}
+{"question": "do ray clusters support ipv6?", "target": 1, "score": 2.0}
+{"question": "When using Ray in docker, how to set home folder as mounted local drive", "target": 1, "score": 4.0}
+{"question": "Hi team, I am trying to fine-tune a transformers model using HuggingFaceTrainer but is getting RuntimeError: CUDA error: invalid device ordinal", "target": 1, "score": 4.0}
+{"question": "how to use AutoscalingCluster", "target": 1, "score": 5.0}
+{"question": "how do i create a producer and consumer queue?", "target": 1, "score": 1.0}
+{"question": "how do I use execution options in ray remote", "target": 1, "score": 4.0}
+{"question": "how do i use request resource in submission client", "target": 1, "score": 4.0}
+{"question": "how to use ray wait, to give the available worker more job to do?", "target": 1, "score": 4.0}
+{"question": "ExecutionOptions( resource_limits=ray.ExecutionResources(cpu=0.4, gpu=0.25) )", "target": 1, "score": 4.0}
+{"question": "what\u2019s the latest version of ray", "target": 1, "score": 4.0}
+{"question": "what does MeanStdFilter do", "target": 1, "score": 2.0}
+{"question": "does rllib do running mean normalization", "target": 0, "score": 1.0}
+{"question": "tune.run takes a config parameter which contains a \"num_gpus\" entry. Is this the number of gpus per trial or the total number of GPUs to be used for training?", "target": 1, "score": 2.0}
+{"question": "How to efficiently run many python UDF's on input to an online inference for a model in RayServe", "target": 1, "score": 3.5}
+{"question": "When I set the resources_per_trial parameter in tune.run, I get an error: Resources have been automatically set to <PlacementGroupFactory (_bound=<BoundArguments (bundles=[{'CPU': 1.0}, {'CPU': 1.0}, {'CPU': 1.0}], strategy='PACK')>, head_bundle_is_empty=False)> by its `default_resource_request()` method. Please clear the `resources_per_trial` option.", "target": 1, "score": 4.0}
+{"question": "How to set gpu for ray platfrom", "target": 1, "score": 5.0}
+{"question": "how can I use ray[tune] in c++", "target": 0, "score": 1.0}
+{"question": "How does RayServe handle actor's returning an exception", "target": 1, "score": 4.5}
+{"question": "Can you create a vector env from a PZ enviornment? can you show a snippet", "target": 1, "score": 4.5}
+{"question": "what happens in the train() method ?", "target": 1, "score": 1.0}
+{"question": "How do I know how many cpus a given tune.run trial will use?", "target": 1, "score": 4.0}
+{"question": "how can I stop a ray tune run after a specified number of iterations?", "target": 1, "score": 4.5}
+{"question": "what is train_batch_size in policy gradient", "target": 1, "score": 4.5}
+{"question": "How to setup on Ubuntu", "target": 1, "score": 4.0}
+{"question": "can you direct me to a file in the github that is a pure rllib env that supports multiagent?", "target": 1, "score": 2.5}
+{"question": "how do i use the curiosity exploration", "target": 1, "score": 5.0}
+{"question": "if I have a collection of remote() objects , how can I collect only the finished objects", "target": 1, "score": 2.0}
+{"question": "I am starting a new ray process remote I see 4 actors are created in dashboard but only two is used", "target": 1, "score": 5.0}
+{"question": "WARNING algorithm_config.py:656 -- Cannot create A3CConfig from given `config_dict`! Property __stdout_file__ not supported.", "target": 1, "score": 4.0}
+{"question": "I see 4 actors are created but only two is used I am starting a ray remote process", "target": 1, "score": 3.5}
+{"question": "If I define my model as fc_net will the output from the last layer be processed by some activations or is it the direct output of the neurones", "target": 1, "score": 1.0}
+{"question": "WARNING algorithm_config.py:656 -- Cannot create A3CConfig from given `config_dict`! Property __stdout_file__ not supported.", "target": 1, "score": 4.0}
+{"question": "i got tuner = tune.Tuner(tune.with_parameters(objective, data=data50), tune_config=tune.TuneConfig( search_alg=algo, num_samples=1000), param_space=search_space) results = tuner.fit() print(results.get_best_result(metric=\"auc\", mode=\"max\").config) bur i also want the to print the metric of the best attempt", "target": 0, "score": 2.0}
+{"question": "when creating a custom model in RLLib, do i need to create my own value function branch, or is it inherited?", "target": 1, "score": 2.0}
+{"question": "Getting this error: Setting `exploration_config={}` because you set `_enable_rl_module_api=True`. When RLModule API are enabled, exploration_config can not be set. If you want to implement custom exploration behaviour, please modify the `forward_exploration` method of the RLModule at hand. On configs that have a default exploration config, this must be done with `config.exploration_config={}`. I had no problems in ray 2.5.1, why is it throwing an error now?", "target": 1, "score": 5.0}
+{"question": "Setting `exploration_config={}` because you set `_enable_rl_module_api=True`. When RLModule API are enabled, exploration_config can not be set. If you want to implement custom exploration behaviour, please modify the `forward_exploration` method of the RLModule at hand. On configs that have a default exploration config, this must be done with `config.exploration_config={}`. I keep getting this error and I am just using default model", "target": 0, "score": 5.0}
+{"question": "observation preprocessors", "target": 1, "score": 5.0}
+{"question": "how to get preprocessor from policy?", "target": 1, "score": 5.0}
+{"question": "WARNING algorithm_config.py:2534 -- Setting `exploration_config={}` because you set `_enable_rl_module_api=True`. When RLModule API are enabled, exploration_config can not be set. If you want to implement custom exploration behaviour, please modify the `forward_exploration` method of the RLModule at hand. On configs that have a default exploration config, this must be done with `config.exploration_config={}`.", "target": 1, "score": 4.5}
+{"question": "is uniform(1e-10, 1e-3) good ?", "target": 1, "score": 4.0}
+{"question": "What is the difference between Algorithm framework and RL Modules framework?", "target": 0, "score": 4.5}
+{"question": "I am using ray.wait , how to get the results after that", "target": 1, "score": 4.5}
+{"question": "How to clean up the returned data after a successful ray.get call?", "target": 1, "score": 4.0}
+{"question": "give me the total steps of hyperparameter tuning using tuner()", "target": 1, "score": 5.0}
+{"question": "seed ray", "target": 0, "score": 1.0}
+{"question": "how does rllib handle tuple observation space", "target": 1, "score": 5.0}
+{"question": "run pytoch ddp on ray", "target": 1, "score": 1.0}
+{"question": "Why is Ray used by many AI companies?", "target": 1, "score": 5.0}
+{"question": "(train_model pid=35986) Metric val_Loss does not exist in `trainer.callback_metrics.", "target": 1, "score": 2.0}
+{"question": "as soon as process gets completed in ray.wait , will be the object of it", "target": 1, "score": 2.0}
+{"question": "Memory of each node increasingly grows, what is the reason?", "target": 1, "score": 3.5}
+{"question": "How i upgrade to use new gym version", "target": 1, "score": 3.0}
+{"question": "how to dockerize ray serve application?", "target": 1, "score": 5.0}
+{"question": "what is submission id in ray dashboard", "target": 1, "score": 4.0}
+{"question": "rayjob", "target": 1, "score": 4.0}
+{"question": "what is PowerOfTwoChoicesReplicaScheduler in ray serve?", "target": 1, "score": 4.0}
+{"question": "what is replicas in ray serve?", "target": 1, "score": 5.0}
+{"question": "how to setup Ray Cluster to span multiple AWS availability zones?", "target": 1, "score": 5.0}
+{"question": "is there an option to set time up retries for ray serve?", "target": 1, "score": 4.0}
+{"question": "OMP_NUM_THREADS, do we need to set?", "target": 1, "score": 5.0}
+{"question": "Why is Ray used by many leading AI companies?", "target": 1, "score": 5.0}
+{"question": "do we need to set max_concurrent_queries on every deployment?", "target": 1, "score": 4.5}
+{"question": "What is max_concurrent_queries and how should we define the values?", "target": 1, "score": 5.0}
+{"question": "Algorithm.compute_single_action()", "target": 1, "score": 4.0}
+{"question": "with ray tune and rllib, what determines how long each trial will last", "target": 1, "score": 4.0}
+{"question": "what is the capital of india ?", "target": 1, "score": 5.0}
+{"question": "how do i restart a ray tune run from a checkpoint", "target": 1, "score": 5.0}
+{"question": "How to use ray train LLama", "target": 1, "score": 2.5}
+{"question": "how to create a large ray cluster", "target": 1, "score": 4.0}
+{"question": "how to make ray cluster", "target": 1, "score": 4.0}
+{"question": "Typical hyperparameters optimization do the optimization in sequential form and use past trial results to choose better Hyper parameter set at next trial. While ray tune use multiple cpu to run multiple trial concurrent. How does it use past trial result as experience to decide next set of hyperparameters", "target": 1, "score": 5.0}
+{"question": "ray sumbit job in dashboard", "target": 1, "score": 5.0}
+{"question": "ray memory use", "target": 1, "score": 4.0}
+{"question": "how would i set the sac config with ray tune", "target": 1, "score": 3.5}
+{"question": "i am getting this error, will it terminate training 2023-07-27 20:27:16,052 WARNING tune.py:1122 -- Trial Runner checkpointing failed: Sync process failed: GetFileInfo() yielded path 'C:/Users/[REDACTED]/ray_results/SAC/SAC_TeaserEnvWrap_c3611_00000_0_2023-07-27_20-20-55', which is outside base dir 'C:\\Users\\[REDACTED]\\ray_results\\SAC'", "target": 1, "score": 4.0}
+{"question": "How to use ray c++", "target": 1, "score": 5.0}
+{"question": "ray ignores the save location i give for storage_path and saves somewhere else, how can i avoid this", "target": 1, "score": 4.0}
+{"question": "when I try to set the storage path in ray tune, it is ignored and saves on some default path, how can i stop this?", "target": 1, "score": 4.0}
+{"question": "_exec_plan training_iteration_fn", "target": 1, "score": 3.5}
+{"question": "when i run ray tune, it's saving a ton of session data in a hidden temp folder until it fills my disk. how can i limit the space it uses", "target": 1, "score": 2.0}
+{"question": "what does is_driver_deployment=True do ?", "target": 1, "score": 4.0}
+{"question": "Can I create ray cluster using python sdk?", "target": 1, "score": 5.0}
+{"question": "_exec_plan_or_training_iteration_fn", "target": 1, "score": 3.0}
+{"question": "How to get ray cluster address?", "target": 1, "score": 5.0}
+{"question": "how do i reduce the rate at which ray tune logs results, get a performance warning in regards to that", "target": 1, "score": 5.0}
+{"question": "Please tell me the function that selects a random value within a specific range among the ray tune function", "target": 1, "score": 5.0}
+{"question": "I get this error when i try to run ray tune", "target": 1, "score": 4.0}
+{"question": "when I try to call ray.air.RunConfig with a storage path in the constructor argument list, it says this is an unexpected parameter, what is the issue", "target": 1, "score": 4.5}
+{"question": "how do i set where ray tune stores intermediate results", "target": 1, "score": 3.5}
+{"question": "how to check ray serve version?", "target": 1, "score": 1.0}
+{"question": "when work directory is intialized where is data stored on remote", "target": 1, "score": 4.5}
+{"question": "what ara annealing shedules?", "target": 1, "score": 4.0}
+{"question": "how to read files over remote cluster", "target": 1, "score": 5.0}
+{"question": "how work perturbation_factors in pbt?", "target": 1, "score": 5.0}
+{"question": "how PBT choose for applying between \"exploitation\" and \"perturbation\"?", "target": 1, "score": 5.0}
+{"question": "What is Ray remote?", "target": 1, "score": 5.0}
+{"question": "when I must write ray.init()", "target": 1, "score": 5.0}
+{"question": "does ingress deployment support http post request?", "target": 1, "score": 4.0}
+{"question": "What's the difference between Kubernetes and Ray?", "target": 1, "score": 4.5}
+{"question": "how to use prior ray tune trials into ray tune to continue ray tune from same point", "target": 1, "score": 4.0}
+{"question": "what params does ray.remote() take?", "target": 1, "score": 4.0}
+{"question": "show an example of ray.remote call which utilizes all cores", "target": 0, "score": 4.0}
+{"question": "how to load file into multiagent env ray rllib", "target": 1, "score": 4.5}
+{"question": "what are ray datasets", "target": 1, "score": 5.0}
+{"question": "My multiagent env gets stuck on pending becuase of this remote call: @ray.remote def f(num_sims): # The function will have its working directory changed to its node's return SimSimAlpha(num_sims, \"scenario.json\", show_viewer=False) why???", "target": 0, "score": 2.0}
+{"question": "How to assign a specific number of models to train, workers per model, and gpus per model in a call to tune.run?", "target": 1, "score": 3.5}
+{"question": "how to use an algorithm that isn't PPO for this? config = ( AlgorithmConfig(algo_class=PG) .environment(env=\"multi_simsim_alpha_rust\", disable_env_checking=False) .framework(\"torch\") .rollouts( num_rollout_workers=0, num_envs_per_worker=1, # rollout_fragment_length=\"auto\", # was 10, then 8 ) .training( train_batch_size=200, # bigger than 128 minibatch, 200 for 50 gamma=0.9, ) .multi_agent( policies={ \"policy_red\": PolicySpec( config=AlgorithmConfig.overrides( model={\"use_lstm\": True}, framework_str=\"torch\" ) ), \"policy_blue\": PolicySpec( config=AlgorithmConfig.overrides( model={\"use_lstm\": True}, framework_str=\"torch\" ) ), }, policy_mapping_fn=select_policy, ) # .reporting(metrics_num_episodes_for_smoothing=200) ) # Start the training # print(APEXTrainer.default_resource_request(config=config)._bundles) from ray.rllib.algorithms.ppo import PPO print(PPO.default_resource_request(config)) tune.run( \"PPO\", stop={\"training_iteration\": 1}, # need atleast 3 cpus to train? config=config, )", "target": 0, "score": 3.5}
+{"question": "is there any way to report ram usage live using ray tune", "target": 1, "score": 4.0}
+{"question": "is there any way to include ram usage in Tune Console Output", "target": 1, "score": 3.5}
+{"question": "multiagent env stuck on pending", "target": 1, "score": 2.0}
+{"question": "convert this config into the appropriate dict please: config = ( AlgorithmConfig(algo_class=EntropyLossPG) .environment(env=\"multi_simsim_alpha_rust\", disable_env_checking=False) .framework(\"torch\") .rollouts( num_rollout_workers=0, num_envs_per_worker=1, # rollout_fragment_length=\"auto\", # was 10, then 8 ) .training( train_batch_size=200, # bigger than 128 minibatch, 200 for 50 gamma=0.9, ) .multi_agent( policies={ \"policy_red\": PolicySpec( config=AlgorithmConfig.overrides( model={\"use_lstm\": True}, framework_str=\"torch\" ) ), \"policy_blue\": PolicySpec( config=AlgorithmConfig.overrides( model={\"use_lstm\": True}, framework_str=\"torch\" ) ), }, policy_mapping_fn=select_policy, ) # .reporting(metrics_num_episodes_for_smoothing=200) )", "target": 0, "score": 4.0}
+{"question": "is there any chance to use a scheduler in combination with optuna search", "target": 1, "score": 5.0}
+{"question": "i am using ray tune and when I determine to use 1 concurrent job and 20 cpus for that one job it runs slower than when I use 5 job with 4 cpu for each of them , why ?", "target": 1, "score": 5.0}
+{"question": "how to define resources needed", "target": 1, "score": 5.0}
+{"question": "how to make more cpus available in ray.init?", "target": 1, "score": 5.0}
+{"question": "explain this snippet: MAX_NUM_PENDING_TASKS = 100 result_refs = [] for _ in range(NUM_TASKS): if len(result_refs) > MAX_NUM_PENDING_TASKS: # update result_refs to only # track the remaining tasks. ready_refs, result_refs = ray.wait(result_refs, num_returns=1) ray.get(ready_refs) result_refs.append(actor.heavy_compute.remote()) ray.get(result_refs)", "target": 1, "score": 5.0}
+{"question": "how to assign more cpus to a ray.tune() run", "target": 1, "score": 5.0}
+{"question": "give me the location of each trial in ray.tune", "target": 1, "score": 2.0}
+{"question": "What are oss templates", "target": 1, "score": 4.0}
+{"question": "Given the following pattern: MAX_NUM_PENDING_TASKS = 100 result_refs = [] for _ in range(NUM_TASKS): if len(result_refs) > MAX_NUM_PENDING_TASKS: # update result_refs to only # track the remaining tasks. ready_refs, result_refs = ray.wait(result_refs, num_returns=1) ray.get(ready_refs) result_refs.append(actor.heavy_compute.remote()) ray.get(result_refs), what would happen if I increased the num_returns parameter in ray.wait()??", "target": 1, "score": 5.0}
+{"question": "how to select sampler in ray tune optuna search", "target": 1, "score": 5.0}
+{"question": "how to select sample in optunasearch", "target": 1, "score": 4.5}
+{"question": "status stuck on pending while ray trianing", "target": 1, "score": 4.0}
+{"question": "how to get best ray tune results hyperparameter and best result", "target": 1, "score": 4.0}
+{"question": "what signals one training iteration?", "target": 1, "score": 4.5}
+{"question": "how can i serve?", "target": 1, "score": 4.0}
+{"question": "how to configure ray tune to use all cpu available", "target": 1, "score": 5.0}
+{"question": "can you find the documentation about tune.run", "target": 1, "score": 4.0}
+{"question": "what's meaning of Design Patterns & Anti-patterns?", "target": 1, "score": 4.5}
+{"question": "is there any way to pass resources_per_trial to tune.tuner", "target": 1, "score": 5.0}
+{"question": "my multiagent env needs access to a local file but it throws errors", "target": 1, "score": 2.0}
+{"question": "How do I get the node's IP address?", "target": 1, "score": 4.0}
+{"question": "What's a good way to construct the action space for an agent that has to choose among a varying number of options, such as for playing Tic-Tac-Toe?", "target": 1, "score": 4.5}
+{"question": "when I run tune.run and my code finishes running how should I get the best parameters", "target": 1, "score": 1.0}
+{"question": "why does ray not work properly?", "target": 1, "score": 4.5}
+{"question": "where can I find the model config?", "target": 1, "score": 4.5}
+{"question": "Hi ,There is a problem with ray tune. When I worked earlier with optuna for tuning it used a set of hyperparameters to see the performance of the model and based on the performance and set of hyperparameters it used an optimization to see how it can improve performance. now ray uses optuna as built in method but instead of running each trail sequentially it run all of them parallel so it can not benefits from past experiment to change the hyperparameters to improve the future trials. what should I do?", "target": 1, "score": 4.0}
+{"question": "how can I use lstms with rllib?", "target": 1, "score": 4.5}
+{"question": "VectorEnv class that has instances of MultiAgentEnvs is unable to use ray tune's multiagent() function because Rllib misinterprets the vectorenv as not being multiagent", "target": 1, "score": 4.0}
+{"question": "how to train a ppo agent", "target": 1, "score": 5.0}
+{"question": "Does a VecEnvClass(VectorEnv) not support having instances of multiagent classes within it that use the reset function and such? because my training tuner says that the vectorenv doesn't support multiagent policy", "target": 1, "score": 4.0}
+{"question": "can i setup ray without kubernetes?", "target": 1, "score": 4.5}
+{"question": "who are you", "target": 0, "score": 1.0}
+{"question": "What happens when .remote() is called?", "target": 1, "score": 4.0}
+{"question": "How should I set up a curriculum environment for training an RL agent?", "target": 1, "score": 4.5}
+{"question": "Can ray allocate fractional gpu?", "target": 1, "score": 5.0}
+{"question": "ray datasets", "target": 1, "score": 4.0}
+{"question": "Are there known problems with the MADDPG implementation in rllib regarding the SampleBatch while training?", "target": 1, "score": 2.0}
+{"question": "what gets added to the ray object store?", "target": 1, "score": 5.0}
+{"question": "how can I run without any rollout workers?", "target": 1, "score": 4.5}
+{"question": "how to load ES policy from checkpoint", "target": 1, "score": 3.5}
+{"question": "I want to install ray version 1.6, please give me the command", "target": 1, "score": 4.0}
+{"question": "I get this error but I know it is a MultiAgenEnv:ValueError: Have multiple policies <PolicyMap lru-caching-capacity=100 policy-IDs=['policy_red', 'policy_blue']>, but the env <harness.envs.simsim_vector_env.VectorizedSimSimEnv object at 0x00000244B8E4DCF0> is not a subclass of BaseEnv, MultiAgentEnv, ActorHandle, or ExternalMultiAgentEnv!", "target": 1, "score": 4.0}
+{"question": "tune.run accepts a config parameter, which is a dictionary that contains a \"num_gpus\" key. Does this specify the number of GPUs per trial, or the total number available to ray, or some other measurement?", "target": 1, "score": 3.5}
+{"question": "How do I set up a ray cluster?", "target": 1, "score": 4.5}
+{"question": "I have a results folder after running tune.run(). How do I read that folder? tune.analysis no longer work", "target": 1, "score": 4.0}
+{"question": "if I set num_gpus=1 on my desktop, how can I prevent ray from taking exclusive access. I have other parts of learning workflow that could benefit from gpu", "target": 1, "score": 5.0}
+{"question": "implement a custom action distribution with the dirichlet distribution", "target": 1, "score": 4.0}
+{"question": "ray init taking alot of time", "target": 1, "score": 2.0}
+{"question": "What is TrialRunner", "target": 1, "score": 4.0}
+{"question": "ray.get_runtime_context().get_runtime_env_string()", "target": 1, "score": 4.0}
+{"question": "What is PG in this page", "target": 1, "score": 2.0}
+{"question": "how are resourced from a kubenrestes clusster assigned / requested", "target": 1, "score": 4.0}
+{"question": "How to pass certain attributes or properties from submitter to ray job, inside the ray job I have to read those variables give me in detail explanation use this one.. ray.get_runtime_context().get_runtime_env_string() which means, we need to pass query as part of runtime env from the submitter.. i.e. not through metadata. and in the submitter, I can set any key value pair as runtime_env.. 'runtime_env': {'working_dir': '/tmp/', 'query_in':{<actual query>} } in script.py", "target": 1, "score": 4.0}
+{"question": "ray tune distriubted", "target": 1, "score": 2.0}
+{"question": "how does monitring in ray tune work", "target": 1, "score": 4.0}
+{"question": "job return code", "target": 1, "score": 3.5}
+{"question": "is there a specify file format for searializing config and config spaces", "target": 1, "score": 2.5}
+{"question": "does ray support hierachical search spaces", "target": 1, "score": 5.0}
+{"question": "30 seconds for ray serve", "target": 1, "score": 3.5}
+{"question": "ray serve replica init", "target": 1, "score": 2.0}
+{"question": "can you continue a hp search?", "target": 1, "score": 2.0}
+{"question": "can I extend a search run in tune?", "target": 1, "score": 3.5}
+{"question": "what happens if a worker node crashes or a run fails?", "target": 1, "score": 5.0}
+{"question": "How to read a JSON in scrip.py file and monitor the jo status in ray", "target": 1, "score": 4.0}
+{"question": "sync batch", "target": 1, "score": 2.0}
+{"question": "is torchtrainer do syncbatchnorm", "target": 0, "score": 1.0}
+{"question": "I use PPO in RLlib. I want to see the clip values during training. I think one way of this is to get the clip values from the custom callback's on_train_result. But, I'm not sure where the clip value (probably clip_epsilon in Rllib) is in the result dictionary. Please let me know where the clip values are in the result dictionary. Also, let me know they way to include the values in the tensorboard plot as I want to 'see' clip values on the graph during training.", "target": 1, "score": 2.5}
+{"question": "what does num_cpu in ray_remote mean", "target": 1, "score": 4.5}
+{"question": "The GAIL implementation using RLlib", "target": 0, "score": 1.0}
+{"question": "TypeError: Population must be a sequence. For dicts or sets, use sorted(d).", "target": 1, "score": 2.0}
+{"question": "how to get information from trainer.fit() results?", "target": 1, "score": 5.0}
+{"question": "I have to pass set of variables one variable is actual and second is environment variables", "target": 1, "score": 5.0}
+{"question": "In RLlib, can we use a genetic algorithm to optimize the network parameters?", "target": 1, "score": 2.0}
+{"question": "when to use async in ray serve?", "target": 1, "score": 3.5}
+{"question": "how to use this ray.get_runtime_context().get_runtime_env_string() from submitter to ray job, inside ray job I have to read those variables", "target": 1, "score": 3.5}
+{"question": "If I want low latency, how should i set target_num_ongoing_requests_per_replica ?", "target": 1, "score": 5.0}
+{"question": "I have two deployment, one with autoscaling_config of min_replicas between 1 and max 3, another is 1-8,why when i see the dashboard, only second one create a lot of replicas", "target": 1, "score": 4.0}
+{"question": "get_best_result", "target": 0, "score": 1.0}
+{"question": "WARNING 2023-07-27 16:18:23,145 controller 1612362 deployment_state.py:1869 - Deployment default_VectorSearchDeployment has 1 replicas that have taken more than 30s to initialize. This may be caused by a slow __init__ or reconfigure method.", "target": 1, "score": 4.0}
+{"question": "i wan to tune with multiple datasets", "target": 1, "score": 4.0}
+{"question": "i want to tune with multiple dataset to grid_search hyperparamters", "target": 1, "score": 5.0}
+{"question": "How to set up a learning rate schedule?", "target": 1, "score": 4.0}
+{"question": "how can i use multiple dataset in Ray Tune", "target": 1, "score": 4.5}
+{"question": "\"query_in\": \"<actual query>\" what parameter should be passed in it with example", "target": 0, "score": 2.0}
+{"question": "what is the easiest way to run experiments?", "target": 1, "score": 4.5}
+{"question": "here is the code:", "target": 1, "score": 5.0}
+{"question": "How to send files into Ray cluster", "target": 1, "score": 5.0}
+{"question": "how to run two deployment with different router prefix in one ray serve", "target": 1, "score": 4.0}
+{"question": "I have ended training and I have a checkpoint folder. How can I restore and evaluate it. I used tune.Tuner to train", "target": 1, "score": 5.0}
+{"question": "ray remote examples", "target": 0, "score": 2.0}
+{"question": "ray serve use stream_chat and chat", "target": 1, "score": 5.0}
+{"question": "ray serve fastapi", "target": 1, "score": 5.0}
+{"question": "how GCS persistent storage", "target": 1, "score": 4.0}
+{"question": "how Global Control Store persistent storage", "target": 1, "score": 4.5}
+{"question": "I understand. You can pass the query as part of the runtime environment as you described. The ray.get_runtime_context().get_runtime_env_string() function takes a dictionary as input, and you can use this dictionary to pass any key-value pairs that you want to include in the runtime environment. For example, you could use the following code to pass the query and the working directory as part of the runtime environment:", "target": 0, "score": 3.5}
+{"question": "Ray RLLIB use cuda config", "target": 1, "score": 4.0}
+{"question": "Rewrite the code below so it uses Ray Tune to train a PPO agent", "target": 1, "score": 3.0}
+{"question": "Choose a random action ---> 12 observation, reward, done, info = env.step(action) # Take the action 13 14 # Print the reward and the current step TypeError: 'int' object is not callable", "target": 1, "score": 2.0}
+{"question": "Generate a trading environment based on Ray RLLIB version 2.6.1", "target": 1, "score": 4.0}
+{"question": "summrize the content of Ray Core", "target": 1, "score": 5.0}
+{"question": "write the code to deploy a speech to text model", "target": 1, "score": 5.0}
+{"question": "ray.get_runtime_context().get_runtime_env_string()", "target": 1, "score": 4.0}
+{"question": "RaySystemError: System error: Attempting to deserialize object on CUDA device 0 but torch.cuda.device_count() is 0. Please use torch.load with map_location to map your storages to an existing device.", "target": 1, "score": 5.0}
+{"question": "what is _statActor", "target": 1, "score": 3.0}
+{"question": "How do I run a job with my own docker container?", "target": 1, "score": 4.0}
+{"question": "autoscale ray serve", "target": 1, "score": 5.0}
+{"question": "if i use checkpointconfig with ray tune to save checkpoints, where will they be stored", "target": 1, "score": 4.0}
+{"question": "how do i make ray tune automatically save the best performing model checkpoint", "target": 1, "score": 4.5}
+{"question": "why doesnt ray dashboard show pid", "target": 1, "score": 4.0}
+{"question": "What if i do ray up from head node", "target": 1, "score": 4.0}
+{"question": "what if i do ray up from ray head", "target": 1, "score": 5.0}
+{"question": "Running ray up only starts one node but given are 2", "target": 1, "score": 4.0}
+{"question": "how to send telemetry to an OpenTelemetry Collector", "target": 1, "score": 5.0}
+{"question": "What's new in version 2.6.1 of Ray?", "target": 1, "score": 1.0}
+{"question": "Do you need to include serve.run() in a ray serve application if deploying via a yaml file", "target": 1, "score": 4.5}
+{"question": "In RLlib, how is the entropy loss calculated?", "target": 1, "score": 4.0}
+{"question": "What would cause a {\"detail\":\"Not Found\"} error when querying a ray serve endpoint with a fastapi route prefix?", "target": 1, "score": 4.0}
+{"question": "how do you deploy a ray serve application with multiple deployments using a yaml file and ServeDeploySchema", "target": 1, "score": 4.0}
+{"question": "how do you deploy a ray serve application using a yaml file", "target": 1, "score": 4.0}
+{"question": "if a node fails, I want the actor to be restarted on a new node or with clean environment, how do I achieve that", "target": 1, "score": 4.0}
+{"question": "How do I parallelise a dataset loading and transformation?", "target": 1, "score": 5.0}
+{"question": "can i make use client api on same headnode", "target": 1, "score": 3.5}
+{"question": "when a node is marked dead, how does ray restart the node or actor", "target": 1, "score": 4.0}
+{"question": "Would not having a DAGDriver in a ray serve application cause the error {'detail': 'Not Found'}?", "target": 1, "score": 3.5}
+{"question": "What would cause this error for a ray serve application? {'detail': 'Not Found'}", "target": 1, "score": 4.0}
+{"question": "how to submit job with ray cli on remote cluster", "target": 1, "score": 4.0}
+{"question": "Do you need the DAGDriver to deploy a serve application using RayServe?", "target": 1, "score": 5.0}
+{"question": "connect to ray cluster from cli", "target": 1, "score": 5.0}
+{"question": "if i have ray serve 2.5 but ray 2.6, does ray serve still work?", "target": 1, "score": 2.0}
+{"question": "ray how to access worker id within env", "target": 1, "score": 4.0}
+{"question": "How to tune with sklearn pipelines", "target": 1, "score": 3.0}
+{"question": "PolicySpecs", "target": 1, "score": 2.0}
+{"question": "DQNconfig multi_agent()", "target": 1, "score": 2.0}
+{"question": "how do I specify how many gpus I need?", "target": 1, "score": 5.0}
+{"question": "explain this part: cfg_id = ray.put(cfg) dataset_ref = { 'dataset': ray.put(dataset['train']), 'split': ray.put(data_split['train']), 'label_split': ray.put(label_split)}", "target": 1, "score": 2.0}
+{"question": "How to make a vectorenv of an env that has multiagent", "target": 1, "score": 4.0}
+{"question": "With Ray RLlib and multiple workers, are there any hooks that can be used to compress experience data before it is sent on interprocess communication?", "target": 1, "score": 1.0}
+{"question": "running ray rllib with a replaybuffer instance, and storage unit of 'timesteps', what is the object format of samples added with add() and returned by sample(). For convolutional application I want to identify image data and compress it when store, decompress when sample", "target": 1, "score": 4.0}
+{"question": "how would I implement compression in the replay buffer? are there config options for this or do i need to subclass replaybuffer", "target": 1, "score": 2.0}
+{"question": "Can I use sidecar containers", "target": 1, "score": 5.0}
+{"question": "how to customize evaluation function in A3C?", "target": 1, "score": 4.0}
+{"question": "ray serve auto scaler", "target": 1, "score": 4.5}
+{"question": "ray serve canary deployment", "target": 1, "score": 4.5}
+{"question": "I'm trying to load a checkpoint with ES, but I keep getting this: AttributeError: 'ES' object has no attribute 'policy'", "target": 1, "score": 4.0}
+{"question": "how do I set a max number of concurrent jobs in ray.remote", "target": 1, "score": 5.0}
+{"question": "can i see the changelog for rllib 2.6", "target": 1, "score": 4.0}
+{"question": "How can I train a PPO algorithm with a modified policy ?", "target": 1, "score": 4.0}
+{"question": "Convert to ray", "target": 1, "score": 3.5}
+{"question": "What does happen if the head node in ray tune dies?", "target": 1, "score": 5.0}
+{"question": "show a Ray tensorflow example with LSTM", "target": 0, "score": 5.0}
+{"question": "is gymnasium a set of rl algorithm or what?", "target": 1, "score": 4.0}
+{"question": "What's the difference between a Model and a Policy", "target": 1, "score": 4.5}
+{"question": "How would I dynamically create a subclass of an Algorithm class that overrides the setup function?", "target": 1, "score": 4.0}
+{"question": "with ray tune how do i make sure inference is run on gpu", "target": 1, "score": 3.5}
+{"question": "How can I add an energy loss on a PPO algorithm ?", "target": 1, "score": 4.5}
+{"question": "with sac algorithm and ray tune, how can i make training be 3:2 with number of environment samples", "target": 1, "score": 2.5}
+{"question": "Exception ignored in atexit callback<function shutdown at 0x103410ee0>: <function _exit_function at 0x11dddedd0>", "target": 1, "score": 3.5}
+{"question": "why is the second ray function call much faster", "target": 1, "score": 5.0}
+{"question": "python code for add two number", "target": 0, "score": 5.0}
+{"question": "What's the recommended way to log worker progress", "target": 1, "score": 5.0}
+{"question": "how do i specify an application name with the python api?", "target": 1, "score": 2.0}
+{"question": "how can i format the worker logs", "target": 1, "score": 4.0}
+{"question": "how do i specify an application name that is not default?", "target": 1, "score": 4.5}
+{"question": "how do i name a ray serve application?", "target": 1, "score": 4.0}
+{"question": "use overlapblocker in py_entitymatching with modin and ray", "target": 1, "score": 5.0}
+{"question": "I am running a remote function twice. Why is the second much faster?", "target": 1, "score": 4.0}
+{"question": "If a trainable is distibuted, how is ensured that the dependecies are install on the nodes?", "target": 1, "score": 4.0}
+{"question": "How to use this function ray.get_runtime_context()", "target": 1, "score": 5.0}
+{"question": "Creo que esta pasando algo erroneo. me devuelve No local checkpoint was found. Ray Tune will now start a new experiment., el directorio existe, y cada vez que lanzo algo crear un nuevo subdirectorio del formato objetive_FECHA_HORA", "target": 1, "score": 4.0}
+{"question": "How to pass a JSON file in job submission client", "target": 1, "score": 4.0}
+{"question": "in rllib, how can I use the 'reuse_actors' keyword (example please). What do I need to concider when using it?", "target": 0, "score": 2.0}
+{"question": "how do I create a ray serve grpc application?", "target": 1, "score": 4.0}
+{"question": "which model are you using for the ray docs AI?", "target": 1, "score": 4.0}
+{"question": "ray training", "target": 1, "score": 5.0}
+{"question": "I have log mixed between jobs, how can I avoid that", "target": 1, "score": 4.0}
+{"question": "how to set resource for serve.deployment", "target": 1, "score": 2.0}
+{"question": "how can I disable the logs coloras and formating in a job", "target": 1, "score": 5.0}
+{"question": "why when I pass an ObjectRef to the next workflow function I have the object itself.", "target": 1, "score": 4.0}
+{"question": "How to read the ray dataset", "target": 1, "score": 5.0}
+{"question": "Use ray for reading big data csv files", "target": 1, "score": 4.0}
+{"question": "how to set customer resource when start cluster?", "target": 1, "score": 5.0}
+{"question": "How can I use the experimental `storage` option of the ray.init", "target": 1, "score": 2.5}
+{"question": "how to use ray to serve llama2", "target": 1, "score": 2.0}
+{"question": "how to get serve status by api", "target": 1, "score": 4.0}
+{"question": "How can I set the log style of a job", "target": 1, "score": 5.0}
+{"question": "How can I share data across job execution", "target": 1, "score": 5.0}
+{"question": "how can I set the log style to record when submitting a job using the sdk", "target": 1, "score": 2.0}
+{"question": "Can I deploy several coordinated models?", "target": 1, "score": 5.0}
+{"question": "Can I export several coordinated models?", "target": 1, "score": 4.0}
+{"question": "how can I disable log colors", "target": 1, "score": 4.0}
+{"question": "How can I save checkpoint if I'm using tune", "target": 1, "score": 3.5}
+{"question": "How can I set the log level", "target": 1, "score": 4.0}
+{"question": "RETRIEVER RAY", "target": 1, "score": 4.0}
+{"question": "how to submit a json data in python script and pass through metadata and submit the job and monitor the status", "target": 1, "score": 5.0}
+{"question": "How can I have the job logs sumitted", "target": 1, "score": 5.0}
+{"question": "how to solve the ray job submit by using metadata and getting struck in infinte loop how to solve this error", "target": 1, "score": 4.0}
+{"question": "ray serve deployment logs", "target": 1, "score": 5.0}
+{"question": "Get cluster resource by node", "target": 1, "score": 4.0}
+{"question": "how could I use the job submission api to log the number of item I loaded", "target": 1, "score": 3.5}
+{"question": "Using workflows, how could I run a task each 5 minutes", "target": 1, "score": 3.5}
+{"question": "loaded_checkpoint = session.get_checkpoint() if loaded_checkpoint: with loaded_checkpoint.as_directory() as loaded_checkpoint_dir: model_state, optimizer_state = torch.load(os.path.join(loaded_checkpoint_dir, \"checkpoint.pt\")) net.load_state_dict(model_state) optimizer.load_state_dict(optimizer_state)", "target": 1, "score": 4.0}
+{"question": "give me a Ray Data + Ray Train example for image PyTorch training", "target": 0, "score": 4.5}
+{"question": "How to pass multiple pipeline mongo queries in to process", "target": 1, "score": 4.5}
+{"question": "how to effectively use ray remote", "target": 1, "score": 4.0}
+{"question": "how do i configure my ray tune run to reuse actors", "target": 1, "score": 5.0}
+{"question": "with sac ray algorithm, how do I reduce the max size of the replay buffer", "target": 1, "score": 5.0}
+{"question": "why would i get this error ImportError: cannot import name 'Field' from 'pydantic' (C:\\ProgramData\\Anaconda3\\envs\\mlagnt-env\\lib\\site-packages\\pydantic\\__init__.py)", "target": 1, "score": 3.5}
+{"question": "load multiple csv files into Ray Dataset but use only one data file per Ray RLLIB environment for parallel tuning with Ray Tune", "target": 1, "score": 3.5}
+{"question": "I am getting this error when trying to instantiate a tune.tuner object import tensorflow_probability as tfp ModuleNotFoundError: No module named 'tensorflow_probability'", "target": 1, "score": 4.0}
+{"question": "1. KubeRay provides 3 CRDs: RayCluster, RayJob, and RayService. What is the use case for each of them?", "target": 1, "score": 5.0}
+{"question": "kuberay usecase", "target": 1, "score": 5.0}
+{"question": "load multiple csv files into Ray Dataset but use only one data file per Ray RLLIB environment for parallel training", "target": 1, "score": 4.0}
+{"question": "how do i specify that ray tune should use pytorch and not tensorflow", "target": 1, "score": 4.0}
+{"question": "Ral rllib load one data file per environment using Ray Data", "target": 1, "score": 2.5}
+{"question": "Ral rllib load one data file per environment", "target": 1, "score": 2.0}
+{"question": "in algorithm config, what are the functions of the \"num_workers\", \"num_cpus\", and \"num_gpus\" parameters", "target": 1, "score": 4.5}
+{"question": "for a ray tuner object, how do I specify the class to use for the environment in an rl application", "target": 1, "score": 2.0}
+{"question": "How can I store data on the hard drive of the cluster and then retrieve it", "target": 1, "score": 5.0}
+{"question": "who is India's Prime Minister?", "target": 0, "score": 5.0}
+{"question": "when specifying the hyperparam_mutations for an instance of population based learning, how do I specify hyperparams that are nested in the target algorithm?", "target": 1, "score": 5.0}
+{"question": "How can I efficiently pull data from clickhouse", "target": 1, "score": 5.0}
+{"question": "How to delete objects from the object store", "target": 1, "score": 4.0}
+{"question": "what are the available hyperparameters for the Ray SAC implementation?", "target": 1, "score": 2.0}
+{"question": "give me an example of how to use ray to serve a language model, like OPT model", "target": 0, "score": 4.0}
+{"question": "_available_resources_per_node to remote", "target": 1, "score": 4.0}
+{"question": "How do I get started?", "target": 1, "score": 5.0}
+{"question": "How do I get started?", "target": 1, "score": 5.0}
