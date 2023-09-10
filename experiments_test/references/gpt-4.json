@@ -1,9 +1,0 @@
-[
-    {
-        "question": "I\u2019m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?",
-        "source": "https://docs.ray.io/en/master/data/transforming-data.html#configuring-batch-format",
-        "answer": "You can configure the batch type in Ray Data by specifying the 'batch_format' in the 'map_batches()' function. If you're working with NumPy ndarrays, your function should return a dict of ndarrays. If you're working with pandas DataFrames, your function should return a DataFrame. Make sure your function is returning the correct type based on your specified 'batch_format'.",
-        "score": 5.0,
-        "reasoning": "The context provides clear instructions on how to configure the batch type in Ray Data and how to use the 'map_batches()' function. It also provides examples for both NumPy and pandas, which directly answers the query."
-    }
-]

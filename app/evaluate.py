@@ -1,4 +1,30 @@
+import json
 import re
+from pathlib import Path
+
+import numpy as np
+from IPython.display import JSON, clear_output, display
+from tqdm import tqdm
+
+from app.config import ROOT_DIR
+from app.generate import generate_response
+from app.utils import set_credentials
+
+
+def get_retrieval_score(references, generated):
+    matches = np.zeros(len(references))
+    for i in range(len(references)):
+        reference_source = references[i]["source"].split("#")[0]
+        if not reference_source:
+            matches[i] = 1
+            continue
+        for source in generated[i]["sources"]:
+            # sections don't have to perfectly match
+            if reference_source == source.split("#")[0]:
+                matches[i] = 1
+                continue
+    retrieval_score = np.mean(matches)
+    return retrieval_score
 
 
 def extract_from_response(response):
@@ -31,6 +57,7 @@ def evaluate_responses(
     max_context_length,
     system_content,
     assistant_content="",
+    experiments_dir="experiments",
     num_samples=None,
 ):
     # Set credentials
@@ -81,7 +108,9 @@ def evaluate_responses(
 
     # Save to file
     evaluator_name = evaluator.split("/")[-1].lower()
-    evaluation_fp = Path(ROOT_DIR, EXPERIMENTS_DIR, "evaluations", f"{experiment_name}_{evaluator_name}.json")
+    evaluation_fp = Path(
+        ROOT_DIR, experiments_dir, "evaluations", f"{experiment_name}_{evaluator_name}.json"
+    )
     evaluation_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
         "experiment_name": experiment_name,
@@ -96,7 +125,9 @@ def evaluate_responses(
     evaluation = {
         "config": config,
         "retrieval_score": get_retrieval_score(references, generated),
-        "quality_score": np.mean([item["score"] for item in results if (item["score"] and item["reference_answer"])]),
+        "quality_score": np.mean(
+            [item["score"] for item in results if (item["score"] and item["reference_answer"])]
+        ),
         "results": results,
     }
     with open(evaluation_fp, "w") as fp:
