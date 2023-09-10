@@ -2,7 +2,7 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup, NavigableString
 
-from app.config import EFS_DIR
+from rag.config import EFS_DIR
 
 
 def extract_text_from_section(section):

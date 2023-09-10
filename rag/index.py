@@ -7,9 +7,9 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from pgvector.psycopg import register_vector
 from ray.data import ActorPoolStrategy
 
-from app.config import EFS_DIR, EMBEDDING_DIMENSIONS
-from app.embed import EmbedChunks
-from app.utils import execute_bash
+from rag.config import EFS_DIR, EMBEDDING_DIMENSIONS
+from rag.embed import EmbedChunks
+from rag.utils import execute_bash
 
 
 class StoreResults:

@@ -52,7 +52,7 @@ pre-commit install
 pre-commit autoupdate
 ```
 
-### Variables
+### Credentials
 ```bash
 touch .env
 # Add environment variables to .env
@@ -63,3 +63,5 @@ ANYSCALE_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
 DB_CONNECTION_STRING="dbname=postgres user=postgres host=localhost password=postgres"
 source .env
 ```
+
+Now we're ready to go through the [rag.ipynb](notebooks/rag.ipynb) interactive notebook to develop and serve our LLM application!

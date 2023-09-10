@@ -16,10 +16,10 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-from app import query
-from app.config import EFS_DIR, EMBEDDING_DIMENSIONS
+from rag.config import EFS_DIR, EMBEDDING_DIMENSIONS
+from rag.generate import QueryAgent
 
-application = FastAPI()
+app = FastAPI()
 
 
 def get_secret(secret_name):
@@ -87,9 +87,9 @@ class Answer(BaseModel):
 
 
 @serve.deployment(
-    route_prefix="/", num_replicas="1", ray_actor_options={"num_cpus": 28, "num_gpus": 2}
+    route_prefix="/", num_replicas=1, ray_actor_options={"num_cpus": 28, "num_gpus": 2}
 )
-@serve.ingress(application)
+@serve.ingress(app)
 class RayAssistantDeployment:
     def __init__(self, chunk_size, chunk_overlap, num_chunks, embedding_model_name, llm):
         # Set credentials
@@ -106,22 +106,22 @@ class RayAssistantDeployment:
 
         # Query agent
         self.num_chunks = num_chunks
-        self.agent = query.QueryAgent(
+        self.agent = QueryAgent(
             llm=llm,
             max_context_length=4096,
             system_content="Answer the query using the context provided.",
         )
-        self.app = SlackApp.remote()
+        self.slack_app = SlackApp.remote()
         # Run the Slack app in the background
-        self.runner = self.app.run.remote()
+        self.runner = self.slack_app.run.remote()
 
-    @application.post("/query")
+    @app.post("/query")
     def query(self, query: Query) -> Answer:
         result = self.agent(query=query.query, num_chunks=self.num_chunks)
         return Answer.parse_obj(result)
 
 
-# Deploy the Ray Serve application.
+# Deploy the Ray Serve app
 deployment = RayAssistantDeployment.bind(
     chunk_size=500,
     chunk_overlap=50,
