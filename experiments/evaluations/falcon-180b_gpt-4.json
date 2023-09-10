@@ -1,7 +1,7 @@
 {
     "config": {
         "experiment_name": "falcon-180b-eval-3",
-        "reference_loc": "/home/ray/default/llm-applications/experiments/references/gpt-4.json",
+        "references_loc": "/home/ray/default/llm-applications/experiments/references/gpt-4.json",
         "response_loc": "/home/ray/default/llm-applications/experiments/responses/falcon-180b.json",
         "evaluator": "gpt-4",
         "temperature": 0.0,

@@ -134,8 +134,6 @@ class QueryAgent:
 # Generate responses
 def generate_responses(
     experiment_name,
-    data_path,
-    sections,
     chunk_size,
     chunk_overlap,
     num_chunks,
@@ -144,13 +142,15 @@ def generate_responses(
     temperature,
     max_context_length,
     system_content,
-    assistant_content="",
-    experiments_dir="experiments",
+    assistant_content,
+    docs_dir,
+    experiments_dir,
+    references_fp,
     num_samples=None,
 ):
     # Build index
     set_index(
-        sections=sections,
+        docs_dir=docs_dir,
         embedding_model_name=embedding_model_name,
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
@@ -167,8 +167,8 @@ def generate_responses(
 
     # Generate responses
     results = []
-    with open(Path(data_path), "r") as f:
-        questions = [json.loads(item)["question"] for item in list(f)][:num_samples]
+    with open(Path(references_fp), "r") as f:
+        questions = [item["question"] for item in json.load(f)][:num_samples]
     for query in tqdm(questions):
         result = agent(query=query, num_chunks=num_chunks)
         results.append(result)
@@ -180,7 +180,6 @@ def generate_responses(
     responses_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
         "experiment_name": experiment_name,
-        "data_path": data_path,
         "chunk_size": chunk_size,
         "chunk_overlap": chunk_overlap,
         "num_chunks": num_chunks,
@@ -190,6 +189,10 @@ def generate_responses(
         "max_context_length": max_context_length,
         "system_content": system_content,
         "assistant_content": assistant_content,
+        "docs_dir": str(docs_dir),
+        "experiments_dir": str(experiments_dir),
+        "references_fp": str(references_fp),
+        "num_samples": len(questions),
     }
     responses = {
         "config": config,

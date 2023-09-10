@@ -6,7 +6,6 @@ import numpy as np
 from IPython.display import JSON, clear_output, display
 from tqdm import tqdm
 
-from rag.config import ROOT_DIR
 from rag.generate import generate_response
 from rag.utils import set_credentials
 
@@ -50,23 +49,23 @@ def extract_from_response(response):
 
 def evaluate_responses(
     experiment_name,
-    reference_loc,
-    response_loc,
     evaluator,
     temperature,
     max_context_length,
     system_content,
-    assistant_content="",
-    experiments_dir="experiments",
+    assistant_content,
+    experiments_dir,
+    references_fp,
+    responses_fp,
     num_samples=None,
 ):
     # Set credentials
     set_credentials(llm=evaluator)
 
     # Load answers
-    with open(Path(reference_loc), "r") as f:
+    with open(Path(references_fp), "r") as f:
         references = [item for item in json.load(f)][:num_samples]
-    with open(Path(response_loc), "r") as f:
+    with open(Path(responses_fp), "r") as f:
         generated = [item for item in json.load(f)["results"]][:num_samples]
     assert len(references) == len(generated)
 
@@ -109,18 +108,19 @@ def evaluate_responses(
     # Save to file
     evaluator_name = evaluator.split("/")[-1].lower()
     evaluation_fp = Path(
-        ROOT_DIR, experiments_dir, "evaluations", f"{experiment_name}_{evaluator_name}.json"
+        experiments_dir, "evaluations", f"{experiment_name}_{evaluator_name}.json"
     )
     evaluation_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
         "experiment_name": experiment_name,
-        "reference_loc": reference_loc,
-        "response_loc": response_loc,
         "evaluator": evaluator,
         "temperature": temperature,
         "max_context_length": max_context_length,
         "system_content": system_content,
         "assistant_content": assistant_content,
+        "experiments_dir": str(experiments_dir),
+        "references_fp": str(references_fp),
+        "responses_fp": str(responses_fp),
     }
     evaluation = {
         "config": config,

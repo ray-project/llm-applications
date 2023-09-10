@@ -3,8 +3,6 @@
 
 import json
 import os
-import subprocess
-from pathlib import Path
 from typing import List
 
 import openai
@@ -16,8 +14,8 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-from rag.config import EFS_DIR, EMBEDDING_DIMENSIONS
 from rag.generate import QueryAgent
+from rag.index import load_index
 
 app = FastAPI()
 
@@ -28,32 +26,6 @@ def get_secret(secret_name):
     client = boto3.client("secretsmanager", region_name="us-west-2")
     response = client.get_secret_value(SecretId="ray-assistant")
     return json.loads(response["SecretString"])[secret_name]
-
-
-def execute_bash(command):
-    results = subprocess.run(
-        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
-    )
-    return results
-
-
-def load_index(embedding_model_name, chunk_size, chunk_overlap):
-    # Drop current Vector DB and prepare for new one
-    execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -c "DROP TABLE document;"')
-    execute_bash(
-        f"sudo -u postgres psql -f ../migrations/vector-{EMBEDDING_DIMENSIONS[embedding_model_name]}.sql"
-    )
-    SQL_DUMP_FP = Path(
-        EFS_DIR,
-        "sql_dumps",
-        f"{embedding_model_name.split('/')[-1]}_{chunk_size}_{chunk_overlap}.sql",
-    )
-
-    # Load vector DB
-    if SQL_DUMP_FP.exists():  # Load from SQL dump
-        execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -f {SQL_DUMP_FP}')
-    else:
-        raise Exception(f"{SQL_DUMP_FP} does not exist!")
 
 
 @ray.remote
