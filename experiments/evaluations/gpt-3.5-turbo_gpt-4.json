@@ -1,7 +1,7 @@
 {
     "config": {
         "experiment_name": "gpt-3.5-turbo",
-        "reference_loc": "/home/ray/ray-assistant/experiments/references/gpt-4.json",
+        "references_loc": "/home/ray/ray-assistant/experiments/references/gpt-4.json",
         "response_loc": "/home/ray/ray-assistant/experiments/responses/gpt-3.5-turbo.json",
         "evaluator": "gpt-4",
         "temperature": 0.0,

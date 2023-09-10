@@ -1,7 +1,7 @@
 {
     "config": {
         "experiment_name": "bge-large-en",
-        "reference_loc": "/home/ray/ray-assistant/experiments/references/gpt-4.json",
+        "references_loc": "/home/ray/ray-assistant/experiments/references/gpt-4.json",
         "response_loc": "/home/ray/ray-assistant/experiments/responses/bge-large-en.json",
         "evaluator": "gpt-4",
         "temperature": 0.0,
