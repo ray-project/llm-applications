@@ -6,9 +6,9 @@ import numpy as np
 from IPython.display import JSON, clear_output, display
 from tqdm import tqdm
 
-from app.config import ROOT_DIR
-from app.generate import generate_response
-from app.utils import set_credentials
+from rag.config import ROOT_DIR
+from rag.generate import generate_response
+from rag.utils import set_credentials
 
 
 def get_retrieval_score(references, generated):

@@ -11,10 +11,10 @@ from IPython.display import JSON, clear_output, display
 from pgvector.psycopg import register_vector
 from tqdm import tqdm
 
-from app.config import ROOT_DIR
-from app.embed import get_embedding_model
-from app.index import set_index
-from app.utils import set_credentials
+from rag.config import ROOT_DIR
+from rag.embed import get_embedding_model
+from rag.index import set_index
+from rag.utils import set_credentials
 
 
 def prepare_response(response, stream):
