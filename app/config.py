@@ -3,7 +3,6 @@ from pathlib import Path
 # Directories
 EFS_DIR = Path("/efs/shared_storage/goku")
 ROOT_DIR = Path(__file__).parent.parent.absolute()
-EXPERIMENTS_DIR = Path(ROOT_DIR, "experiments")
 
 # Mappings
 EMBEDDING_DIMENSIONS = {

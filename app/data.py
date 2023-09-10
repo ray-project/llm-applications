@@ -1,4 +1,8 @@
-from bs4 import BeautifulSoup, NavigableString, Tag
+from pathlib import Path
+
+from bs4 import BeautifulSoup, NavigableString
+
+from app.config import EFS_DIR
 
 
 def extract_text_from_section(section):
@@ -30,3 +34,20 @@ def extract_sections(record):
             uri = path_to_uri(path=record["path"])
             section_list.append({"source": f"{uri}#{section_id}", "text": section_text})
     return section_list
+
+
+def fetch_text(uri):
+    url, anchor = uri.split("#") if "#" in uri else (uri, None)
+    file_path = Path(EFS_DIR, url.split("https://")[-1])
+    with open(file_path, "r", encoding="utf-8") as file:
+        html_content = file.read()
+    soup = BeautifulSoup(html_content, "html.parser")
+    if anchor:
+        target_element = soup.find(id=anchor)
+        if target_element:
+            text = target_element.get_text()
+        else:
+            return fetch_text(uri=url)
+    else:
+        text = soup.get_text()
+    return text

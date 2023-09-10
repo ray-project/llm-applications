@@ -2,7 +2,7 @@
     "config": {
         "experiment_name": "without-context",
         "data_path": "/home/ray/ray-assistant/datasets/eval-dataset-v1.jsonl",
-        "chunk_size": 100,
+        "chunk_size": 300,
         "chunk_overlap": 50,
         "num_chunks": 0,
         "embedding_model_name": "thenlper/gte-base",

@@ -1,13 +1,20 @@
+import json
 import os
 import sys
 import time
+from pathlib import Path
 
 import numpy as np
 import openai
 import psycopg
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+from IPython.display import JSON, clear_output, display
 from pgvector.psycopg import register_vector
+from tqdm import tqdm
+
+from app.config import ROOT_DIR
+from app.embed import get_embedding_model
+from app.index import set_index
+from app.utils import set_credentials
 
 
 def prepare_response(response, stream):
@@ -57,28 +64,15 @@ def generate_response(
     return ""
 
 
-def get_embedding_model(embedding_model_name, model_kwargs, encode_kwargs):
-    if embedding_model_name == "text-embedding-ada-002":
-        embedding_model = OpenAIEmbeddings(
-            model=embedding_model_name,
-            model_kwargs=model_kwargs,
-            encode_kwargs=encode_kwargs,
-            openai_api_base=os.environ["OPENAI_API_BASE"],
-            openai_api_key=os.environ["OPENAI_API_KEY"],
-        )
-    else:
-        embedding_model = HuggingFaceEmbeddings(
-            model_name=embedding_model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
-        )
-    return embedding_model
-
-
 def get_sources_and_context(query, embedding_model, num_chunks):
     embedding = np.array(embedding_model.embed_query(query))
     with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
         register_vector(conn)
         with conn.cursor() as cur:
-            cur.execute("SELECT * FROM document ORDER BY embedding <-> %s LIMIT %s", (embedding, num_chunks))
+            cur.execute(
+                "SELECT * FROM document ORDER BY embedding <-> %s LIMIT %s",
+                (embedding, num_chunks),
+            )
             rows = cur.fetchall()
             context = [{"text": row[1]} for row in rows]
             sources = [row[2] for row in rows]
@@ -96,38 +90,25 @@ class QueryAgent:
         assistant_content="",
     ):
         # Embedding model
-        model_kwargs = {"device": "cuda"}
-        encode_kwargs = {"device": "cuda", "batch_size": 100}
-        if embedding_model_name == "text-embedding-ada-002":
-            self.embedding_model = OpenAIEmbeddings(
-                model=embedding_model_name,
-                model_kwargs=model_kwargs,
-                encode_kwargs=encode_kwargs,
-                openai_api_base=os.environ["OPENAI_API_BASE"],
-                openai_api_key=os.environ["OPENAI_API_KEY"],
-            )
-        else:
-            self.embedding_model = HuggingFaceEmbeddings(
-                model_name=embedding_model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
-            )
+        self.embedding_model = get_embedding_model(
+            embedding_model_name=embedding_model_name,
+            model_kwargs={"device": "cuda"},
+            encode_kwargs={"device": "cuda", "batch_size": 100},
+        )
 
         # LLM
         self.llm = llm
         self.temperature = temperature
+        set_credentials(llm=llm)
         self.context_length = max_context_length - len(system_content + assistant_content)
         self.system_content = system_content
         self.assistant_content = assistant_content
 
     def __call__(self, query, num_chunks=5):
-        # Get context
-        embedding = np.array(self.embedding_model.embed_query(query))
-        with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
-            register_vector(conn)
-            with conn.cursor() as cur:
-                cur.execute("SELECT * FROM document ORDER BY embedding <-> %s LIMIT %s", (embedding, num_chunks))
-                rows = cur.fetchall()
-                context = [{"text": row[1]} for row in rows]
-                sources = [row[2] for row in rows]
+        # Get sources and context
+        sources, context = get_sources_and_context(
+            query=query, embedding_model=self.embedding_model, num_chunks=num_chunks
+        )
 
         # Generate response
         user_content = f"query: {query}, context: {context}"
@@ -145,6 +126,7 @@ class QueryAgent:
             "question": query,
             "sources": sources,
             "answer": answer,
+            "llm": self.llm,
         }
         return result
 
@@ -163,11 +145,15 @@ def generate_responses(
     max_context_length,
     system_content,
     assistant_content="",
+    experiments_dir="experiments",
     num_samples=None,
 ):
     # Build index
     set_index(
-        sections=sections, embedding_model_name=embedding_model_name, chunk_size=chunk_size, chunk_overlap=chunk_overlap
+        sections=sections,
+        embedding_model_name=embedding_model_name,
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
     )
 
     # Query agent
@@ -190,7 +176,7 @@ def generate_responses(
         display(JSON(json.dumps(result, indent=2)))
 
     # Save to file
-    responses_fp = Path(ROOT_DIR, EXPERIMENTS_DIR, "responses", f"{experiment_name}.json")
+    responses_fp = Path(ROOT_DIR, experiments_dir, "responses", f"{experiment_name}.json")
     responses_fp.parent.mkdir(parents=True, exist_ok=True)
     config = {
         "experiment_name": experiment_name,

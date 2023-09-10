@@ -31,15 +31,23 @@ def get_secret(secret_name):
 
 
 def execute_bash(command):
-    results = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    results = subprocess.run(
+        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    )
     return results
 
 
 def load_index(embedding_model_name, chunk_size, chunk_overlap):
     # Drop current Vector DB and prepare for new one
     execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -c "DROP TABLE document;"')
-    execute_bash(f"sudo -u postgres psql -f ../migrations/vector-{EMBEDDING_DIMENSIONS[embedding_model_name]}.sql")
-    SQL_DUMP_FP = Path(EFS_DIR, "sql_dumps", f"{embedding_model_name.split('/')[-1]}_{chunk_size}_{chunk_overlap}.sql")
+    execute_bash(
+        f"sudo -u postgres psql -f ../migrations/vector-{EMBEDDING_DIMENSIONS[embedding_model_name]}.sql"
+    )
+    SQL_DUMP_FP = Path(
+        EFS_DIR,
+        "sql_dumps",
+        f"{embedding_model_name.split('/')[-1]}_{chunk_size}_{chunk_overlap}.sql",
+    )
 
     # Load vector DB
     if SQL_DUMP_FP.exists():  # Load from SQL dump
@@ -78,7 +86,9 @@ class Answer(BaseModel):
     sources: List[str]
 
 
-@serve.deployment(route_prefix="/", num_replicas="1", ray_actor_options={"num_cpus": 28, "num_gpus": 2})
+@serve.deployment(
+    route_prefix="/", num_replicas="1", ray_actor_options={"num_cpus": 28, "num_gpus": 2}
+)
 @serve.ingress(application)
 class RayAssistantDeployment:
     def __init__(self, chunk_size, chunk_overlap, num_chunks, embedding_model_name, llm):
