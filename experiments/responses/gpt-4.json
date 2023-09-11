@@ -9,7 +9,7 @@
         "llm": "gpt-4",
         "temperature": 0.0,
         "max_context_length": 8192,
-        "system_content": "Answer the query using the context provided.",
+        "system_content": "Answer the query using the context provided. Be succinct.",
         "assistant_content": ""
     },
     "results": [

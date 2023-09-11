@@ -8,14 +8,14 @@ def get_embedding_model(embedding_model_name, model_kwargs, encode_kwargs):
     if embedding_model_name == "text-embedding-ada-002":
         embedding_model = OpenAIEmbeddings(
             model=embedding_model_name,
-            model_kwargs=model_kwargs,
-            encode_kwargs=encode_kwargs,
             openai_api_base=os.environ["OPENAI_API_BASE"],
             openai_api_key=os.environ["OPENAI_API_KEY"],
         )
     else:
         embedding_model = HuggingFaceEmbeddings(
-            model_name=embedding_model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
+            model_name=embedding_model_name,
+            model_kwargs={"device": "cuda"},
+            encode_kwargs={"device": "cuda", "batch_size": 100},
         )
     return embedding_model
 

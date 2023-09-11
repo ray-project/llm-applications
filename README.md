@@ -12,9 +12,10 @@ In this guide, we will learn how to:
 
 - 💻 Develop a retrieval augmented generation (RAG) based LLM application.
 - 🚀 Scale the major components (embed, index, serve, etc.) in our application.
-- ✅ Evaluate different configurations of our application to optimize for both per-component (ex. `retrieval_score`) and overall performance (`quality_score`).
-- 🔀 Implement a hybrid routing approach that closes the gap between open-source and closed-source LLMs.
+- ✅ Evaluate different configurations of our application to optimize for both per-component (ex. retrieval_score) and overall performance (quality_score).
+- 🔀 Implement an agent routing approach to bridge the gap b/w OSS and closed LLMs.
 - 📦 Serve the application in a highlight available and scalable manner.
+- 💥 Share the 1st order and 2nd order impact LLM applications can have for your team.
 
 ## Setup
 

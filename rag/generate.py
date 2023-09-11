@@ -14,7 +14,7 @@ from tqdm import tqdm
 from rag.config import ROOT_DIR
 from rag.embed import get_embedding_model
 from rag.index import set_index
-from rag.utils import set_credentials
+from rag.utils import get_credentials
 
 
 def prepare_response(response, stream):
@@ -43,12 +43,15 @@ def generate_response(
 ):
     """Generate response from an LLM."""
     retry_count = 0
+    api_base, api_key = get_credentials(llm=llm)
     while retry_count < max_retries:
         try:
             response = openai.ChatCompletion.create(
                 model=llm,
                 temperature=temperature,
                 stream=stream,
+                api_base=api_base,
+                api_key=api_key,
                 messages=[
                     {"role": "system", "content": system_content},
                     {"role": "assistant", "content": assistant_content},
@@ -70,7 +73,7 @@ def get_sources_and_context(query, embedding_model, num_chunks):
         register_vector(conn)
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT * FROM document ORDER BY embedding <-> %s LIMIT %s",
+                "SELECT * FROM document ORDER BY embedding <=> %s LIMIT %s",
                 (embedding, num_chunks),
             )
             rows = cur.fetchall()
@@ -99,12 +102,11 @@ class QueryAgent:
         # LLM
         self.llm = llm
         self.temperature = temperature
-        set_credentials(llm=llm)
         self.context_length = max_context_length - len(system_content + assistant_content)
         self.system_content = system_content
         self.assistant_content = assistant_content
 
-    def __call__(self, query, num_chunks=5):
+    def __call__(self, query, num_chunks=5, stream=True):
         # Get sources and context
         sources, context = get_sources_and_context(
             query=query, embedding_model=self.embedding_model, num_chunks=num_chunks
@@ -115,7 +117,7 @@ class QueryAgent:
         answer = generate_response(
             llm=self.llm,
             temperature=self.temperature,
-            stream=True,
+            stream=stream,
             system_content=self.system_content,
             assistant_content=self.assistant_content,
             user_content=user_content[: self.context_length],

@@ -3,6 +3,8 @@
 
 import json
 import os
+import pickle
+from pathlib import Path
 from typing import List
 
 import openai
@@ -14,6 +16,7 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
+from rag.config import MAX_CONTEXT_LENGTHS, ROOT_DIR
 from rag.generate import QueryAgent
 from rag.index import load_index
 
@@ -56,6 +59,7 @@ class Answer(BaseModel):
     question: str
     answer: str
     sources: List[str]
+    llm: str
 
 
 @serve.deployment(
@@ -78,18 +82,30 @@ class RayAssistantDeployment:
 
         # Query agent
         self.num_chunks = num_chunks
-        self.agent = QueryAgent(
-            llm=llm,
-            max_context_length=4096,
-            system_content="Answer the query using the context provided.",
+        system_content = "Answer the query using the context provided. Be succint."
+        self.oss_agent = QueryAgent(
+            llm=llm, max_context_length=MAX_CONTEXT_LENGTHS[llm], system_content=system_content
         )
-        self.slack_app = SlackApp.remote()
+        self.gpt_agent = QueryAgent(
+            llm="gpt-4",
+            max_context_length=MAX_CONTEXT_LENGTHS["gpt-4"],
+            system_content=system_content,
+        )
+
+        # Router
+        router_fp = Path(ROOT_DIR, "datasets", "router.pkl")
+        with open(router_fp, "rb") as file:
+            self.router = pickle.load(file)
+
         # Run the Slack app in the background
+        self.slack_app = SlackApp.remote()
         self.runner = self.slack_app.run.remote()
 
     @app.post("/query")
     def query(self, query: Query) -> Answer:
-        result = self.agent(query=query.query, num_chunks=self.num_chunks)
+        use_oss_agent = self.router.predict([query.query])[0]
+        agent = self.oss_agent if use_oss_agent else self.gpt_agent
+        result = agent(query=query.query, num_chunks=self.num_chunks)
         return Answer.parse_obj(result)
 
 
