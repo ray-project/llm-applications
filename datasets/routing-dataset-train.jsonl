@@ -1,4 +1,3 @@
-{"question": "how can I use leela chess zero for a similar two player board game called breakthrough?", "target": 1}
 {"question": "what is num_samples in tune?", "target": 1}
 {"question": "What's the difference between learner worker and local worker?", "target": 1}
 {"question": "I have a two player board game that I would like to learn by self-play using alphazero. How can I do this", "target": 1}

@@ -7,7 +7,6 @@ from IPython.display import JSON, clear_output, display
 from tqdm import tqdm
 
 from rag.generate import generate_response
-from rag.utils import set_credentials
 
 
 def get_retrieval_score(references, generated):
@@ -59,9 +58,6 @@ def evaluate_responses(
     responses_fp,
     num_samples=None,
 ):
-    # Set credentials
-    set_credentials(llm=evaluator)
-
     # Load answers
     with open(Path(references_fp), "r") as f:
         references = [item for item in json.load(f)][:num_samples]
