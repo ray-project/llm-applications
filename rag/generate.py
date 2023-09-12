@@ -19,14 +19,9 @@ from rag.utils import get_credentials
 
 def prepare_response(response, stream):
     if stream:
-        answer = []
         for chunk in response:
             if "content" in chunk["choices"][0]["delta"].keys():
-                content = chunk["choices"][0]["delta"]["content"]
-                answer.append(content)
-                sys.stdout.write(content)
-                sys.stdout.flush()
-        return "".join([item for item in answer])
+                yield chunk["choices"][0]["delta"]["content"]
     else:
         return response["choices"][-1]["message"]["content"]
 
