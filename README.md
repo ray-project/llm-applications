@@ -1,8 +1,8 @@
 # LLM Applications
 
-A Comprehensive Guide for Developing and Serving RAG Applications in Production.
+A Comprehensive Guide for building RAG-based LLM Applications
 
-- **Blog post**: https://www.anyscale.com/blog
+- **Blog post**: https://www.anyscale.com/blog/a-comprehensive-guide-for-building-rag-based-llm-applications-part-1
 - **GitHub repository**: https://github.com/ray-project/llm-applications
 - **Interactive notebook**: https://github.com/ray-project/llm-applications/blob/main/notebooks/rag.ipynb
 - **Anyscale Endpoints**: https://endpoints.anyscale.com/
@@ -10,12 +10,15 @@ A Comprehensive Guide for Developing and Serving RAG Applications in Production.
 
 In this guide, we will learn how to:
 
-- 💻 Develop a retrieval augmented generation (RAG) based LLM application.
-- 🚀 Scale the major components (embed, index, serve, etc.) in our application.
+- 💻 Develop a retrieval augmented generation (RAG) based LLM application from scratch.
+- 🚀 Scale the major components (load, chunk, embed, index, serve, etc.) in our application.
 - ✅ Evaluate different configurations of our application to optimize for both per-component (ex. retrieval_score) and overall performance (quality_score).
-- 🔀 Implement an agent routing approach to bridge the gap b/w OSS and closed LLMs.
-- 📦 Serve the application in a highlight available and scalable manner.
-- 💥 Share the 1st order and 2nd order impact LLM applications can have for your team.
+- 🔀 Implement LLM hyrbid routing approach to bridge the gap b/w OSS and closed LLMs.
+- 📦 Serve the application in a highly scalable and available manner.
+- 💥 Share the 1st order and 2nd order impacts LLM applications have had on our products.
+
+<br>
+<img width="800" src="https://images.ctfassets.net/xjan103pcp94/7FWrvPPlIdz5fs8wQgxLFz/fdae368044275028f0544a3d252fcfe4/image15.png">
 
 ## Setup
 
@@ -40,7 +43,7 @@ We'll be using [OpenAI](https://platform.openai.com/docs/models/) to access Chat
 
 ### Repository
 ```bash
-git clone https://github.com/ray-project/llm-applications.git .  # git checkout -b goku origin/goku
+git clone https://github.com/ray-project/llm-applications.git .
 git config --global user.name <GITHUB-USERNAME>
 git config --global user.email <EMAIL-ADDRESS>
 ```
@@ -77,3 +80,8 @@ source .env
 ```
 
 Now we're ready to go through the [rag.ipynb](notebooks/rag.ipynb) interactive notebook to develop and serve our LLM application!
+
+### Learn more
+- If your team is investing heavily in developing LLM applications, [reach out](mailto: endpoints-help@anyscale.com) to us to learn more about how [Ray](https://github.com/ray-project/ray) and [Anyscale](http://anyscale.com/) can help you scale and productionize everything.
+- Start serving (+fine-tuning) OSS LLMs with [Anyscale Endpoints](https://endpoints.anyscale.com/) ($1/M tokens for `Llama-2-70b`) and private endpoints available upon request (1M free tokens trial).
+- Learn more about how companies like OpenAI, Netflix, Pinterest, Verizon, Instacart and others leverage Ray and Anyscale for their AI workloads at the [Ray Summit 2023](https://raysummit.anyscale.com/) this Sept 18-20 in San Francisco.
