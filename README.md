@@ -1,6 +1,6 @@
 # LLM Applications
 
-A comprehensive guide for building RAG-based LLM applications.
+A comprehensive guide to building RAG-based LLM applications for production.
 
 - **Blog post**: https://www.anyscale.com/blog/a-comprehensive-guide-for-building-rag-based-llm-applications-part-1
 - **GitHub repository**: https://github.com/ray-project/llm-applications
