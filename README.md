@@ -17,6 +17,9 @@ In this guide, we will learn how to:
 - 📦 Serve the application in a highly scalable and available manner.
 - 💥 Share the 1st order and 2nd order impacts LLM applications have had on our products.
 
+<br>
+<img width="800" src="https://images.ctfassets.net/xjan103pcp94/7FWrvPPlIdz5fs8wQgxLFz/fdae368044275028f0544a3d252fcfe4/image15.png">
+
 ## Setup
 
 ### API keys
