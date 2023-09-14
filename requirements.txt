@@ -9,7 +9,6 @@ python-dotenv
 ray
 sentence_transformers
 slack_bolt
-spacy
 streamlit
 typer
 tiktoken
