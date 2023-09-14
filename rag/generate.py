@@ -17,11 +17,15 @@ from rag.index import set_index
 from rag.utils import get_credentials
 
 
+def response_stream(response):
+    for chunk in response:
+        if "content" in chunk["choices"][0]["delta"].keys():
+            yield chunk["choices"][0]["delta"]["content"]
+
+
 def prepare_response(response, stream):
     if stream:
-        for chunk in response:
-            if "content" in chunk["choices"][0]["delta"].keys():
-                yield chunk["choices"][0]["delta"]["content"]
+        return response_stream(response)
     else:
         return response["choices"][-1]["message"]["content"]
 
