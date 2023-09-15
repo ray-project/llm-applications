@@ -171,7 +171,7 @@ def generate_responses(
     with open(Path(references_fp), "r") as f:
         questions = [item["question"] for item in json.load(f)][:num_samples]
     for query in tqdm(questions):
-        result = agent(query=query, num_chunks=num_chunks)
+        result = agent(query=query, num_chunks=num_chunks, stream=False)
         results.append(result)
         clear_output(wait=True)
         display(JSON(json.dumps(result, indent=2)))
