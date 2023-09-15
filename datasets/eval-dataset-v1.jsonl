@@ -1,6 +1,8 @@
 {"question": "I’m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?", "source": "https://docs.ray.io/en/master/data/transforming-data.html#configuring-batch-format"}
+{"question": "How does autoscaling work in a Ray Serve application?", "source": "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling"}
 {"question": "how do I get the address of a ray node", "source": "https://docs.ray.io/en/master/ray-core/miscellaneous.html#node-information"}
 {"question": "Does Ray support NCCL?", "source": "https://docs.ray.io/en/master/ray-more-libs/ray-collective.html"}
+{"question": "Is Ray integrated with DeepSpeed?", "source": "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#fine-tuning-the-model-with-ray-air-a-name-train-a"}
 {"question": "what will happen if I use AsyncIO's await to wait for a Ray future like `await x.remote()`", "source": "https://docs.ray.io/en/master/ray-core/actors/async_api.html#objectrefs-as-asyncio-futures"}
 {"question": "How would you compare Spark, Ray, Dask?", "source": "https://docs.ray.io/en/master/data/overview.html#how-does-ray-data-compare-to-x-for-offline-inference"}
 {"question": "why would ray overload a node w/ more task that the resources allow ?", "source": "https://docs.ray.io/en/master/ray-core/scheduling/resources.html#physical-resources-and-logical-resources"}
@@ -14,6 +16,7 @@
 {"question": "How do I log the results from multiple distributed workers into a single tensorboard?", "source": "https://docs.ray.io/en/master/tune/tutorials/tune-output.html#how-to-log-your-tune-runs-to-tensorboard"}
 {"question": "how do you config SyncConfig for a Ray AIR job?", "source": "https://docs.ray.io/en/master/tune/tutorials/tune-storage.html#on-a-multi-node-cluster-deprecated"}
 {"question": "how can I quickly narrow down the root case of a failed ray job, assuming I have access to all the logs", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-files-in-logging-directory"}
+{"question": "How do I specify how many GPUs a serve deployment needs?", "source": "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#resource-management-cpus-gpus"}
 {"question": "One of my worker nodes keeps dying on using TensorflowTrainer with around 1500 workers, I observe SIGTERM has been received to the died node's raylet. How can I debug this?", "source": "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-files-in-logging-directory"}
 {"question": "what are the possible reasons for nodes dying in a cluster?", "source": "https://docs.ray.io/en/master/ray-core/scheduling/ray-oom-prevention.html"}
 {"question": "how do I programatically get ray remote cluster to a target size immediately without scaling up through autoscaler ?", "source": "https://docs.ray.io/en/master/cluster/running-applications/autoscaling/reference.html#ray-autoscaler-sdk-request-resources"}
