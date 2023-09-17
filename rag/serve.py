@@ -1,11 +1,12 @@
 # You can run the whole script locally with
-# serve run rag.serve:deployment
+# serve run rag.serve:deployment --runtime-env-json='{"env_vars": {"RAY_ASSISTANT_LOGS": "/mnt/shared_storage/ray-assistant-logs/info.log", "RAY_ASSISTANT_SECRET": "ray-assistant-prod"}}'
 
 import json
+import logging
 import os
 import pickle
 from pathlib import Path
-from typing import List
+from typing import Any, Dict, List
 
 import openai
 import ray
@@ -17,6 +18,7 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from starlette.responses import StreamingResponse
+import structlog
 
 from rag.config import MAX_CONTEXT_LENGTHS, ROOT_DIR
 from rag.generate import QueryAgent
@@ -37,7 +39,7 @@ def get_secret(secret_name):
     import boto3
 
     client = boto3.client("secretsmanager", region_name="us-west-2")
-    response = client.get_secret_value(SecretId="ray-assistant")
+    response = client.get_secret_value(SecretId=os.environ["RAY_ASSISTANT_SECRET"])
     return json.loads(response["SecretString"])[secret_name]
 
 
@@ -78,6 +80,17 @@ class Answer(BaseModel):
 @serve.ingress(app)
 class RayAssistantDeployment:
     def __init__(self, num_chunks, embedding_model_name, llm, run_slack=False):
+        # Configure logging
+        logging.basicConfig(filename=os.environ["RAY_ASSISTANT_LOGS"], level=logging.INFO, encoding='utf-8')
+        structlog.configure(
+            processors=[
+                structlog.processors.TimeStamper(fmt="iso"),
+                structlog.processors.JSONRenderer(),
+            ],
+            logger_factory=structlog.stdlib.LoggerFactory(),
+        )
+        self.logger = structlog.get_logger()
+
         # Set credentials
         os.environ["ANYSCALE_API_BASE"] = "https://api.endpoints.anyscale.com/v1"
         os.environ["ANYSCALE_API_KEY"] = get_secret("ANYSCALE_API_KEY")
@@ -111,33 +124,48 @@ class RayAssistantDeployment:
             self.slack_app = SlackApp.remote()
             self.runner = self.slack_app.run.remote()
 
-    @app.post("/query")
-    def query(self, query: Query) -> Answer:
+    def predict(self, query: Query, stream: bool) -> Dict[str, Any]:
         use_oss_agent = self.router.predict([query.query])[0]
         agent = self.oss_agent if use_oss_agent else self.gpt_agent
-        result = agent(query=query.query, num_chunks=self.num_chunks, stream=False)
+        result = agent(query=query.query, num_chunks=self.num_chunks, stream=stream)
+        return result
+
+    @app.post("/query")
+    def query(self, query: Query) -> Answer:
+        result = self.predict(query, stream=False)
         return Answer.parse_obj(result)
 
-    def produce_streaming_answer(self, result):
+    def produce_streaming_answer(self, query, result):
+        answer = []
         for answer_piece in result["answer"]:
+            answer.append(answer_piece)
             yield answer_piece
+
         if result["sources"]:
             yield "\n\n**Sources:**\n"
             for source in result["sources"]:
                 yield "* " + source + "\n"
 
+        self.logger.info(
+            "finished streaming query",
+            query=query,
+            document_ids=result["document_ids"],
+            llm=result["llm"],
+            answer="".join(answer)
+        )
+
     @app.post("/stream")
     def stream(self, query: Query) -> StreamingResponse:
-        use_oss_agent = self.router.predict([query.query])[0]
-        agent = self.oss_agent if use_oss_agent else self.gpt_agent
-        result = agent(query=query.query, num_chunks=self.num_chunks, stream=True)
+        result = self.predict(query, stream=True)
         return StreamingResponse(
-            self.produce_streaming_answer(result), media_type="text/plain")
+            self.produce_streaming_answer(query.query, result),
+            media_type="text/plain"
+        )
 
 
 # Deploy the Ray Serve app
 deployment = RayAssistantDeployment.bind(
-    num_chunks=7,
+    num_chunks=5,
     embedding_model_name="thenlper/gte-large",
     llm="meta-llama/Llama-2-70b-chat-hf",
 )

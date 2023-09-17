@@ -76,9 +76,10 @@ def get_sources_and_context(query, embedding_model, num_chunks):
                 (embedding, num_chunks),
             )
             rows = cur.fetchall()
+            document_ids = [row[0] for row in rows]
             context = [{"text": row[1]} for row in rows]
             sources = [row[2] for row in rows]
-    return sources, context
+    return document_ids, sources, context
 
 
 class QueryAgent:
@@ -107,7 +108,7 @@ class QueryAgent:
 
     def __call__(self, query, num_chunks=5, stream=True):
         # Get sources and context
-        sources, context = get_sources_and_context(
+        document_ids, sources, context = get_sources_and_context(
             query=query, embedding_model=self.embedding_model, num_chunks=num_chunks
         )
 
@@ -126,6 +127,7 @@ class QueryAgent:
         result = {
             "question": query,
             "sources": sources,
+            "document_ids": document_ids,
             "answer": answer,
             "llm": self.llm,
         }

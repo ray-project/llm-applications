@@ -3,4 +3,7 @@ cluster_env: ray-assistant
 ray_serve_config:
   import_path: app.serve:deployment
   runtime_env:
-    working_dir: "https://github.com/ray-project/llm-applications/archive/refs/tags/v0.0.8.zip"
+    working_dir: "https://github.com/ray-project/llm-applications/archive/refs/tags/v0.0.9.zip"
+    env_vars:
+      RAY_ASSISTANT_SECRET: "ray-assistant-prod"
+      RAY_ASSISTANT_LOGS: "/mnt/shared_storage/ray-assistant-logs/info.log"
