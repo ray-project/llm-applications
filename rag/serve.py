@@ -1,5 +1,5 @@
 # You can run the whole script locally with
-# serve run rag.serve:deployment --runtime-env-json='{"env_vars": {"RAY_ASSISTANT_LOGS": "/mnt/shared_storage/ray-assistant-logs/info.log"}}'
+# serve run rag.serve:deployment --runtime-env-json='{"env_vars": {"RAY_ASSISTANT_LOGS": "/mnt/shared_storage/ray-assistant-logs/info.log", "RAY_ASSISTANT_SECRET": "ray-assistant-prod"}}'
 
 import json
 import logging
@@ -39,7 +39,7 @@ def get_secret(secret_name):
     import boto3
 
     client = boto3.client("secretsmanager", region_name="us-west-2")
-    response = client.get_secret_value(SecretId="ray-assistant")
+    response = client.get_secret_value(SecretId=os.environ["RAY_ASSISTANT_SECRET"])
     return json.loads(response["SecretString"])[secret_name]
 
 
@@ -165,7 +165,7 @@ class RayAssistantDeployment:
 
 # Deploy the Ray Serve app
 deployment = RayAssistantDeployment.bind(
-    num_chunks=7,
+    num_chunks=5,
     embedding_model_name="thenlper/gte-large",
     llm="meta-llama/Llama-2-70b-chat-hf",
 )
