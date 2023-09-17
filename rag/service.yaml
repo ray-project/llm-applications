@@ -1,7 +1,7 @@
-name: "ray-assistant"
+name: "ray-assistant-prod"
 cluster_env: ray-assistant
 ray_serve_config:
-  import_path: app.serve:deployment
+  import_path: rag.serve:deployment
   runtime_env:
     working_dir: "https://github.com/ray-project/llm-applications/archive/refs/tags/v0.0.9.zip"
     env_vars:
