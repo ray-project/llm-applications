@@ -10,6 +10,7 @@ ray
 sentence_transformers
 slack_bolt
 streamlit
+structlog
 typer
 tiktoken
 
