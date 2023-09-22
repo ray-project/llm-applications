@@ -1,9 +1,12 @@
-name: "ray-assistant-prod"
+name: "ray-assistant-public"
 cluster_env: ray-assistant
+config:
+  access:
+    use_bearer_token: False
 ray_serve_config:
   import_path: rag.serve:deployment
   runtime_env:
-    working_dir: "https://github.com/ray-project/llm-applications/archive/refs/tags/v0.0.9.zip"
+    working_dir: "."
     env_vars:
       RAY_ASSISTANT_SECRET: "ray-assistant-prod"
       RAY_ASSISTANT_LOGS: "/mnt/shared_storage/ray-assistant-logs/info.log"
