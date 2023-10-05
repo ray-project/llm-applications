@@ -1,6 +1,5 @@
 import json
 import os
-import sys
 import time
 from pathlib import Path
 
@@ -14,7 +13,7 @@ from tqdm import tqdm
 from rag.config import ROOT_DIR
 from rag.embed import get_embedding_model
 from rag.index import set_index
-from rag.utils import get_credentials
+from rag.utils import get_credentials, get_num_tokens, trim
 
 
 def response_stream(response):
@@ -99,10 +98,15 @@ class QueryAgent:
             encode_kwargs={"device": "cuda", "batch_size": 100},
         )
 
+        # Context length (restrict input length to 50% of total context length)
+        max_context_length *= 0.5
+
         # LLM
         self.llm = llm
         self.temperature = temperature
-        self.context_length = max_context_length - len(system_content + assistant_content)
+        self.context_length = max_context_length - get_num_tokens(
+            system_content + assistant_content
+        )
         self.system_content = system_content
         self.assistant_content = assistant_content
 
@@ -120,7 +124,7 @@ class QueryAgent:
             stream=stream,
             system_content=self.system_content,
             assistant_content=self.assistant_content,
-            user_content=user_content[: self.context_length],
+            user_content=trim(user_content, self.context_length),
         )
 
         # Result

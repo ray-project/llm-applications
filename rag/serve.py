@@ -1,6 +1,3 @@
-# You can run the whole script locally with
-# serve run rag.serve:deployment --runtime-env-json='{"env_vars": {"RAY_ASSISTANT_LOGS": "/mnt/shared_storage/ray-assistant-logs/info.log", "RAY_ASSISTANT_SECRET": "ray-assistant-prod"}}'
-
 import json
 import logging
 import os
@@ -8,9 +5,9 @@ import pickle
 from pathlib import Path
 from typing import Any, Dict, List
 
-import openai
 import ray
 import requests
+import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -18,7 +15,6 @@ from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from starlette.responses import StreamingResponse
-import structlog
 
 from rag.config import MAX_CONTEXT_LENGTHS, ROOT_DIR
 from rag.generate import QueryAgent
@@ -34,6 +30,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 def get_secret(secret_name):
     import boto3
@@ -81,7 +78,9 @@ class Answer(BaseModel):
 class RayAssistantDeployment:
     def __init__(self, num_chunks, embedding_model_name, llm, run_slack=False):
         # Configure logging
-        logging.basicConfig(filename=os.environ["RAY_ASSISTANT_LOGS"], level=logging.INFO, encoding='utf-8')
+        logging.basicConfig(
+            filename=os.environ["RAY_ASSISTANT_LOGS"], level=logging.INFO, encoding="utf-8"
+        )
         structlog.configure(
             processors=[
                 structlog.processors.TimeStamper(fmt="iso"),
@@ -151,15 +150,14 @@ class RayAssistantDeployment:
             query=query,
             document_ids=result["document_ids"],
             llm=result["llm"],
-            answer="".join(answer)
+            answer="".join(answer),
         )
 
     @app.post("/stream")
     def stream(self, query: Query) -> StreamingResponse:
         result = self.predict(query, stream=True)
         return StreamingResponse(
-            self.produce_streaming_answer(query.query, result),
-            media_type="text/plain"
+            self.produce_streaming_answer(query.query, result), media_type="text/plain"
         )
 
 
