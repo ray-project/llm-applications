@@ -99,7 +99,7 @@ class QueryAgent:
         )
 
         # Context length (restrict input length to 50% of total context length)
-        max_context_length *= 0.5
+        max_context_length = int(0.5 * max_context_length)
 
         # LLM
         self.llm = llm
