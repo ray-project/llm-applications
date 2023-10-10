@@ -62,7 +62,6 @@
 {'question': 'how do I kill a specific serve replica', 'source': 'https://docs.ray.io/en/latest/serve/production-guide/fault-tolerance.html'}
 {'question': 'What exactly is rayjob? How is it handled in kuberay? Can you give an example of what a Rayjob will look like?', 'source': 'https://ray-project.github.io/kuberay/guidance/rayjob/'}
 {'question': 'do you have access to the CRD yaml file of RayJob for KubeRay?', 'source': 'https://github.com/ray-project/kuberay'}
-
 {'question': 'how do I adjust the episodes per iteration in Ray Tune?', 'source': 'https://docs.ray.io/en/latest/tune/index.html'}
 {'question': 'in Ray Tune, can you explain what episodes are?', 'source': 'https://docs.ray.io/en/latest/ray-references/glossary.html'}
 {'question': 'how do I know how many agents a Tune episode is spanning?', 'source': 'https://docs.ray.io/en/latest/index.html'}

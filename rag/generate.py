@@ -97,7 +97,6 @@ class QueryAgent:
             embedding_model_name=embedding_model_name,
             model_kwargs={"device": "cuda"},
             encode_kwargs={"device": "cuda", "batch_size": 100},
-            model_path=embedding_model_path,
         )
 
         # Context length (restrict input length to 50% of total context length)

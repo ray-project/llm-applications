@@ -77,7 +77,7 @@ def set_index(embedding_model_name, embedding_dim, chunk_size, chunk_overlap, do
             fn_constructor_kwargs={"model_name": embedding_model_name},
             batch_size=100,
             num_gpus=1,
-            compute=ActorPoolStrategy(size=2),
+            compute=ActorPoolStrategy(size=1),
         )
 
         # Index data
@@ -85,7 +85,7 @@ def set_index(embedding_model_name, embedding_dim, chunk_size, chunk_overlap, do
             StoreResults,
             batch_size=128,
             num_cpus=1,
-            compute=ActorPoolStrategy(size=28),
+            compute=ActorPoolStrategy(size=6),
         ).count()
 
         # Save to SQL dump
