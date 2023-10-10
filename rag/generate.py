@@ -85,6 +85,7 @@ class QueryAgent:
     def __init__(
         self,
         embedding_model_name="thenlper/gte-base",
+        embedding_model_path="",
         llm="meta-llama/Llama-2-70b-chat-hf",
         temperature=0.0,
         max_context_length=4096,
@@ -96,6 +97,7 @@ class QueryAgent:
             embedding_model_name=embedding_model_name,
             model_kwargs={"device": "cuda"},
             encode_kwargs={"device": "cuda", "batch_size": 100},
+            model_path=embedding_model_path,
         )
 
         # Context length (restrict input length to 50% of total context length)
@@ -145,6 +147,7 @@ def generate_responses(
     chunk_overlap,
     num_chunks,
     embedding_model_name,
+    embedding_dim,
     llm,
     temperature,
     max_context_length,
@@ -157,10 +160,11 @@ def generate_responses(
 ):
     # Build index
     set_index(
-        docs_dir=docs_dir,
         embedding_model_name=embedding_model_name,
+        embedding_dim=embedding_dim,
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
+        docs_dir=docs_dir,
     )
 
     # Query agent

@@ -10,6 +10,7 @@ EMBEDDING_DIMENSIONS = {
     "thenlper/gte-large": 1024,
     "BAAI/bge-large-en": 1024,
     "text-embedding-ada-002": 1536,
+    "gte-large-fine-tuned": 1024,
 }
 MAX_CONTEXT_LENGTHS = {
     "gpt-4": 8192,

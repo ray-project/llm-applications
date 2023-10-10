@@ -46,12 +46,10 @@ def chunk_section(section, chunk_size, chunk_overlap):
     return [{"text": chunk.page_content, "source": chunk.metadata["source"]} for chunk in chunks]
 
 
-def set_index(embedding_model_name, chunk_size, chunk_overlap, docs_dir):
+def set_index(embedding_model_name, embedding_dim, chunk_size, chunk_overlap, docs_dir):
     # Drop current Vector DB and prepare for new one
     execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -c "DROP TABLE document;"')
-    execute_bash(
-        f"sudo -u postgres psql -f ../migrations/vector-{EMBEDDING_DIMENSIONS[embedding_model_name]}.sql"
-    )
+    execute_bash(f"sudo -u postgres psql -f ../migrations/vector-{embedding_dim}.sql")
     SQL_DUMP_FP = Path(
         EFS_DIR,
         "sql_dumps",

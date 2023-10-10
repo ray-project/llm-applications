@@ -14,8 +14,8 @@ def get_embedding_model(embedding_model_name, model_kwargs, encode_kwargs):
     else:
         embedding_model = HuggingFaceEmbeddings(
             model_name=embedding_model_name,
-            model_kwargs={"device": "cuda"},
-            encode_kwargs={"device": "cuda", "batch_size": 100},
+            model_kwargs=model_kwargs,
+            encode_kwargs=encode_kwargs,
         )
     return embedding_model
 
