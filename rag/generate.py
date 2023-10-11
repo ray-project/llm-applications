@@ -66,19 +66,24 @@ def generate_response(
     return ""
 
 
-def get_sources_and_context(query, embedding_model, num_chunks):
+def get_sources_and_context(query, embedding_model, num_chunks, ranker=None):
     embedding = np.array(embedding_model.embed_query(query))
     with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
         register_vector(conn)
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT * FROM document ORDER BY embedding <=> %s LIMIT %s",
-                (embedding, num_chunks),
+                "SELECT * FROM document ORDER BY embedding <=> %s LIMIT 100",
+                (embedding,),
             )
             rows = cur.fetchall()
-            document_ids = [row[0] for row in rows]
-            context = [{"text": row[1]} for row in rows]
-            sources = [row[2] for row in rows]
+        documents = [{"document_id": row[0], "text": row[1], "source": row[2]} for row in rows]
+        if ranker:
+            documents = ranker.rank(query, documents)
+
+        documents = documents[:num_chunks]
+        document_ids = [document["document_id"] for document in documents]
+        context = [{"text": document["text"]} for document in documents]
+        sources = [document["source"] for document in documents]
     return document_ids, sources, context
 
 
@@ -91,6 +96,7 @@ class QueryAgent:
         max_context_length=4096,
         system_content="",
         assistant_content="",
+        ranker=None,
     ):
         # Embedding model
         self.embedding_model = get_embedding_model(
@@ -105,11 +111,12 @@ class QueryAgent:
         self.context_length = max_context_length - len(system_content + assistant_content)
         self.system_content = system_content
         self.assistant_content = assistant_content
+        self.ranker = ranker
 
     def __call__(self, query, num_chunks=5, stream=True):
         # Get sources and context
         document_ids, sources, context = get_sources_and_context(
-            query=query, embedding_model=self.embedding_model, num_chunks=num_chunks
+            query=query, embedding_model=self.embedding_model, num_chunks=num_chunks, ranker=self.ranker
         )
 
         # Generate response
