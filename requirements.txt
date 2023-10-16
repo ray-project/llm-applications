@@ -1,5 +1,6 @@
 # Default
 beautifulsoup4
+rank-bm25
 fastapi
 langchain
 matplotlib
