@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 from pathlib import Path
 
@@ -8,12 +9,13 @@ import openai
 import psycopg
 from IPython.display import JSON, clear_output, display
 from pgvector.psycopg import register_vector
+from rank_bm25 import BM25Okapi
 from tqdm import tqdm
 
 from rag.config import ROOT_DIR
 from rag.embed import get_embedding_model
 from rag.index import set_index
-from rag.utils import get_credentials, get_num_tokens, trim
+from rag.utils import get_credentials, get_num_tokens, lexical_search, trim
 
 
 def response_stream(response):
@@ -85,7 +87,8 @@ class QueryAgent:
     def __init__(
         self,
         embedding_model_name="thenlper/gte-base",
-        embedding_model_path="",
+        use_lexical_search=False,
+        chunks=None,
         llm="meta-llama/Llama-2-70b-chat-hf",
         temperature=0.0,
         max_context_length=4096,
@@ -99,6 +102,12 @@ class QueryAgent:
             encode_kwargs={"device": "cuda", "batch_size": 100},
         )
 
+        # Lexical search
+        self.chunks = chunks
+        if use_lexical_search:
+            texts = [re.sub(r"[^a-zA-Z0-9]", " ", chunk[1]).lower().split() for chunk in chunks]
+            self.lexical_index = BM25Okapi(texts)
+
         # Context length (restrict input length to 50% of total context length)
         max_context_length = int(0.5 * max_context_length)
 
@@ -111,11 +120,21 @@ class QueryAgent:
         self.system_content = system_content
         self.assistant_content = assistant_content
 
-    def __call__(self, query, num_chunks=5, stream=True):
+    def __call__(self, query, num_chunks=5, lexical_search_k=1, stream=True):
         # Get sources and context
         document_ids, sources, context = get_sources_and_context(
             query=query, embedding_model=self.embedding_model, num_chunks=num_chunks
         )
+
+        # Add lexical search results
+        if self.lexical_index:
+            lexical_context = lexical_search(
+                index=self.lexical_index, query=query, chunks=self.chunks, k=lexical_search_k
+            )
+            for item in lexical_context:
+                document_ids.append(item["id"])
+                context.append({"text": item["text"]})
+                sources.append(item["source"])
 
         # Generate response
         user_content = f"query: {query}, context: {context}"
@@ -147,6 +166,8 @@ def generate_responses(
     num_chunks,
     embedding_model_name,
     embedding_dim,
+    use_lexical_search,
+    lexical_search_k,
     llm,
     temperature,
     max_context_length,
@@ -158,7 +179,7 @@ def generate_responses(
     num_samples=None,
 ):
     # Build index
-    set_index(
+    chunks = set_index(
         embedding_model_name=embedding_model_name,
         embedding_dim=embedding_dim,
         chunk_size=chunk_size,
@@ -173,6 +194,8 @@ def generate_responses(
         temperature=temperature,
         system_content=system_content,
         assistant_content=assistant_content,
+        use_lexical_search=use_lexical_search,
+        chunks=chunks,
     )
 
     # Generate responses
@@ -180,7 +203,9 @@ def generate_responses(
     with open(Path(references_fp), "r") as f:
         questions = [item["question"] for item in json.load(f)][:num_samples]
     for query in tqdm(questions):
-        result = agent(query=query, num_chunks=num_chunks, stream=False)
+        result = agent(
+            query=query, num_chunks=num_chunks, lexical_search_k=lexical_search_k, stream=False
+        )
         results.append(result)
         clear_output(wait=True)
         display(JSON(json.dumps(result, indent=2)))

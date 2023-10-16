@@ -91,6 +91,14 @@ def set_index(embedding_model_name, embedding_dim, chunk_size, chunk_overlap, do
         # Save to SQL dump
         execute_bash(f"sudo -u postgres pg_dump -c > {SQL_DUMP_FP}")
 
+    # Chunks
+    with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+        register_vector(conn)
+        with conn.cursor() as cur:
+            cur.execute("SELECT id, text, source FROM document")
+            chunks = cur.fetchall()
+    return chunks
+
 
 def load_index(embedding_model_name, chunk_size, chunk_overlap):
     # Drop current Vector DB and prepare for new one
