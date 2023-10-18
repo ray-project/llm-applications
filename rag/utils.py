@@ -9,9 +9,9 @@ def get_num_tokens(text):
     return len(enc.encode(text))
 
 
-def trim(text, max_token_length):
+def trim(text, max_context_length):
     enc = tiktoken.get_encoding("cl100k_base")
-    return enc.decode(enc.encode(text)[:max_token_length])
+    return enc.decode(enc.encode(text)[:max_context_length])
 
 
 def get_credentials(llm):

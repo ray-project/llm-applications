@@ -104,6 +104,7 @@ class QueryAgent:
 
         # Lexical search
         self.chunks = chunks
+        self.lexical_index = None
         if use_lexical_search:
             texts = [re.sub(r"[^a-zA-Z0-9]", " ", chunk[1]).lower().split() for chunk in chunks]
             self.lexical_index = BM25Okapi(texts)
@@ -177,6 +178,7 @@ def generate_responses(
     experiments_dir,
     references_fp,
     num_samples=None,
+    sql_dump_fp=None,
 ):
     # Build index
     chunks = set_index(
@@ -185,6 +187,7 @@ def generate_responses(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
         docs_dir=docs_dir,
+        sql_dump_fp=sql_dump_fp,
     )
 
     # Query agent
