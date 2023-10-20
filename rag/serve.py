@@ -1,27 +1,26 @@
-# You can run the whole script locally with
-# serve run rag.serve:deployment --runtime-env-json='{"env_vars": {"RAY_ASSISTANT_LOGS": "/mnt/shared_storage/ray-assistant-logs/info.log", "RAY_ASSISTANT_SECRET": "ray-assistant-prod"}}'
-
 import json
 import logging
 import os
 import pickle
+import re
 from pathlib import Path
 from typing import Any, Dict, List
 
-import openai
 import ray
 import requests
+import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from rank_bm25 import BM25Okapi
 from ray import serve
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from starlette.responses import StreamingResponse
-import structlog
 
-from rag.config import MAX_CONTEXT_LENGTHS, ROOT_DIR
+from rag.config import EFS_DIR, MAX_CONTEXT_LENGTHS
 from rag.generate import QueryAgent
+from rag.index import load_index
 
 app = FastAPI()
 
@@ -34,6 +33,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 def get_secret(secret_name):
     import boto3
@@ -75,13 +75,28 @@ class Answer(BaseModel):
 
 
 @serve.deployment(
-    route_prefix="/", num_replicas=1, ray_actor_options={"num_cpus": 1, "num_gpus": 1}
+    route_prefix="/", num_replicas=1, ray_actor_options={"num_cpus": 6, "num_gpus": 1}
 )
 @serve.ingress(app)
 class RayAssistantDeployment:
-    def __init__(self, num_chunks, embedding_model_name, llm, run_slack=False):
+    def __init__(
+        self,
+        chunk_size,
+        chunk_overlap,
+        num_chunks,
+        embedding_model_name,
+        use_lexical_search,
+        lexical_search_k,
+        use_reranking,
+        rerank_threshold,
+        rerank_k,
+        llm,
+        run_slack=False,
+    ):
         # Configure logging
-        logging.basicConfig(filename=os.environ["RAY_ASSISTANT_LOGS"], level=logging.INFO, encoding='utf-8')
+        logging.basicConfig(
+            filename=os.environ["RAY_ASSISTANT_LOGS"], level=logging.INFO, encoding="utf-8"
+        )
         structlog.configure(
             processors=[
                 structlog.processors.TimeStamper(fmt="iso"),
@@ -98,24 +113,50 @@ class RayAssistantDeployment:
         os.environ["OPENAI_API_KEY"] = get_secret("OPENAI_API_KEY")
         os.environ["DB_CONNECTION_STRING"] = get_secret("DB_CONNECTION_STRING")
 
+        # Set up
+        chunks = load_index(
+            embedding_model_name=embedding_model_name,
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+        )
+
+        # Lexical index
+        lexical_index = None
+        if use_lexical_search:
+            texts = [re.sub(r"[^a-zA-Z0-9]", " ", chunk[1]).lower().split() for chunk in chunks]
+            lexical_index = BM25Okapi(texts)
+
+        # Reranker
+        reranker = None
+        if use_reranking:
+            reranker_fp = Path(EFS_DIR, "reranker.pkl")
+            with open(reranker_fp, "rb") as file:
+                reranker = pickle.load(file)
+
         # Query agent
         self.num_chunks = num_chunks
         system_content = "Answer the query using the context provided. Be succint."
         self.oss_agent = QueryAgent(
             embedding_model_name=embedding_model_name,
+            chunks=chunks,
+            lexical_index=lexical_index,
+            reranker=reranker,
             llm=llm,
             max_context_length=MAX_CONTEXT_LENGTHS[llm],
             system_content=system_content,
         )
         self.gpt_agent = QueryAgent(
             embedding_model_name=embedding_model_name,
+            chunks=chunks,
+            lexical_index=lexical_index,
+            reranker=reranker,
             llm="gpt-4",
             max_context_length=MAX_CONTEXT_LENGTHS["gpt-4"],
             system_content=system_content,
         )
 
         # Router
-        router_fp = Path(ROOT_DIR, "datasets", "router.pkl")
+        router_fp = Path(EFS_DIR, "router.pkl")
         with open(router_fp, "rb") as file:
             self.router = pickle.load(file)
 
@@ -151,15 +192,14 @@ class RayAssistantDeployment:
             query=query,
             document_ids=result["document_ids"],
             llm=result["llm"],
-            answer="".join(answer)
+            answer="".join(answer),
         )
 
     @app.post("/stream")
     def stream(self, query: Query) -> StreamingResponse:
         result = self.predict(query, stream=True)
         return StreamingResponse(
-            self.produce_streaming_answer(query.query, result),
-            media_type="text/plain"
+            self.produce_streaming_answer(query.query, result), media_type="text/plain"
         )
 
 

@@ -1,6 +1,6 @@
 {
     "config": {
-        "experiment_name": "gpt-3.5-turbo",
+        "experiment_name": "gte-large-fine-tuned-fp",
         "chunk_size": 500,
         "chunk_overlap": 50,
         "num_chunks": 7,
@@ -28,15 +28,15 @@
                 "https://docs.ray.io/en/master/data/key-concepts.html#transforming-data"
             ],
             "document_ids": [
-                9261,
-                8866,
+                9477,
+                9110,
                 19788,
-                9556,
-                8860,
-                9746,
-                8791
+                9323,
+                9104,
+                9862,
+                9035
             ],
-            "answer": "When using Ray Data's `map_batches` function, you can configure the batch format by specifying the `batch_format` parameter. You can choose between \"numpy\" and \"pandas\" formats. By default, Ray Data represents batches as dicts of NumPy ndarrays. To learn more about batch formats and how to configure them, refer to the documentation on configuring batch formats.",
+            "answer": "When using Ray Data's `map_batches` function, you can configure the batch format by specifying the `batch_format` parameter. You can choose between \"numpy\" and \"pandas\" formats. By default, Ray Data represents batches as dicts of NumPy ndarrays. To convert the batch type, use the `batch_format` parameter in methods like `Dataset.iter_batches()` and `Dataset.map_batches()`. For example, you can set `batch_format=\"numpy\"` or `batch_format=\"pandas\"`.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -51,13 +51,13 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/configuring-autoscaling.html#understanding-the-ray-autoscaler-in-the-context-of-kubernetes"
             ],
             "document_ids": [
-                16409,
-                8200,
-                16377,
-                16380,
+                18089,
+                8548,
+                18057,
+                18060,
                 7537,
-                16378,
-                8472
+                18058,
+                8040
             ],
             "answer": "In a Ray Serve application, autoscaling works by automatically increasing or decreasing the number of replicas based on the deployment's load. The Ray Serve autoscaler asks Ray to start a number of replica actors based on the request demand. If there aren't enough available CPUs, it requests more Ray nodes from the underlying cloud provider. The Ray autoscaler, which runs on the head node or as a sidecar container in the head pod if using Kubernetes, increases the number of worker nodes when the resource demands exceed the current capacity and removes idle worker nodes from the cluster. When scaling down, Ray Serve tries to terminate replica actors in a way that results in the most nodes having no Ray actors or tasks running on them, and the Ray autoscaler removes those nodes.",
             "llm": "gpt-3.5-turbo"
@@ -74,15 +74,15 @@
                 "https://docs.ray.io/en/master/cluster/vms/user-guides/community/yarn.html#worker-node-commands"
             ],
             "document_ids": [
-                422,
-                8761,
-                10018,
+                1002,
+                9005,
+                9906,
                 3192,
-                4376,
+                5926,
                 7330,
-                8315
+                8717
             ],
-            "answer": "To get the address of a Ray node, you can use the `ray.get_runtime_context().get_node_id()` function. Additionally, you can retrieve the address from the initialized Ray cluster using the `ray.nodes()` function.",
+            "answer": "To get the address of a Ray node, you can use the `ray.get_runtime_context().get_node_id()` function. Additionally, you can use the `ray.nodes()` function to get information about the current nodes in your cluster.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -93,17 +93,17 @@
                 "https://docs.ray.io/en/master/ray-overview/getting-started.html#ray-core-quickstart",
                 "https://docs.ray.io/en/master/ray-air/getting-started.html#design-principles",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.init.html#ray-init",
-                "https://docs.ray.io/en/master/installation.html#installing-ray",
-                "https://docs.ray.io/en/master/ray-overview/installation.html#installing-ray"
+                "https://docs.ray.io/en/master/ray-overview/installation.html#installing-ray",
+                "https://docs.ray.io/en/master/installation.html#installing-ray"
             ],
             "document_ids": [
-                6898,
-                19521,
-                1168,
+                6322,
+                19328,
+                359,
                 13131,
-                4615,
-                899,
-                1209
+                6514,
+                400,
+                90
             ],
             "answer": "Yes, Ray supports NCCL as one of its optional high-performance communication backends for collective communication between distributed CPUs or GPUs.",
             "llm": "gpt-3.5-turbo"
@@ -120,13 +120,13 @@
                 "https://docs.ray.io/en/master/train/huggingface-accelerate.html#configuring-accelerate"
             ],
             "document_ids": [
-                12765,
-                10604,
-                11890,
-                10737,
+                12446,
+                11010,
+                11983,
+                11163,
                 11842,
-                14917,
-                10626
+                13825,
+                11050
             ],
             "answer": "Yes, Ray is integrated with DeepSpeed. The context mentions that many deep learning frameworks, including Transformers, Accelerate, and more, have integrated with DeepSpeed, and you can run all these combinations in Ray Train.",
             "llm": "gpt-3.5-turbo"
@@ -143,13 +143,13 @@
                 "https://docs.ray.io/en/master/ray-core/actors/async_api.html#objectrefs-as-asyncio-futures"
             ],
             "document_ids": [
-                4529,
-                4541,
-                6371,
-                4528,
+                6215,
+                6239,
+                7023,
+                6213,
                 7090,
-                4527,
-                4530
+                6211,
+                6217
             ],
             "answer": "If you use AsyncIO's `await` to wait for a Ray future like `await x.remote()`, you can await on Ray futures in existing concurrent applications. This allows you to wait for the completion of the Ray future before proceeding with the rest of your code.",
             "llm": "gpt-3.5-turbo"
@@ -166,13 +166,13 @@
                 "https://docs.ray.io/en/master/data/overview.html#how-does-ray-data-compare-to-x-for-offline-inference"
             ],
             "document_ids": [
-                19587,
-                19597,
-                19589,
-                8237,
-                19598,
-                8887,
-                8932
+                19424,
+                19444,
+                19428,
+                8585,
+                19446,
+                9131,
+                9176
             ],
             "answer": "Spark, Ray, and Dask are all parallel computing libraries that can handle big data workloads. Dask provides big data collections that mimic the APIs of NumPy and Pandas, allowing operations on larger-than-memory data to be run on a multi-machine cluster. Ray is a fast and fault-tolerant distributed task execution system that can be used with Dask to execute data analyses. Ray Data handles batch processing workloads similar to Apache Spark, but with a streaming paradigm better suited for GPU workloads. Dask-on-Ray is an ongoing project that allows the Dask ecosystem to be executed on top of Ray, but it may not achieve the same performance as using Ray directly.",
             "llm": "gpt-3.5-turbo"
@@ -190,12 +190,12 @@
             ],
             "document_ids": [
                 7067,
-                6256,
-                6261,
+                6908,
+                6913,
                 7088,
-                6246,
-                6313,
-                6763
+                6898,
+                6965,
+                6024
             ],
             "answer": "Ray may overload a node with more tasks than the resources allow if the tasks or actors use more than their proportionate share of memory. This can lead to issues like Out of Memory (OOM). To prevent this, Ray allows specifying the resource requirements for tasks or actors. By increasing the amount of resources requested by tasks or actors, the number of concurrently running tasks or actors on each node can be reduced, ensuring that the sum of the resource requirements does not exceed the node's total resources. It is recommended to adjust the resource requirements of each task instead of modifying the task parallelism to control how many tasks can run concurrently.",
             "llm": "gpt-3.5-turbo"
@@ -212,13 +212,13 @@
                 "https://docs.ray.io/en/master/ray-core/patterns/unnecessary-ray-get.html#anti-pattern-calling-ray-get-unnecessarily-harms-performance"
             ],
             "document_ids": [
-                9223,
-                9220,
-                9217,
-                9214,
+                8885,
+                8882,
+                8879,
+                8876,
                 19791,
-                9221,
-                6400
+                8883,
+                7052
             ],
             "answer": "You should use Ray Client when you want to connect an interactive Python shell to a remote Ray cluster for interactive development. However, it is not recommended for ML workloads. If you have a long-running workload, it is better to use Ray Jobs instead.",
             "llm": "gpt-3.5-turbo"
@@ -235,12 +235,12 @@
                 "https://docs.ray.io/en/master/ray-core/examples/monte_carlo_pi.html#creating-a-progress-actor"
             ],
             "document_ids": [
-                6304,
+                6956,
                 7367,
-                10509,
-                6302,
-                9560,
-                6369,
+                10817,
+                6954,
+                9327,
+                7021,
                 7298
             ],
             "answer": "To scatter actors across the cluster, you can use the \"SPREAD\" strategy by setting the scheduling_strategy parameter to \"SPREAD\" when defining the actor. For example, you can use the SpreadActor.options(scheduling_strategy=\"SPREAD\").remote() syntax to create actors and scatter them across the cluster.",
@@ -259,12 +259,12 @@
             ],
             "document_ids": [
                 7690,
-                4619,
-                9216,
-                9232,
-                19728,
-                6601,
-                4622
+                6518,
+                8878,
+                8894,
+                19707,
+                5792,
+                6521
             ],
             "answer": "The connection refused error occurs when the Ray cluster is not ready or the necessary components (Dashboard, Dashboard Agent, GCS) have not fully started up. It is important to wait a few seconds after the head Pod is ready before using `ray debug`.",
             "llm": "gpt-3.5-turbo"
@@ -284,7 +284,7 @@
                 13170,
                 7222,
                 13139,
-                14520,
+                13428,
                 7120,
                 7211,
                 13199
@@ -304,13 +304,13 @@
                 "https://docs.ray.io/en/master/serve/index.html#how-can-serve-help-me-as-a"
             ],
             "document_ids": [
-                16602,
-                16341,
-                16585,
-                17095,
-                1011,
-                14880,
-                16611
+                18282,
+                18021,
+                18265,
+                18775,
+                202,
+                13788,
+                18291
             ],
             "answer": "You would use Ray Serve instead of Modal or Seldon because Ray Serve supports multi-model composition using a programmable API, allowing calls to different models to look like function calls. It also supports flexible scaling and resource allocation across different machines in a cluster. Using containers alone may be limiting and hard to work with for complex model deployment patterns requiring the orchestration of multiple actors. Ray Serve handles both batch and online inference and can scale to thousands of models in production.",
             "llm": "gpt-3.5-turbo"
@@ -327,13 +327,13 @@
                 "https://docs.ray.io/en/master/ray-overview/use-cases.html#model-serving"
             ],
             "document_ids": [
-                16697,
-                1326,
-                16611,
-                16612,
+                18377,
+                517,
+                18291,
+                18292,
                 7637,
-                16341,
-                1012
+                18021,
+                203
             ],
             "answer": "To deploy an LLM workload on top of Ray Serve, you can use the Ray Serve CLI. The \"serve deploy\" command takes a config file path and deploys it to a Ray cluster over HTTP. You can deploy to a local, single-node cluster or a remote, multi-node cluster. Ray Serve supports any arbitrary Python code, allowing you to write all the steps of your LLM application as a single Python module. Ray Serve also has features for batching, model optimization, and streaming responses.",
             "llm": "gpt-3.5-turbo"
@@ -342,21 +342,21 @@
             "question": "what size of memory should I need for this if I am setting set the `model_id` to \u201cEleutherAI/gpt-j-6B\u201d?",
             "sources": [
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.RayActorOptionsSchema.html#ray-serve-schema-rayactoroptionsschema",
-                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeInstanceDetails.html#ray-serve-schema-serveinstancedetails",
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.DeploymentSchema.html#ray-serve-schema-deploymentschema",
-                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeApplicationSchema.html#ray-serve-schema-serveapplicationschema",
+                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeInstanceDetails.html#ray-serve-schema-serveinstancedetails",
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ApplicationDetails.html#ray-serve-schema-applicationdetails",
+                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeApplicationSchema.html#ray-serve-schema-serveapplicationschema",
                 "https://docs.ray.io/en/master/data/examples/batch_inference_object_detection.html#model-inference",
-                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.DeploymentDetails.html#ray-serve-schema-deploymentdetails"
+                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeDeploySchema.html#ray-serve-schema-servedeployschema"
             ],
             "document_ids": [
-                17288,
-                17531,
-                17311,
-                17426,
-                17371,
-                11082,
-                17252
+                18968,
+                18991,
+                19211,
+                19051,
+                19106,
+                10840,
+                18891
             ],
             "answer": "The size of memory needed for setting the `model_id` to \"EleutherAI/gpt-j-6B\" is not specified in the given context.",
             "llm": "gpt-3.5-turbo"
@@ -373,13 +373,13 @@
                 "https://docs.ray.io/en/master/ray-overview/getting-started.html#ray-ai-runtime-libraries-quickstart"
             ],
             "document_ids": [
-                18115,
-                5332,
-                13065,
-                10680,
+                14586,
+                4017,
+                12746,
+                11104,
                 3111,
-                1133,
-                1135
+                324,
+                326
             ],
             "answer": "To log the results from multiple distributed workers into a single TensorBoard, you can use the TensorBoardLogger provided by the training framework. Make sure to specify the save directory for the TensorBoard logs.",
             "llm": "gpt-3.5-turbo"
@@ -396,13 +396,13 @@
                 "https://docs.ray.io/en/master/train/api/doc/ray.train.RunConfig.html#ray-train-runconfig"
             ],
             "document_ids": [
-                2287,
-                15140,
-                11220,
-                2666,
-                15138,
-                2011,
-                11199
+                1536,
+                14240,
+                11301,
+                1924,
+                14236,
+                2457,
+                11280
             ],
             "answer": "To configure SyncConfig for a Ray AIR job, you can use the `ray.train.SyncConfig` class. It takes several parameters such as `upload_dir`, `syncer`, `sync_period`, `sync_timeout`, `sync_artifacts`, `sync_artifacts_on_checkpoint`, and `sync_on_checkpoint`. However, please note that Ray AIR no longer supports the synchronization of checkpoints and artifacts from worker nodes to the head node.",
             "llm": "gpt-3.5-turbo"
@@ -420,12 +420,12 @@
             ],
             "document_ids": [
                 7782,
-                74,
-                1388,
-                9246,
-                9155,
-                16483,
-                8715
+                590,
+                579,
+                8908,
+                8817,
+                18163,
+                8283
             ],
             "answer": "To quickly narrow down the root cause of a failed Ray job, you can follow these steps:\n\n1. Check the output of the Ray job by running the command: `kubectl logs -l=job-name=rayjob-sample`.\n\n2. If available, you can profile Ray jobs by clicking on the \"Stack Trace\" or \"CPU Flame Graph\" actions. Refer to the Profiling section for more details.\n\n3. For Ray Jobs, worker logs are always captured in the Ray logging directory, while driver logs are only captured for Ray Jobs submitted via the Jobs API. You can find the captured driver logs using the Dashboard UI, CLI (using the `ray job logs` command), or the Python SDK (`JobSubmissionClient.get_logs()` or `JobSubmissionClient.tail_job_logs()`).\n\n4. Ray client logs can be found at `/tmp/ray/session_latest/logs` on the head node.\n\n5. You can query the logs of the job using the command: `ray job logs raysubmit_seQk3L4nYWcUBwXD`.\n\n6. Additionally, you can check the status of the job using the command: `ray job status raysubmit_seQk3L4nYWcUBwXD`.\n\n7. If needed, you can request the job to be stopped using the command: `ray job stop raysubmit_seQk3L4nYWcUBwXD`.\n\n8. Log messages include various details such as logging level, timestamp, deployment name, replica tag, request ID, route, file name, and line number. You can find a copy of these logs at `/tmp/ray/session_latest/logs/serve/`. You can parse these stored logs with a logging stack like ELK or Loki to search by deployment or replica.\n\n9. To follow the logs of a job, use the command: `ray job logs 'raysubmit_xxxxxxxxxxxxxxxx' --address http://127.0.0.1:8265 --follow`.\n\nBy following these steps and analyzing the logs, you can quickly identify the root cause of a failed Ray job.",
             "llm": "gpt-3.5-turbo"
@@ -442,13 +442,13 @@
                 "https://docs.ray.io/en/master/serve/advanced-guides/managing-java-deployments.html#resource-management-cpus-gpus"
             ],
             "document_ids": [
-                16392,
-                16559,
-                10968,
-                10507,
-                16388,
-                8421,
-                16839
+                18072,
+                18239,
+                10690,
+                10812,
+                18068,
+                7989,
+                18519
             ],
             "answer": "To specify how many GPUs a serve deployment needs, you can use the \"num_gpus\" parameter in the ray_actor_options when creating the deployment. For example, you can set \"num_gpus\" to 0.5 to allocate 0.5 GPUs per replica.",
             "llm": "gpt-3.5-turbo"
@@ -465,13 +465,13 @@
                 "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#training-speed"
             ],
             "document_ids": [
-                6282,
-                239,
-                13002,
-                12988,
-                12740,
-                6105,
-                14951
+                6934,
+                755,
+                12683,
+                12669,
+                12421,
+                6757,
+                13860
             ],
             "answer": "To debug the issue of worker nodes dying due to memory pressure (OOM), you can check the logs of the specific nodes that received the SIGTERM signal. Use the command `ray logs raylet.out -ip <node_ip>` to see more information about the workers killed on each node.",
             "llm": "gpt-3.5-turbo"
@@ -488,12 +488,12 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/aws-eks-gpu-cluster.html#create-a-gpu-node-group"
             ],
             "document_ids": [
-                16992,
-                4433,
-                4431,
-                4434,
-                234,
-                6282,
+                18672,
+                6033,
+                6030,
+                6035,
+                750,
+                6934,
                 7948
             ],
             "answer": "Possible reasons for nodes dying in a cluster include head node failure, node fault tolerance, raylet failure, and tasks being killed due to low memory.",
@@ -512,12 +512,12 @@
             ],
             "document_ids": [
                 7596,
-                8200,
-                8769,
-                8529,
-                9215,
-                17072,
-                9021
+                8548,
+                9013,
+                8097,
+                8877,
+                18752,
+                8599
             ],
             "answer": "To programmatically scale a Ray remote cluster to a target size immediately without using the autoscaler, you can use the `ray.autoscaler.sdk.request_resources()` function within your Ray program. This function allows you to command the autoscaler to scale the cluster up to the desired size. The cluster will immediately attempt to scale to accommodate the requested resources, bypassing normal upscaling speed constraints.",
             "llm": "gpt-3.5-turbo"
@@ -534,11 +534,11 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.iter_tf_batches.html#ray-data-dataset-iter-tf-batches"
             ],
             "document_ids": [
-                9746,
-                9857,
-                9936,
-                9261,
-                10015,
+                9862,
+                9614,
+                10074,
+                9477,
+                9903,
                 19788,
                 10438
             ],
@@ -558,12 +558,12 @@
             ],
             "document_ids": [
                 19789,
-                8967,
-                9261,
-                9746,
+                9211,
+                9477,
+                9862,
                 7125,
-                9809,
-                8997
+                9566,
+                9241
             ],
             "answer": "In the context of Ray datasets, a batch size refers to the number of data points used for one gradient update during model training. On the other hand, a block is a processing unit of data that is used internally in Ray datasets. A dataset consists of a collection of blocks, which are distributed data partitions that allow for parallel operations. Unlike a batch, which is a user-facing object, a block is an internal abstraction.",
             "llm": "gpt-3.5-turbo"
@@ -580,13 +580,13 @@
                 "https://docs.ray.io/en/master/ray-contribute/development.html#preparing-to-build-ray-on-macos"
             ],
             "document_ids": [
-                656,
-                14724,
-                16928,
-                609,
-                16747,
-                6583,
-                626
+                1236,
+                13632,
+                18608,
+                1189,
+                18427,
+                5774,
+                1206
             ],
             "answer": "To set up the development environment for the Ray project, follow these steps:\n\n1. Clone the Ray repository and navigate to the example directory.\n2. Install the dependencies by running \"pip install -Ur dreambooth/requirements.txt\".\n3. Set up the necessary directories and environment variables.\n4. Install Ray with the Runtime Environments feature by running \"pip install 'ray[default]'\".\n5. Follow the recommended development workflow for Ray Serve applications.\n\nNote: Building Ray from source and additional setup steps are also available, but the provided context does not specify the specific requirements or platform.",
             "llm": "gpt-3.5-turbo"
@@ -603,13 +603,13 @@
                 "https://docs.ray.io/en/master/rllib/package_ref/doc/ray.rllib.evaluation.rollout_worker.RolloutWorker.sample.html#ray-rllib-evaluation-rollout-worker-rolloutworker-sample"
             ],
             "document_ids": [
-                16075,
-                14193,
-                14192,
+                17717,
+                17069,
+                17068,
                 19831,
-                15617,
-                347,
-                14241
+                17413,
+                863,
+                17117
             ],
             "answer": "To debug why Ray rollout workers are deadlocking when using the sample API in `ray/rllib/evaluation/rollout_worker.py`, you can follow these steps:\n\n1. Check if you have initialized multiple Sleeper actors. If you have only initialized a single Sleeper actor, the code will run on a single worker, causing the deadlock.\n2. Make sure you are waiting until after submitting all remote function tasks to call `ray.get()`. If you call `ray.get()` before all tasks are submitted, it can cause issues.\n3. Use cProfile's output to analyze the code and identify any bottlenecks or performance issues.\n4. Verify that you have set up the RolloutWorker correctly, including providing the necessary arguments such as `env_creator`, `default_policy_class`, and `config`.\n5. If the issue persists, you can try running the provided examples in the context to see if they work as expected.",
             "llm": "gpt-3.5-turbo"
@@ -626,13 +626,13 @@
                 "https://docs.ray.io/en/master/train/user-guides/data-loading-preprocessing.html#loading-data"
             ],
             "document_ids": [
-                12774,
-                10992,
-                8916,
-                9502,
-                9528,
-                9396,
-                12547
+                12455,
+                10714,
+                9160,
+                9269,
+                9295,
+                9752,
+                12228
             ],
             "answer": "To join two Ray datasets, you can use the `union` method provided by the Ray Data API. This method allows you to concatenate datasets across rows while preserving the order of the blocks in the datasets. However, it's important to note that unioned datasets are not lineage-serializable and cannot be used as tunable hyperparameters in Ray Tune.",
             "llm": "gpt-3.5-turbo"
@@ -649,13 +649,13 @@
                 "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.get_objects.html#ray-util-state-get-objects"
             ],
             "document_ids": [
-                7042,
-                6812,
-                6080,
-                5961,
-                7011,
-                16654,
-                411
+                6474,
+                6131,
+                6732,
+                6613,
+                6443,
+                18334,
+                991
             ],
             "answer": "Yes, you can retrieve an object ref from its id using the Ray Core API `ray.get(ref)` or the async API `await ref`.",
             "llm": "gpt-3.5-turbo"
@@ -672,12 +672,12 @@
                 "https://docs.ray.io/en/master/train/api/doc/ray.train.lightning.LightningCheckpoint.get_model.html#ray-train-lightning-lightningcheckpoint-get-model"
             ],
             "document_ids": [
-                14841,
+                13749,
                 11850,
-                4120,
-                4276,
-                12133,
-                3967,
+                5367,
+                5523,
+                12069,
+                5183,
                 11764
             ],
             "answer": "To create a model Checkpoint from a model in memory, you can use the `Checkpoint.from_model()` method.",
@@ -695,13 +695,13 @@
                 "https://docs.ray.io/en/master/serve/tutorials/java.html#converting-to-a-ray-serve-deployment"
             ],
             "document_ids": [
-                16337,
-                17470,
+                18017,
+                19150,
                 19794,
-                17327,
-                16697,
-                16341,
-                17706
+                19007,
+                18377,
+                18021,
+                19555
             ],
             "answer": "In Ray Serve, a deployment is a container that holds business logic or an ML model to handle incoming requests. It can be scaled up to run across a Ray cluster and consists of replicas, which are individual copies of the class or function that are started in separate Ray Actors. The number of replicas can be scaled up or down to match the incoming request load.",
             "llm": "gpt-3.5-turbo"
@@ -718,13 +718,13 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/rayserve-dev-doc.html#step-4-prepare-your-ray-serve-python-scripts-and-run-the-ray-serve-application"
             ],
             "document_ids": [
-                16910,
-                17109,
-                17045,
-                16546,
-                17095,
-                16675,
-                8489
+                18590,
+                18789,
+                18725,
+                18226,
+                18775,
+                18355,
+                8057
             ],
             "answer": "User config in Ray Serve is a configuration that can be set when creating a deployment in Ray Serve. It allows users to customize the behavior of their deployments. The user_config is passed as an argument to the deployment's __init__ method and can also be updated by modifying the Serve config file and reapplying it to the Ray cluster.",
             "llm": "gpt-3.5-turbo"
@@ -732,8 +732,8 @@
         {
             "question": "What is the difference between PACK and SPREAD strategy?",
             "sources": [
-                "https://docs.ray.io/en/master/rllib/rllib-training.html#specifying-resources",
                 "https://docs.ray.io/en/master/rllib/package_ref/doc/ray.rllib.algorithms.algorithm_config.AlgorithmConfig.resources.html#ray-rllib-algorithms-algorithm-config-algorithmconfig-resources",
+                "https://docs.ray.io/en/master/rllib/rllib-training.html#specifying-resources",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.util.placement_group.html#ray-util-placement-group",
                 "https://docs.ray.io/en/master/tune/api/doc/ray.tune.execution.placement_groups.PlacementGroupFactory.html#ray-tune-execution-placement-groups-placementgroupfactory",
                 "https://docs.ray.io/en/master/ray-core/scheduling/placement-group.html#placement-strategy",
@@ -741,13 +741,13 @@
                 "https://docs.ray.io/en/master/ray-core/scheduling/placement-group.html#placement-strategy"
             ],
             "document_ids": [
-                18305,
-                13397,
-                7058,
-                2888,
-                6209,
-                6204,
-                6207
+                15514,
+                15022,
+                6490,
+                2486,
+                6861,
+                6856,
+                6859
             ],
             "answer": "The PACK strategy packs bundles into as few nodes as possible, while the SPREAD strategy places bundles across distinct nodes as evenly as possible.",
             "llm": "gpt-3.5-turbo"
@@ -756,20 +756,20 @@
             "question": "What\u2019s the best way to run ray across multiple machines?",
             "sources": [
                 "https://docs.ray.io/en/master/cluster/faq.html#i-have-multiple-ray-users-what-s-the-right-way-to-deploy-ray-for-them",
+                "https://docs.ray.io/en/master/cluster/getting-started.html#ray-clusters-overview",
                 "https://docs.ray.io/en/master/ray-more-libs/cluster/index.html#ray-clusters-overview",
                 "https://docs.ray.io/en/master/ray-core/cluster/index.html#ray-clusters-overview",
-                "https://docs.ray.io/en/master/cluster/getting-started.html#ray-clusters-overview",
                 "https://docs.ray.io/en/master/ray-air/getting-started.html#why-ray-for-ml-infrastructure",
                 "https://docs.ray.io/en/master/ray-core/configure.html#code-search-path",
                 "https://docs.ray.io/en/master/cluster/faq.html#do-ray-clusters-support-multi-tenancy"
             ],
             "document_ids": [
                 7637,
-                19762,
-                4588,
                 7590,
+                19762,
+                6317,
                 13125,
-                6804,
+                6117,
                 7634
             ],
             "answer": "The best way to run Ray across multiple machines is to deploy a Ray cluster. A Ray cluster is a set of worker nodes connected to a common Ray head node. Each user should have their own Ray cluster to isolate their workloads.",
@@ -787,13 +787,13 @@
                 "https://docs.ray.io/en/master/train/user-guides/using-gpus.html#scaling-configurations-in-train-scalingconfig"
             ],
             "document_ids": [
-                12057,
-                5458,
-                2499,
-                12058,
+                12143,
+                4268,
+                1825,
+                12144,
                 3181,
-                2133,
-                12634
+                2659,
+                12315
             ],
             "answer": "To specify ScalingConfig for a Tuner run, you need to define a ScalingConfig object with the desired configurations. This includes specifying the number of workers, whether to use GPU, and the resources per worker. You can then pass the ScalingConfig object to the Tuner constructor along with other configurations like TuneConfig and RunConfig.",
             "llm": "gpt-3.5-turbo"
@@ -810,13 +810,13 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.from_numpy_refs.html#ray-data-from-numpy-refs"
             ],
             "document_ids": [
-                6025,
-                10164,
-                10165,
-                10147,
-                6029,
-                6547,
-                9286
+                6677,
+                10213,
+                10214,
+                10012,
+                6681,
+                5738,
+                9502
             ],
             "answer": "To utilize the 'zero-copy' feature that Ray provides for numpy, you can use the `to_numpy_refs()` method of the `ray.data.Dataset` class. This method converts the dataset into a distributed set of NumPy ndarrays or a dictionary of NumPy ndarrays. However, note that this function induces a copy of the data. For zero-copy access to the underlying data, you can consider using `to_arrow()` or `get_internal_block_refs()` methods instead.",
             "llm": "gpt-3.5-turbo"
@@ -833,13 +833,13 @@
                 "https://docs.ray.io/en/master/data/examples/random-access.html#performance"
             ],
             "document_ids": [
-                10983,
-                6324,
+                10705,
+                6976,
                 7068,
-                11142,
-                10509,
+                10958,
+                10817,
                 7367,
-                10985
+                10707
             ],
             "answer": "It would be advised to create 'key pools' where an actor can hold 1=many keys, rather than spinning up 1=1 actors for each key.",
             "llm": "gpt-3.5-turbo"
@@ -856,13 +856,13 @@
                 "https://docs.ray.io/en/master/tune/api/doc/ray.tune.ExperimentAnalysis.html#ray-tune-experimentanalysis"
             ],
             "document_ids": [
-                2652,
-                2729,
-                1848,
-                3832,
-                2651,
-                18620,
-                1423
+                1910,
+                2884,
+                2195,
+                4902,
+                1909,
+                15529,
+                1966
             ],
             "answer": "To find the best checkpoint from the trial directory, you can use the `ray.tune.ExperimentAnalysis.best_checkpoint` method. This method returns the checkpoint path of the best trial in the experiment, determined by comparing the last trial results using the specified metric and mode parameters. If you didn't pass these parameters, you can use the `get_best_checkpoint` method instead.",
             "llm": "gpt-3.5-turbo"
@@ -871,23 +871,23 @@
             "question": "what are the advantage and disadvantage of using singleton Actor ?",
             "sources": [
                 "https://docs.ray.io/en/master/ray-core/examples/batch_prediction.html#how-to-improve-the-gpu-utilization-rate",
-                "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources",
-                "https://docs.ray.io/en/master/rllib/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
+                "https://docs.ray.io/en/master/rllib/actors.html#faq-actors-workers-and-resources",
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/ray-core/patterns/concurrent-operations-async-actor.html#pattern-using-asyncio-to-run-actor-methods-concurrently",
                 "https://docs.ray.io/en/master/ray-core/patterns/global-variables.html#anti-pattern-using-global-variables-to-share-state-between-tasks-and-actors",
                 "https://docs.ray.io/en/master/ray-core/actors/concurrency_group_api.html#default-concurrency-group"
             ],
             "document_ids": [
                 7423,
+                6015,
+                15751,
                 19760,
-                18814,
-                4422,
-                6324,
-                6365,
-                4584
+                6976,
+                7017,
+                6309
             ],
-            "answer": "The advantage of using a singleton actor is that it allows for efficient reuse of model initialization for multiple tasks, resulting in more time spent on the actual workload. However, if you don't need the stateful part of an actor, it is generally better to use tasks.",
+            "answer": "The advantage of using a singleton actor is that it allows for efficient reuse of model initialization for multiple tasks, resulting in more time spent on the actual workload. However, if you don't need the stateful part of an actor, it is generally better to use tasks instead.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -897,17 +897,17 @@
                 "https://docs.ray.io/en/master/ray-core/examples/batch_prediction.html#how-to-improve-the-gpu-utilization-rate",
                 "https://docs.ray.io/en/master/ray-core/actors/named-actors.html#get-or-create-a-named-actor",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.get_actor.html#ray-get-actor",
-                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/rllib/actors.html#faq-actors-workers-and-resources",
+                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources"
             ],
             "document_ids": [
-                4556,
+                6269,
                 7423,
-                4566,
-                4695,
-                4422,
-                18814,
+                6287,
+                6594,
+                15751,
+                6015,
                 19760
             ],
             "answer": "The advantages of using a named actor are:\n\n1. Ability to retrieve the actor from any job in the Ray cluster.\n2. Useful when you cannot directly pass the actor handle to the task that needs it or when accessing an actor launched by another driver.\n3. The actor will still be garbage-collected if no handles to it exist.\n4. Allows for efficient reuse of model initialization for many tasks, resulting in more time spent on the actual workload.\n5. Can create an actor only if it doesn't already exist using the get_if_exists option.\n6. Can get a handle to a named actor using ray.get_actor().",
@@ -925,12 +925,12 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.read_binary_files.html#ray-data-read-binary-files"
             ],
             "document_ids": [
-                10032,
-                9609,
-                12573,
-                10796,
-                10860,
-                9402,
+                10107,
+                9376,
+                12254,
+                10518,
+                10582,
+                9651,
                 10400
             ],
             "answer": "To read a text file stored on S3 using Ray Data, you can use the `ray.data.read_text()` function. Here is an example:\n\n```python\nimport ray\n\nds = ray.data.read_text(\"s3://anonymous@ray-example-data/this.txt\")\n```\n\nThis will create a dataset (`ds`) from the lines stored in the text file. You can then perform operations on this dataset, such as displaying the first few rows using `ds.show(3)`.",
@@ -949,12 +949,12 @@
             ],
             "document_ids": [
                 7630,
-                9075,
-                159,
+                8726,
+                675,
                 7574,
                 3192,
-                4376,
-                9076
+                5926,
+                8729
             ],
             "answer": "To get the IP of the head node for your Ray cluster, you can use the command \"ray get_head_ip [OPTIONS] CLUSTER_CONFIG_FILE\". Alternatively, you can start the head node using the command \"ray start --head --port=6379\" and the Ray cluster address will be printed out. You can also programmatically discover the endpoints by reading the Ray Cluster information using the ray.nodes API.",
             "llm": "gpt-3.5-turbo"
@@ -971,13 +971,13 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map_batches.html#ray-data-dataset-map-batches"
             ],
             "document_ids": [
-                10925,
-                9417,
-                10263,
-                9273,
-                9262,
-                10357,
-                9261
+                10647,
+                9666,
+                10347,
+                9489,
+                9478,
+                10209,
+                9477
             ],
             "answer": "To write a map function that returns a list of objects for `map_batches`, you can define a function that takes a batch of data as input and applies the desired transformation to each element in the batch. The function should return a list of objects representing the transformed data.",
             "llm": "gpt-3.5-turbo"
@@ -994,13 +994,13 @@
                 "https://docs.ray.io/en/master/rllib/package_ref/doc/ray.rllib.algorithms.algorithm.Algorithm.train_buffered.html#ray-rllib-algorithms-algorithm-algorithm-train-buffered"
             ],
             "document_ids": [
-                17970,
-                17893,
-                16052,
-                18270,
-                15202,
-                18617,
-                13696
+                14201,
+                14040,
+                17694,
+                14958,
+                14408,
+                15523,
+                16572
             ],
             "answer": "To set a maximum episode length when training with Rllib, you can use the \"evaluation_duration\" parameter. Set the value to the desired maximum episode length in timesteps.",
             "llm": "gpt-3.5-turbo"
@@ -1018,12 +1018,12 @@
             ],
             "document_ids": [
                 3074,
-                2094,
+                2620,
                 2988,
-                2603,
-                2258,
-                2957,
-                2837
+                2842,
+                1507,
+                2555,
+                2308
             ],
             "answer": "To make a Ray Tune trial retry on failures, you can use the `on_trial_error` callback. This callback is called after a trial instance fails and allows you to handle the failure. You can configure the callback to retry the trial by implementing the retry logic within the callback function.",
             "llm": "gpt-3.5-turbo"
@@ -1040,13 +1040,13 @@
                 "https://docs.ray.io/en/master/ray-core/scheduling/memory-management.html#debugging-using-ray-memory"
             ],
             "document_ids": [
-                6385,
-                6384,
-                4474,
-                4497,
-                4569,
-                6369,
-                6151
+                7037,
+                7036,
+                6106,
+                6157,
+                6290,
+                7021,
+                6803
             ],
             "answer": "No, if the supervisor dies or the driver fails, the worker actors will be automatically terminated due to actor reference counting.",
             "llm": "gpt-3.5-turbo"
@@ -1063,13 +1063,13 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.read_csv.html#ray-data-read-csv"
             ],
             "document_ids": [
-                10032,
-                9609,
-                10796,
-                12573,
-                10860,
-                8809,
-                9402
+                10107,
+                9376,
+                10518,
+                12254,
+                10582,
+                9053,
+                9651
             ],
             "answer": "To read a large text file in S3 with Ray, you can use the `ray.data.read_text()` function. Here's an example:\n\n```python\nimport ray\n\nds = ray.data.read_text(\"s3://anonymous@ray-example-data/this.txt\")\n```\n\nThis will create a dataset from the lines stored in the text file.",
             "llm": "gpt-3.5-turbo"
@@ -1086,13 +1086,13 @@
                 "https://docs.ray.io/en/master/ray-air/examples/huggingface_text_classification.html#preprocessing-the-data-with-ray-air-a-name-preprocess-a"
             ],
             "document_ids": [
-                8884,
-                9528,
-                8811,
-                9003,
-                10313,
-                9470,
-                14518
+                9128,
+                9295,
+                9055,
+                9247,
+                10165,
+                9767,
+                13426
             ],
             "answer": "To get a Ray dataset from pandas, you can use the `ray.data.from_pandas()` function.",
             "llm": "gpt-3.5-turbo"
@@ -1109,15 +1109,15 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.to_numpy_refs.html#ray-data-dataset-to-numpy-refs"
             ],
             "document_ids": [
-                10634,
-                9375,
-                10958,
-                10049,
-                9533,
-                10340,
-                10165
+                11058,
+                9731,
+                10680,
+                10124,
+                9300,
+                10192,
+                10214
             ],
-            "answer": "Here is an example of using `ray.data.map`:\n\n```python\nimport ray\n\n# Step 1: Create a Ray Dataset\nds = ray.data.range(10000)\n\n# Step 2: Apply map transformation\ntransformed_ds = ds.map(lambda row: {\"id\": row[\"id\"] * 2})\n\n# Step 3: Consume the results\nresults = transformed_ds.take(4)\nprint(results)\n```\n\nOutput:\n```\n[{'id': 0}, {'id': 2}, {'id': 4}, {'id': 6}]\n```\n\nIn this example, we create a Ray Dataset using `ray.data.range` with 10,000 rows. Then, we apply the `map` transformation to double the value of the \"id\" field in each row. Finally, we consume the results by taking the first 4 rows.",
+            "answer": "Here is an example of using `ray.data.map`:\n\n```python\nimport ray\n\n# Step 1: Create a Ray Dataset\nds = ray.data.range(10000)\n\n# Step 2: Apply map transformation\ntransformed_ds = ds.map(lambda row: {\"id\": row[\"id\"] * 2})\n\n# Step 3: Consume the results\nresults = transformed_ds.take(4)\nprint(results)\n```\n\nOutput:\n```\n[{'id': 0}, {'id': 2}, {'id': 4}, {'id': 6}]\n```\n\nIn this example, `ray.data.map` is used to apply a transformation to each row of the dataset. The transformation doubles the value of the \"id\" field. The `take` method is then used to retrieve the first 4 transformed rows.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1133,12 +1133,12 @@
             ],
             "document_ids": [
                 10416,
-                9375,
-                8811,
-                14908,
-                10049,
-                10352,
-                1770
+                9731,
+                9055,
+                13816,
+                10124,
+                10204,
+                2141
             ],
             "answer": "Here is an example of using `ray.data.map` with a callable class as input:\n\n```python\nclass MyCallableClass:\n    def __call__(self, row):\n        # Perform some transformation on the row\n        return transformed_row\n\n# Create a dataset\nds = ray.data.range(10000)\n\n# Apply the callable class to each row of the dataset\nds.map(MyCallableClass()).take(4)\n```\n\nThis example applies the `MyCallableClass` to each row of the dataset and returns the transformed rows.",
             "llm": "gpt-3.5-turbo"
@@ -1156,14 +1156,14 @@
             ],
             "document_ids": [
                 3073,
-                6285,
+                6937,
                 3180,
                 3165,
-                2740,
-                2258,
+                2895,
+                1507,
                 3170
             ],
-            "answer": "To set the memory limit for each trial in Ray Tuner, you can specify the memory threshold when starting Ray using the command \"RAY_memory_usage_threshold=0.4 ray start --head\". Additionally, you can customize the resources allocated per trial using the \"tune.with_resources\" function, where you can specify the resource requests using a dictionary, a ScalingConfig, or a PlacementGroupFactory object.",
+            "answer": "To set the memory limit for each trial in Ray Tuner, you can specify the memory threshold when starting Ray. Use the command \"RAY_memory_usage_threshold=0.4 ray start --head\".",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1178,13 +1178,13 @@
                 "https://docs.ray.io/en/master/ray-observability/getting-started.html#actor-detail-page"
             ],
             "document_ids": [
-                7055,
-                6012,
-                9,
-                214,
-                139,
-                136,
-                93
+                6487,
+                6664,
+                928,
+                730,
+                655,
+                652,
+                609
             ],
             "answer": "To get the actor ID of an actor, you can use the `ray.runtime_context.RuntimeContext.get_actor_id()` method. This method returns the current actor ID in the worker.",
             "llm": "gpt-3.5-turbo"
@@ -1201,13 +1201,13 @@
                 "https://docs.ray.io/en/master/ray-core/tips-for-first-time.html#tips-for-first-time-users"
             ],
             "document_ids": [
-                7053,
-                4615,
-                6490,
-                6493,
-                6491,
-                6400,
-                6513
+                6485,
+                6514,
+                5681,
+                5684,
+                5682,
+                7052,
+                5704
             ],
             "answer": "Yes, the function `ray.is_initialized()` can be used to check if Ray has already been initiated. It returns `True` if `ray.init()` has been called and `False` otherwise.",
             "llm": "gpt-3.5-turbo"
@@ -1224,13 +1224,13 @@
                 "https://docs.ray.io/en/master/data/transforming-data.html#transforming-batches-with-actors"
             ],
             "document_ids": [
-                8861,
-                8865,
-                14855,
-                11135,
-                9536,
-                11138,
-                8863
+                9105,
+                9109,
+                13763,
+                10942,
+                9303,
+                10949,
+                9107
             ],
             "answer": "The `compute=actor` argument within `ray.data.map_batches` specifies that the computation should be performed using actors.",
             "llm": "gpt-3.5-turbo"
@@ -1250,10 +1250,10 @@
                 3218,
                 3215,
                 3262,
-                2281,
+                1530,
                 3217,
-                13065,
-                13061
+                12746,
+                12742
             ],
             "answer": "To use the Wandb logger with accelerateTrainer, you can use the WandbLoggerCallback and the setup_wandb function. First, make sure you are logged in to wandb on all machines you are running your training on by using the command \"wandb login\". Then, import the necessary libraries and initialize the Wandb API with Tune's training information using the setup_wandb function. You can then use the Wandb API as usual, for example, using wandb.log() to log your training process.",
             "llm": "gpt-3.5-turbo"
@@ -1270,13 +1270,13 @@
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.DeploymentDetails.html#ray-serve-schema-deploymentdetails"
             ],
             "document_ids": [
-                6116,
-                6118,
+                6768,
+                6770,
                 19815,
-                8998,
+                9242,
                 19816,
-                6813,
-                17252
+                6132,
+                18932
             ],
             "answer": "Objects created using `ray.put` and the return values from remote functions will be implicitly put into the object store.",
             "llm": "gpt-3.5-turbo"
@@ -1288,18 +1288,18 @@
                 "https://docs.ray.io/en/master/ray-core/tasks.html#cancelling-tasks",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.cancel.html#ray-cancel",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.cancel.html#ray-cancel",
-                "https://docs.ray.io/en/master/ray-core/actors.html#cancelling-actor-tasks",
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#cancelling-actor-tasks",
                 "https://docs.ray.io/en/master/rllib/actors.html#cancelling-actor-tasks",
-                "https://docs.ray.io/en/master/ray-more-libs/actors.html#cancelling-actor-tasks"
+                "https://docs.ray.io/en/master/ray-core/actors.html#cancelling-actor-tasks"
             ],
             "document_ids": [
-                4459,
-                6762,
-                5968,
-                5972,
-                4416,
-                18808,
-                19754
+                6080,
+                6021,
+                6620,
+                6624,
+                19754,
+                15745,
+                6005
             ],
             "answer": "To kill or cancel a Ray task that you have already started, you can call `ray.cancel()` on the returned ObjectRef of the task. By default, this will send a KeyboardInterrupt to the task's worker if it is mid-execution. If you pass `force=True` to `ray.cancel()`, it will force-exit the worker. Note that Ray will not automatically retry tasks that have been cancelled.",
             "llm": "gpt-3.5-turbo"
@@ -1316,13 +1316,13 @@
                 "https://docs.ray.io/en/master/data/examples/huggingface_vit_batch_prediction.html#step-3-scaling-up-to-the-full-dataset-with-ray-data"
             ],
             "document_ids": [
-                9262,
-                14705,
-                9261,
-                9008,
-                9417,
-                10263,
-                10925
+                9478,
+                13613,
+                9477,
+                9252,
+                9666,
+                10347,
+                10647
             ],
             "answer": "To send extra arguments in the `map_batches` function, you can pass them as keyword arguments using the `fn_kwargs` parameter. For example:\n\n```python\ninstance_dataset.map_batches(\n    transform_image, fn_kwargs={\"output_column_name\": \"instance_image\"}\n)\n```\n\nThis will pass the extra argument `output_column_name` with the value `\"instance_image\"` to the `transform_image` function.",
             "llm": "gpt-3.5-turbo"
@@ -1339,15 +1339,15 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/logging.html#log-persistence"
             ],
             "document_ids": [
-                8701,
+                8269,
                 7650,
                 7867,
-                16954,
-                8698,
-                16957,
+                18634,
+                8266,
+                18637,
                 7907
             ],
-            "answer": "Ray GCS (Global Control Store) stores the history of jobs run on a KubeRay cluster. It uses an internal key-value store by default, but it can also write this metadata to an external Redis database for reliability and high availability.",
+            "answer": "Ray GCS stores the history of jobs run on a KubeRay cluster in its internal key-value store called the Global Control Store (GCS). However, to ensure fault tolerance and high availability, Ray can also write this metadata to an external Redis database. The format and type of database used for storing the job history in Ray GCS is not specified in the given context.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1362,15 +1362,15 @@
                 "https://docs.ray.io/en/master/ray-air/examples/lightgbm_example.html#training-a-model-with-distributed-lightgbm"
             ],
             "document_ids": [
-                8704,
+                8272,
                 13187,
-                10977,
-                11142,
-                11135,
-                14858,
+                10699,
+                10958,
+                10942,
+                13766,
                 13265
             ],
-            "answer": "To resolve the ValueError \"The actor ImplicitFunc is too large,\" you can try the following steps:\n\n1. Move the data loader to the training function to avoid capturing large objects implicitly.\n2. Use ray.put() to put large objects in the Ray object store.\n3. Check the batch size configuration. The specified batch size should be at most 5 to ensure full parallelization across an actor pool of size 4.\n4. Consider reducing the size of the actor or optimizing the code to reduce memory usage.\n5. If using GPUs, uncomment the line \"num_gpus=1\" to run the code on GPUs.\n6. If the issue persists, you may need to further investigate the code and the size of the objects being used.",
+            "answer": "To resolve the ValueError \"The actor ImplicitFunc is too large,\" you can try the following steps:\n\n1. Move the data loader to the training function to reduce the size of the actor.\n2. Check the definition of the actor and ensure that it is not implicitly capturing a large array or object in scope.\n3. Use ray.put() to put large objects in the Ray object store.\n4. Adjust the batch size to be at most 5 to ensure full parallelization across the actor pool of size 4.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1386,14 +1386,14 @@
             ],
             "document_ids": [
                 13170,
-                12219,
+                12840,
                 13139,
-                10691,
-                14761,
-                10683,
-                10624
+                11115,
+                13669,
+                11107,
+                11048
             ],
-            "answer": "To distribute training for your custom neural net written using Keras in Databricks with Ray, you need to make a few changes to your code:\n\n1. Import Ray Train and Ray AIR Session:\n   ```python\n   import ray.train as train\n   ```\n\n2. Prepare the dataloader for distributed training:\n   ```python\n   train_dataloader = ray.train.torch.prepare_data_loader(train_dataloader)\n   test_dataloader = ray.train.torch.prepare_data_loader(test_dataloader)\n   ```\n\n3. Distribute the model using `ray.train.torch.prepare_model` instead of `DistributedDataParallel`:\n   ```python\n   model = ray.train.torch.prepare_model(model)\n   ```\n\n4. Iterate over data using `DataIterator.iter_batches` instead of a Torch DataLoader:\n   ```python\n   for batch in DataIterator.iter_batches(train_dataloader):\n       # Training logic here\n   ```\n\n5. Pass preprocessors to the Trainer:\n   ```python\n   trainer = train.TorchTrainer(model=model, ...)\n   trainer.set_preprocessors(preprocessors)\n   ```\n\nThese changes will enable data-parallel training, communication of gradient updates across machines, and reporting of results back to Ray Train.",
+            "answer": "To distribute training for your custom neural net written using Keras in Databricks with Ray, you need to make a few changes to your code:\n\n1. Import Ray Train and Ray AIR Session:\n   ```python\n   import ray.train as train\n   ```\n\n2. Prepare the dataloader for distributed training:\n   ```python\n   train_dataloader = ray.train.torch.prepare_data_loader(train_dataloader)\n   test_dataloader = ray.train.torch.prepare_data_loader(test_dataloader)\n   ```\n\n3. Distribute the model using `ray.train.torch.prepare_model` instead of `DistributedDataParallel`:\n   ```python\n   model = ray.train.torch.prepare_model(model)\n   ```\n\n4. Iterate over data using `DataIterator.iter_batches` instead of a Torch DataLoader:\n   ```python\n   for batch in DataIterator.iter_batches(train_dataloader):\n       # Training logic here\n   ```\n\n5. Pass preprocessors to the Trainer:\n   ```python\n   trainer = train.TorchTrainer(model=model, ...)\n   trainer.set_preprocessors(preprocessors)\n   ```\n\nThese changes will enable you to distribute the training of your custom neural net using Ray in Databricks.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1408,15 +1408,15 @@
                 "https://docs.ray.io/en/master/ray-core/patterns/limit-pending-tasks.html#code-example"
             ],
             "document_ids": [
-                6512,
-                4596,
-                6400,
-                6515,
+                5703,
+                6334,
+                7052,
+                5706,
                 7370,
-                4668,
+                6567,
                 7092
             ],
-            "answer": "To use `ray.put()`, you can store an object in the object store and it will return its ID. This ID can be used to pass the object as an argument to any remote function or method call.\n\nTo use `ray.get()`, you can retrieve an object or a list of objects from the object ID or list of object IDs. This is a synchronous operation, meaning it will block until the object is available.\n\nIt is recommended to wait as long as possible before calling `ray.get()`, or even design your program to avoid calling it altogether.\n\nTo summarize, `ray.put()` is used to store objects in the object store, and `ray.get()` is used to retrieve objects from the object store.",
+            "answer": "To use `ray.put()`, you can store an object in the object store and it will return its ID. This ID can be used to pass the object as an argument to any remote function or method call.\n\nTo use `ray.get()`, you can retrieve an object or a list of objects from the object ID or list of object IDs. This is a synchronous operation, meaning it will block until the object is available.\n\nIt is recommended to wait as long as possible before calling `ray.get()` or design your program to avoid calling it altogether.\n\nTo summarize, `ray.put()` is used to store objects in the object store, and `ray.get()` is used to retrieve objects from the object store.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1431,13 +1431,13 @@
                 "https://docs.ray.io/en/master/data/examples/pytorch_resnet_batch_prediction.html#preprocessing"
             ],
             "document_ids": [
-                12536,
-                11117,
-                9499,
-                8934,
-                12594,
-                10513,
-                10958
+                12217,
+                10899,
+                9266,
+                9178,
+                12275,
+                10827,
+                10680
             ],
             "answer": "To preprocess many files using Ray Data, you can use Ray Data's preprocessors for tabular data or existing Ray Data operations for unstructured data. Ray Data allows you to load and preprocess data in a streaming fashion for distributed ML training pipelines. If your preprocessed dataset can fit in Ray's object store memory, you can call the materialize() method to compute and store the preprocessed dataset in memory. Additionally, you can use Ray Data's map method to scale out the preprocessing across all resources in your Ray cluster.",
             "llm": "gpt-3.5-turbo"
@@ -1454,15 +1454,15 @@
                 "https://docs.ray.io/en/master/rllib/rllib-saving-and-loading-algos-and-policies.html#checkpoints-are-py-version-specific-but-can-be-converted-to-be-version-independent"
             ],
             "document_ids": [
-                6042,
-                6041,
-                6045,
-                6040,
-                6022,
-                6031,
-                15255
+                6694,
+                6693,
+                6697,
+                6692,
+                6674,
+                6683,
+                14564
             ],
-            "answer": "The error message indicates that SSLContext objects cannot be pickled. This error occurred during serialization, and it suggests using the `ray.util.inspect_serializability` function to identify non-serializable objects. The context also mentions that Ray uses a customized Pickle protocol version 5 for serialization and supports a wider range of objects with the help of cloudpickle. Additionally, it provides information on customizing the serialization process if needed.",
+            "answer": "The error message indicates that SSLContext objects cannot be pickled. This error occurred during serialization, and it suggests using the `ray.util.inspect_serializability` function to identify non-serializable objects. The context also mentions that Ray uses a customized Pickle protocol version 5 backport for serialization and supports a wider range of objects with the help of cloudpickle. Additionally, it provides information on customizing the serialization process if needed.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1478,10 +1478,10 @@
             ],
             "document_ids": [
                 7733,
-                8660,
-                8644,
-                8654,
-                8713,
+                8228,
+                8212,
+                8222,
+                8281,
                 7649,
                 7851
             ],
@@ -1500,13 +1500,13 @@
                 "https://docs.ray.io/en/master/ray-overview/use-cases.html#batch-inference"
             ],
             "document_ids": [
-                11133,
-                1004,
-                16729,
-                14232,
-                10099,
-                9749,
-                1005
+                10937,
+                195,
+                18409,
+                17108,
+                9964,
+                9865,
+                196
             ],
             "answer": "The function for Ray data batch inference is named `__call__()` because it is a special method in Python classes that allows instances of the class to be called as if they were functions. In this case, the `__call__()` method is used to perform batch inference on a tabular dataset using Ray Data.",
             "llm": "gpt-3.5-turbo"
@@ -1523,13 +1523,13 @@
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#when-to-use-ray-client"
             ],
             "document_ids": [
-                9223,
-                6717,
-                9235,
-                9239,
-                16758,
-                19620,
-                9220
+                8885,
+                5927,
+                8897,
+                8901,
+                18438,
+                19495,
+                8882
             ],
             "answer": "To disconnect the Ray client, you can use the `cli1.disconnect()` or `cli2.disconnect()` method explicitly.",
             "llm": "gpt-3.5-turbo"
@@ -1546,13 +1546,13 @@
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/doc/ray.job_submission.JobSubmissionClient.submit_job.html#ray-job-submission-jobsubmissionclient-submit-job"
             ],
             "document_ids": [
-                9131,
-                8352,
-                9170,
-                9135,
-                6590,
-                9175,
-                8351
+                8793,
+                8989,
+                8832,
+                8797,
+                5781,
+                8837,
+                8988
             ],
             "answer": "To submit a job with Python using local files, you can use the Ray APIs. Here is an example script that submits a task and prints its return value:\n\n```python\nimport ray\n\n@ray.remote\ndef hello_world():\n    return \"hello world\"\n```\n\nTo submit the job, you can use the `ray job submit` command. Make sure to specify the path to the working directory using the `--working-dir` argument. Here is an example command:\n\n```\n$ ray job submit --working-dir your_working_directory -- python script.py\n```\n\nReplace `your_working_directory` with the path to your working directory.",
             "llm": "gpt-3.5-turbo"
@@ -1566,16 +1566,16 @@
                 "https://docs.ray.io/en/master/ray-air/examples/batch_tuning.html#run-batch-training-on-ray-tune-a-class-anchor-id-run-tune-search-a",
                 "https://docs.ray.io/en/master/tune/tutorials/tune_get_data_in_and_out.html#getting-data-out-of-ray-tune",
                 "https://docs.ray.io/en/master/tune/tutorials/tune-fault-tolerance.html#example",
-                "https://docs.ray.io/en/master/tune/examples/index.html#examples-using-ray-tune-with-ml-frameworks"
+                "https://docs.ray.io/en/master/tune/examples/ml-frameworks.html#examples-using-ray-tune-with-ml-frameworks"
             ],
             "document_ids": [
-                1607,
-                9564,
-                5316,
-                14818,
+                1336,
+                9331,
+                3988,
+                13726,
                 3021,
                 2980,
-                3879
+                3731
             ],
             "answer": "To do inference from a model trained by Ray tune.fit(), you can use the Checkpoint that is returned by Ray Train. This Checkpoint can be used for batch inference with Ray Data.",
             "llm": "gpt-3.5-turbo"
@@ -1586,19 +1586,19 @@
                 "https://docs.ray.io/en/master/data/working-with-pytorch.html#batch-inference-with-pytorch",
                 "https://docs.ray.io/en/master/data/working-with-images.html#performing-inference-on-images",
                 "https://docs.ray.io/en/master/data/examples/batch_inference_object_detection.html#object-detection-batch-inference-with-pytorch",
-                "https://docs.ray.io/en/master/data/batch_inference.html#quickstart",
                 "https://docs.ray.io/en/master/data/working-with-pytorch.html#batch-inference-with-pytorch",
+                "https://docs.ray.io/en/master/data/batch_inference.html#quickstart",
                 "https://docs.ray.io/en/master/data/working-with-pytorch.html#batch-inference-with-pytorch",
                 "https://docs.ray.io/en/master/data/batch_inference.html#quickstart"
             ],
             "document_ids": [
-                9587,
-                8782,
-                10996,
-                9535,
-                9589,
-                9588,
-                9534
+                9354,
+                9026,
+                10718,
+                9356,
+                9302,
+                9355,
+                9301
             ],
             "answer": "Yes, you can load and run inference without using PyTorch or TensorFlow directly by using Ray Datasets. Ray Datasets allow you to perform scalable offline batch inference with Torch models by mapping a pre-trained model over your data. You can create a Ray Dataset from in-memory Numpy arrays or other sources and file formats. Additionally, you can define a Predictor class for inference and use it to initialize and reuse your pre-trained PyTorch model for inference across multiple batches.",
             "llm": "gpt-3.5-turbo"
@@ -1615,11 +1615,11 @@
                 "https://docs.ray.io/en/master/cluster/key-concepts.html#ray-jobs"
             ],
             "document_ids": [
-                4615,
+                6514,
                 7283,
-                8002,
-                17470,
-                1974,
+                8350,
+                19150,
+                2420,
                 7658,
                 7539
             ],
@@ -1635,16 +1635,16 @@
                 "https://docs.ray.io/en/master/tune/examples/tune-xgboost.html#using-fractional-gpus",
                 "https://docs.ray.io/en/master/ray-core/tasks/using-ray-with-gpus.html#fractional-gpus",
                 "https://docs.ray.io/en/master/tune/examples/tune-vanilla-pytorch-lightning.html#training-with-gpus",
-                "https://docs.ray.io/en/master/rllib/package_ref/doc/ray.rllib.algorithms.algorithm_config.AlgorithmConfig.resources.html#ray-rllib-algorithms-algorithm-config-algorithmconfig-resources"
+                "https://docs.ray.io/en/master/rllib/rllib-training.html#specifying-resources"
             ],
             "document_ids": [
-                1665,
-                16390,
-                18291,
-                4996,
-                6101,
-                5314,
-                13392
+                1394,
+                18070,
+                14996,
+                3638,
+                6753,
+                3985,
+                15013
             ],
             "answer": "If you specify a fractional GPU in the resource spec, you can allocate a fraction of the GPU memory to a task or actor. However, you need to ensure that your model still fits within the allocated fractional memory.",
             "llm": "gpt-3.5-turbo"
@@ -1654,20 +1654,20 @@
             "sources": [
                 "https://docs.ray.io/en/master/ray-core/patterns/global-variables.html#anti-pattern-using-global-variables-to-share-state-between-tasks-and-actors",
                 "https://docs.ray.io/en/master/ray-core/ray-dag.html#ray-dag-with-classes-and-class-methods",
-                "https://docs.ray.io/en/master/rllib/actors.html#actors",
                 "https://docs.ray.io/en/master/ray-core/actors.html#actors",
-                "https://docs.ray.io/en/master/ray-more-libs/actors.html#actors",
                 "https://docs.ray.io/en/master/rllib/actors.html#actors",
-                "https://docs.ray.io/en/master/ray-core/actors.html#actors"
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#actors",
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#actors",
+                "https://docs.ray.io/en/master/rllib/actors.html#actors"
             ],
             "document_ids": [
-                6365,
-                6570,
-                18784,
-                4392,
-                19730,
-                18787,
-                4395
+                7017,
+                5761,
+                5957,
+                15721,
+                19711,
+                19718,
+                15724
             ],
             "answer": "To pickle a variable defined in an actor's `__init__` method, you can use the actor's instance variables to hold the global state. Pass the actor handle to places where the state needs to be modified or accessed. Note that using class variables to manage state between instances of the same class is not supported. Each actor instance is instantiated in its own process, so each actor will have its own copy of the class variables.",
             "llm": "gpt-3.5-turbo"
@@ -1684,13 +1684,13 @@
                 "https://docs.ray.io/en/master/ray-overview/getting-started.html#ray-core-quickstart"
             ],
             "document_ids": [
-                19554,
-                491,
-                136,
-                370,
-                8861,
+                19363,
+                1071,
+                652,
+                886,
+                9105,
                 7367,
-                1166
+                357
             ],
             "answer": "To perform an all_reduce operation among a list of actors, you can use the `col.allreduce()` function. In the given context, the `do_allreduce()` method is defined in the `Worker` class, and it calls `col.allreduce(self.buffer)` to perform the all_reduce operation. The `buffer` variable is the data that will be reduced.",
             "llm": "gpt-3.5-turbo"
@@ -1707,13 +1707,13 @@
                 "https://docs.ray.io/en/master/ray-core/scheduling/placement-group.html#placement-group"
             ],
             "document_ids": [
-                6188,
-                6187,
-                7059,
-                6206,
-                6182,
-                6167,
-                6169
+                6840,
+                6839,
+                6491,
+                6858,
+                6834,
+                6819,
+                6821
             ],
             "answer": "If we specify a bundle with `{\"CPU\":0}` in the PlacementGroup, it means that we are reserving 0 CPUs. This will result in the placement group not being created, as there are no resources being reserved.",
             "llm": "gpt-3.5-turbo"
@@ -1730,13 +1730,13 @@
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.cancel.html#ray-cancel"
             ],
             "document_ids": [
-                4459,
-                12431,
+                6080,
+                13052,
                 13099,
-                9144,
-                6762,
-                8397,
-                5968
+                8806,
+                6021,
+                8956,
+                6620
             ],
             "answer": "To cancel a job from the UI, you can call the `cancel` function on the job's ObjectRef. By default, this will send a KeyboardInterrupt to the task's worker if it is mid-execution. If you want to force-exit the worker, you can pass `force=True` to `ray.cancel`.",
             "llm": "gpt-3.5-turbo"
@@ -1753,15 +1753,15 @@
                 "https://docs.ray.io/en/master/serve/advanced-guides/deploy-vm.html#using-a-remote-cluster"
             ],
             "document_ids": [
-                16703,
-                16762,
-                9148,
-                16671,
-                17111,
-                16697,
-                16704
+                18383,
+                18442,
+                8810,
+                18351,
+                18791,
+                18377,
+                18384
             ],
-            "answer": "To get your project files on the cluster when using Ray Serve, you can use the `serve deploy` command with the `--address` option to specify the remote Ray cluster's dashboard agent address. For example:\n\n```\nserve deploy config.yaml --address <remote dashboard agent address>\n```\n\nAlternatively, you can use the `serve run` command with the `--address` and `--working-dir` options to connect to the remote cluster via Ray Client, upload the specified working directory, and run your Serve application. The working directory should contain the necessary files, including `local_dev.py`, which will be uploaded to the cluster and imported by Ray Serve. For example:\n\n```\nserve run --address=ray://<head-node-ip-address>:10001 --working-dir=\"./project/src\" local_dev:graph\n```\n\nMake sure to replace `<remote dashboard agent address>` and `<head-node-ip-address>` with the actual addresses of your remote cluster.",
+            "answer": "To get your project files on the cluster when using Ray Serve, you can use the `serve deploy` command with the `--address` option. Specify the remote Ray cluster's dashboard agent address in the format [RAY_CLUSTER_URI]:[DASHBOARD_AGENT_PORT]. For example:\n\n```\nserve deploy config.yaml --address <remote dashboard agent address>\n```\n\nAlternatively, you can use the `serve run` command with the `--address` and `--working-dir` options to connect to the remote cluster via Ray Client, upload the specified working directory, and run your Serve application. The working directory should contain the necessary files, including `local_dev.py`, which will be uploaded to the cluster and imported by Ray Serve. For example:\n\n```\nserve run --address=ray://<head-node-ip-address>:10001 --working-dir=\"./project/src\" local_dev:graph\n```\n\nMake sure to replace `<head-node-ip-address>` with the actual IP address of the head node.\n\nOnce your application is running, you can send requests to it using `curl`:\n\n```\ncurl -X PUT http://<head-node-ip-address>:8000/?name=Ray\n```\n\nRemember to replace `<head-node-ip-address>` with the actual IP address of the head node.\n\nYou can also use the `serve config` command to fetch the current configuration and the `serve status` command to check the status of your application and deployments after deploying.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1771,18 +1771,18 @@
                 "https://docs.ray.io/en/master/ray-more-libs/installation.html#daily-releases-nightlies",
                 "https://docs.ray.io/en/master/installation.html#daily-releases-nightlies",
                 "https://docs.ray.io/en/master/ray-contribute/development.html#building-ray-python-only",
-                "https://docs.ray.io/en/master/ray-overview/installation.html#installing-from-a-specific-commit",
                 "https://docs.ray.io/en/master/installation.html#installing-from-a-specific-commit",
-                "https://docs.ray.io/en/master/ray-more-libs/installation.html#installing-from-a-specific-commit"
+                "https://docs.ray.io/en/master/ray-more-libs/installation.html#installing-from-a-specific-commit",
+                "https://docs.ray.io/en/master/ray-overview/installation.html#installing-from-a-specific-commit"
             ],
             "document_ids": [
-                1214,
-                19646,
-                904,
-                618,
-                1219,
-                909,
-                19651
+                405,
+                19548,
+                95,
+                1198,
+                100,
+                19557,
+                410
             ],
             "answer": "To install the nightly Ray wheel, use the following pip command:\n\npip install -U \"ray[default] @ LINK_TO_WHEEL.whl\"\n\nReplace \"LINK_TO_WHEEL\" with the actual link to the wheel file.",
             "llm": "gpt-3.5-turbo"
@@ -1794,18 +1794,18 @@
                 "https://docs.ray.io/en/master/installation.html#daily-releases-nightlies",
                 "https://docs.ray.io/en/master/ray-more-libs/installation.html#daily-releases-nightlies",
                 "https://docs.ray.io/en/master/ray-contribute/development.html#building-ray-python-only",
-                "https://docs.ray.io/en/master/ray-overview/installation.html#installing-from-a-specific-commit",
+                "https://docs.ray.io/en/master/ray-more-libs/installation.html#installing-from-a-specific-commit",
                 "https://docs.ray.io/en/master/installation.html#installing-from-a-specific-commit",
-                "https://docs.ray.io/en/master/ray-more-libs/installation.html#installing-from-a-specific-commit"
+                "https://docs.ray.io/en/master/ray-overview/installation.html#installing-from-a-specific-commit"
             ],
             "document_ids": [
-                1214,
-                904,
-                19646,
-                618,
-                1219,
-                909,
-                19651
+                405,
+                95,
+                19548,
+                1198,
+                19557,
+                100,
+                410
             ],
             "answer": "To install the latest Ray nightly wheel, use the following pip command:\n\npip install -U \"ray[default] @ LINK_TO_WHEEL.whl\"\n\nReplace \"LINK_TO_WHEEL\" with the actual link to the wheel file.",
             "llm": "gpt-3.5-turbo"
@@ -1823,14 +1823,14 @@
             ],
             "document_ids": [
                 7308,
-                6716,
-                2961,
+                5925,
+                2559,
                 7305,
-                4615,
-                6213,
-                6705
+                6514,
+                6865,
+                5907
             ],
-            "answer": "To write unit tests for Ray code, you can follow these tips:\n\n1. Start a new Ray cluster for each test.\n2. Use the `ray.init` function to fix the resource quantity.\n3. If possible, share the Ray cluster across tests.\n4. Create a mini-cluster using `ray.cluster_utils.Cluster` for testing.\n5. Be cautious when running tests in parallel.\n\nAdditionally, you can use assertions like `Assert.assertEquals` or `assert` statements to verify the expected behavior of your Ray code.",
+            "answer": "To write unit tests for Ray code, you can follow these tips and tricks:\n\n1. Tip 1: Fix the resource quantity with `ray.init(num_cpus=...)`.\n2. Tip 2: Start a new Ray cluster for each test.\n3. Tip 3: Create a mini-cluster with `ray.cluster_utils.Cluster` if needed.\n4. Be careful when running tests in parallel.\n\nAdditionally, you can use assertions like `Assert.assertEquals()` or `assert` statements to verify the expected behavior of your Ray code.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1845,13 +1845,13 @@
                 "https://docs.ray.io/en/master/ray-observability/key-concepts.html#worker-logs-stdout-and-stderr"
             ],
             "document_ids": [
-                9142,
-                198,
-                199,
+                8804,
+                714,
+                715,
                 7785,
-                6518,
-                16758,
-                1384
+                5709,
+                18438,
+                575
             ],
             "answer": "To stop Ray from spamming lots of Info updates on stdout, you can disable logging to the driver by setting `log_to_driver=False` in `ray.init()`.",
             "llm": "gpt-3.5-turbo"
@@ -1868,12 +1868,12 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/troubleshooting/rayservice-troubleshooting.html#issue-1-ray-serve-script-is-incorrect"
             ],
             "document_ids": [
-                17611,
-                8674,
-                8671,
-                17615,
-                8499,
-                14724,
+                19366,
+                8242,
+                8239,
+                19374,
+                8067,
+                13632,
                 7676
             ],
             "answer": "To deploy Stable Diffusion 2.1 with Ray Serve, follow these steps:\n\n1. Install the necessary packages: `pip install \"ray[serve]\" requests torch diffusers==0.12.1 transformers`.\n2. Download the `ray-service.stable-diffusion.yaml` file: `curl -LO https://raw.githubusercontent.com/ray-project/kuberay/master/ray-operator/config/samples/ray-service.stable-diffusion.yaml`.\n3. Clone the Ray repository and install dependencies: `git clone https://github.com/ray-project/ray.git` and `pip install -Ur dreambooth/requirements.txt`.\n4. Prepare the necessary directories and environment variables: `export DATA_PREFIX=\"/tmp\"` and `export ORIG_MODEL_NAME=\"CompVis/stable-diffusion-v1-4\"`.\n5. Test your Ray Serve script locally or in a RayCluster before deploying it to a RayService. Refer to `rayserve-dev-doc.md` for more details.",
@@ -1884,20 +1884,20 @@
             "sources": [
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.kill.html#ray-kill",
                 "https://docs.ray.io/en/master/ray-more-libs/actors.html#passing-around-actor-handles",
-                "https://docs.ray.io/en/master/ray-core/actors.html#passing-around-actor-handles",
                 "https://docs.ray.io/en/master/rllib/actors.html#passing-around-actor-handles",
+                "https://docs.ray.io/en/master/ray-core/actors.html#passing-around-actor-handles",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.kill.html#ray-kill",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.get_actor.html#ray-get-actor",
-                "https://docs.ray.io/en/master/ray-core/actors.html#passing-around-actor-handles"
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#passing-around-actor-handles"
             ],
             "document_ids": [
-                4682,
+                6581,
                 19745,
-                4407,
-                18799,
-                4683,
-                4695,
-                4409
+                15736,
+                5987,
+                6582,
+                6594,
+                19747
             ],
             "answer": "An actor handle is a reference to an actor that allows for communication and interaction with the actor. It can be passed into other tasks or functions to perform operations on the actor.",
             "llm": "gpt-3.5-turbo"
@@ -1914,13 +1914,13 @@
                 "https://docs.ray.io/en/master/ray-core/fault_tolerance/actors.html#actor-creator-failure"
             ],
             "document_ids": [
-                4572,
-                4667,
-                4544,
-                2608,
-                4681,
-                4546,
-                4498
+                6293,
+                6566,
+                6245,
+                2847,
+                6580,
+                6249,
+                6159
             ],
             "answer": "To kill a detached actor in Ray, you can use the `ray.kill(actor_handle)` function in Python or `actorHandle.kill()` in Java. This will manually terminate the actor and interrupt any running tasks on it.",
             "llm": "gpt-3.5-turbo"
@@ -1937,15 +1937,15 @@
                 "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#debugging"
             ],
             "document_ids": [
-                6964,
-                6607,
-                6693,
-                6698,
-                6697,
-                6694,
-                6695
+                6396,
+                5798,
+                5884,
+                5890,
+                5888,
+                5885,
+                5886
             ],
-            "answer": "To force upgrade the pip package in the runtime environment, you can specify the desired version in the `pip_version` parameter. In this case, the pip version is set to `==22.0.2` for Python version `3.8.11`.",
+            "answer": "To force upgrade the pip package in the runtime environment, you can specify the desired version in the `pip_version` parameter. For example, if you want to upgrade to version 22.0.2, you can set `pip_version` to \"==22.0.2\" in the `RuntimeEnv` configuration.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -1960,13 +1960,13 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.random_shuffle.html#ray-data-dataset-random-shuffle"
             ],
             "document_ids": [
-                12572,
-                9995,
-                8872,
-                8908,
-                8907,
-                8971,
-                9996
+                12253,
+                9883,
+                9116,
+                9152,
+                9151,
+                9215,
+                9884
             ],
             "answer": "To perform a global shuffle with Ray, you can use the `random_shuffle()` method provided by the Ray Data API. This method randomly shuffles the rows of a dataset. However, note that this method can be slow. For better performance, you can try iterating over batches with shuffling. Additionally, you can enable local shuffling by specifying a `local_shuffle_buffer_size` when iterating over the dataset during training.",
             "llm": "gpt-3.5-turbo"
@@ -1983,13 +1983,13 @@
                 "https://docs.ray.io/en/master/ray-core/namespaces.html#using-namespaces"
             ],
             "document_ids": [
-                4696,
-                6876,
-                4556,
-                6880,
-                4562,
-                7012,
-                6863
+                6595,
+                6262,
+                6269,
+                6270,
+                6280,
+                6444,
+                6236
             ],
             "answer": "To find the namespace of an Actor, you can specify the namespace when creating the actor. The created actor will belong to the specified namespace. You can also retrieve the actor from any job in the Ray cluster using its unique name within the namespace. If a namespace is not specified, Ray will place the job in an anonymous namespace, which will not have access to actors in other namespaces.",
             "llm": "gpt-3.5-turbo"
@@ -2006,15 +2006,15 @@
                 "https://docs.ray.io/en/master/rllib/actors.html#cancelling-actor-tasks"
             ],
             "document_ids": [
-                6516,
-                4526,
-                4532,
-                4528,
-                4534,
-                4415,
-                18807
+                5707,
+                6209,
+                6221,
+                6213,
+                6225,
+                6003,
+                15744
             ],
-            "answer": "Ray works with async.io by allowing the invocation of every remote operation to be asynchronous. This means that operations immediately return a promise/future, which is an identifier of the operation's result. To get the actual results, the programmer needs to call ray.get() on the IDs of the results. Ray natively integrates with asyncio, allowing it to be used alongside popular async frameworks like aiohttp and aioredis. Async actors in Ray can be defined using async method definitions, and Ray automatically detects whether an actor supports async calls or not.",
+            "answer": "Ray works with async.io by allowing the invocation of every remote operation to be asynchronous. This means that operations immediately return a promise/future, which is an identifier of the operation's result. To get the actual results, the programmer needs to call ray.get() on the IDs of the results. Ray natively integrates with asyncio, allowing it to be used alongside popular async frameworks. Async actors in Ray can be defined using async method definitions, and Ray automatically detects whether an actor supports async calls or not.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -2029,12 +2029,12 @@
                 "https://docs.ray.io/en/master/ray-core/patterns/ray-get-loop.html#anti-pattern-calling-ray-get-in-a-loop-harms-parallelism"
             ],
             "document_ids": [
-                6528,
-                6400,
+                5719,
+                7052,
                 7074,
-                6515,
-                6816,
-                6518,
+                5706,
+                6136,
+                5709,
                 7076
             ],
             "answer": "To debug a hanging `ray.get()` call, you should ensure that you are calling `ray.get()` as late as possible in your program. Avoid calling it in a loop, as it is a blocking call that waits for the result. Instead, separate the call to `ray.get()` from the call to the remote functions and pass a list of object references to `ray.get()` to wait for all tasks to finish.",
@@ -2048,17 +2048,17 @@
                 "https://docs.ray.io/en/master/ray-core/actors/terminating-actors.html#manual-termination-via-an-actor-handle",
                 "https://docs.ray.io/en/master/ray-core/actors/terminating-actors.html#manual-termination-within-the-actor",
                 "https://docs.ray.io/en/master/ray-core/fault_tolerance/actors.html#force-killing-a-misbehaving-actor",
-                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
-                "https://docs.ray.io/en/master/rllib/actors.html#faq-actors-workers-and-resources"
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources",
+                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources"
             ],
             "document_ids": [
-                4549,
-                4543,
-                4544,
-                4551,
-                4502,
-                4421,
-                18813
+                6255,
+                6243,
+                6245,
+                6259,
+                6165,
+                19759,
+                6014
             ],
             "answer": "The example of `ray.actor.exit_actor()` can be found in the first context provided. It shows how to manually terminate an actor from within one of the actor methods.",
             "llm": "gpt-3.5-turbo"
@@ -2075,13 +2075,13 @@
                 "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#customizing-prefixes-for-actor-logs"
             ],
             "document_ids": [
-                217,
-                1387,
-                105,
-                136,
-                402,
-                17511,
-                195
+                733,
+                578,
+                621,
+                652,
+                918,
+                19191,
+                711
             ],
             "answer": "To add a log inside an actor, you can use the `logging` module in Python. In the provided code, the `log` method inside the `Actor` class sets up a logger and logs the message using `logger.info(msg)`. You can call this method on the actor object to add logs. The logs can be accessed from the Task and Actor table view in the Ray dashboard.",
             "llm": "gpt-3.5-turbo"
@@ -2098,15 +2098,15 @@
                 "https://docs.ray.io/en/master/ray-air/examples/torch_detection.html#next-steps"
             ],
             "document_ids": [
-                1006,
-                9616,
-                14847,
+                197,
+                9383,
+                13755,
                 7154,
-                9615,
-                14680,
-                14790
+                9382,
+                13588,
+                13698
             ],
-            "answer": "Yes, you can write a script to do batch inference with GPT-2 on text data from an S3 bucket. Here is an example script:\n\n```python\nimport numpy as np\nfrom transformers import GPT2Tokenizer, GPT2LMHeadModel\nimport torch\nimport boto3\n\n# Load GPT-2 model and tokenizer\nmodel_name = 'gpt2'\nmodel = GPT2LMHeadModel.from_pretrained(model_name)\ntokenizer = GPT2Tokenizer.from_pretrained(model_name)\n\n# Initialize S3 client\ns3 = boto3.client('s3')\n\n# Function to perform batch inference\ndef batch_inference(texts):\n    inputs = tokenizer(texts, return_tensors='pt', padding=True, truncation=True)\n    input_ids = inputs['input_ids']\n    attention_mask = inputs['attention_mask']\n    outputs = model.generate(input_ids=input_ids, attention_mask=attention_mask, max_length=100)\n    generated_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)\n    return generated_texts\n\n# Function to read text data from S3 bucket\ndef read_text_data(bucket_name, file_name):\n    response = s3.get_object(Bucket=bucket_name, Key=file_name)\n    text_data = response['Body'].read().decode('utf-8')\n    return text_data\n\n# Example usage\nbucket_name = 'your_bucket_name'\nfile_name = 'your_file_name.txt'\ntext_data = read_text_data(bucket_name, file_name)\ntexts = text_data.split('\\n')\n\ngenerated_texts = batch_inference(texts)\n\n# Print generated texts\nfor text in generated_texts:\n    print(text)\n```\n\nMake sure to replace `'your_bucket_name'` and `'your_file_name.txt'` with the actual bucket name and file name in your S3 bucket.",
+            "answer": "Yes, you can write a script to do batch inference with GPT-2 on text data from an S3 bucket. You can use Ray Data and a pretrained model from the Hugging Face hub. Implement a callable class that sets up and invokes the model, and then call Dataset.map_batches() to perform the inference on the text data.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -2121,13 +2121,13 @@
                 "https://docs.ray.io/en/master/ray-observability/user-guides/debug-apps/ray-debugging.html#debugger-commands"
             ],
             "document_ids": [
-                400,
-                224,
-                13003,
-                14962,
-                182,
+                916,
+                740,
+                12684,
+                13882,
+                698,
                 7605,
-                271
+                787
             ],
             "answer": "To enable Ray debug logs, you need to install Ray using \"pip install ray[default]\" and then configure the logging system according to the instructions provided in the \"Configuring Logging\" guide.",
             "llm": "gpt-3.5-turbo"
@@ -2144,13 +2144,13 @@
                 "https://docs.ray.io/en/master/ray-observability/reference/cli.html#ray-list"
             ],
             "document_ids": [
-                154,
-                134,
+                670,
+                650,
                 19759,
-                4421,
-                18813,
-                491,
-                391
+                6014,
+                15750,
+                1071,
+                907
             ],
             "answer": "To list the current Ray actors from Python, you can use the `list_actors` function from the `ray.util.state` module. Here's an example:\n\n```python\nfrom ray.util.state import list_actors\n\nactors = list_actors(filters=[(\"state\", \"=\", \"ALIVE\")])\n```\n\nThis will return a list of actor states.",
             "llm": "gpt-3.5-turbo"
@@ -2167,13 +2167,13 @@
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.kill.html#ray-kill"
             ],
             "document_ids": [
-                4667,
-                17010,
-                4544,
-                4681,
-                4546,
-                4549,
-                4683
+                6566,
+                18690,
+                6245,
+                6580,
+                6249,
+                6255,
+                6582
             ],
             "answer": "To kill a replica actor from Python, you can use the `ray.kill(actor_handle, no_restart=True)` function. This will immediately kill the actor without going through the normal exit logic.",
             "llm": "gpt-3.5-turbo"
@@ -2190,13 +2190,13 @@
                 "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus"
             ],
             "document_ids": [
-                6747,
-                6260,
-                6258,
-                6094,
-                9189,
-                6109,
-                16391
+                5988,
+                6912,
+                6910,
+                6746,
+                8851,
+                6761,
+                18071
             ],
             "answer": "To specify that you want a task to run on a V100 GPU type, you can use the `@ray.remote(num_gpus=1, accelerator_type=NVIDIA_TESLA_V100)` decorator in Python.",
             "llm": "gpt-3.5-turbo"
@@ -2213,13 +2213,13 @@
                 "https://docs.ray.io/en/master/tune/index.html#ray-tune-hyperparameter-tuning"
             ],
             "document_ids": [
-                9048,
-                16621,
-                1118,
+                8661,
+                18301,
+                309,
                 7383,
-                6855,
-                1697,
-                2228
+                6220,
+                1426,
+                1477
             ],
             "answer": "To get started, you can follow these steps:\n\n1. Install Ray by running `pip install -U ray`.\n2. Import and initialize Ray in your code: `import ray` and `ray.init()`.\n3. Check out the \"Getting Started\" section and \"Key Concepts\" in the provided context for more detailed instructions and tutorials.\n4. Explore the examples provided to see how to build Ray Serve applications.\n5. If you're interested in contributing to Tune, check out the \"How can I get started contributing to Tune?\" section for guidance.\n\nRemember to refer to the specific sections mentioned in the context for more detailed information and instructions.",
             "llm": "gpt-3.5-turbo"
@@ -2236,13 +2236,13 @@
                 "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#debugging"
             ],
             "document_ids": [
-                6607,
-                6630,
-                6613,
-                6964,
-                6897,
-                16938,
-                6693
+                5798,
+                5821,
+                5804,
+                6396,
+                6320,
+                18618,
+                5884
             ],
             "answer": "To specify the Python version in the runtime_env, you can use the \"pip\" field in your conda environment.yaml file. Specify the desired Python version using the \"python_version\" parameter, for example: \"pip_version\": \"==22.0.2;python_version=='3.8.11'\".",
             "llm": "gpt-3.5-turbo"
@@ -2259,13 +2259,13 @@
                 "https://docs.ray.io/en/master/ray-core/actors/named-actors.html#named-actors"
             ],
             "document_ids": [
-                6876,
-                4696,
-                6878,
-                6869,
-                6865,
-                6870,
-                4556
+                6262,
+                6595,
+                6266,
+                6248,
+                6240,
+                6250,
+                6269
             ],
             "answer": "To create an Actor in a namespace, you can specify the namespace while creating the actor. In Python, you can use the `ray.remote` decorator and set the `namespace` parameter to the desired namespace. For example:\n\n```python\nimport ray\n\n@ray.remote(namespace=\"my_namespace\")\nclass MyActor:\n    pass\n```\n\nIn Java, you can use the `Ray.actor` method and set the namespace using `setName`. For example:\n\n```java\nRay.actor(Actor::new).setName(\"my_actor\", \"actor_namespace\").remote();\n```\n\nRemember to initialize Ray with the desired namespace using `Ray.init(namespace=\"my_namespace\")` before creating the actor.",
             "llm": "gpt-3.5-turbo"
@@ -2282,13 +2282,13 @@
                 "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#remote-uris"
             ],
             "document_ids": [
-                6614,
-                6620,
-                17114,
-                6622,
-                1917,
-                1937,
-                6655
+                5805,
+                5811,
+                18794,
+                5813,
+                2363,
+                2383,
+                5846
             ],
             "answer": "Yes, you can specify multiple working directories. The working_dir parameter allows you to specify the working directory for the Ray workers. It can be a local existing directory, a local existing zipped file, or a URI to a remotely-stored zip file. You can also use the --working-dir option or the working_dir parameter in the runtime_env dictionary to specify the working directory for your application.",
             "llm": "gpt-3.5-turbo"
@@ -2305,13 +2305,13 @@
                 "https://docs.ray.io/en/master/ray-observability/user-guides/debug-apps/optimize-performance.html#no-speedup"
             ],
             "document_ids": [
-                4670,
-                6246,
-                19600,
+                6569,
+                6898,
+                19450,
                 7070,
-                8217,
-                18293,
-                324
+                8565,
+                15000,
+                840
             ],
             "answer": "Setting `num_cpus=0` for tasks means that the tasks will not be scheduled on a head node. It is recommended to always explicitly set `num_cpus` for actors to avoid any surprises. Ray does not provide CPU isolation for tasks or actors, and it is the responsibility of the user to ensure that tasks or actors do not use more resources than specified.",
             "llm": "gpt-3.5-turbo"
@@ -2328,15 +2328,15 @@
                 "https://docs.ray.io/en/master/serve/production-guide/kubernetes.html#autoscaling"
             ],
             "document_ids": [
-                8453,
+                8021,
                 7852,
-                8465,
+                8033,
                 7767,
-                17072,
-                8472,
-                17071
+                18752,
+                8040,
+                18751
             ],
-            "answer": "No, it is not possible to have Ray on Kubernetes without using KubeRay if autoscaling is enabled. KubeRay provides the built-in autoscaling feature for Ray clusters on Kubernetes.",
+            "answer": "Yes, it is possible to have Ray on Kubernetes without using KubeRay. However, if you choose to deploy a static Ray cluster without KubeRay, you will not have the built-in autoscaling feature that KubeRay provides.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -2352,14 +2352,14 @@
             ],
             "document_ids": [
                 7730,
-                8410,
-                8409,
+                7978,
+                7977,
                 7658,
                 7643,
                 7860,
-                9097
+                8759
             ],
-            "answer": "To manually configure and manage a Ray cluster on Kubernetes, you can follow these steps:\n\n1. Deploy the RayCluster custom resource (CR) by applying the raycluster.yaml file using the command: `kubectl apply -f raycluster.yaml`.\n\n2. Configure the Ray cluster by setting the Redis IP address and password in the config file. If the external Redis has a password, substitute the real password for the empty string.\n\n3. Once the Ray cluster is deployed, you can view the pods for the head node and worker nodes by running the command: `kubectl get pods`.",
+            "answer": "To manually configure and manage a Ray cluster on Kubernetes, you can follow these steps:\n\n1. Deploy the RayCluster custom resource (CR) by running the command: `kubectl apply -f raycluster.yaml`.\n\n2. Configure the Ray cluster by setting the Redis IP address and password in the config file.\n\n3. Once the Ray cluster is deployed, you can view the pods for the head node and worker nodes by running the command: `kubectl get pods`.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -2374,12 +2374,12 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/getting-started/rayjob-quick-start.html#step-4-verify-the-kubernetes-cluster-status"
             ],
             "document_ids": [
-                8013,
-                6282,
-                239,
-                4434,
-                4431,
-                6717,
+                8361,
+                6934,
+                755,
+                6035,
+                6030,
+                5927,
                 7781
             ],
             "answer": "No, shutting down a raylet will not automatically kill the tasks and workers on that node.",
@@ -2397,13 +2397,13 @@
                 "https://docs.ray.io/en/master/ray-core/user-guide.html#user-guides"
             ],
             "document_ids": [
-                225,
-                6266,
-                226,
-                242,
-                6113,
-                238,
-                6845
+                741,
+                6918,
+                742,
+                758,
+                6765,
+                754,
+                6200
             ],
             "answer": "To debug out-of-memory issues, you can refer to the \"Debugging Out of Memory\" section in the documentation. Additionally, you can find information on how to find per Task and Actor memory usage to locate the source of the memory leak. The documentation also provides details on memory management in Ray. For specific instructions on addressing the out-of-memory issue, you can refer to the documentation link provided: https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-prevention.html.",
             "llm": "gpt-3.5-turbo"
@@ -2420,13 +2420,13 @@
                 "https://docs.ray.io/en/master/tune/api/doc/ray.tune.Callback.html#ray-tune-callback"
             ],
             "document_ids": [
-                13091,
-                12648,
-                10567,
-                10547,
-                12507,
-                12516,
-                2681
+                12772,
+                12329,
+                10941,
+                10907,
+                12188,
+                12197,
+                1875
             ],
             "answer": "To use a callback in the Trainer class, you can follow these steps:\n\n1. Create a callback class that inherits from the `Callback` base class.\n2. Implement the desired callback method, such as `on_train_epoch_end`, to define the behavior of the callback.\n3. Instantiate the Trainer class with the necessary arguments, such as the model, training arguments, and datasets.\n4. Add the callback to the Trainer using the `add_callback` method.\n\nExample:\n```python\nfrom transformers import Trainer, TrainerCallback\n\nclass MyCallback(TrainerCallback):\n    def on_train_epoch_end(self, trainer, pl_module):\n        # Define the behavior of the callback\n        # Access trainer and pl_module to perform desired actions\n\n# Instantiate the Trainer\ntrainer = Trainer(\n    model=model,\n    args=training_args,\n    train_dataset=train_dataset,\n    eval_dataset=eval_dataset,\n)\n\n# Add the callback to the Trainer\ntrainer.add_callback(MyCallback())\n```\n\nNote: The specific implementation of the callback may vary depending on the desired functionality.",
             "llm": "gpt-3.5-turbo"
@@ -2443,13 +2443,13 @@
                 "https://docs.ray.io/en/master/serve/advanced-guides/dev-workflow.html#testing-on-a-remote-cluster"
             ],
             "document_ids": [
-                9247,
-                6614,
-                9248,
-                17114,
-                9135,
-                9138,
-                16762
+                8909,
+                5805,
+                8910,
+                18794,
+                8797,
+                8800,
+                18442
             ],
             "answer": "To provide the current working directory to Ray, you can specify the working directory using the `--working-dir` argument when running `ray.init()`. The working directory can be a local existing directory or a URI to a remotely-stored zip file. Ray will upload the working directory to the cluster and make it available to the Ray job.",
             "llm": "gpt-3.5-turbo"
@@ -2462,17 +2462,17 @@
                 "https://docs.ray.io/en/master/ray-core/examples/monte_carlo_pi.html#creating-a-progress-actor",
                 "https://docs.ray.io/en/master/ray-core/actors/named-actors.html#named-actors",
                 "https://docs.ray.io/en/master/ray-core/namespaces.html#using-namespaces",
-                "https://docs.ray.io/en/master/ray-core/actors.html#actors",
-                "https://docs.ray.io/en/master/rllib/actors.html#actors"
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#actors",
+                "https://docs.ray.io/en/master/ray-core/actors.html#actors"
             ],
             "document_ids": [
-                5947,
-                6365,
+                6599,
+                7017,
                 7299,
-                4557,
-                6865,
-                4395,
-                18787
+                6271,
+                6240,
+                19718,
+                5963
             ],
             "answer": "To create an actor instance with parameters, you can use the `ActorClass.remote()` method and pass the arguments to the constructor. This will create and run the actor on a remote worker process, and the return value will be an actor handle that can be used to call its methods.",
             "llm": "gpt-3.5-turbo"
@@ -2484,17 +2484,17 @@
                 "https://docs.ray.io/en/master/ray-core/actors/named-actors.html#named-actors",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.util.ActorPool.push.html#ray-util-actorpool-push",
                 "https://docs.ray.io/en/master/ray-core/namespaces.html#using-namespaces",
-                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/rllib/actors.html#faq-actors-workers-and-resources",
+                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources"
             ],
             "document_ids": [
-                4595,
-                4561,
-                7021,
-                6865,
-                4421,
-                18813,
+                6332,
+                6278,
+                6453,
+                6240,
+                15750,
+                6014,
                 19759
             ],
             "answer": "To push a custom module to Ray that is being used by an Actor, you can use the `ActorPool.push()` method. First, import the necessary modules (`ray` and `ActorPool`). Then, define your custom Actor class using the `@ray.remote` decorator. Finally, create instances of your Actor class using the `Actor.remote()` method and push them to the ActorPool using `pool.push()`.",
@@ -2512,13 +2512,13 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/examples/ml-example.html#submit-the-workload"
             ],
             "document_ids": [
-                6614,
-                9132,
-                9247,
-                9248,
-                183,
-                9138,
-                8746
+                5805,
+                8794,
+                8909,
+                8910,
+                699,
+                8800,
+                8314
             ],
             "answer": "To print the Ray working directory, you can use the `working_dir` parameter in the `ray.init()` function. The working directory can be a local existing directory, a local existing zipped file, or a URI to a remotely-stored zip file.",
             "llm": "gpt-3.5-turbo"
@@ -2529,19 +2529,19 @@
                 "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.get_log.html#ray-util-state-get-log",
                 "https://docs.ray.io/en/master/ray-observability/getting-started.html#logs-view",
                 "https://docs.ray.io/en/master/ray-observability/reference/cli.html#log",
-                "https://docs.ray.io/en/master/train/examples/lightning/lightning_cola_advanced.html#distributed-training-with-ray-torchtrainer",
                 "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#training-speed",
+                "https://docs.ray.io/en/master/train/examples/lightning/lightning_cola_advanced.html#distributed-training-with-ray-torchtrainer",
                 "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#logging-directory",
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#ray-client-logs"
             ],
             "document_ids": [
-                416,
-                103,
-                400,
-                13003,
-                14962,
-                183,
-                9246
+                996,
+                619,
+                916,
+                13882,
+                12684,
+                699,
+                8908
             ],
             "answer": "The provided context does not mention anything about the specific issue of not being able to see log.info in Ray log.",
             "llm": "gpt-3.5-turbo"
@@ -2558,13 +2558,13 @@
                 "https://docs.ray.io/en/master/data/data-internals.html#reading-files"
             ],
             "document_ids": [
-                12577,
+                12258,
                 10397,
-                8916,
-                9398,
-                14745,
-                10147,
-                8969
+                9160,
+                9647,
+                13653,
+                10012,
+                9213
             ],
             "answer": "Yes, when using Ray Dataset to read a file, you can ensure that the order of the data is preserved by setting the preserve_order flag in the DataContext to True.",
             "llm": "gpt-3.5-turbo"
@@ -2581,13 +2581,13 @@
                 "https://docs.ray.io/en/master/ray-core/fault-tolerance.html#fault-tolerance"
             ],
             "document_ids": [
-                6764,
-                4448,
-                4477,
-                4436,
-                4444,
-                6891,
-                6725
+                6026,
+                6060,
+                6112,
+                6038,
+                6052,
+                6308,
+                5944
             ],
             "answer": "\"Ray will not retry tasks upon exceptions thrown by application code\" means that if an exception is thrown by the application code during the execution of a task, Ray will not automatically retry that task.",
             "llm": "gpt-3.5-turbo"
@@ -2604,12 +2604,12 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/logging.html#mounting-the-ray-log-directory"
             ],
             "document_ids": [
-                183,
-                8197,
+                699,
+                8545,
                 7909,
                 7930,
-                17512,
-                400,
+                19192,
+                916,
                 7920
             ],
             "answer": "To specify the log directory when starting Ray, you can change the temp and logging directory by specifying it when you call `ray start` or `ray.init()`. By default, Ray writes logs to files in the directory `/tmp/ray/session_*/logs` on each Ray node's or pod's file system. However, it is not recommended to redirect Ray logs to stderr, but if needed, you can set the environment variable `RAY_LOG_TO_STDERR=1` on all Ray nodes.",
@@ -2627,13 +2627,13 @@
                 "https://docs.ray.io/en/master/cluster/vms/getting-started.html#launch-a-cluster-on-a-cloud-provider"
             ],
             "document_ids": [
-                8143,
-                8154,
-                9021,
-                4420,
-                18812,
+                8491,
+                8502,
+                8599,
+                6012,
+                15749,
                 19758,
-                7997
+                8345
             ],
             "answer": "To launch a Ray cluster with 10 nodes, you need to set the \"max_workers\" parameter to 10 in the cluster configuration file.",
             "llm": "gpt-3.5-turbo"
@@ -2651,12 +2651,12 @@
             ],
             "document_ids": [
                 7596,
-                8769,
+                9013,
                 19779,
                 19762,
-                4588,
+                6317,
                 7590,
-                8460
+                8028
             ],
             "answer": "To scale up a Ray cluster programmatically using the Ray API, you can use the `ray.autoscaler.sdk.request_resources()` function. This function allows you to command the autoscaler to scale the cluster up to a desired size by specifying the number of CPUs or other resource bundles. The cluster will immediately attempt to scale to accommodate the requested resources, bypassing normal upscaling speed constraints.",
             "llm": "gpt-3.5-turbo"
@@ -2673,13 +2673,13 @@
                 "https://docs.ray.io/en/master/cluster/vms/user-guides/community/index.html#using-a-custom-cloud-or-cluster-manager"
             ],
             "document_ids": [
-                7990,
-                1196,
-                7997,
-                9031,
+                8338,
+                387,
+                8345,
+                8620,
                 7464,
-                8645,
-                8322
+                8213,
+                8730
             ],
             "answer": "To specify a subnet in the deployment file for launching a cluster using Ray Cloud Launcher in AWS, you need to edit the `ray-operator/config/samples/ray-cluster-alb-ingress.yaml` file. In this file, you can set the annotation `alb.ingress.kubernetes.io/subnets` to include at least two subnets. Make sure to select public subnets that have \"Auto-assign public IPv4 address\" set to Yes on the AWS dashboard.",
             "llm": "gpt-3.5-turbo"
@@ -2696,13 +2696,13 @@
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeInstanceDetails.html#ray-serve-schema-serveinstancedetails"
             ],
             "document_ids": [
-                17095,
-                16481,
-                9246,
-                16472,
+                18775,
+                18161,
+                8908,
+                18152,
                 7676,
                 7761,
-                17512
+                19192
             ],
             "answer": "The HTTP server error code log for Ray Serve can be found in the Serve actor's log file, which is located in the ray logs directory.",
             "llm": "gpt-3.5-turbo"
@@ -2720,14 +2720,14 @@
             ],
             "document_ids": [
                 7502,
-                16705,
+                18385,
                 7501,
-                8023,
-                9146,
+                8371,
+                8808,
                 7499,
                 7497
             ],
-            "answer": "It seems that you are experiencing issues with displaying the Ray Dashboard when running a Ray cluster on Amazon. The problem may be related to the dashboard port not being publicly exposed. To access the Ray Dashboard from outside the head node, you need to set up additional configuration. However, it is important to ensure proper authentication is in place before exposing the Ray Dashboard publicly for security purposes.",
+            "answer": "It seems that you are experiencing issues with displaying the Ray Dashboard when running a Ray cluster on Amazon. The problem may be that the dashboard port is not publicly exposed. You need to set up additional configuration to access the Ray Dashboard from outside the head node. Make sure to follow the instructions provided in the context to properly configure and manage the Ray Dashboard.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -2742,13 +2742,13 @@
                 "https://docs.ray.io/en/master/cluster/vms/user-guides/configuring-autoscaling.html#cluster-config-parameters"
             ],
             "document_ids": [
-                8243,
-                8106,
-                8203,
-                8029,
-                8154,
-                8143,
-                8205
+                8593,
+                8454,
+                8551,
+                8377,
+                8502,
+                8491,
+                8553
             ],
             "answer": "In the Ray cluster launcher YAML, `max_workers` does not include the head node. It represents the maximum number of worker nodes to launch in addition to the head node.",
             "llm": "gpt-3.5-turbo"
@@ -2765,13 +2765,13 @@
                 "https://docs.ray.io/en/master/tune/faq.html#how-do-i-access-relative-filepaths-in-my-tune-training-function"
             ],
             "document_ids": [
-                9247,
-                6614,
-                1937,
-                1917,
-                8010,
+                8909,
+                5805,
+                2383,
+                2363,
+                8358,
                 3020,
-                1723
+                1452
             ],
             "answer": "To update files in the working directory, you can use the \"ray up\" command if you are working with a cluster configuration. If you are using the Ray client, you can upload the working directory to the specified location using ray.init().",
             "llm": "gpt-3.5-turbo"
@@ -2788,13 +2788,13 @@
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/quickstart.html#interacting-with-long-running-jobs"
             ],
             "document_ids": [
-                9247,
-                9138,
-                8010,
-                6599,
-                6614,
-                4615,
-                9141
+                8909,
+                8800,
+                8358,
+                5790,
+                5805,
+                6514,
+                8803
             ],
             "answer": "To update the working directory file after Ray has already been initiated, you can run `ray up` on the existing cluster. This command checks if the local configuration differs from the applied configuration of the cluster, including any changes to synced files specified in the file_mounts section of the config. If there are differences, the new files and config will be uploaded to the cluster and Ray services/processes will be restarted.",
             "llm": "gpt-3.5-turbo"
@@ -2811,13 +2811,13 @@
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#alternative-approach-ssh-port-forwarding"
             ],
             "document_ids": [
-                8157,
-                1179,
-                8126,
-                7999,
-                8170,
-                8165,
-                9230
+                8505,
+                370,
+                8474,
+                8347,
+                8518,
+                8513,
+                8892
             ],
             "answer": "To force the Ray head node to use a custom PEM file to SSH the worker node, you need to set the \"ssh_private_key\" parameter in the Ray configuration file (config.yaml) to the path of your custom PEM file.",
             "llm": "gpt-3.5-turbo"
@@ -2834,13 +2834,13 @@
                 "https://docs.ray.io/en/master/ray-core/miscellaneous.html#tuning-operating-system-settings"
             ],
             "document_ids": [
-                4424,
-                8215,
+                6019,
+                8563,
                 19806,
-                248,
-                17035,
-                16408,
-                4383
+                764,
+                18715,
+                18088,
+                5939
             ],
             "answer": "The GCS server manages cluster-level metadata and provides cluster-level operations. By default, the GCS is not fault-tolerant and stores data in-memory. If the GCS server is taking up a lot of memory on the head node, it may be due to additional system processes running on the head node, such as the GCS or the dashboard. To avoid out-of-memory problems, it is recommended not to run any tasks and actors on the head node.",
             "llm": "gpt-3.5-turbo"
@@ -2857,13 +2857,13 @@
                 "https://docs.ray.io/en/master/ray-overview/getting-started.html#ray-cluster-quickstart"
             ],
             "document_ids": [
-                574,
+                1154,
                 7640,
-                19617,
+                19489,
                 13247,
-                13029,
-                14776,
-                1170
+                12710,
+                13684,
+                361
             ],
             "answer": "To debug the issue of pending nodes when starting a cluster with Ray, you can follow these steps:\n\n1. Check the node status using the command `ray status`. Look for any pending nodes or recent failures.\n2. If there are no pending nodes or failures, the issue may be related to routing. Check the logs for any errors related to IP address mismatch or container connections.\n3. If the head node is overloaded with simultaneous connections, it can cause delays in starting worker nodes. Start the worker nodes more slowly to alleviate this issue.\n4. If there are no available CPUs in the Ray cluster, it could be due to resources being used by Actors or Tune trials. Consider reducing the number of actors or adding more nodes to the cluster.\n5. Use the `wait_for_nodes` function provided in the context to wait for all nodes to join the cluster. This can help identify if there are any delays in node joining.\n\nBy following these steps, you should be able to debug the issue of pending nodes when starting a Ray cluster.",
             "llm": "gpt-3.5-turbo"
@@ -2871,22 +2871,22 @@
         {
             "question": "how to install Ray 2.5.1 from github or wheel?",
             "sources": [
-                "https://docs.ray.io/en/master/ray-more-libs/installation.html#installing-from-a-specific-commit",
                 "https://docs.ray.io/en/master/installation.html#installing-from-a-specific-commit",
+                "https://docs.ray.io/en/master/ray-more-libs/installation.html#installing-from-a-specific-commit",
                 "https://docs.ray.io/en/master/ray-overview/installation.html#installing-from-a-specific-commit",
-                "https://docs.ray.io/en/master/ray-more-libs/installation.html#daily-releases-nightlies",
                 "https://docs.ray.io/en/master/ray-overview/installation.html#daily-releases-nightlies",
                 "https://docs.ray.io/en/master/installation.html#daily-releases-nightlies",
+                "https://docs.ray.io/en/master/ray-more-libs/installation.html#daily-releases-nightlies",
                 "https://docs.ray.io/en/master/installation.html#installing-from-a-specific-commit"
             ],
             "document_ids": [
-                19650,
-                908,
-                1218,
-                19646,
-                1214,
-                904,
-                909
+                99,
+                19556,
+                409,
+                405,
+                95,
+                19548,
+                100
             ],
             "answer": "To install Ray 2.5.1 from GitHub or a wheel, you can use the following command:\n\npip install https://s3-us-west-2.amazonaws.com/ray-wheels/master/{COMMIT_HASH}/ray-{RAY_VERSION}-{PYTHON_VERSION}-{PYTHON_VERSION}-{OS_VERSION}.whl\n\nReplace {COMMIT_HASH} with the desired commit hash, {RAY_VERSION} with the desired Ray version (e.g., 2.5.1), {PYTHON_VERSION} with your Python version, and {OS_VERSION} with your operating system version.",
             "llm": "gpt-3.5-turbo"
@@ -2903,13 +2903,13 @@
                 "https://docs.ray.io/en/master/rllib/package_ref/doc/ray.rllib.evaluation.rollout_worker.RolloutWorker.__init__.html#ray-rllib-evaluation-rollout-worker-rolloutworker-init"
             ],
             "document_ids": [
-                6968,
-                220,
-                12764,
-                17924,
-                14897,
-                8067,
-                16080
+                6400,
+                736,
+                12445,
+                14103,
+                13805,
+                8415,
+                17722
             ],
             "answer": "To use `worker_process_setup_hook` in a runtime environment to set up worker nodes, you need to define a function that will be called after workers start and before Tasks and Actors are scheduled. This function should be passed to the `runtime_env` parameter when initializing Ray. For example:\n\n```python\ndef logging_setup_func():\n    logger = logging.getLogger(\"ray\")\n    logger.setLevel(logging.DEBUG)\n    warnings.simplefilter(\"always\")\n\nray.init(runtime_env={\"worker_process_setup_hook\": logging_setup_func})\n\nlogging_setup_func()\n```\n\nThis will apply the new logging configuration to all worker processes within the job.",
             "llm": "gpt-3.5-turbo"
@@ -2926,13 +2926,13 @@
                 "https://docs.ray.io/en/master/data/examples/custom-datasource.html#implementing-a-custom-datasource"
             ],
             "document_ids": [
-                8921,
-                8790,
-                10992,
-                12547,
-                11467,
-                9526,
-                10880
+                9165,
+                9034,
+                10714,
+                12228,
+                11371,
+                9293,
+                10602
             ],
             "answer": "To use Ray dataset on AWS, you can start a Ray cluster on AWS using the Ray cluster launcher. Ray Data supports various ML frameworks such as PyTorch, HuggingFace, and Tensorflow. You can create datasets from on-disk files, Python objects, or cloud storage services like S3. Ray Data can read from any filesystem supported by Arrow. To load data from S3, you can use the `ray.data.read_csv` function. Ray Data supports a wide variety of data formats including CSV, Parquet, and raw images. For more information on creating datasets and loading data, you can refer to the Datasets User Guide and the Loading Data documentation.",
             "llm": "gpt-3.5-turbo"
@@ -2949,13 +2949,13 @@
                 "https://docs.ray.io/en/master/ray-air/examples/huggingface_text_classification.html#preprocessing-the-data-with-ray-air-a-name-preprocess-a"
             ],
             "document_ids": [
-                9261,
-                9746,
-                9995,
-                12572,
-                8872,
-                11047,
-                14518
+                9477,
+                9862,
+                9883,
+                12253,
+                9116,
+                10779,
+                13426
             ],
             "answer": "To avoid shuffling your dataset during `ray.data.map_batches`, you can use the `random_shuffle` method on your dataset before applying the `map_batches` operation. This will randomize the order of the rows in your dataset. However, note that `random_shuffle` can be slow, so it is recommended to iterate over batches with shuffling for better performance.",
             "llm": "gpt-3.5-turbo"
@@ -2972,12 +2972,12 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.map.html#ray-data-dataset-map"
             ],
             "document_ids": [
-                10357,
-                9261,
-                9417,
-                8891,
-                10925,
-                9273,
+                10209,
+                9477,
+                9666,
+                9135,
+                10647,
+                9489,
                 10422
             ],
             "answer": "Yes, the order of the input data is preserved after a map_batches operation.",
@@ -2995,13 +2995,13 @@
                 "https://docs.ray.io/en/master/serve/api/index.html#ray-serve-api"
             ],
             "document_ids": [
-                6725,
-                4436,
-                16406,
-                16476,
+                5944,
+                6038,
+                18086,
+                18156,
                 7676,
-                6724,
-                17095
+                5942,
+                18775
             ],
             "answer": "To get more detailed errors or logs from Ray Serve, you can leverage Ray logging. Ray Serve uses Python's standard logging module with a logger named \"ray.serve\". By default, logs are emitted from actors both to stderr and on disk on each node at /tmp/ray/session_latest/logs/serve/. This includes both system-level logs from the Serve controller and proxy as well as access logs and custom user logs produced from within deployment replicas.",
             "llm": "gpt-3.5-turbo"
@@ -3018,11 +3018,11 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/troubleshooting/rayservice-troubleshooting.html#issue-9-upgrade-from-ray-serves-single-application-api-to-its-multi-application-api-without-downtime"
             ],
             "document_ids": [
-                17095,
-                6935,
-                7046,
-                4436,
-                16472,
+                18775,
+                6367,
+                6478,
+                6038,
+                18152,
                 7761,
                 7715
             ],
@@ -3041,13 +3041,13 @@
                 "https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#redirecting-worker-logs-to-the-driver"
             ],
             "document_ids": [
-                16476,
-                400,
-                16477,
-                1389,
-                6686,
-                16485,
-                193
+                18156,
+                916,
+                18157,
+                580,
+                5877,
+                18165,
+                709
             ],
             "answer": "You can view logs emitted by your Ray Serve endpoint in the Ray cluster by checking the logs located at /tmp/ray/session_latest/logs/serve/ on each node. These logs include system-level logs from the Serve controller and proxy, as well as access logs and custom user logs produced from within deployment replicas.",
             "llm": "gpt-3.5-turbo"
@@ -3064,12 +3064,12 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/logging.html#log-persistence"
             ],
             "document_ids": [
-                17076,
-                16483,
-                9246,
-                16481,
-                16670,
-                16371,
+                18756,
+                18163,
+                8908,
+                18161,
+                18350,
+                18051,
                 7907
             ],
             "answer": "You can check the controller log and deployment log for a failed Ray Serve deployment. These logs are located under /tmp/ray/session_latest/logs/serve/ in both the head node pod and worker node pod. The logs contain information about specific deployment failure reasons and autoscaling events. Additionally, Ray client logs can be found at /tmp/ray/session_latest/logs on the head node.",
@@ -3087,12 +3087,12 @@
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.split_at_indices.html#ray-data-dataset-split-at-indices"
             ],
             "document_ids": [
-                10992,
-                9528,
-                12560,
-                8916,
-                14518,
-                11675,
+                10714,
+                9295,
+                12241,
+                9160,
+                13426,
+                11511,
                 10428
             ],
             "answer": "To take a subset of a Ray Dataset, you can use the `split_at_indices` method. This method takes a list of sorted integers as input, which indicate where the dataset should be split. It returns the dataset splits based on the provided indices.",
@@ -3110,9 +3110,9 @@
                 "https://docs.ray.io/en/master/tune/tutorials/tune-storage.html#example-running-tune-with-cloud-storage"
             ],
             "document_ids": [
-                2780,
-                2768,
-                2760,
+                2935,
+                2923,
+                2915,
                 2993,
                 2968,
                 3106,
@@ -3133,15 +3133,15 @@
                 "https://docs.ray.io/en/master/ray-core/fault_tolerance/actors.html#force-killing-a-misbehaving-actor"
             ],
             "document_ids": [
-                4572,
-                4681,
-                4667,
-                4549,
-                4544,
-                4569,
-                4502
+                6293,
+                6580,
+                6566,
+                6255,
+                6245,
+                6290,
+                6165
             ],
-            "answer": "To kill a \"detached\" actor in Ray, you can use the `ray.kill` function. This function forcefully terminates the actor and interrupts any running tasks on it. After calling `ray.kill`, the actor's name may be reused. If you want to let pending tasks finish before killing the actor, you can call `actor.__ray_terminate__.remote()` instead.",
+            "answer": "To kill a \"detached\" actor in Ray, you can use the `ray.kill` function. This function forcefully terminates the actor and interrupts any running tasks on it. After calling `ray.kill`, the actor's name may be reused.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -3156,13 +3156,13 @@
                 "https://docs.ray.io/en/master/ray-core/handling-dependencies.html#api-reference"
             ],
             "document_ids": [
-                306,
-                6956,
-                307,
-                4615,
-                16763,
-                14363,
-                6632
+                822,
+                6388,
+                823,
+                6514,
+                18443,
+                13271,
+                5823
             ],
             "answer": "To set environment variables in `ray.init()`, you can use the `runtime_env` parameter. Pass a dictionary with the desired environment variables using the key `\"env_vars\"`. For example: `ray.init(runtime_env={\"env_vars\": {\"FOO\": \"bar\"}})`.",
             "llm": "gpt-3.5-turbo"
@@ -3173,19 +3173,19 @@
                 "https://docs.ray.io/en/master/ray-observability/reference/doc/ray.util.state.common.NodeState.html#ray-util-state-common-nodestate",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.runtime_context.RuntimeContext.node_id.html#ray-runtime-context-runtimecontext-node-id",
                 "https://docs.ray.io/en/master/cluster/vms/references/ray-cluster-configuration.html#full-configuration",
+                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeInstanceDetails.html#ray-serve-schema-serveinstancedetails",
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ApplicationDetails.html#ray-serve-schema-applicationdetails",
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.DeploymentDetails.html#ray-serve-schema-deploymentdetails",
-                "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeInstanceDetails.html#ray-serve-schema-serveinstancedetails",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.init.html#ray-init"
             ],
             "document_ids": [
-                55,
-                6981,
-                8180,
-                17395,
-                17269,
-                17555,
-                4632
+                974,
+                6413,
+                8528,
+                19256,
+                19075,
+                18949,
+                6531
             ],
             "answer": "The REST API for getting the head node ID is deprecated and may be removed in future Ray releases. It is recommended to use the `get_node_id()` function instead.",
             "llm": "gpt-3.5-turbo"
@@ -3198,17 +3198,17 @@
                 "https://docs.ray.io/en/master/rllib/actors.html#cancelling-actor-tasks",
                 "https://docs.ray.io/en/master/ray-core/actors.html#cancelling-actor-tasks",
                 "https://docs.ray.io/en/master/ray-more-libs/actors.html#cancelling-actor-tasks",
-                "https://docs.ray.io/en/master/ray-core/actors.html#cancelling-actor-tasks",
-                "https://docs.ray.io/en/master/rllib/actors.html#cancelling-actor-tasks"
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#cancelling-actor-tasks",
+                "https://docs.ray.io/en/master/ray-core/actors.html#cancelling-actor-tasks"
             ],
             "document_ids": [
-                4459,
-                6762,
-                18806,
-                4414,
+                6080,
+                6021,
+                15743,
+                6001,
                 19752,
-                4416,
-                18808
+                19754,
+                6005
             ],
             "answer": "To rerun a canceled Ray task, you need to call `ray.cancel()` on the ObjectRef of the task that was canceled. By default, this will send a KeyboardInterrupt to the task's worker if it is mid-execution. If you want to force-exit the worker, you can pass `force=True` to `ray.cancel()`. Note that Ray does not automatically retry tasks that have been canceled.",
             "llm": "gpt-3.5-turbo"
@@ -3225,13 +3225,13 @@
                 "https://docs.ray.io/en/master/tune/api/doc/ray.tune.search.Repeater.html#ray-tune-search-repeater"
             ],
             "document_ids": [
-                2145,
-                9269,
-                1410,
-                2160,
-                14756,
-                2504,
-                2127
+                2671,
+                9485,
+                1953,
+                2686,
+                13664,
+                2743,
+                2653
             ],
             "answer": "To set the maximum number of parallel concurrent scheduled tasks in `map_batches`, you need to use the `max_concurrent` parameter. This parameter determines the maximum number of concurrent trials and is passed to the `ConcurrencyLimiter` if used. The `max_concurrent` value passed to the `ConcurrencyLimiter` will override the value passed to `map_batches`.",
             "llm": "gpt-3.5-turbo"
@@ -3240,21 +3240,21 @@
             "question": "How do I get the number of cpus from ray cluster?",
             "sources": [
                 "https://docs.ray.io/en/master/ray-air/examples/huggingface_text_classification.html#set-up-ray-a-name-setup-a",
-                "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/rllib/actors.html#faq-actors-workers-and-resources",
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/cluster/vms/getting-started.html#create-a-basic-python-application",
                 "https://docs.ray.io/en/master/cluster/kubernetes/k8s-ecosystem/pyspy.html#step-6-profile-using-ray-dashboard",
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/config.html#num-cpus"
             ],
             "document_ids": [
-                14498,
+                13406,
+                6012,
+                15749,
                 19758,
-                4420,
-                18812,
-                7988,
-                8575,
-                8430
+                8336,
+                8143,
+                7998
             ],
             "answer": "To get the number of CPUs from a Ray cluster, you can use the `ray.cluster_resources()[\"CPU\"]` command.",
             "llm": "gpt-3.5-turbo"
@@ -3271,13 +3271,13 @@
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.job_config.JobConfig.set_runtime_env.html#ray-job-config-jobconfig-set-runtime-env"
             ],
             "document_ids": [
-                16764,
-                6897,
-                4636,
-                6956,
-                6607,
-                16938,
-                4635
+                18444,
+                6320,
+                6535,
+                6388,
+                5798,
+                18618,
+                6534
             ],
             "answer": "To use the exclude option with the runtime_env, refer to the API Reference for details. Be cautious when specifying conda or pip packages that involve building from source, as it can be slow. The runtime_env is used to define the environment for the application and package dependencies. The Serve config's runtime_env can only use remote URIs in its working_dir and py_modules, not local zip files or directories.",
             "llm": "gpt-3.5-turbo"
@@ -3295,12 +3295,12 @@
             ],
             "document_ids": [
                 19788,
-                9261,
-                9269,
-                10925,
-                14705,
-                15318,
-                9417
+                9477,
+                9485,
+                10647,
+                13613,
+                14775,
+                9666
             ],
             "answer": "The example shows how to use the `batch_format` parameter in methods like `iter_batches()` and `map_batches()` in Ray Data. It demonstrates using `batch_format=\"numpy\"` and `batch_format=\"pandas\"` to specify the batch type.",
             "llm": "gpt-3.5-turbo"
@@ -3310,20 +3310,20 @@
             "sources": [
                 "https://docs.ray.io/en/master/tune/tutorials/tune-distributed.html#running-a-distributed-tune-experiment",
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.init.html#ray-init",
-                "https://docs.ray.io/en/master/cluster/vms/examples/ml-example.html#ray-dashboard",
                 "https://docs.ray.io/en/master/cluster/kubernetes/examples/ml-example.html#ray-dashboard",
+                "https://docs.ray.io/en/master/cluster/vms/examples/ml-example.html#ray-dashboard",
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/doc/ray.job_submission.JobSubmissionClient.html#ray-job-submission-jobsubmissionclient",
                 "https://docs.ray.io/en/master/serve/monitoring.html#ray-dashboard",
                 "https://docs.ray.io/en/master/ray-core/starting-ray.html#what-is-the-ray-runtime"
             ],
             "document_ids": [
                 3192,
-                4621,
-                9112,
-                8750,
-                8761,
-                16472,
-                6490
+                6520,
+                8318,
+                8774,
+                9005,
+                18152,
+                5681
             ],
             "answer": "To find the local Ray address, you can try the following methods:\n\n1. Check if the Ray cluster is already started. In that case, you should not need to run anything on the worker nodes.\n\n2. If a concrete address is provided, such as \"localhost:<port>\", try to connect to it. You can also prefix the address with \"ray://\" to connect to a remote cluster.\n\n3. If no address is provided, try to find an existing Ray instance.\n\n4. Access the Ray Dashboard by going to \"localhost:8265\" in your browser.\n\n5. If you're running Ray Serve locally, you can access the dashboard by going to \"http://localhost:8265\" in your browser.\n\nNote: The RAY_ADDRESS environment variable can also be used to specify the Ray address.",
             "llm": "gpt-3.5-turbo"
@@ -3340,15 +3340,15 @@
                 "https://docs.ray.io/en/master/cluster/cli.html#cluster-management-cli"
             ],
             "document_ids": [
-                7997,
-                19617,
-                6497,
-                9021,
-                6959,
-                6767,
+                8345,
+                19489,
+                5688,
+                8599,
+                6391,
+                6034,
                 7597
             ],
-            "answer": "To start a Ray cluster on multiple nodes via CLI, you can use the following command:\n\n$ ray up -y config.yaml\n\nMake sure to run \"ray start\" on each node before using \"ray.init()\" in Python to connect to the cluster services.",
+            "answer": "To start a Ray cluster on multiple nodes via CLI, you can use the following command:\n\n$ ray up -y config.yaml\n\nMake sure to define the configuration file before running this command.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -3363,15 +3363,15 @@
                 "https://docs.ray.io/en/master/ray-air/examples/gptj_deepspeed_fine_tuning.html#training-speed"
             ],
             "document_ids": [
-                6196,
-                8975,
-                323,
-                12845,
+                6848,
+                9219,
+                839,
+                12526,
                 13251,
                 7307,
-                15067
+                14095
             ],
-            "answer": "The Ray tuner shows \"running\" because it is scheduled to run, but it occupies almost 0% CPU usage because it does not require CPU resources after it is created.",
+            "answer": "The Ray tuner shows \"running\" because it is scheduled to use 1 CPU, but after it is created, it occupies 0 CPU. This could be due to the default behavior of Ray Tune, which tries to fully utilize cluster CPUs, potentially preventing Ray Data from scheduling tasks. To ensure CPU resources are always available for Ray Data execution, limit the number of concurrent Tune trials with the max_concurrent_trials option.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -3386,13 +3386,13 @@
                 "https://docs.ray.io/en/master/ray-contribute/fake-autoscaler.html#using-ray-cluster-utils-autoscalingcluster"
             ],
             "document_ids": [
-                8246,
-                8313,
-                8300,
-                245,
-                248,
-                6116,
-                577
+                8598,
+                8714,
+                8693,
+                761,
+                764,
+                6768,
+                1157
             ],
             "answer": "No, the Ray head node and workers do not necessarily need to have the same object store memory size allocated. The object store memory available to each worker node is capped by a specific formula, while the object store memory available to the Ray head node is capped by a different formula. The default values for these allocations are also different.",
             "llm": "gpt-3.5-turbo"
@@ -3409,13 +3409,13 @@
                 "https://docs.ray.io/en/master/serve/advanced-guides/deployment-graphs.html#binding-deployments"
             ],
             "document_ids": [
-                17153,
-                16415,
-                17157,
-                17236,
-                17119,
-                17073,
-                16775
+                18833,
+                18095,
+                18837,
+                18916,
+                18799,
+                18753,
+                18455
             ],
             "answer": "To specify whether to set up an HTTP proxy on each node or just the head node in Ray Serve, you can use the `proxy_location` field in the `http_options` configuration. Set the value to \"EveryNode\" to start one HTTP server per node or \"HeadOnly\" to start one HTTP server on the head node. The default behavior is \"HeadOnly\".",
             "llm": "gpt-3.5-turbo"
@@ -3433,14 +3433,14 @@
             ],
             "document_ids": [
                 7518,
-                8591,
+                8159,
                 7519,
                 7517,
                 7523,
                 7520,
                 7522
             ],
-            "answer": "To embed Grafana into the Ray Dashboard when using KubeRay, you should set the following variables:\n\n- `RAY_GRAFANA_HOST`: Set this to an address that the head node can use to access Grafana.\n- `RAY_PROMETHEUS_HOST`: Set this to an address that the head node can use to access Prometheus.\n\nTo set these variables more intelligently, given that the head node IP is changing every time the cluster is reconfigured, you can use the following approach:\n\n- Set `RAY_GRAFANA_HOST` to the IP address of the head node and the port where Grafana is hosted.\n- Set `RAY_PROMETHEUS_HOST` to the IP address of the head node and the port where Prometheus is hosted.\n\nFor example, if the IP of the head node is 55.66.77.88 and Grafana is hosted on port 3000, you would set `RAY_GRAFANA_HOST` to `http://55.66.77.88:3000`. Similarly, if Prometheus is hosted at port 9000 on a node with IP 55.66.77.88, you would set `RAY_PROMETHEUS_HOST` to `http://55.66.77.88:9000`.\n\nMake sure to properly configure these environment variables when starting the Ray Clusters.",
+            "answer": "To embed Grafana into the Ray Dashboard when using KubeRay, you should set the following variables:\n\n- `RAY_GRAFANA_HOST`: Set this to an address that the head node can use to access Grafana.\n- `RAY_PROMETHEUS_HOST`: Set this to an address that the head node can use to access Prometheus.\n\nTo set these variables more intelligently, given that the head node IP is changing every time the cluster is reconfigured, you can use the following approach:\n\n- Set `RAY_GRAFANA_HOST` to the IP address of the head node and the port where Grafana is hosted.\n- Set `RAY_PROMETHEUS_HOST` to the IP address of the head node and the port where Prometheus is hosted.\n\nFor example, if the IP of the head node is 55.66.77.88 and Grafana is hosted on port 3000, you would set `RAY_GRAFANA_HOST` to `http://55.66.77.88:3000`. Similarly, if Prometheus is hosted at port 9000 on a node with IP 55.66.77.88, you would set `RAY_PROMETHEUS_HOST` to `http://55.66.77.88:9000`.\n\nNote that these environment variables need to be properly configured for each Ray Cluster, and you should ensure that the head node and the browsers of dashboard users can access Grafana.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -3455,15 +3455,15 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/user-guides/configuring-autoscaling.html#ray-autoscaler-with-kubernetes-cluster-autoscaler"
             ],
             "document_ids": [
-                17071,
-                17070,
-                8734,
-                8453,
-                8476,
-                8478,
-                8480
+                18751,
+                18750,
+                8302,
+                8021,
+                8044,
+                8046,
+                8048
             ],
-            "answer": "The Ray Autoscaler in KubeRay determines which Kubernetes pod to kill by having fine-grained control over scale-down. It can select precisely which pods to scale down, and the KubeRay operator then deletes that pod. This is in contrast to the Horizontal Pod Autoscaler, which can only decrease a replica count without much control over which pods are scaled down.",
+            "answer": "The GCS (Google Cloud Scheduler) does not determine which Kubernetes pod to kill when using KubeRay autoscaling. The Ray autoscaler, which is a Ray cluster process, determines the scaling up and down of the cluster based on resource demand. It has fine-grained control over scale-down and can select precisely which pods to scale down. The KubeRay operator then deletes that pod.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -3478,15 +3478,15 @@
                 "https://docs.ray.io/en/master/ray-observability/reference/cli.html#ray-summary-tasks"
             ],
             "document_ids": [
-                16936,
-                16863,
-                17236,
-                17164,
-                17150,
-                389,
-                383
+                18616,
+                18543,
+                18916,
+                18844,
+                18830,
+                905,
+                899
             ],
-            "answer": "To set the `request_timeout_s` in the `http_options` section of a Ray Serve YAML config file, you need to specify the desired timeout value in seconds. This can be done by updating the `request_timeout_s` field in the `http_options` section of the config file. Note that this configuration is global to your Ray cluster and cannot be updated during runtime.",
+            "answer": "To set the `request_timeout_s` in the `http_options` section of a Ray Serve YAML config file, you need to specify the desired timeout value in seconds for the HTTP requests. This configuration is global to your Ray cluster and cannot be updated during runtime.",
             "llm": "gpt-3.5-turbo"
         },
         {
@@ -3496,18 +3496,18 @@
                 "https://docs.ray.io/en/master/ray-core/tasks/using-ray-with-gpus.html#using-gpus-in-tasks-and-actors",
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.add_column.html#ray-data-dataset-add-column",
                 "https://docs.ray.io/en/master/data/api/doc/ray.data.Dataset.filter.html#ray-data-dataset-filter",
-                "https://docs.ray.io/en/master/ray-overview/installation.html#m1-mac-apple-silicon-support",
                 "https://docs.ray.io/en/master/installation.html#m1-mac-apple-silicon-support",
+                "https://docs.ray.io/en/master/ray-overview/installation.html#m1-mac-apple-silicon-support",
                 "https://docs.ray.io/en/master/ray-more-libs/installation.html#m1-mac-apple-silicon-support"
             ],
             "document_ids": [
-                5315,
-                6094,
+                3986,
+                6746,
                 10435,
                 10479,
-                1226,
-                916,
-                19658
+                107,
+                417,
+                19571
             ],
             "answer": "To make the GPU available on your M1 laptop to Ray, you can specify the resource requirements using the `num_gpus` parameter, such as `@ray.remote(num_gpus=1)`. Ray will then schedule the task or actor to a node with available GPU resources and set the `CUDA_VISIBLE_DEVICES` environment variable before running the code.",
             "llm": "gpt-3.5-turbo"
@@ -3524,13 +3524,13 @@
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#when-to-use-ray-client"
             ],
             "document_ids": [
-                9140,
-                16863,
+                8802,
+                18543,
                 7772,
-                9155,
-                7065,
-                9143,
-                9220
+                8817,
+                6497,
+                8805,
+                8882
             ],
             "answer": "To add a timeout for a Ray job, you can set an end-to-end timeout for HTTP requests by configuring the request_timeout_s in the http_options field of the Serve config. This timeout specifies the number of seconds the HTTP proxies will wait before terminating an HTTP request. However, please note that this configuration is global to your Ray cluster and cannot be updated during runtime. If you want to retry requests that time out due to transient failures, you can use client-side retries.",
             "llm": "gpt-3.5-turbo"
@@ -3547,11 +3547,11 @@
                 "https://docs.ray.io/en/master/cluster/kubernetes/troubleshooting/troubleshooting.html#cluster-domain"
             ],
             "document_ids": [
-                6616,
-                9147,
-                16761,
-                6582,
-                16703,
+                5807,
+                8809,
+                18441,
+                5773,
+                18383,
                 7623,
                 7726
             ],
@@ -3570,13 +3570,13 @@
                 "https://docs.ray.io/en/master/ray-contribute/fake-autoscaler.html#setting-up-in-a-docker-in-docker-dind-environment"
             ],
             "document_ids": [
-                6049,
-                6048,
-                184,
-                183,
-                6117,
-                6776,
-                602
+                6701,
+                6700,
+                700,
+                699,
+                6769,
+                6055,
+                1182
             ],
             "answer": "Yes, if you set the `--temp-dir` flag to a different directory than `/tmp`, Ray objects will spill to the custom directory specified.",
             "llm": "gpt-3.5-turbo"
@@ -3593,13 +3593,13 @@
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ApplicationDetails.html#ray-serve-schema-applicationdetails"
             ],
             "document_ids": [
-                6663,
-                6679,
-                6666,
-                9197,
-                16763,
-                17230,
-                17389
+                5854,
+                5870,
+                5857,
+                8859,
+                18443,
+                18910,
+                19069
             ],
             "answer": "An example for `--runtime-env-json` is:\n\n`runtime_env = {\"working_dir\": \"https://github.com/example_username/example_respository/archive/HEAD.zip\"}`",
             "llm": "gpt-3.5-turbo"
@@ -3616,13 +3616,13 @@
                 "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling-config-parameters"
             ],
             "document_ids": [
-                16379,
-                8466,
-                16527,
-                17258,
-                17217,
-                8529,
-                16381
+                18059,
+                8034,
+                18207,
+                18938,
+                18897,
+                8097,
+                18061
             ],
             "answer": "The value of `maxConcurrentReplicas` should be specified in the `autoscaling_config` parameter.",
             "llm": "gpt-3.5-turbo"
@@ -3639,13 +3639,13 @@
                 "https://docs.ray.io/en/master/serve/api/doc/ray.serve.schema.ServeDeploySchema.html#ray-serve-schema-servedeployschema"
             ],
             "document_ids": [
-                17319,
-                16527,
-                16382,
-                16861,
-                16404,
-                17297,
-                17216
+                18999,
+                18207,
+                18062,
+                18541,
+                18084,
+                18977,
+                18896
             ],
             "answer": "The value of `max_concurrent_queries` should be set to a number that represents the maximum number of pending queries in a single replica. The default value is 100, but it can be increased if needed.",
             "llm": "gpt-3.5-turbo"
@@ -3657,18 +3657,18 @@
                 "https://docs.ray.io/en/master/serve/scaling-and-resource-allocation.html#autoscaling-config-parameters",
                 "https://docs.ray.io/en/master/rllib/package_ref/utils.html#tensorflow-utilities",
                 "https://docs.ray.io/en/master/tune/api/doc/ray.tune.schedulers.PopulationBasedTraining.html#ray-tune-schedulers-populationbasedtraining",
-                "https://docs.ray.io/en/master/rllib/rllib-algorithms.html#twin-delayed-ddpg-td3",
                 "https://docs.ray.io/en/master/rllib/rllib-algorithms.html#deep-deterministic-policy-gradients-ddpg",
+                "https://docs.ray.io/en/master/rllib/rllib-algorithms.html#twin-delayed-ddpg-td3",
                 "https://docs.ray.io/en/master/rllib/rllib-algorithms.html#behavior-cloning-bc-derived-from-marwil-implementation"
             ],
             "document_ids": [
-                16386,
-                16387,
-                15734,
-                2955,
-                19061,
-                19045,
-                18846
+                18066,
+                18067,
+                14373,
+                2553,
+                16045,
+                16061,
+                15783
             ],
             "answer": "A `smoothing_factor` is a multiplicative factor used to speed up or slow down each upscaling or downscaling decision in an autoscaling algorithm. It can be adjusted to control the pace of resource scaling based on traffic volume.",
             "llm": "gpt-3.5-turbo"
@@ -3685,13 +3685,13 @@
                 "https://docs.ray.io/en/master/rllib/package_ref/doc/ray.rllib.evaluation.worker_set.WorkerSet.html#ray-rllib-evaluation-worker-set-workerset"
             ],
             "document_ids": [
-                16914,
-                17043,
-                17044,
-                431,
-                139,
-                136,
-                16228
+                18594,
+                18723,
+                18724,
+                1011,
+                655,
+                652,
+                17908
             ],
             "answer": "Actors change their state to unhealthy due to various reasons such as errors in the deployment's constructor, crashed replicas, or general system or machine errors.",
             "llm": "gpt-3.5-turbo"
@@ -3708,13 +3708,13 @@
                 "https://docs.ray.io/en/master/cluster/running-applications/job-submission/ray-client.html#ray-client-logs"
             ],
             "document_ids": [
-                158,
-                159,
-                374,
-                212,
-                236,
-                15,
-                9246
+                674,
+                675,
+                890,
+                728,
+                752,
+                934,
+                8908
             ],
             "answer": "You cannot access logs from a dead node.",
             "llm": "gpt-3.5-turbo"
@@ -3731,13 +3731,13 @@
                 "https://docs.ray.io/en/master/ray-core/scheduling/placement-group.html#rescheduling-bundles-on-a-dead-node"
             ],
             "document_ids": [
-                574,
-                4434,
-                234,
-                16952,
-                8537,
-                4547,
-                6238
+                1154,
+                6035,
+                750,
+                18632,
+                8105,
+                6251,
+                6890
             ],
             "answer": "A node can change its status to dead for several reasons, including:\n- Raylet failure: When a raylet process fails, the corresponding node is marked as dead.\n- Task killed due to low memory: If a node is running low on memory, a task may be killed, resulting in the node being marked as dead.\n- Worker node failure: If a worker node fails, the actors running on it also fail, and the node is marked as dead.\n- Scaling down nodes: Nodes may be scaled down, resulting in some nodes being marked as dead.\n- Rescheduling bundles on a dead node: If nodes containing bundles of a placement group die, the bundles are rescheduled on different nodes, and the original node is marked as dead.",
             "llm": "gpt-3.5-turbo"
@@ -3754,13 +3754,13 @@
                 "https://docs.ray.io/en/master/train/user-guides/data-loading-preprocessing.html#adding-cpu-only-nodes-to-your-cluster"
             ],
             "document_ids": [
-                128,
-                8216,
-                12602,
-                234,
-                577,
+                644,
+                8564,
+                12283,
+                750,
+                1157,
                 7793,
-                12601
+                12282
             ],
             "answer": "The reasons for spikes in node CPU utilization could be due to various factors such as high demand for resources, insufficient memory leading to task termination, or bottlenecked preprocessing compute time. Adding more CPU-only nodes can help parallelize preprocessing and increase cluster object store memory, which can alleviate these issues.",
             "llm": "gpt-3.5-turbo"
@@ -3778,12 +3778,12 @@
             ],
             "document_ids": [
                 7938,
-                17078,
-                17039,
-                16618,
-                9169,
-                1326,
-                16616
+                18758,
+                18719,
+                18298,
+                8831,
+                517,
+                18296
             ],
             "answer": "The recommended machine type to deploy a RayService on EKS (Amazon Elastic Kubernetes Service) is not mentioned in the provided context.",
             "llm": "gpt-3.5-turbo"
@@ -3800,13 +3800,13 @@
                 "https://docs.ray.io/en/master/ray-core/fault_tolerance/gcs.html#setting-up-redis"
             ],
             "document_ids": [
-                6775,
-                6776,
-                4615,
-                184,
-                17095,
-                9221,
-                4427
+                6053,
+                6055,
+                6514,
+                700,
+                18775,
+                8883,
+                6023
             ],
             "answer": "Yes, you can configure the session name generated by Ray. By default, the session name is in the format \"session_{timestamp}_{pid}\". You can change the root temporary directory by passing \"--temp-dir={your temp path}\" to \"ray start\". However, there is currently no stable way to change the root temporary directory when calling \"ray.init()\".",
             "llm": "gpt-3.5-turbo"
@@ -3823,13 +3823,13 @@
                 "https://docs.ray.io/en/master/ray-core/scheduling/placement-group.html#observe-and-debug-placement-groups"
             ],
             "document_ids": [
-                9166,
-                9120,
-                9128,
-                9253,
-                9258,
-                8402,
-                6216
+                8828,
+                8782,
+                8790,
+                8915,
+                8920,
+                8961,
+                6868
             ],
             "answer": "Yes, you can use the Python SDK to get a link to the Ray dashboard for a given job. You can use the `get_job_info` method from the `JobSubmissionClient` class in the Python SDK to retrieve the latest status and other information associated with a job. The Ray dashboard provides the placement group table that displays the scheduling state and metadata of the placement group.",
             "llm": "gpt-3.5-turbo"
@@ -3846,13 +3846,13 @@
                 "https://docs.ray.io/en/master/ray-core/fault_tolerance/nodes.html#raylet-failure"
             ],
             "document_ids": [
-                6282,
-                239,
-                234,
-                4680,
-                4641,
-                5983,
-                4434
+                6934,
+                755,
+                750,
+                6579,
+                6540,
+                6635,
+                6035
             ],
             "answer": "Possible causes for the node where the task was running to crash unexpectedly include: (1) failure of the instance where the node was running, (2) raylet crashing unexpectedly due to memory pressure (OOM), preempted node, or other reasons.",
             "llm": "gpt-3.5-turbo"
@@ -3870,12 +3870,12 @@
             ],
             "document_ids": [
                 7639,
-                9079,
-                16956,
-                4424,
-                574,
-                4433,
-                16408
+                8735,
+                18636,
+                6019,
+                1154,
+                6033,
+                18088
             ],
             "answer": "The error \"gcs_health_check_manager.cc:108: Health check failed for node\" indicates that the health check for a node in the cluster has failed. This could be due to various reasons such as the head node being inaccessible, a different version of Ray running at the specified address, incorrect address specified, or firewall settings preventing access. To troubleshoot, you can use tools like nmap or nc to check if each port can be reached from the node. Once the GCS (Global Control Service) is recovered, the cluster will return to normal behavior. To make the GCS fault tolerant, HA Redis is required.",
             "llm": "gpt-3.5-turbo"
@@ -3892,13 +3892,13 @@
                 "https://docs.ray.io/en/master/serve/tutorials/gradio-dag-visualization.html#requirement-driver"
             ],
             "document_ids": [
-                16793,
-                16349,
-                16789,
-                16794,
+                18473,
+                18029,
+                18469,
+                18474,
                 7815,
-                16455,
-                17681
+                18135,
+                19506
             ],
             "answer": "Yes, you need the DAGDriver to deploy a serve application using RayServe. The DAGDriver routes HTTP requests through your call graph and is used as the ingress deployment in the deployment graph. It is required for visualization and can be included in your deployment graph using the `DAGDriver.bind()` method.",
             "llm": "gpt-3.5-turbo"
@@ -3915,13 +3915,13 @@
                 "https://docs.ray.io/en/master/serve/configure-serve-deployment.html#configure-ray-serve-deployments"
             ],
             "document_ids": [
-                16928,
-                17548,
-                17388,
-                17229,
+                18608,
+                19242,
+                19068,
+                18909,
                 7687,
-                17081,
-                16531
+                18761,
+                18211
             ],
             "answer": "The import path that needs to be provided for a simple RayServe deployment is of the form \"module.submodule_1...submodule_n.dag_node\".",
             "llm": "gpt-3.5-turbo"
@@ -3941,7 +3941,7 @@
                 7766,
                 7650,
                 7775,
-                8695,
+                8263,
                 7767,
                 7780,
                 7661
@@ -3956,18 +3956,18 @@
                 "https://docs.ray.io/en/master/ray-observability/getting-started.html#metrics-view",
                 "https://docs.ray.io/en/master/ray-observability/reference/system-metrics.html#metrics-semantics-and-consistency",
                 "https://docs.ray.io/en/master/ray-observability/user-guides/add-app-metrics.html#adding-application-level-metrics",
+                "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources",
                 "https://docs.ray.io/en/master/rllib/actors.html#faq-actors-workers-and-resources",
-                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources",
-                "https://docs.ray.io/en/master/ray-more-libs/actors.html#faq-actors-workers-and-resources"
+                "https://docs.ray.io/en/master/ray-core/actors.html#faq-actors-workers-and-resources"
             ],
             "document_ids": [
-                173,
-                95,
-                366,
-                174,
-                18813,
-                4421,
-                19759
+                689,
+                611,
+                882,
+                690,
+                19759,
+                15750,
+                6014
             ],
             "answer": "No, Ray metrics do not have to be exported via an actor. The example provided in the context shows an actor exporting metrics, but it is not a requirement.",
             "llm": "gpt-3.5-turbo"
@@ -3984,13 +3984,13 @@
                 "https://docs.ray.io/en/master/ray-core/objects/object-spilling.html#single-node"
             ],
             "document_ids": [
-                6052,
-                6048,
-                6835,
-                8214,
+                6704,
+                6700,
+                6178,
+                8562,
                 19816,
-                6058,
-                6049
+                6710,
+                6701
             ],
             "answer": "To avoid objects from getting spilled, you can take the following steps:\n\n1. Use an SSD instead of an HDD for better performance.\n2. Specify a large buffer size (> 1MB) to reduce IO requests during spilling.\n3. Use NVMe SSDs or other high-performance storage if possible.\n4. Configure the directory where objects are spilled to, if needed.",
             "llm": "gpt-3.5-turbo"
@@ -4007,13 +4007,13 @@
                 "https://docs.ray.io/en/master/ray-core/api/doc/ray.init.html#ray-init"
             ],
             "document_ids": [
-                1168,
-                6898,
-                6854,
-                1324,
-                1330,
-                6909,
-                4615
+                359,
+                6322,
+                6218,
+                515,
+                521,
+                6341,
+                6514
             ],
             "answer": "Ray Core is an open-source, Python-based distributed computing library that provides core primitives for building and scaling distributed applications. It enables ML engineers and Python developers to scale Python applications and accelerate machine learning workloads. It can run on various platforms such as laptops, clusters, clouds, and Kubernetes. Ray Core is the foundation for Ray AI libraries and third-party integrations.",
             "llm": "gpt-3.5-turbo"
@@ -4030,13 +4030,13 @@
                 "https://docs.ray.io/en/master/cluster/vms/index.html#ray-on-cloud-vms"
             ],
             "document_ids": [
-                17095,
-                9253,
-                6898,
-                12264,
-                4615,
-                9255,
-                8002
+                18775,
+                8915,
+                6322,
+                12885,
+                6514,
+                8917,
+                8350
             ],
             "answer": "No, Ray does not have built-in support for cron jobs. However, you can use external job schedulers to interact with your Ray cluster and trigger workflow runs.",
             "llm": "gpt-3.5-turbo"
@@ -4053,13 +4053,13 @@
                 "https://docs.ray.io/en/master/ray-more-libs/installation.html#docker-source-images"
             ],
             "document_ids": [
-                9723,
-                8775,
-                9722,
-                11038,
-                1235,
-                925,
-                19667
+                9839,
+                9019,
+                9838,
+                10761,
+                426,
+                116,
+                19589
             ],
             "answer": "The dependencies for the `read_images` API are not mentioned in the provided context.",
             "llm": "gpt-3.5-turbo"
@@ -4076,13 +4076,13 @@
                 "https://docs.ray.io/en/master/serve/advanced-guides/dev-workflow.html#local-development-with-http-requests"
             ],
             "document_ids": [
-                17010,
-                16759,
-                17134,
-                17006,
-                17002,
-                16378,
-                16758
+                18690,
+                18439,
+                18814,
+                18686,
+                18682,
+                18058,
+                18438
             ],
             "answer": "To kill a specific Serve replica, you can use the `ray.kill()` function with the replica handle. In the provided context, the code snippet `ray.kill(replica_handle, no_restart=True)` is used to kill the replica with the handle `replica_handle`. The `no_restart=True` argument ensures that the replica is not restarted.",
             "llm": "gpt-3.5-turbo"
