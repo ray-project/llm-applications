@@ -46,12 +46,12 @@ def chunk_section(section, chunk_size, chunk_overlap):
     return [{"text": chunk.page_content, "source": chunk.metadata["source"]} for chunk in chunks]
 
 
-def set_index(
-    embedding_model_name, embedding_dim, chunk_size, chunk_overlap, docs_dir, sql_dump_fp=None
-):
+def build_index(embedding_model_name, chunk_size, chunk_overlap, docs_dir, sql_dump_fp=None):
     # Drop current Vector DB and prepare for new one
     execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -c "DROP TABLE document;"')
-    execute_bash(f"sudo -u postgres psql -f ../migrations/vector-{embedding_dim}.sql")
+    execute_bash(
+        f"sudo -u postgres psql -f ../migrations/vector-{EMBEDDING_DIMENSIONS[embedding_model_name]}.sql"
+    )
     if not sql_dump_fp:
         sql_dump_fp = Path(
             EFS_DIR,
@@ -120,3 +120,11 @@ def load_index(embedding_model_name, chunk_size, chunk_overlap):
         execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -f {SQL_DUMP_FP}')
     else:
         raise Exception(f"{SQL_DUMP_FP} does not exist!")
+
+    # Chunks
+    with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+        register_vector(conn)
+        with conn.cursor() as cur:
+            cur.execute("SELECT id, text, source FROM document")
+            chunks = cur.fetchall()
+    return chunks

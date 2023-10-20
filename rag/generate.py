@@ -1,5 +1,6 @@
 import json
 import os
+import pickle
 import re
 import time
 from pathlib import Path
@@ -12,9 +13,10 @@ from pgvector.psycopg import register_vector
 from rank_bm25 import BM25Okapi
 from tqdm import tqdm
 
-from rag.config import ROOT_DIR
+from rag.config import EFS_DIR, ROOT_DIR
 from rag.embed import get_embedding_model
-from rag.index import set_index
+from rag.index import build_index
+from rag.rerank import custom_predict, get_reranked_indices
 from rag.utils import get_credentials, get_num_tokens, lexical_search, trim
 
 
@@ -87,8 +89,9 @@ class QueryAgent:
     def __init__(
         self,
         embedding_model_name="thenlper/gte-base",
-        use_lexical_search=False,
         chunks=None,
+        lexical_index=None,
+        reranker=None,
         llm="meta-llama/Llama-2-70b-chat-hf",
         temperature=0.0,
         max_context_length=4096,
@@ -104,24 +107,30 @@ class QueryAgent:
 
         # Lexical search
         self.chunks = chunks
-        self.lexical_index = None
-        if use_lexical_search:
-            texts = [re.sub(r"[^a-zA-Z0-9]", " ", chunk[1]).lower().split() for chunk in chunks]
-            self.lexical_index = BM25Okapi(texts)
+        self.lexical_index = lexical_index
 
-        # Context length (restrict input length to 50% of total context length)
-        max_context_length = int(0.5 * max_context_length)
+        # Reranker
+        self.reranker = reranker
 
         # LLM
         self.llm = llm
         self.temperature = temperature
+        max_context_length = int(0.5 * max_context_length)  # 50% of total context
         self.context_length = max_context_length - get_num_tokens(
             system_content + assistant_content
         )
         self.system_content = system_content
         self.assistant_content = assistant_content
 
-    def __call__(self, query, num_chunks=5, lexical_search_k=1, stream=True):
+    def __call__(
+        self,
+        query,
+        num_chunks=5,
+        lexical_search_k=1,
+        rerank_threshold=0.3,
+        rerank_k=7,
+        stream=True,
+    ):
         # Get sources and context
         document_ids, sources, context = get_sources_and_context(
             query=query, embedding_model=self.embedding_model, num_chunks=num_chunks
@@ -136,6 +145,20 @@ class QueryAgent:
                 document_ids.append(item["id"])
                 context.append({"text": item["text"]})
                 sources.append(item["source"])
+
+        # Rerank
+        if self.reranker:
+            predicted_tag = custom_predict(
+                inputs=[query], classifier=self.reranker, threshold=rerank_threshold
+            )[0]
+            if predicted_tag != "other":
+                reranked_indices = get_reranked_indices(sources, predicted_tag)
+                document_ids = [document_ids[i] for i in reranked_indices]
+                context = [context[i] for i in reranked_indices]
+                sources = [sources[i] for i in reranked_indices]
+            document_ids = document_ids[:rerank_k]
+            context = context[:rerank_k]
+            sources = sources[:rerank_k]
 
         # Generate response
         user_content = f"query: {query}, context: {context}"
@@ -166,9 +189,11 @@ def generate_responses(
     chunk_overlap,
     num_chunks,
     embedding_model_name,
-    embedding_dim,
     use_lexical_search,
     lexical_search_k,
+    use_reranking,
+    rerank_threshold,
+    rerank_k,
     llm,
     temperature,
     max_context_length,
@@ -181,24 +206,37 @@ def generate_responses(
     sql_dump_fp=None,
 ):
     # Build index
-    chunks = set_index(
+    chunks = build_index(
         embedding_model_name=embedding_model_name,
-        embedding_dim=embedding_dim,
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
         docs_dir=docs_dir,
         sql_dump_fp=sql_dump_fp,
     )
 
+    # Lexical index
+    lexical_index = None
+    if use_lexical_search:
+        texts = [re.sub(r"[^a-zA-Z0-9]", " ", chunk[1]).lower().split() for chunk in chunks]
+        lexical_index = BM25Okapi(texts)
+
+    # Reranker
+    reranker = None
+    if use_reranking:
+        reranker_fp = Path(EFS_DIR, "reranker.pkl")
+        with open(reranker_fp, "rb") as file:
+            reranker = pickle.load(file)
+
     # Query agent
     agent = QueryAgent(
         embedding_model_name=embedding_model_name,
+        chunks=chunks,
+        lexical_index=lexical_index,
+        reranker=reranker,
         llm=llm,
         temperature=temperature,
         system_content=system_content,
         assistant_content=assistant_content,
-        use_lexical_search=use_lexical_search,
-        chunks=chunks,
     )
 
     # Generate responses
@@ -207,7 +245,12 @@ def generate_responses(
         questions = [item["question"] for item in json.load(f)][:num_samples]
     for query in tqdm(questions):
         result = agent(
-            query=query, num_chunks=num_chunks, lexical_search_k=lexical_search_k, stream=False
+            query=query,
+            num_chunks=num_chunks,
+            lexical_search_k=lexical_search_k,
+            rerank_threshold=rerank_threshold,
+            rerank_k=rerank_k,
+            stream=False,
         )
         results.append(result)
         clear_output(wait=True)
