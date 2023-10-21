@@ -122,12 +122,15 @@ class RayAssistantDeployment:
 
         # Lexical index
         lexical_index = None
+        self.lexical_search_k = lexical_search_k
         if use_lexical_search:
             texts = [re.sub(r"[^a-zA-Z0-9]", " ", chunk[1]).lower().split() for chunk in chunks]
             lexical_index = BM25Okapi(texts)
 
         # Reranker
         reranker = None
+        self.rerank_threshold = rerank_threshold
+        self.rerank_k = rerank_k
         if use_reranking:
             reranker_fp = Path(EFS_DIR, "reranker.pkl")
             with open(reranker_fp, "rb") as file:
@@ -168,7 +171,14 @@ class RayAssistantDeployment:
     def predict(self, query: Query, stream: bool) -> Dict[str, Any]:
         use_oss_agent = self.router.predict([query.query])[0]
         agent = self.oss_agent if use_oss_agent else self.gpt_agent
-        result = agent(query=query.query, num_chunks=self.num_chunks, stream=stream)
+        result = agent(
+            query=query.query,
+            num_chunks=self.num_chunks,
+            lexical_search_k=self.lexical_search_k,
+            rerank_threshold=self.rerank_threshold,
+            rerank_k=self.rerank_k,
+            stream=False,
+        )
         return result
 
     @app.post("/query")

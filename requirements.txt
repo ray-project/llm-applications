@@ -8,6 +8,7 @@ openai
 pre-commit
 python-dotenv
 ray
+seaborn
 sentence_transformers
 slack_bolt
 streamlit
