@@ -1,0 +1,1502 @@
+,question,tag,correction
+0,is there a key value store,ray-core,
+1,how is an generator function handled by ray internally? is the generator “enumerated” before being passed on as a ref?,ray-core,
+2,in my a2c tune run (custom env) how can i make sure that use_lstm is set to true?,tune,rllib
+3,"let's assume I am running simple_q, in which python file env.step() is being executed?",cluster,rllib
+4,"In my custom env, hoe can I normalize the observation space?",rllib,
+5,"when working with a variable length observation space, do I have to implement my own model?",rllib,
+6,How can I do inference on my trained model?,other,train
+7,What's the difference betwen to_arrow_refs and get_internal_block_refs?,data,
+8,how to rewrite old ppo_config dict into new,rllib,
+9,How do I iterate over internal block refs of a ray data set as arrow tables?,data,
+10,whta do you know about ray on vertex ai,other,
+11,How do I set a timeout on an actor function call,ray-core,
+12,", my ray.init is stuck with the following msg : Connecting to existing Ray cluster at address: 192.168.0.143:6379... What could be wrong ?",cluster,
+13,how can i force ray to reupload my runtime environment,ray-core,
+14,"when I run an algo like simple_q, which python file execute env.step()",cluster,rllib
+15,"ds.iter_batches fails on empty parquet files, how do i handle this",data,
+16,how can I get the current runtime env dict,ray-core,
+17,join node to existing cluster,cluster,
+18,How do I load results from a past ray tune experiment,tune,
+19,ModuleNotFoundError: No module named 'ray.rllib.utils.torch_ops' I'm getting this error with this code: from marllib import marl,rllib,
+20,How do you get access to the storage_path in the trainer function ?,train,
+21,what is model_id used for ?,rllib,
+22,what is the model_name parameter used for ?,other,
+23,我如何將固定的參數放到objectstore裡面,ray-core,
+24,"2023-10-22 14:40:05,062 ERROR trial_runner.py:1088 -- Trial train_d2601_00001: Error processing event. ray.exceptions.RayTaskError(FileNotFoundError): ray::ImplicitFunc.train() (pid=916467, ip=192.168.50.157, repr=train) File ""/home/ray_cluster/anaconda3/envs/fortheray/lib/python3.8/site-packages/ray/tune/trainable/trainable.py"", line 367, in train raise skipped from exception_cause(skipped) File ""/home/ray_cluster/anaconda3/envs/fortheray/lib/python3.8/site-packages/ray/tune/trainable/function_trainable.py"", line 335, in entrypoint return self._trainable_func( File ""/home/ray_cluster/anaconda3/envs/fortheray/lib/python3.8/site-packages/ray/tune/trainable/function_trainable.py"", line 652, in _trainable_func output = fn() File ""/home/ray_cluster/anaconda3/envs/fortheray/lib/python3.8/site-packages/ray/tune/trainable/util.py"", line 394, in _inner return inner(config, checkpoint_dir=None) File ""/home/ray_cluster/anaconda3/envs/fortheray/lib/python3.8/site-packages/ray/tune/trainable/util.py"", line 386, in inner return trainable(config, **fn_kwargs) File ""train2.py"", line 95, in train FileNotFoundError: [Errno 2] No such file or directory: '/home/ray_cluster/Documents/workspace/yolov7-main/data/data.yaml' Result for train_d2601_00001: date: 2023-10-22_14-40-04 experiment_id: 01060f68bdf0480db893cdac547f7fa1 hostname: ray node_ip: 192.168.50.157 pid: 916467 timestamp: 1697956804 trial_id: d2601_00001這是甚麼錯誤",tune,
+25,"in rllib experiments or in any rl experiment, when training agents on environments, whats the common practice, for instance, if i want to train a common gym environment, how should i go about it,whats the criteria of choosing algos? for example's sake lets say i chose ppo, what should be configurations, should i search for people who have already trained them, if i find them,good enough, if not, what them? is it trial and error ?",tune,
+26,how to print model summary from policy object in ray rllib?,rllib,
+27,get class name from actor handle,ray-core,
+28,Can I train scikit learn regressors with ray?,train,
+29,are p2p connections constantly maintained between worker nodes,ray-core,
+30,How do I know what class an ActorHandle belongs to,ray-core,
+31,are Ray nodes dynamically connected or fixed,ray-core,cluster
+32,are Ray nodes interconnected,ray-core,cluster
+33,Can I ask you how could I debug my code?,other,ray-core
+34,eHow do I make sure Python version between client and sever are the same when I’m using conda environments on the cluster?,cluster,ray-core
+35,How do I avoid the error around Python version mismatch between cluster set up and execution of a task,cluster,ray-core
+36,ray.wait点用法,ray-core,
+37,"I want to pass values from the info dict of my environment to my policy for training using a view requirement, but the info dict is a tensor of all zeros.",rllib,
+38,"In Ray RLLib, what is the difference between local worker, rollout worker and learner worker?",rllib,
+39,"can you point where the ray worker inherits the environment from ? I am getting an error for missing pip module but that should be there. Nonetheless, I added it in runtime_env and even then it does not work",ray-core,
+40,what is the difference between map_batches and flat_map,data,
+41,How do I check my ray[tune] version?,tune,other
+42,how do I change the logging dir for ray,other,ray-observability
+43,how to define a custom action distribution class?,rllib,
+44,"I cant recall, is there a way to pass a single ref to a ray.remote call but to tell the receiving function to unpack it as a 2 arguments? provided we passed in a tuple",ray-core,
+45,build a eks cluster,cluster,
+46,"When I deploy a cluster to AWS, why when I do ray.init() it connects automatically to that cluster?",cluster,
+47,I have a backend of Django and a ray cluster with multiple GPUs deployed on AWS. I have a training script in the back-end code with the decorator @ray.remote. How can I submit this to the ray cluster?,cluster,
+48,what is ray dashboard port,cluster,
+49,"I executed the code: import lightgbm as lgb import numpy as np import sklearn.datasets import sklearn.metrics from sklearn.model_selection import train_test_split from ray import train, tune from ray.tune.schedulers import ASHAScheduler from ray.tune.integration.lightgbm import TuneReportCheckpointCallback def train_breast_cancer(config): data, target = sklearn.datasets.load_breast_cancer(return_X_y=True) train_x, test_x, train_y, test_y = train_test_split(data, target, test_size=0.25) train_set = lgb.Dataset(train_x, label=train_y) test_set = lgb.Dataset(test_x, label=test_y) gbm = lgb.train( config, train_set, valid_sets=[test_set], valid_names=[""eval""], verbose_eval=False, callbacks=[ TuneReportCheckpointCallback( { ""binary_error"": ""eval-binary_error"", ""binary_logloss"": ""eval-binary_logloss"", } ) ], ) preds = gbm.predict(test_x) pred_labels = np.rint(preds) train.report( { ""mean_accuracy"": sklearn.metrics.accuracy_score(test_y, pred_labels), ""done"": True, } ) if __name__ == ""__main__"": config = { ""objective"": ""binary"", ""metric"": [""binary_error"", ""binary_logloss""], ""verbose"": -1, ""boosting_type"": tune.grid_search([""gbdt"", ""dart""]), ""num_leaves"": tune.randint(10, 1000), ""learning_rate"": tune.loguniform(1e-8, 1e-1), } tuner = tune.Tuner( train_breast_cancer, tune_config=tune.TuneConfig( metric=""binary_error"", mode=""min"", scheduler=ASHAScheduler(), num_samples=2, local_dir=""/content/ray_results/"" ), param_space=config, ) results = tuner.fit() print(""Best hyperparameters found were: "", results.get_best_result().config) and I got the error: RuntimeError Traceback (most recent call last) <ipython-input-53-6c8994e77284> in <cell line: 43>() 63 results = tuner.fit() 64 ---> 65 print(""Best hyperparameters found were: "", results.get_best_result().config) /usr/local/lib/python3.10/dist-packages/ray/tune/result_grid.py in get_best_result(self, metric, mode, scope, filter_nan_and_inf) 163 else ""."" 164 ) --> 165 raise RuntimeError(error_msg) 166 167 return self._trial_to_result(best_trial) RuntimeError: No best trial found for the given metric: binary_error. This means that no trial has reported this metric, or all values reported for this metric are NaN. To not ignore NaN values, you can set the `filter_nan_and_inf` arg to False.",tune,
+50,"I executed the following code: import lightgbm as lgb import numpy as np import sklearn.datasets import sklearn.metrics from sklearn.model_selection import train_test_split from ray import train, tune from ray.tune.schedulers import ASHAScheduler from ray.tune.integration.lightgbm import TuneReportCheckpointCallback def train_breast_cancer(config): data, target = sklearn.datasets.load_breast_cancer(return_X_y=True) train_x, test_x, train_y, test_y = train_test_split(data, target, test_size=0.25) train_set = lgb.Dataset(train_x, label=train_y) test_set = lgb.Dataset(test_x, label=test_y) gbm = lgb.train( config, train_set, valid_sets=[test_set], valid_names=[""eval""], verbose_eval=False, callbacks=[ TuneReportCheckpointCallback( { ""binary_error"": ""eval-binary_error"", ""binary_logloss"": ""eval-binary_logloss"", } ) ], ) preds = gbm.predict(test_x) pred_labels = np.rint(preds) train.report( { ""mean_accuracy"": sklearn.metrics.accuracy_score(test_y, pred_labels), ""done"": True, } ) if __name__ == ""__main__"": config = { ""objective"": ""binary"", ""metric"": [""binary_error"", ""binary_logloss""], ""verbose"": -1, ""boosting_type"": tune.grid_search([""gbdt"", ""dart""]), ""num_leaves"": tune.randint(10, 1000), ""learning_rate"": tune.loguniform(1e-8, 1e-1), } tuner = tune.Tuner( train_breast_cancer, tune_config=tune.TuneConfig( metric=""binary_error"", mode=""min"", scheduler=ASHAScheduler(), num_samples=2, ), param_space=config, ) results = tuner.fit() print(""Best hyperparameters found were: "", results.get_best_result().config) and the got the folllowing error message: ValueError Traceback (most recent call last) <ipython-input-45-6c8994e77284> in <cell line: 43>() 61 param_space=config, 62 ) ---> 63 results = tuner.fit() 64 65 print(""Best hyperparameters found were: "", results.get_best_result().config) 4 frames /usr/local/lib/python3.10/dist-packages/ray/tune/analysis/experiment_analysis.py in __init__(self, experiment_checkpoint_path, storage_filesystem, trials, default_metric, default_mode) 123 if experiment_json_filename is None: 124 pattern = TuneController.CKPT_FILE_TMPL.format(""*"") --> 125 raise ValueError( 126 f""No experiment checkpoint file of form '{pattern}' was found at: "" 127 f""({self._fs.type_name}, {self._experiment_fs_path})\n"" ValueError: No experiment checkpoint file of form 'experiment_state-*.json' was found at: (local, /root/ray_results/train_breast_cancer_2023-10-21_17-29-56) Please check if you specified the correct experiment path, which should be a combination of the `storage_path` and `name` specified in your run. How to fix the error. The code is from your tutorial",tune,
+51,Does TorchTrainer take a TrialInfo ?,train,
+52,how to tune lightgbm,tune,
+53,should I install ray in virtual machine or in kuberenetes with kuberay operator?,cluster,
+54,suppose i had 10 tasks in remote and ray outputs 1 task killed due to OOM pressure .DOes ray retry the task later ?,ray-core,
+55,what about ray on vertex ai?,other,
+56,usecases of ray,ray-core,other
+57,What is Ray,ray-core,
+58,actor函数优先级,ray-core,
+59,Does Ray have a distributed file system,ray-core,
+60,is min and max worker port inclusive?,rllib,ray-core
+61,can ray do cross-cluster operation,cluster,
+62,"I have many worker node group, how do I schedule actor into specific node group?",ray-core,
+63,Does Ray increment a run number after every run to not overwrite data.,data,other
+64,What about Hugging Fact Dataset Cache Dir?,data,
+65,* If I deploy an application using serve.run inside an already running serve client (for example by calling it on an application that was deployed during startup) would this new application be recovered when GCS fault tolerance is enabled and the ServeController crashes?*,serve,
+66,Why would I want to use RAY,cluster,other
+67,Can Ray be configured to store everything to S3 ?,cluster,ray-core
+68,prevent schedule worker actor on head node,ray-core,
+69,What is an example of an FSDP Scaling config ?,train,
+70,can i change FUNCTION_SIZE_ERROR_THRESHOLD,ray-core,
+71,Can Ray train on TPUs ?,train,
+72,what does TorchTrainer do ?,train,
+73,Can I download the whole docs as pdf or offline version?,other,
+74,do i setup gpus in advance,cluster,
+75,how can I scale a serve deployment programmatically with its handle,serve,
+76,How to make my torch trainer make use of Apple silicon(mps) for training instead of cpu,other,train
+77,How to make my torch trainer make use of Apple silicon(mps) for training instead of cpu,other,train
+78,do i need to have multiple machines to try ray,ray-core,
+79,"explain""Doubling the CPU requirements, runs only half(7) of the Tasks at the same time, and memory usage doesn’t exceed 9GB.""",ray-core,
+80,where is the log which is output into the console?,tune,ray-observability
+81,How do I give an actor custom resources,ray-core,
+82,"whats the use for ""truncated"" in ""step"" procedure of an custom env for RLLib?",rllib,
+83,"I'm starting the Ray cluster with `ray start --block`. I'd also like to run `serve start`, but only after the cluster has been started. My issue is that I need to run `ray start` first, and I need it to block. This doesn't give me an opportunity to run `serve start` after the cluster has been started",cluster,
+84,how to use resume_from_checkpoint,train,
+85,Why should I use map_batches as opposed to map for ray data?,data,
+86,How to save and reload checkpoint with ray rllib python api?,rllib,
+87,how to save and reload checkpoint with ray?,tune,train
+88,"running your code I got the following error message: TuneError Traceback (most recent call last) <ipython-input-83-873af01b7718> in <cell line: 30>() 28 29 # Run the hyperparameter tuning ---> 30 analysis = tune.run(train_model, config=config) 31 32 # Get the best hyperparameters /usr/local/lib/python3.10/dist-packages/ray/tune/tune.py in run(run_or_experiment, name, metric, mode, stop, time_budget_s, config, resources_per_trial, num_samples, storage_path, storage_filesystem, search_alg, scheduler, checkpoint_config, verbose, progress_reporter, log_to_file, trial_name_creator, trial_dirname_creator, sync_config, export_formats, max_failures, fail_fast, restore, server_port, resume, reuse_actors, raise_on_failed_trial, callbacks, max_concurrent_trials, keep_checkpoints_num, checkpoint_score_attr, checkpoint_freq, checkpoint_at_end, chdir_to_trial_dir, local_dir, _experiment_checkpoint_dir, _remote, _remote_string_queue, _entrypoint) 1135 if incomplete_trials: 1136 if raise_on_failed_trial and not experiment_interrupted_event.is_set(): -> 1137 raise TuneError(""Trials did not complete"", incomplete_trials) 1138 else: 1139 logger.error(""Trials did not complete: %s"", incomplete_trials) TuneError: ('Trials did not complete', [train_model_d3692_00000])",tune,
+89,"I run : tuner = tune.Tuner( train_breast_cancer, tune_config=tune.TuneConfig( # metric=""binary_error"", # mode=""min"", scheduler=ASHAScheduler( metric=""binary_error"",mode=""min""), num_samples=2, ), param_space=config, ) results = tuner.fit() print(""Best hyperparameters found were: "", results.get_best_result( ).config) then I got the following error and warning: 2023-10-20 22:48:54,109 WARNING experiment_analysis.py:596 -- Could not find best trial. Did you pass the correct `metric` parameter? --------------------------------------------------------------------------- RuntimeError Traceback (most recent call last) <ipython-input-79-e979625bdedf> in <cell line: 1>() ----> 1 print(""Best hyperparameters found were: "", results.get_best_result( metric=""binary_error"",mode=""min"").config) /usr/local/lib/python3.10/dist-packages/ray/tune/result_grid.py in get_best_result(self, metric, mode, scope, filter_nan_and_inf) 163 else ""."" 164 ) --> 165 raise RuntimeError(error_msg) 166 167 return self._trial_to_result(best_trial) RuntimeError: No best trial found for the given metric: binary_error. This means that no trial has reported this metric, or all values reported for this metric are NaN. To not ignore NaN values, you can set the `filter_nan_and_inf` arg to False.",tune,
+90,what API should I call Ray to get cluster info,cluster,ray-observability
+91,"I run tuner = tune.Tuner( train_breast_cancer, tune_config=tune.TuneConfig( # metric=""binary_error"", # mode=""min"", scheduler=ASHAScheduler( metric=""binary_error"",mode=""min""), num_samples=2, ), param_space=config, )",tune,
+92,provide example of tuning lightgbm,train,tune
+93,How can I check if an ActorState is DEAD in python api,ray-observability,
+94,How do I do it in python api,other,
+95,How do I check if an ActorState is DEAD,ray-core,ray-observability
+96,"I am trying to run : Contents Example Using LightGBM with Tune LightGBM Logo Example Example import lightgbm as lgb import numpy as np import sklearn.datasets import sklearn.metrics from sklearn.model_selection import train_test_split from ray import train, tune from ray.tune.schedulers import ASHAScheduler from ray.tune.integration.lightgbm import TuneReportCheckpointCallback def train_breast_cancer(config): data, target = sklearn.datasets.load_breast_cancer(return_X_y=True) train_x, test_x, train_y, test_y = train_test_split(data, target, test_size=0.25) train_set = lgb.Dataset(train_x, label=train_y) test_set = lgb.Dataset(test_x, label=test_y) gbm = lgb.train( config, train_set, valid_sets=[test_set], valid_names=[""eval""], verbose_eval=False, callbacks=[ TuneReportCheckpointCallback( { ""binary_error"": ""eval-binary_error"", ""binary_logloss"": ""eval-binary_logloss"", } ) ], ) preds = gbm.predict(test_x) pred_labels = np.rint(preds) train.report( { ""mean_accuracy"": sklearn.metrics.accuracy_score(test_y, pred_labels), ""done"": True, } ) if __name__ == ""__main__"": config = { ""objective"": ""binary"", ""metric"": [""binary_error"", ""binary_logloss""], ""verbose"": -1, ""boosting_type"": tune.grid_search([""gbdt"", ""dart""]), ""num_leaves"": tune.randint(10, 1000), ""learning_rate"": tune.loguniform(1e-8, 1e-1), } tuner = tune.Tuner( train_breast_cancer, tune_config=tune.TuneConfig( metric=""binary_error"", mode=""min"", scheduler=ASHAScheduler(), num_samples=2, ), param_space=config, ) results = tuner.fit() print(""Best hyperparameters found were: "", results.get_best_result().config) and I am getting the following error: ValueError Traceback (most recent call last) <ipython-input-64-fa1c673ad5fe> in <cell line: 1>() ----> 1 results = tuner.fit() 2 8 frames /usr/local/lib/python3.10/dist-packages/ray/tune/schedulers/async_hyperband.py in on_trial_add(self, tune_controller, trial) 123 def on_trial_add(self, tune_controller: ""TuneController"", trial: Trial): 124 if not self._metric or not self._metric_op: --> 125 raise ValueError( 126 ""{} has been instantiated without a valid `metric` ({}) or "" 127 ""`mode` ({}) parameter. Either pass these parameters when "" ValueError: AsyncHyperBandScheduler has been instantiated without a valid `metric` (None) or `mode` (None) parameter. Either pass these parameters when instantiating the scheduler, or pass them as parameters to `tune.TuneConfig()` : How to fix the problem ?",tune,
+97,Exception: Cannot include dashboard with missing packages.,cluster,ray-observability
+98,how does ray behave when a function returns a tuple?,ray-core,
+99,How can I get a named actor by id,ray-core,
+100,get a list of all named actors in a namespace,ray-core,
+101,i have ray implemented in cpp code.How can i compile iot ?,rllib,ray-core
+102,can you write the entire coce including what to write or #include ?,data,ray-core
+103,how do I call the healthz endpoint using grpcurl?,serve,
+104,I want to use ray cpp to parallelize a function in c++ code .Can you guide me give me a example,ray-core,
+105,how do i release the actors created by ray data transformations?,data,
+106,is there a way to set the max block size when using ray dataset / map_batches,data,
+107,force clea-up idle nodes,cluster,
+108,I'm getting a AttributeError: 'Dataset' object has no attribute 'unique' error when trying to run Dataset.unique. What could be the reason?,data,
+109,How to deploy Ray Serve on a cluster?,serve,
+110,how to deploy it on a cluster?,cluster,
+111,the autoscaler failed with signal 15,cluster,
+112,"I am deploying my application using: serve.run(_target_ = application, _name_=deployment_name, _route_prefix_=prefix) How can i programmatically make a request to the prefix endpoint through serve ?",serve,
+113,Show me an example of optuna with ASHA scheduler with ray tune,tune,
+114,checkpoint_path: /tmp/tmpqkrkahqo/checkpoint.pth,tune,train
+115,Repartition thousands of files,data,
+116,how do i stream in a set of files?,rllib,data
+117,Checkpoint.from_directory() how does this code works,train,
+118,ray tune isnt reporting the output to the output file on a PBSpro cluster,tune,
+119,"best_checkpoint = best_trial.checkpoint.to_air_checkpoint() best_checkpoint_data = best_checkpoint.to_dict() best_trained_model.load_state_dict(best_checkpoint_data[""net_state_dict""])is there anything wrong with this code?",tune,
+120,How do i view model summary from PPOTF1Policy,rllib,
+121,how do i stream data?,data,
+122,how do i read data from an iterator?,data,
+123,ray.air.Checkpoint` is deprecated. Please use `ray.train.Checkpoint` instead.,train,
+124,how do i create a datasource from a stream?,data,
+125,how do i index into a ray dataset?,data,
+126,can i have nested parallel ray jobs? for example a ray.remote function calls ray.get on another list of ray tasks?,ray-core,
+127,how do i iterate over the product of files in ray data?,data,
+128,how to continue training when I had previously stopped it,rllib,train
+129,"session.report( {""loss"": val_loss / val_steps, ""accuracy"": correct / total, ""checkpoint"": checkpoint}, )how can I get the checkpoint data if I save the weight in this way",train,
+130,is there a way to flag the system to ignore any num_cpus def when in local mode?,ray-core,
+131,how do i pass an argument to actor when calling .map?,ray-core,data
+132,What is Ray?,ray-core,
+133,map_batches restrict to one actor per gpu,ray-core,data
+134,What is the new ray handle being introduced after 2.7.1,ray-core,serve
+135,What is the new ray handle being introduced after 2.7.1,ray-core,serve
+136,how to find why ray.init times out?,ray-core,
+137,Which advanced exploration technics for RL are available in ray?,rllib,
+138,can two people ray.init to the same ray cluster?,cluster,
+139,"for dqn what are the possible configs for type replay_buffer_config.update({ ""type""",rllib,
+140,how to log debug level in cutom log file,ray-observability,
+141,"When using persistent cloud storage, do the worker nodes save to the cloud by first sending data to the head node?",cluster,other
+142,iter_torch_batches,rllib,data
+143,how should I use trial name creator.,tune,
+144,set conda env to serve deployment,serve,
+145,can i find out from logs what was the ip address of the machine that called ray.init ?,cluster,ray-core
+146,how to place a serve deployments to a specific node,serve,
+147,for a single trial how do I plot the loss for each epoch,ray-core,train
+148,how does manual inference using compute_single_action with view requirements and the trajectory api?,rllib,
+149,What is teh best way to overcome the credit assignment problem when training with PPO?,other,rllib
+150,"Logical resource usage: 1.0/24 CPUs, 0/3 GPUs (0.0/1.0 accelerator_type:G) is this as fast as possible",ray-core,
+151,I get the following error when trying to analyse my 'ExperimentAnalysis' results object: TypeError: 'ExperimentAnalysis' object is not iterable,tune,
+152,assign a actor to specific node,ray-core,
+153,"when i using compute_single_action with a model with complicated view requirements (trajectory api), including states and requirements regarding obs, rewards and action of multiple last episodes do i need to process these in any way, for example concatenate it, or is this already managed in compute_single_action itself?",rllib,
+154,"After finishing a tune.tuner experiment, there is no tuner.pkl file in my experiment directory, what is wrong?",tune,
+155,how do i use callbacks function to access infos data?,data,
+156,how to use ApexTrainer?,train,
+157,how to kill and restart workers if their memory usage is too large ?,ray-core,
+158,how do i get the number of workers in an algorithm?,rllib,
+159,I have an actor pool that contains a function called count and I want to process a list of number thorugh this function,ray-core,
+160,"can you outline to me the difference between partition, paralellism, block (batch?) size, in the context of a using ray dataset",data,
+161,"for this provided ray RLLib example, how can i set ""store_infos"" : True? from ray.rllib.examples.env.two_step_game import TwoStepGame from ray.rllib.algorithms.qmix import QMixConfig config = QMixConfig() config = config.training(gamma=0.9, lr=0.01, kl_coeff=0.3) config = config.resources(num_gpus=0) config = config.rollouts(num_rollout_workers=4) print(config.to_dict()) # Build an Algorithm object from the config and run 1 training iteration. algo = config.build(env=TwoStepGame) algo.train()",rllib,
+162,"ow can i set ""store_infos"" : True, for an custom environment RLLib python API?",rllib,
+163,Is it possible for me to write outputs to Google Cloud Storage so that those outputs never reside on the nodes of my cluster?,cluster,
+164,Could you give an example of actorpool?,ray-core,
+165,"how can i fix this error trainer.hyperparameter_search( direction=""maximize"", backend=""ray"", n_trials=10 # number of trials ) DeprecationWarning: Accepting a `checkpoint_dir` argument in your training function is deprecated. Please use `ray.train.get_checkpoint()` to access your checkpoint as a `ray.train.Checkpoint` object instead. See below for an example:",train,
+166,"im using ray tune , when i run the script locally it works but when i run it with qsub on the HPC cluser it just starts the ray instance and then does nothing",ray-core,cluster
+167,"how can i extract ""infos"" from environment during training?",rllib,
+168,How can I stop the deduplication of logs in ray?,ray-observability,
+169,ray starts ray instance but doesnt do anything else,ray-core,
+170,how to config object_store_memory,ray-core,
+171,Hw can I use Actorpool,ray-core,
+172,i have problem registering my env,rllib,
+173,ray job 有几种状态,cluster,
+174,difference between agent steps and env steps,rllib,
+175,DQN custom model 짜는 법 알려줘,rllib,
+176,hi,rllib,other
+177,ray up cluster.yaml ray attach cluster.yaml -p 10001 上面的两个命令，cluster.yaml文件是从哪里来的？,cluster,
+178,jump to spill in v2.3.1,ray-core,
+179,how to training xgboost with auto scaling,train,
+180,What is the difference between rlib and Ray?,other,
+181,"message: 'Deployment ''MistralAWQ'' in application ''MistralAWQ'' has 1 replicas that have taken more than 30s to be scheduled. This may be due to waiting for the cluster to auto-scale or for a runtime environment to be installed. Resources required for each replica: {""GPU"": 1.0}, total resources available: {}. Use `ray status` for more details.'",cluster,
+182,give me a example of ray memory,ray-core,
+183,ray mmap 的映射文件是哪个,ray-core,
+184,how to use ray?,cluster,other
+185,What orchestrators support ray?,other,
+186,Can I use mlflow to schedule periodic jobs on ray?,cluster,other
+187,What's ray air?,other,
+188,tune sync config,tune,
+189,ray tune logging,tune,
+190,"what will happend if too many job submit, will head node out of memory",cluster,
+191,log images in ray tune,tune,
+192,How can I do stateful actor,ray-observability,ray-core
+193,integration with chromaSB,tune,data
+194,"I have two nodes, A and B, I want to specific my task on node A, how can I do it",ray-core,
+195,"I have two nodes, A and B, I want to specific my task on node A, how can I do it",ray-core,
+196,为什么要限制 Object Store Memory 的大小,ray-core,
+197,How do I get started,tune,other
+198,"in this code 'import ray from ray import tune, air from ray.rllib.algorithms.ppo import PPOConfig stopping_criteria={""episode_reward_mean"": 300} config = ( # 1. Configure the algorithm, PPOConfig().environment(""BipedalWalker-v3"") .training(lr = tune.uniform(3e-4, 1e-4),train_batch_size=tune.choice([128, 512, 1024]),model={""fcnet_hiddens"": tune.grid_search([[256, 256], [512, 512]])}) .evaluation(num_episodes=100,evaluation_interval=1).rollouts() ) tuner = tune.Tuner( ""PPO"" , run_config=air.RunConfig(stop=stopping_criteria,storage_path='/notebooks/TrainedModels'), param_space= config.to_dict(), tune_config=tune.TuneConfig(num_samples= 20) ).fit()' are multiple environments being used or not ?",tune,rllib
+199,how to save model when tuner.fit() end?,tune,
+200,"how to save tuner to checkpoint? tuner = tune.Tuner( DQN, run_config=RunConfig( stop={ ""training_iteration"": 10000000, }, checkpoint_config=CheckpointConfig( checkpoint_frequency=100, checkpoint_at_end=True ) ), param_space=config, )",tune,
+201,"ray溢出到磁盘时有一堆session, 这些session都是什么意思",rllib,other
+202,how to disable cluster log,cluster,
+203,"如果发现ray溢出磁盘很大，达到100g, 应该怎么排查具体造成的原因？",rllib,other
+204,该如何配置 object store memory,ray-core,
+205,dataset 会发生内存拷贝吗,data,
+206,is this on github?,ray-core,other
+207,can ray limit actor resource (cpu/mem),ray-core,
+208,"使用demo程序，测试Ray环境是否可以使用，报如下错误的原因是什么？ ray-demo-1$ python main.py Ray is initialized as False 2023-10-20 21:30:33,200 INFO worker.py:1458 -- Connecting to existing Ray cluster at address: 192.168.0.119:6379... 2023-10-20 21:30:34,211 INFO node.py:998 -- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-19_11-31-57_663834_35. Have you started Ray instsance using `ray start` or `ray.init`? 2023-10-20 21:30:44,227 INFO node.py:998 -- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-19_11-31-57_663834_35. Have you started Ray instsance using `ray start` or `ray.init`? 2023-10-20 21:30:54,238 INFO node.py:998 -- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-19_11-31-57_663834_35. Have you started Ray instsance using `ray start` or `ray.init`? 2023-10-20 21:31:04,253 INFO node.py:998 -- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-19_11-31-57_663834_35. Have you started Ray instsance using `ray start` or `ray.init`? 2023-10-20 21:31:14,267 INFO node.py:998 -- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-19_11-31-57_663834_35. Have you started Ray instsance using `ray start` or `ray.init`? 2023-10-20 21:31:24,281 INFO node.py:998 -- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-19_11-31-57_663834_35. Have you started Ray instsance using `ray start` or `ray.init`? Traceback (most recent call last): File ""main.py"", line 13, in <module> ray.init(address='auto') File ""/home/liuqing/.cache/pypoetry/virtualenvs/ray-demo-1-FU-xQSgr-py3.8/lib/python3.8/site-packages/ray/_private/client_mode_hook.py"", line 103, in wrapper return func(*args, **kwargs) File ""/home/liuqing/.cache/pypoetry/virtualenvs/ray-demo-1-FU-xQSgr-py3.8/lib/python3.8/site-packages/ray/_private/worker.py"", line 1598, in init _global_node = ray._private.node.Node( File ""/home/liuqing/.cache/pypoetry/virtualenvs/ray-demo-1-FU-xQSgr-py3.8/lib/python3.8/site-packages/ray/_private/node.py"", line 201, in __init__ node_ip_address = self._wait_and_get_for_node_address() File ""/home/liuqing/.cache/pypoetry/virtualenvs/ray-demo-1-FU-xQSgr-py3.8/lib/python3.8/site-packages/ray/_private/node.py"", line 1005, in _wait_and_get_for_node_address raise ValueError( ValueError: Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-19_11-31-57_663834_35. for 60 seconds. A ray instance hasn't started. Did you do `ray start` or `ray.init` on this host?",cluster,other
+209,is Ray object store faster than redis,ray-core,
+210,使用網路檔案系統 (NFS) 設定 Tune，幫我詳細說明這裡的NFS是把資料儲存到哪裡,rllib,other
+211,請問RAY提供的NFS市面費的嗎?,ray-core,other
+212,kuberay中，rayservice支持哪些调度方式？,cluster,
+213,我有两台gpu的机器，怎么部署一个rayservice，将多个副本分布到两个机器上?,rllib,cluster
+214,ho w,train,other
+215,When should i use RayService and RayCluster in KubeRay?,cluster,
+216,"when i increase the num_workers in my scaling config ,trials do not run concurrently",train,tune
+217,how many concurrent trails are run when using ray tune,tune,
+218,when i use a pl trainer i get an error ValueError: Expected a parent,ray-core,train
+219,does it matter if an actor calls a function in an outside scope ? ie: ```def fun(): ... @ray.remote() class Actor(): def remote_fun(): return fun()```,ray-core,
+220,how do i know the ammount of trials being ran concurrently,tune,
+221,how do I find the length of a dataset,data,
+222,"My episode_reward_mean seems to be going down over time after enabling this: configs.evaluation_config.update( { ""explore"": True })",rllib,
+223,how do i run multiple trials at once ?,tune,
+224,does asahscheduler stop trails when the val loss is increasing ?,rllib,tune
+225,"I am trying to train_test_split a timeseries, how do i do that?",other,
+226,can i have file appends during paralle processing,other,
+227,"The actions and episode rewards during training are much better compared to the actions during inference after loading a saved checkpoint. I'm providing the same input observation to both. My config is below. Can you help me debug this? { ""_AlgorithmConfig__prior_exploration_config"": null, ""_disable_action_flattening"": false, ""_disable_execution_plan_api"": true, ""_disable_initialize_loss_from_dummy_batch"": false, ""_disable_preprocessor_api"": true, ""_enable_learner_api"": false, ""_enable_rl_module_api"": false, ""_fake_gpus"": false, ""_is_atari"": null, ""_learner_class"": null, ""_tf_policy_handles_more_than_one_loss"": false, ""action_mask_key"": ""action_mask"", ""action_space"": null, ""actions_in_input_normalized"": false, ""adam_epsilon"": 1e-08, ""algorithm_config_overrides_per_module"": {}, ""always_attach_evaluation_results"": false, ""auto_wrap_old_gym_envs"": true, ""batch_mode"": ""truncate_episodes"", ""before_learn_on_batch"": null, ""callbacks"": ""<class 'ray.rllib.algorithms.callbacks.DefaultCallbacks'>"", ""categorical_distribution_temperature"": 1.0, ""checkpoint_trainable_policies_only"": false, ""clip_actions"": false, ""clip_rewards"": null, ""compress_observations"": false, ""count_steps_by"": ""env_steps"", ""create_env_on_driver"": false, ""custom_eval_function"": null, ""custom_resources_per_worker"": {}, ""delay_between_worker_restarts_s"": 60.0, ""disable_env_checking"": false, ""double_q"": true, ""dueling"": true, ""eager_max_retraces"": 20, ""eager_tracing"": true, ""enable_async_evaluation"": false, ""enable_connectors"": true, ""enable_tf1_exec_eagerly"": false, ""env"": ""meltingpot"", ""env_config"": { ""roles"": [ ""player_who_likes_red"", ""player_who_likes_red"", ""player_who_likes_red"", ""player_who_likes_red"", ""player_who_likes_red"", ""player_who_likes_red"", ""player_who_likes_red"", ""player_who_likes_red"", ""player_who_likes_green"", ""player_who_likes_green"", ""player_who_likes_green"", ""player_who_likes_green"", ""player_who_likes_green"", ""player_who_likes_green"", ""player_who_likes_green"", ""player_who_likes_green"" ], ""scaled"": 8, ""substrate"": ""allelopathic_harvest__open"" }, ""env_runner_cls"": null, ""env_task_fn"": null, ""evaluation_config"": { ""explore"": false }, ""evaluation_duration"": 10, ""evaluation_duration_unit"": ""episodes"", ""evaluation_interval"": null, ""evaluation_num_workers"": 0, ""evaluation_parallel_to_training"": false, ""evaluation_sample_timeout_s"": 180.0, ""exploration_config"": { ""epsilon_timesteps"": 40000, ""final_epsilon"": 0.01, ""initial_epsilon"": 1.5, ""type"": ""PerWorkerEpsilonGreedy"" }, ""explore"": true, ""export_native_model_files"": false, ""extra_python_environs_for_driver"": {}, ""extra_python_environs_for_worker"": {}, ""fake_sampler"": false, ""framework"": ""torch"", ""gamma"": 0.99, ""grad_clip"": 40.0, ""grad_clip_by"": ""global_norm"", ""hiddens"": [ 256 ],",rllib,
+228,does the AsyncHyperBandScheduler perform early stopping ?,tune,
+229,how do I not require a bearer token in a service yaml,cluster,other
+230,bearer token,other,
+231,when i use asahscheduler my training only runs for 100 epochs,rllib,tune
+232,why when i use ray tune does training complete at 100 epochs,tune,
+233,initial guess for ray tune parameters,tune,
+234,How do I pass a dataset to rolloutworker?,rllib,
+235,how to set time zone for a ray cluster,cluster,
+236,torch_backend = 'gloo',train,
+237,the tuner is not passing the config to the trainaable,tune,
+238,cannot pickle 'builtins.CoreBPE' object,ray-core,
+239,"I am running ray tune on my local machine with one gpu , when i run with fractional number of gpu's per worker i get this error """"""torch.distributed.DistBackendError: NCCL error in: ../torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1275, internal error, NCCL version 2.14.3 ncclInternalError: Internal check failed. Last error: Duplicate GPU detected : rank 0 and rank 1 both on CUDA device 1000""""""",ray-core,
+240,"when i use fractional gpu resources i get this error """"""torch.distributed.DistBackendError: NCCL error in: ../torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1275, internal error, NCCL version 2.14.3 ncclInternalError: Internal check failed. Last error: Duplicate GPU detected : rank 0 and rank 1 both on CUDA device 1000""""""",ray-core,
+241,can i run multiple workers on one gpu,cluster,ray-core
+242,"[Errno 99] error while attempting to bind on address ('::1', 9812, 0, 0): cannot assign requested address",cluster,
+243,How can I use the base_env argument in my on_episode_end callback to get relevant information about the episode ?,rllib,
+244,if i have an attention model how do i call compute_single_action?,rllib,
+245,how do i register a custom model ?,rllib,
+246,how to get the data inside a checkpoint,data,train
+247,"so hi, in DQN i see this code self.replay_buffer_config = { ""type"": ""MultiAgentPrioritizedReplayBuffer"", # Specify prioritized replay by supplying a buffer type that supports # prioritization, for example: MultiAgentPrioritizedReplayBuffer. ""prioritized_replay"": DEPRECATED_VALUE, # Size of the replay buffer. Note that if async_updates is set, # then each worker will have a replay buffer of this size. ""capacity"": 50000, ""prioritized_replay_alpha"": 0.6, # Beta parameter for sampling from prioritized replay buffer. ""prioritized_replay_beta"": 0.4, # Epsilon to add to the TD errors when updating priorities. ""prioritized_replay_eps"": 1e-6, # The number of continuous environment steps to replay at once. This may # be set to greater than 1 to support recurrent models. ""replay_sequence_length"": 1, # Whether to compute priorities on workers. ""worker_side_prioritization"": False, } when i see ""prioritized_replay"": DEPRECATED_VALUE, what does it mean what is the modern replacement?",rllib,
+248,how to setup ray tune so that it discards all checkpoints from runs which arent the current optimal run,tune,
+249,my checkpointing config has been set as num_to_keep = 2 however its still keeping all of the checkpoints,train,
+250,How to execute a recurrent model with compute_single_action and env.step for a multiagent enviroment?,rllib,
+251,how to execute a recurrent model with compute_single_action and env.step,rllib,
+252,"checkpoint = Checkpoint.from_directory(""my_short_name"") session.report(metrics, checkpoint=checkpoint) whne using this code, got the error AttributeError: 'dict' object has no attribute 'path'",train,
+253,how to use .options(),other,ray-core
+254,I am trying to serve a deployment using ray serve but Ray Serve is unable to create a log file. Here is the exception i am getting: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/ray/session_2023-10-18_22-59-57_373077_47126/logs/serve/deployment_MyDeployment_facebook/opt-125m#MyDeployment#zYjwcX.log' There is already a deployment running but i get this error when i am serving another deployment,serve,
+255,How to manually execute a trained algorithm with multiple agents and a recurrent model on a multi agent env?,rllib,
+256,how to manually execute a multi agent env with reccurent model?,rllib,
+257,Why I got the best_trial.checkpoint is nonetype,tune,
+258,Is it possible to customize Actor name in a ray Serve app,serve,
+259,how do i set an initial guess for hyperparameters in ray tune,tune,
+260,how to get the total timesteps in a calback in rllib for on_episode_created?,rllib,
+261,How to combine the MyTrainableClass with session,tune,
+262,how are you?,tune,other
+263,how do i change the adam optimizer in ray rllib ppo config,rllib,
+264,"can you generate how to create TuneConfig for random search, simplest working version. this is trainable def step(self): self.model.fit(self.x_train, self.y_train) predictions = self.model.predict(self.x_train) accuracy = accuracy_score(self.y_train, predictions) return {""accuracy"": accuracy}",tune,
+265,is anything wrong with from ray.air import session session.get_checkpoint().to_dict(),other,
+266,what does input node do,rllib,serve
+267,how do i specify GPU in ray serve deployment,serve,
+268,What does InputNode do?,rllib,serve
+269,What does DAGDriver do in Ray Serve?,serve,
+270,how can I tell ds.write_json to write only one file?,data,
+271,i have a question about the callbacks api of rllib. In the on_episode_created one parameter is base_env. what env is accesible using this parameter?,rllib,
+272,can I stack observations?,rllib,
+273,"I loaded my policy from a checkpoint and ran get_exploration_state(). It shows this: {'cur_epsilon': 0.0, 'last_timestep': 0} I'm running my policy with explore=True, but it doesn't seem to be exploring. Instead it repeatedly runs the same action. Do I need to set cur_epsilon to a value above zero to enable exploration? If so, how do I do this?",rllib,
+274,How to define callbacks for rllib training?,rllib,
+275,how to define callbacks?,other,
+276,why use ray serve instead of fast api,serve,
+277,Give me an example where I need to iterate100000k elemnts in dictionary process them and put it in a dataframe,ray-core,data
+278,"How do I submit a Ray job so that it only runs on worker node, not head node?",cluster,
+279,How do I run driver process on the worker node?,cluster,
+280,"I'm setting epsilon and lr schedules like this: configs.exploration_config.update( { ""initial_epsilon"": 1.5, ""final_epsilon"": 0.01, ""epsilon_timesteps"": 100000, } ) explore_config = configs.exploration_config configs = configs.training(lr_schedule=[[0, 8e-3], [40000, 1e-3]]).exploration(exploration_config=explore_config) tuner = tune.Tuner( trainer, param_space=configs.to_dict(), run_config=air.RunConfig(name = exp_config['name'], callbacks=wdb_callbacks, local_dir=exp_config['dir'], stop=exp_config['stop'], checkpoint_config=ckpt_config, verbose=0), ) How do I instead set a constant epsilon and lr?",train,rllib
+281,What does `serveConfigV2` do?,serve,
+282,What does batch_size in map_batches specify? does it specify the number of blocks or the number rows/files?,data,
+283,what’s the easiest way for me to profile my ray application for bottlenecks?,cluster,ray-observability
+284,I’m running into this error occasionally. My processes finished successfully. But it shows FAILED status on dashboard with below message. Unexpected error occurred: The actor died unexpectedly before finishing this task. class_name: JobSupervisor actor_id: 9c3abc8c435453b77358f78301000000 pid: 33622 name: _ray_internal_job_actor_raysubmit_NjcP1D7d3ZygkuHV namespace: SUPERVISOR_ACTOR_RAY_NAMESPACE ip: 10.51.34.39 The actor is dead because its worker process has died. Worker exit type: INTENDED_USER_EXIT Worker exit detail: Worker exits by an user request. exit_actor() is called. It causes trouble for downstream processes that depends on success of this batch of jobs.,ray-core,
+285,How can I get the ID of an actor from it's handle?,ray-core,
+286,can i query the status of an actor from python?,ray-core,ray-observability
+287,ray init中的_temp_dir是什么意思,rllib,ray-core
+288,How ray cluster supports multi-tenancy?,cluster,
+289,checkpoint,train,
+290,put,ray-core,
+291,what is upscale_delay_s,ray-core,serve
+292,how do i change the verbosity of the checkpointing printing using ray train,train,
+293,"How do I fix this error? ray start --address='10.186.16.77:6379' Local node IP: 10.33.110.145 [2023-10-19 07:53:05,546 I 361372 361372] global_state_accessor.cc:368: This node has an IP address of 10.33.110.145, but we cannot find a local Raylet with the same address. This can happen when you connect to the Ray cluster with a different IP address or when connecting to a container. Traceback (most recent call last):",cluster,
+294,how do i log weights and gradients distribution from a training process,rllib,train
+295,ray train worker verbosity setting,train,
+296,serviceUnhealthySecondThreshold vs deploymentUnhealthySecondThreshold,cluster,
+297,"whyen using ray tune how do i stop printing to the command window "" Checkpoint created successfully""",tune,
+298,yaml up,cluster,
+299,enableInTreeAutoscaling,cluster,
+300,"When scheduling a task to be executed with .remote() and ray.get() from inside another remote task, does the parent remote task release it's resources so the child task can get scheduled?",ray-core,
+301,What is the objective in table showing training progress. It is not a eval loss in my case.,rllib,
+302,read json using ray data,data,
+303,"I have two nodes, A and B, I want to specific my task on node A, how can I do it",ray-core,
+304,what is the default num_gpu in `ray start` command?,cluster,ray-core
+305,how to set RAY_ENABLE_RECORD_ACTOR_TASK_LOGGING in a ray service CR,ray-core,cluster
+306,Can I start Ray with a fractional number of GPUs? ray start --num-gpus=0.5,cluster,ray-core
+307,How do I see the list of metrics that are valid to use for checkpoint_score_attribute?,cluster,train
+308,"This is my new checkpoint config, and I don't see any checkpoints being saved. Why? ckpt_config = air.CheckpointConfig(num_to_keep=exp_config['keep'], # checkpoint_frequency=exp_config['freq'], # checkpoint_at_end=exp_config['end'], checkpoint_score_attribute=""episode_reward_mean"", checkpoint_score_order=""max"")",train,
+309,Hello,rllib,other
+310,How do I get started?,tune,other
+311,"How to fix this error when running ray inside a docker container: [Errno 99] error while attempting to bind on address ('::1', 9812, 0, 0): cannot assign requested address",cluster,
+312,"how to fix this error when running ray inside docker: [Errno 99] error while attempting to bind on address ('::1', 9812, 0, 0): cannot assign requested address",cluster,
+313,"My model performed very well between iterations 20 and 50, but my checkpoints only save the last 20, and I'm now on iteration 100. Is there any way I can recover the checkpoints between 20 and 50?",tune,train
+314,What is INDDK-213 used in nasal sprays ?,rllib,other
+315,how can i utilize ray,ray-core,other
+316,"I have the problem that even if i zip my complete repo and declare that zip as working_dir in the serve config, when I run serve run it seays ModuleNotFoundError and i think it doesn't unzip soemthing",serve,
+317,what is Ray?,ray-core,
+318,What hyparameters can I optimize in Bert,train,
+319,How can I launch a rain tune operation in a remote machine?,tune,
+320,I have a ray deployment in a python script. That script imports some other scripts that are in some directories below. How would i need to create a deployment config to deploy this via ray serve so the imported scripts are found?,serve,
+321,TypeError: 'str' object cannot be interpreted as an integer,ray-core,other
+322,"In ray tune, how do I return the number of iterations performed?",tune,
+323,"I have a sample batch object from a multiagent environment using the same policy for each agent. The sample batch observation have shape (batch_size*num_agents, num_features). How to reshape a samplebatch observation such that it has dimensions (batch_size, num_agents, num_features)?",rllib,
+324,"I have the repo based on the ray 1.0 TensorFlow, how can I import the",other,
+325,RayService로 모델을 배포할 때 동시 요청에 대한 처리를 따로 하지 않아도 되는거야?,cluster,
+326,RayJob은 작업이 완료되면 결과가 어디에 남아? 클러스터가 삭제되는거 아니야? 그리고 RayJob은 Dashboard가 따로 없어?,cluster,
+327,"how can i use view requirements and the trajectory api to have a model with to submodels, both using part of the memory state, and assign the parts of the state correctly",ray-observability,rllib
+328,How do you make fault tolerant a ray cluster in Kubernetes regarding the GCS?,cluster,
+329,when is get_initial_states used and when view requirements?,rllib,
+330,how to create a TLS coonection between ray head and workers?,cluster,
+331,trainer.restore,train,
+332,I want to fine tune whisper using whisper bengali dataset,tune,train
+333,memory_monitor_refresh_ms,ray-core,
+334,ray serve 502 errors on load,serve,
+335,The server encountered a temporary error and could not,cluster,other
+336,UnboundLocalError: local variable 'data_dict' referenced before assignment,data,
+337,在tuner中trail該如何同時開啟一個檔案,tune,
+338,我該如何在tuner中平行開啟一個檔案,tune,
+339,how to know that ray distributing tasks on workers,ray-core,
+340,我想在tuner中的train開啟檔案，但是檔案目錄找不到，我非常確定檔案存在並且有資料，而且我使用的是絕對路徑，請問會是甚麼問題,rllib,tune
+341,我想在tuner中的train開啟檔案，但是檔案目錄找不到，我非常確定檔案存在並且有資料，請問匯市甚麼問題,rllib,tune
+342,如果使用tuner和fit進行分散式訓練時，在train有開啟檔案，會造成FileNotFoundError嗎?,tune,
+343,Actors,ray-core,
+344,how to code a simple policy with a custom logic depending on the observation ?,rllib,
+345,how to setup runtime env in a ray serve cluster ?,cluster,
+346,請問在tuner中的train開啟一個檔案，會造成甚麼問題導致檔案找不到,tune,
+347,get worker task log,ray-core,
+348,for distributed experience replay do you have alternatives to Apex DQn?,other,rllib
+349,"Apex dqn does not seem to work with version 2.7.1 of ray I've tried your examples like >>> from ray.rllib.algorithms.apex_dqn.apex_dqn import ApexDQNConfig >>> config = ApexDQNConfig() >>> print(config.replay_buffer_config) # doctest: +SKIP >>> replay_config = config.replay_buffer_config.update( # doctest: +SKIP ... { ... ""capacity"": 100000, ... ""prioritized_replay_alpha"": 0.45, ... ""prioritized_replay_beta"": 0.55, ... ""prioritized_replay_eps"": 3e-6, ... } ... ) >>> config = config.training(replay_buffer_config=replay_config) #doctest: +SKIP >>> config = config.resources(num_gpus=1) # doctest: +SKIP >>> config = config.rollouts(num_rollout_workers=30) # doctest: +SKIP >>> config = config.environment(""CartPole-v1"") # doctest: +SKIP >>> algo = config.build() # doctest: +SKIP >>> algo.train() # doctest: +SKIP and they don't work. is apex dqn still a supported algorithm?",rllib,
+350,如何改变溢出磁盘的存储路径,rllib,
+351,Ray传递参数的时候，Ray object ref 为什么会比直接传快？,ray-core,
+352,PPOtrainer config,train,rllib
+353,How to check ray works remotely on workers in windows,other,
+354,check task assigned to worker,ray-core,ray-observability
+355,"is this values is correct for autoscaling and min 3 nodes head: { enableInTreeAutoscaling: true, autoscalerOptions: { env: containerEnv, resources: {requests: {cpu: 1, memory: '1G'}} }, resources: {requests: {cpu: 2, memory: '8G'}, limits: {cpu: 2, memory: '8G'}}, serviceAccountName: kubeRayServiceAccount.serviceAccountName, nodeSelector: {'eks.amazonaws.com/capacityType': 'ON_DEMAND'}, containerEnv: containerEnv }, worker: { resources: {requests: {cpu: 2, memory: '8G'}, limits: {cpu: 2, memory: '8G'}}, serviceAccountName: kubeRayServiceAccount.serviceAccountName, replicas: 3, minReplicas: 3, nodeSelector: {'eks.amazonaws.com/capacityType': 'ON_DEMAND'}, containerEnv: containerEnv }",cluster,
+356,why work job when i have autoscalling is waiting for scheduling,cluster,
+357,what did you have for breakfast this morning?,other,
+358,load trainer from a PPOtraining results,train,rllib
+359,ray的溢出磁盘功能，默认阈值是多少？,rllib,other
+360,use trained network,other,
+361,"in this 'from ray import tune analysis = tune.run( ""PPO"", metric=""episode_reward_mean"", mode=""max"", stop={{""episode_reward_mean"": 90}}, local_dir=""/path/to/your/directory"", config={{ ""env"": ""MountainCarContinuous-v0"", ""lr"": tune.uniform(1e-5, 1e-4), ""train_batch_size"": tune.choice([10000, 20000, 40000]), }}, )' instead of local directory there is a 'storage path' inside ray air, how can i use that ?",tune,
+362,how does ray compare with apache beam,ray-core,other
+363,how do you compare with beam,tune,other
+364,ray 的对象存储是如何处理的，即put 函数做了什么,ray-core,
+365,ray,ray-core,
+366,Ray 的 put 和 get 能不能当作一个rpc 框架来用，延迟高吗？,ray-core,
+367,Set queue size,ray-core,
+368,端口10001,ray-core,
+369,how to check task assigned to worker,ray-core,ray-observability
+370,10001,ray-core,
+371,is there a verbosity level for tuner.fit,tune,
+372,ray 是如何通过num cpu 限制资源使用量的,rllib,other
+373,gpu,cluster,
+374,is there ray version with long time support or something like that? and which one is it and which one is latest long time support ray version,ray-core,
+375,parameters server,ray-core,
+376,Show me the example of using Queue,ray-core,
+377,how to write a custom callback for unity?,tune,other
+378,"Some tune algorithms have feature where I can pas previously run experiment result and based on that result these algorithms will ""continue"" training, how does it work and which algorithms have that feature?",tune,
+379,how to write a custom side channel for ml agents?,cluster,ray-core
+380,how can I use the learn_on_batch or any other suitable callback to log custom metrics from my multiAgent environment to tune and tensorboard?,tune,
+381,ray.data.read_csv how to read csv in one worker's local disk,data,
+382,ray.data.read_csv ho w,data,
+383,ray cli submit job,cluster,
+384,Show me the Pipelining example with at least 3 tasks to process.,ray-core,
+385,rllib.BaseEnv,rllib,
+386,Show me the Pipelining example with multiple tasks to process.,ray-core,
+387,Show me the pipelining example,ray-core,
+388,Show me the example of using ray.util.iter,ray-core,
+389,mappo,ray-core,rllib
+390,how to store model checkpoints in ray tune,tune,
+391,如何限定子节点的资源使用量,rllib,
+392,use tune.run to train mountaincarcontinuous,tune,
+393,集群如何进行资源分配,rllib,
+394,how to set minio as storage_path with key or credential,data,train
+395,how to save a checkpoint in ray=2.0.1,tune,
+396,"I have a machine with 8 gpus and a tuning script that uses ray-tune: import ray from ray.tune.examples.mnist_pytorch import get_data_loaders, ConvNet, train, test from ray import tune from ray.tune.search.optuna import OptunaSearch import time def train_mnist(config): import torch import torch.optim as optim use_cuda = torch.cuda.is_available() if not use_cuda: print(""NO CUDA!!!!!!!"") raise RuntimeError(""no cuda"") device = torch.device(""cuda"" if use_cuda else ""cpu"") print(""Using device: "" + str(device)) train_loader, test_loader = get_data_loaders() model = ConvNet().to(device) optimizer = optim.SGD( model.parameters(), lr=config[""lr""], momentum=config[""momentum""]) for i in range(20): train(model, optimizer, train_loader, device) acc = test(model, test_loader, device) tune.report(mean_accuracy=acc) start = time.time() ray.init(dashboard_host=""127.0.0.1"") analysis = tune.run( train_mnist, config={ ""lr"": tune.loguniform(1e-4, 1e-2), ""momentum"": tune.uniform(0.1, 0.9), }, metric=""mean_accuracy"", mode=""max"", search_alg=OptunaSearch(), num_samples=10, resources_per_trial={""gpu"": 1} ) taken = time.time() - start print(f""Time taken: {taken:.2f} seconds."") print(f""Best config: {analysis.best_config}"") Is there any additional step I need to take for it to use gpus in my trials?",tune,
+397,"ray start --head --node-ip-address=""10.10.10.123"" --port=""9937"" --num-cpus=""20"" --resources='{""bob"": 20}' --include-dashboard=False --disable-usage-stats 解释下各个参数",cluster,
+398,Sequential programming. tasks are run asynchronous.,ray-core,
+399,Ray集群时，如何设置资源的优先级、,rllib,
+400,"how to restore ray? but restore all trials, the ones that was not started yet when experiment was interrupted",tune,
+401,import package in task,ray-core,
+402,"how to start ray, ray init?",cluster,
+403,使用Docker镜像启动ray，如何把ray启动成head节点？,rllib,other
+404,how to do action masking with rllib,rllib,
+405,monitor dashboard access,cluster,
+406,how to enable the dashboard,cluster,
+407,what is the Object Store Memory in kuberay cluster,cluster,
+408,"When a class method of a created actor is used as remote with a huge batch, will Ray also distribute it to multiple worker or they will all be executed on the worker associated with that actor",ray-core,
+409,"when a class method of a created actor is used as remote, will Ray also distribute it to multiple worker",ray-core,
+410,"This is the runconfig definition: class RunConfig: """"""Runtime configuration for training and tuning runs. Upon resuming from a training or tuning run checkpoint, Ray Train/Tune will automatically apply the RunConfig from the previously checkpointed run. Args: name: Name of the trial or experiment. If not provided, will be deduced from the Trainable. storage_path: Path to store results at. Can be a local directory or a destination on cloud storage. If Ray storage is set up, defaults to the storage location. Otherwise, this defaults to the local ``~/ray_results`` directory. stop: Stop conditions to consider. Refer to ray.tune.stopper.Stopper for more info. Stoppers should be serializable. callbacks: Callbacks to invoke. Refer to ray.tune.callback.Callback for more info. Callbacks should be serializable. Currently only stateless callbacks are supported for resumed runs. (any state of the callback will not be checkpointed by Tune and thus will not take effect in resumed runs). failure_config: Failure mode configuration. sync_config: Configuration object for syncing. See tune.SyncConfig. checkpoint_config: Checkpointing configuration. progress_reporter: Progress reporter for reporting intermediate experiment progress. Defaults to CLIReporter if running in command-line, or JupyterNotebookReporter if running in a Jupyter notebook. verbose: 0, 1, or 2. Verbosity mode. 0 = silent, 1 = default, 2 = verbose. Defaults to 1. If the ``RAY_AIR_NEW_OUTPUT=1`` environment variable is set, uses the old verbosity settings: 0 = silent, 1 = only status updates, 2 = status and brief results, 3 = status and detailed results. log_to_file: Log stdout and stderr to files in trial directories. If this is `False` (default), no files are written. If `true`, outputs are written to `trialdir/stdout` and `trialdir/stderr`, respectively. If this is a single string, this is interpreted as a file relative to the trialdir, to which both streams are written. If this is a Sequence (e.g. a Tuple), it has to have length 2 and the elements indicate the files to which stdout and stderr are written, respectively. """""" How do I provide resources like this? resources = ray.air.config.ScalingConfig( trainer_resources={""CPU"": 2,}, num_workers=2, resources_per_worker={""CPU"": 1}, )",tune,
+411,How does ray handle out of scope object references (like global variables) when executing a function remotely?,ray-core,
+412,"After adding this code: explore_config = configs.exploration_config.update( { ""initial_epsilon"": 1.5, ""final_epsilon"": 0.01, ""epsilone_timesteps"": 40000, } ) configs = configs.training(lr_schedule=[[0, 8e-3], [40000, 1e-3]]).exploration(exploration_config=explore_config) I get this error: File ""/home/ben/miniconda3/envs/mpc_main/lib/python3.10/site-packages/ray/rllib/algorithms/simple_q/simple_q.py"", line 279, in validate if self.exploration_config[""type""] == ""ParameterNoise"": TypeError: 'NoneType' object is not subscriptable",rllib,
+413,how to do batching,cluster,data
+414,"Ray log里的object_store_memory是5g, 但是dashboard cluster视图里的object store memory看是24g, 他们的区别是什么？",ray-core,
+415,"Explain this: explore_config = configs.exploration_config.update( { ""initial_epsilon"": 1.5, ""final_epsilon"": 0.01, ""epsilone_timesteps"": 5000, } )",rllib,
+416,"ray log里的object_store_memory是5g, 但是dashboard cluster视图里的object store memory看是24g, 他们的区别是什么？",ray-core,
+417,how do i check which ray version I am using,cluster,ray-core
+418,I am getting this error ERROR: Invalid requirement: 'channels:' (from line 1 of /tmp/ray/session_2023-10-18_16-32-35_918373_12/runtime_resources/pip/4634fb6671fccc5aef0ee673da0e7de79d6c459d/ray_runtime_env_internal_pip_requirements.txt),ray-core,
+419,ray object memory 超了之后会写到磁盘中吗,ray-core,
+420,ray data map_batches会有写入磁盘的操作吗,data,
+421,在Ray中如果对dataset 执行了某项操作后，改操作不会被立即执行对吗？,rllib,
+422,"i know discrete , but whats discrete + parametric ?",ray-core,
+423,Dashboard上有PENDING_CREATION 的actor，但是命令行检索没有这写,ray-core,
+424,how to set num of cpus when training with DQNConfig()?,rllib,
+425,查看所有actor,ray-core,
+426,what is this error? RuntimeError: Failed to unpickle serialized exception,ray-core,
+427,how to cancel obj refs,cluster,
+428,how can i see how many nodes have been allocated to me in my ray cluster?,cluster,
+429,What's the difference between pyarrow and numpy formats in ray?,ray-core,
+430,during ray serving time how can I install non public pypi packages,ray-core,
+431,how to install dependencies from non public pypi during ray serving time,ray-core,
+432,"My current code looks like this ray_actor_options={ ""num_cpus"": 1, ""runtime_env"": {""pip"": dep}, }, however I need to install dependencies from internal index ""https://artifactory-pypi.cbhq.net/simple/"" how should I write it here",ray-core,
+433,How RayJob works? Does it create a Kubernetes Job?,cluster,
+434,what's the default batch_size in map_batches?,data,
+435,"I have a OOM error that causes tuning to exit. 5 Workers (tasks / actors) killed due to memory pressure (OOM) It then causes tuning to exit with this error: ray.exceptions.RayTaskError(AttributeError): ray::MultiAgentPrioritizedReplayBuffer.apply() (pid=94833, ip=172.22.54.189) File ""/home/ben/miniconda3/envs/mpc_main/lib/python3.10/site-packages/ray/rllib/algorithms/apex_dqn/apex_dqn.py"", line 621, in <lambda> func=lambda actor: actor.sample(train_batch_size), File ""/home/ben/miniconda3/envs/mpc_main/lib/python3.10/site-packages/ray/rllib/utils/replay_buffers/multi_agent_replay_buffer.py"", line 331, in sample samples[policy_id] = replay_buffer.sample(num_items, **kwargs) File ""/home/ben/miniconda3/envs/mpc_main/lib/python3.10/site-packages/ray/rllib/utils/replay_buffers/prioritized_replay_buffer.py"", line 129, in sample raise ValueError(""Trying to sample from an empty buffer."") ValueError: Trying to sample from an empty buffer.",rllib,
+436,how to use ray with jupiter nodebook,cluster,
+437,"in ray serve, when using application build, do the arguments have to be string format? or they can be boolean too?",serve,
+438,"import ray import torch import torch.nn as nn import torch.optim as optim # 定义LSTM神经网络 class LSTMNet(nn.Module): def __init__(self, input_dim, hidden_dim, output_dim): super(LSTMNet, self).__init__() self.lstm = nn.LSTM(input_dim, hidden_dim) self.fc = nn.Linear(hidden_dim, output_dim) def forward(self, x): out, _ = self.lstm(x) out = self.fc(out[:, -1, :]) return out # 使用ray.remote装饰器将该函数标记为远程任务 @ray.remote def train_model(config): # 生成一些随机数据 data = torch.randn(100, 10, 20) target = torch.randn(100, 10) # 创建模型实例 model = LSTMNet(20, config[""hidden_dim""], 10) # 定义损失函数和优化器 criterion = nn.MSELoss() optimizer = optim.Adam(model.parameters(), lr=config[""lr""]) # 训练模型 for epoch in range(config[""epochs""]): optimizer.zero_grad() output = model(data) loss = criterion(output, target) loss.backward() optimizer.step() print(f""Epoch {epoch}, Loss: {loss.item()}"") if __name__ == ""__main__"": ray.init(ignore_reinit_error=True) # 初始化Ray集群 # 配置训练参数 config = { ""hidden_dim"": 50, ""lr"": 0.001, ""epochs"": 10 } # 使用Ray的remote方法异步启动训练任务 training_futures = [train_model.remote(config) for _ in range(4)] # 启动4个并行训练任务 # 等待训练任务完成 ray.get(training_futures) 这个代码展示了如何用ray集群训练一个LSTM神经网络，它正确吗？有什么错误吗？",rllib,train
+439,Can we define our customized placement strategy?,ray-core,
+440,How to resolve NCCL error?,cluster,
+441,How can I submit a Ray Serve Deployment such that it doesn't get submitted to the head node and instead goes to a worker node?,serve,
+442,What does job submitter pod do?,cluster,
+443,How can I change the log format for a ray serve application?,serve,
+444,What is the default batch size for `map_batches` when using CPUs?,data,
+445,How can I change the log format to json from my replicas in a Ray Serve application?,serve,
+446,Where can I read about the Ray job management HTTP APIs?,cluster,
+447,Does ray use TCP to communicate between nodes on a cluster?,cluster,
+448,"when i use ray.get, python prematurely terminates after ray.get is finished even if i have more code afterwards",ray-core,
+449,if ray is connected how can i create a JobSubmissionClient,cluster,
+450,is there a way to prevent tasks from scheduling on certain workers or underlying nodes — I’m trying to reserve my gpu instances solely for gpu related tasks?,ray-core,
+451,Show me how to execute a list or dict of configs for different experiments.,cluster,ray-core
+452,Show me how to execute a list of duct of configs for different experiences,cluster,ray-core
+453,I want to train multiple experiments with different configuration for each one,cluster,ray-core
+454,Bind ray dashboard to private 10.x IP instead of local host.,cluster,
+455,bind ray dashboard to external IP,cluster,
+456,how to port forward a ray dashboard?,cluster,
+457,can you write code to deploy a model on a server for me at scale?,other,serve
+458,I have dataset. I just want to take one column out and convert it to list. How to do it ?,data,
+459,can I set max_restarts=-1 for actors?,ray-core,
+460,what is ray air,other,
+461,How to set environment variable in RAY_CONFIG,ray-core,
+462,please write me code to make a few actors that use a gpu that use an autoscaler,cluster,
+463,How should I install docker in a ray cloud yaml file,cluster,
+464,I try to use 2 submodels in my custom model which both use memory. how to initialize and split the memory accurately,rllib,other
+465,i try to use 2 submodels which both use memory. how to initiliaze and split the memory accurately,ray-core,other
+466,how is port 5044 used?,tune,other
+467,What version of ray had the first implementation dreamer v3 algorithm?,rllib,
+468,in my multiagent env i have a custom variable self.portfolio return which is part of the info dict returned from some agents and I want to log that custom metric to tensorboard so that tune can optimize the trials towards that metric,tune,
+469,How to serve with ray when the observation includes a numpy array,serve,
+470,Can ray run the same task successfully more than once?,ray-core,
+471,"I have a scheduler that allows for a task to be retried if the node it's on gets reclaimed by a higher priority user before finishing. However, I'm noticing cases where the ray dashboard reports that a job has been retried but both of the tries succeeded. How could this happen?",ray-core,
+472,node.execute() takes a lot of time to submit,ray-core,
+473,Is it possible to log custom metric from the gym env to the tensorboard (the variable is available innige step method as self.portfolio_return),cluster,rllib
+474,can I make a join between ray datasets?,data,
+475,what is OPE,tune,rllib
+476,what is the difference between ray/tune/episode_reward_max and ray/tune/sampler_results/episode_reward_max,tune,
+477,what's the difference between the ray:latest and ray:nightly docker images?,cluster,
+478,how to install ray globally,cluster,
+479,what should I do with ERROR services.py:1291 -- [Errno 13] Permission denied,cluster,other
+480,How do I change the ray dashboard port to 443?,cluster,
+481,Which cloud provider to use for deploying ray serve,cluster,
+482,Ab wann macht fractional gpu für rllib sinn?,rllib,
+483,Was ist mit fractional gpu gemeint?,tune,ray-core
+484,"What could be the reason that when i use working_dir with a zip file when deploying a ray serve app on windows, it doesn't find the python scripts inside the working dir when trying to import",cluster,ray-core
+485,list all ray start flags,cluster,
+486,I am trying to run .evaluate() on new_ppo = ppo.PPO.from_checkpoint(checkpoint) new_ppo.evaluate() but get ValueError: Cannot evaluate w/o an evaluation worker set in the Trainer or w/o an env on the local worker! How to solve this?,rllib,
+487,how do i change the documentaiton version on the site,other,
+488,read text,data,
+489,callback,tune,
+490,How can I manage secrets in ray in a secure way?,ray-core,
+491,what are you?,other,
+492,can i start 3 workers to stay permanent and set autoscaling with ray cluster helm chart,cluster,
+493,"How do I choose the stopping condition and the number of samples here? env_config={ ""arg1"": cell, ""arg2"": tws0, ""arg3"": None, ""arg4"": p_array_init } search_space = { ""lr"": tune.uniform(1e-6, 1e-4), # Add other hyperparameters here if needed } analysis = tune.run( ""PPO"", config={ ""env"": ""Accelerator-Env"", # Replace with your custom gym environment ""env_config"": env_config, **search_space, }, metric=""episode_reward_mean"", mode=""max"", )",tune,
+494,"I used tune to run PPO algorithm on a custom environment. I ran this environment env = gym.make(""CartPole-v1"") . How do i use the checkpoints to check models performance and then restart the run",rllib,
+495,"Quiero saber si se puede entrenar un modelo SlateQ sin usar un environment, si no usando un replay_buffer con datos calculados en batch",rllib,
+496,"How do I get the last action taken in an episode, with episodeV2",rllib,
+497,is there a way to have an autoscaling pool of actors?,other,ray-core
+498,how can a ray task get the user who started that task?,ray-core,ray-observability
+499,"how do i register a custom env, pls give me a code example",tune,rllib
+500,"How much wood would a woodchuck chuck, if a woodchuck could chuck wood?",tune,other
+501,was ist max_seq_len,tune,rllib
+502,"I used tune to run PPO algorithm on a custom environment. I ran this environment env = gym.make(""CartPole-v1"") . How do i use the checkpoints to check models performance",rllib,tune
+503,why sometimes we use ray.init() and sometimes we dont?,ray-core,
+504,how do I deply LLM ?,other,
+505,"In an RL training, how to compute the reward after 100 timesteps ?",rllib,
+506,"using this what you gave me: from ray.rllib.agents.callbacks import DefaultCallbacks Then, you can define your custom callback class by inheriting from DefaultCallbacks: class CustomCallbacks(DefaultCallbacks): def on_learn_on_batch(self, *, policy, train_batch, result, **kwargs): result[""custom_metrics""][""current_portfolio_return""] = np.mean(train_batch[""infos""][""current_portfolio_return""]). I am getting this error: AttributeError: 'CustomCallbacks' object has no attribute 'setup'",rllib,
+507,I am running a tune expirement (RLLIB custom env) in the step method I am returning a custom metric in the info dicttionary and I want tune to optimize towards this metric. how can I make this custom metric available to tune?,tune,
+508,"I want to follow a tutorial with offline data, what do you recomend?",data,
+509,how do i speed up my env,rllib,
+510,geht der gtrxl agent über alle eingaben von observation oder wird die observation immer abgeschnitten und es geht ein teil in der observation?,rllib,
+511,Can I add a fcnet after the LSTM with post_fcnet_hiddens,tune,rllib
+512,"was heisst das hier: memory_training: The number of timesteps to concat (time axis) and feed into the next transformer unit as training input (plus the actual input sequence of len=max_seq_len). The first transformer unit will receive this number of past observations (plus the input sequence), instead.+",rllib,
+513,how can I handle errors in ray data map?,data,
+514,I have a custom gym environment for my DRL problem. It works with Ray. I registered and it takes 4 arguments to work (defined in env_config). How do I write a script that takes this environment and tests learning rate values to find the optimum hyperparameters with Tune?,other,
+515,how to run pamda at scale using ray,ray-core,
+516,was ist beim rllib max_seq_len?,rllib,
+517,was ist max_seq_len beim gtrxl ?,tune,rllib
+518,was ist max_seq_len?,tune,rllib
+519,why I need Ray?,ray-core,other
+520,"air.RunConfig(local_dir=""./results"")是幹嘛的",ray-core,train
+521,"Traceback (most recent call last): File ""/workspace/xu/3_train_min_stock.py"", line 1393, in <module> main() File ""/workspace/xu/3_train_min_stock.py"", line 1380, in main train_attention() File ""/workspace/xu/3_train_min_stock.py"", line 512, in train_attention result = algo.train() File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/tune/trainable/trainable.py"", line 375, in train raise skipped from exception_cause(skipped) File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/tune/trainable/trainable.py"", line 372, in train result = self.step() File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/algorithms/algorithm.py"", line 851, in step results, train_iter_ctx = self._run_one_training_iteration() File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/algorithms/algorithm.py"", line 2835, in _run_one_training_iteration results = self.training_step() File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/algorithms/ppo/ppo.py"", line 457, in training_step train_results = multi_gpu_train_one_step(self, train_batch) File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/execution/train_ops.py"", line 171, in multi_gpu_train_one_step results = policy.learn_on_loaded_batch( File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/policy/torch_policy_v2.py"", line 879, in learn_on_loaded_batch tower_outputs = self._multi_gpu_parallel_grad_calc(device_batches) File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/policy/torch_policy_v2.py"", line 1452, in _multi_gpu_parallel_grad_calc raise last_result[0] from last_result[1] ValueError: cannot reshape tensor of 0 elements into shape [0, -1] because the unspecified dimension size -1 can be any value and is ambiguous tracebackTraceback (most recent call last): File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/policy/torch_policy_v2.py"", line 1367, in _worker self.loss(model, self.dist_class, sample_batch) File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/algorithms/ppo/ppo_torch_policy.py"", line 84, in loss logits, state = model(train_batch) File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/models/modelv2.py"", line 259, in __call__ res = self.forward(restored, state or [], seq_lens) File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/models/torch/attention_net.py"", line 377, in forward wrapped_out, _ = self._wrapped_forward(input_dict, [], None) File ""/root/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/models/torch/fcnet.py"", line 151, in forward self._last_flat_in = obs.reshape(obs.shape[0], -1) RuntimeError: cannot reshape tensor of 0 elements into shape [0, -1] because the unspecified dimension size -1 can be any value and is ambiguous In tower 0 on device cuda:0",rllib,
+522,如何限制 ray::IDLE 数量,ray-core,
+523,how can I parallelize my search in a spark environment?,tune,other
+524,How to tune using hyperoptsearch and ashascheduler,tune,
+525,"Meine Observation hat die Länge 932 und mein Model ist so konfiguriert: model={ ""use_attention"": not args.no_attention, ""max_seq_len"": 10, ""attention_num_transformer_units"": 1, ""attention_dim"": 32, ""attention_memory_inference"": 10, ""attention_memory_training"": 10, ""attention_num_heads"": 1, ""attention_head_dim"": 32, ""attention_position_wise_mlp_dim"": 32, }, soll ich mein max_seq_len verlängern, wenn ich meinen kompletten observation betrachten möchte?",rllib,
+526,1.12,rllib,other
+527,"write a code to deploy ray serve in docker on premises, i have 2 GPU 12 GB each NVIDIA 3060,my model is speech to text, whisper small 967 mb size, how to do it? input coming from front end, and result should go to mongodb database",serve,
+528,how to see the object IDS in the ray object store using the ray dashboard?,ray-core,ray-observability
+529,what is GRAM in the ray dahsboard metrics,ray-core,ray-observability
+530,memory leak ray.put,ray-core,
+531,how can I convert a lightning trainer to a ray trainer,train,
+532,ray address,ray-core,
+533,"using gymnasium 0.29.1, can not train while rendering",train,rllib
+534,while using deepspeed for kubray training I am not able to utilize full node bandwidth,cluster,other
+535,how to rename a dataset column,data,
+536,offline training example for rl,rllib,
+537,"ray.exceptions.RayTaskError(ValueError): ray::RolloutWorker.apply() (pid=36506, ip=172.25.187.138, actor_id=441f9d108b175cad27c52f4401000000, repr=<ray.rllib.evaluation.rollout_worker.RolloutWorker object at 0x7fa1aa58f550>) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/utils/actor_manager.py"", line 185, in apply raise e File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/utils/actor_manager.py"", line 176, in apply return func(self, *args, **kwargs) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/execution/rollout_ops.py"", line 86, in <lambda> lambda w: w.sample(), local_worker=False, healthy_only=True File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/rollout_worker.py"", line 696, in sample batches = [self.input_reader.next()] File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/sampler.py"", line 92, in next batches = [self.get_data()] File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/sampler.py"", line 277, in get_data item = next(self._env_runner) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/env_runner_v2.py"", line 344, in run outputs = self.step() File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/env_runner_v2.py"", line 382, in step eval_results = self._do_policy_eval(to_eval=to_eval) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/env_runner_v2.py"", line 1081, in _do_policy_eval eval_results[policy_id] = policy.compute_actions_from_input_dict( File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/policy/torch_policy_v2.py"", line 571, in compute_actions_from_input_dict return self._compute_action_helper( File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/utils/threading.py"", line 24, in wrapper return func(self, *a, **k) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/policy/torch_policy_v2.py"", line 1303, in _compute_action_helper action_dist = dist_class(dist_inputs, self.model) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/models/torch/torch_action_dist.py"", line 292, in __init__ self.dist = torch.distributions.normal.Normal(mean, torch.exp(log_std)) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/torch/distributions/normal.py"", line 56, in __init__ super().__init__(batch_shape, validate_args=validate_args) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/torch/distributions/distribution.py"", line 62, in __init__ raise ValueError( ValueError: Expected parameter scale (Tensor of shape (1, 92)) of distribution Normal(loc: torch.Size([1, 92]), scale: torch.Size([1, 92])) to satisfy the constraint GreaterThan(lower_bound=0.0), but found invalid values: tensor([[inf, 0., inf, 0., 0., 0., 0., 0., inf, 0., inf, 0., inf, inf, 0., inf, inf, 0., inf, inf, inf, 0., inf, inf, 0., inf, 0., inf, inf, 0., 0., 0., inf, inf, 0., inf, 0., 0., 0., 0., inf, inf, 0., inf, inf, 0., inf, 0., 0., 0., 0., inf, inf, 0., inf, 0., 0., 0., 0., inf, 0., 0., inf, 0., inf, inf, 0., inf, 0., inf, inf, 0., inf, 0., 0., inf, inf, 0., 0., inf, inf, inf, inf, inf, 0., 0., inf, 0., inf, 0., 0., 0.]])",rllib,
+538,"Wenn ich mit dem Parameter ""attention_use_n_prev_actions"": 2 setze, werden meine Aktionen an meinem Agent wieder gefüttert. Diese werden von dem rllib pipeline normalisiert und liefern werte wie inf -inf. der Normalisierer beschwert sich aber weil es zwichen 0 und 1 liegen sollen.",rllib,
+539,`ray.rllib.models.torch.torch_modelv2.TorchModelV2` has been deprecated. Use `ray.rllib.core.rl_module.rl_module.RLModule` instead. This will raise an error in the future!,rllib,
+540,"RLLIB normalisiert die Observation. Kann ich das beim config einstellen wie genau die Observation normalisiert wird, damit es nicht zu -inf kommt?",rllib,
+541,"已经没有 Job 了, 但 ray::IDLE 还存活着",ray-core,
+542,how to do groupby sum,ray-core,data
+543,ray 不释放内存是什么原因,ray-core,
+544,在torch trainer中如何debug train function,train,
+545,Funtioniert grxl in rllib mit kontinuierlichen Zustandsraum?,rllib,
+546,funktioniert gtrxl mit observations -1 und 1?,rllib,
+547,如何关闭ray train时的log,tune,train
+548,"<stdin>:1: DeprecationWarning: Accessing values through ctx[""redis_address""] is deprecated. Use ctx.address_info[""redis_address""] instead.",cluster,
+549,如何给 Dataset 起名,data,
+550,ray dataset 如何像 spark dataframe 一样ca che,data,
+551,ray server address,ray-core,
+552,ray data map_batches中将num_cpus设为0有什么好处？,data,
+553,"Spilled 42410 MiB, 428 objects, write throughput 1080 MiB/s.这个是什么问题",ray-core,
+554,"i met this issue, the job supervisor actor is not created successfully. The log is "" Task failed: SchedulingCancelled: Actor creation cancelled"" why is this happened?",ray-core,
+555,How do I train a Pytorch model in ray across multiple GPUs?,train,
+556,How do I shot web,tune,other
+557,what is api/serve/applications/ endpoint in ray cluster for?,serve,
+558,"Was heisst compress observations = True hier: .rollouts( rollout_fragment_length=64, num_rollout_workers=2, batch_mode='complete_episodes', compress_observations=True ).rl_module(_enable_rl_module_api=False).training(_enable_learner_api=False)",rllib,
+559,ray.remote如何配置 memory,ray-core,
+560,I have run a model using RayLLm. How can i see vllm logs?,ray-core,other
+561,how to specify the path to the object store,ray-core,
+562,如何获取已存在的actor,ray-core,
+563,如何列出已存在的 dataset,rllib,
+564,How do I submit a KubeRay RayJob from python code,cluster,
+565,RAY란 무엇입니까? 1 ~ 2 줄로 요약해주세요.,ray-core,
+566,"das hier ist meine Konfiguration: ""use_attention"": True, ""max_seq_len"": 10, ""attention_num_transformer_units"": 1, ""attention_dim"": 32, ""attention_memory_inference"": 10, ""attention_memory_training"": 10, ""attention_num_heads"": 1, ""attention_head_dim"": 32, ""attention_position_wise_mlp_dim"": 32, ""attention_use_n_prev_actions"": 1, ""attention_use_n_prev_rewards"": 1, und bekomme folgenden fehler: (RolloutWorker pid=6963) self._update_policy_map(policy_dict=self.policy_dict) (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/rollout_worker.py"", line 1727, in _update_policy_map (RolloutWorker pid=6963) self._build_policy_map( (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/rollout_worker.py"", line 1838, in _build_policy_map (RolloutWorker pid=6963) new_policy = create_policy_for_framework( (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/utils/policy.py"", line 142, in create_policy_for_framework (RolloutWorker pid=6963) return policy_class(observation_space, action_space, merged_config) (RolloutWorker pid=6963) self._initialize_loss_from_dummy_batch() (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/policy/policy.py"", line 1467, in _initialize_loss_from_dummy_batch (RolloutWorker pid=6963) postprocessed_batch = self.postprocess_trajectory(self._dummy_batch) (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/algorithms/ppo/ppo_torch_policy.py"", line 215, in postprocess_trajectory (RolloutWorker pid=6963) return compute_gae_for_sample_batch( (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/postprocessing.py"", line 188, in compute_gae_for_sample_batch (RolloutWorker pid=6963) sample_batch = compute_bootstrap_value(sample_batch, policy) (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/evaluation/postprocessing.py"", line 270, in compute_bootstrap_value (RolloutWorker pid=6963) input_dict = sample_batch.get_single_step_input_dict( (RolloutWorker pid=6963) File ""/home/pc/anaconda3/envs/py39/lib/python3.9/site-packages/ray/rllib/policy/sample_batch.py"", line 1301, in get_single_step_input_dict (RolloutWorker pid=6963) np.concatenate([data, self[data_col][-missing_at_end:]])[ (RolloutWorker pid=6963) ValueError: all the input arrays must have same number of dimensions, but the array at index 0 has 1 dimension(s) and the array at index 1 has 2 dimension(s)",rllib,
+567,"How can I check if I use GPU? this is my setup: # register env env_creator = lambda config: FlatlandRayEnv(config) register_env(""flatland_ray_marl"", lambda config: env_creator(config)) config = ppo.PPOConfig() config = ( ppo.PPOConfig() .environment(""flatland_ray_marl"") .framework(""torch"") .multi_agent( policies={ ""train"": PolicySpec( policy_class=None, # infer automatically from Algorithm observation_space=MultiDiscrete([5] * (30 * 30 * 23)), # infer automatically from env action_space=Discrete(5), # infer automatically from env config={ ""gamma"": 0.98, }, # use main config plus <- this override here ) }, # policies_to_train=""train"", policy_mapping_fn=lambda agent_id, episode, worker, **kwargs: ""train"", ) ) algo = config.build() print(config.to_dict()) result = algo.train()",rllib,
+568,"i use ray job. Job ID is ""no ray driver"".",cluster,
+569,如何将数据传输到gpu上面,rllib,
+570,如何将数据传输到g pu,rllib,
+571,q,rllib,
+572,does ray have some builtin table dataset?,data,
+573,how to use cpu,cluster,
+574,how to use ray serve if there are a few separate api versions?,serve,
+575,ray.remote 如何安装特定的包,ray-core,
+576,ray remote 安装 pip,ray-core,
+577,How does timesteps based simulations/trainings works ?,train,rllib
+578,Is Ray an alternative for Kubeflow on kubernetes,cluster,other
+579,介绍一下Ray的核心概念和框架？最好有中文的文档,rllib,
+580,how can i make a complete training pipeline for a MARL agent?,rllib,
+581,"I have below code, and I wanted to create embeddings for my documents, However I am receving an error :{AssertionError: Torch not compiled with CUDA enabled}, Correct the code, consider I don't have GPU's class EmbedChunks: def __init__(self, model_name): if model_name == ""text-embedding-ada-002"": self.embedding_model = OpenAIEmbeddings( model=model_name, openai_api_base=os.environ[""OPENAI_API_BASE""], openai_api_key=os.environ[""OPENAI_API_KEY""]) else: self.embedding_model = HuggingFaceEmbeddings( model_name=model_name, model_kwargs={""device"": ""cuda""}, encode_kwargs={""device"": ""cuda"", ""batch_size"": 100}) def __call__(self, batch): embeddings = self.embedding_model.embed_documents(batch[""text""]) return {""text"": batch[""text""], ""source"": batch[""source""], ""embeddings"": embeddings} # Embed chunks embedding_model_name = ""thenlper/gte-base"" embedded_chunks = chunks_ds.map_batches( EmbedChunks, fn_constructor_kwargs={""model_name"": embedding_model_name}, batch_size=100, num_gpus=0, compute=ActorPoolStrategy(size=2)) # Sample sample = embedded_chunks.take(1) print (""embedding size:"", len(sample[0][""embeddings""])) print (sample[0][""text""])",rllib,data
+582,Ray是什么语言实现的？,ray-core,
+583,how to set batch size on rllib?,rllib,
+584,how to set batch size using DQNConfig()?,data,rllib
+585,I used tune to run PPO algorithm on a custom environemtn. How do i use the checkpoints to check model,rllib,
+586,How to use command line to decide if a worker is at head node?,cluster,
+587,"在运行ray data的任务时，k8s报如下的错误：The node was low on resource: ephemeral-storage. Container hobot-gpu-worker was using 107740324Ki, which exceeds its request of 0. Container hobot-gpu-monitor was using 10176Ki, which exceeds its request of 0. 可能的原因是什么？",cluster,
+588,在运行ra y,rllib,
+589,what is num_rollout_workers and num_envs_per_worker?,rllib,
+590,在@ray.remote修饰的类中，调用pytorch的to直接卡死,ray-core,
+591,how to use serve build command,serve,
+592,ray构建分布式集群需要用到ib网卡吗,rllib,
+593,How to configure a ray serve deployment using FastAPI,serve,
+594,What is the default gamma value for SAC?,ray-core,rllib
+595,可序列化物件和不可序列化物件有甚麼區別,rllib,
+596,how to set replay_buffer_config when using DQNConfig()?,rllib,
+597,ray可以支持容器多机吗,rllib,
+598,ray可以支持容器多机吗,rllib,
+599,how to use minio as storage path for ray tune,tune,
+600,how to visualize a ray serve dag/,serve,
+601,"I ran Ray using Ray Tune and PPO algorithm. It created some checkpoints, how do I load them",tune,
+602,how do i load a checkpoint,tune,
+603,"Here is a response of ray status command: ```Resources --------------------------------------------------------------- Usage: 2.0/64.0 CPU 0.0/4.0 GPU 0B/323.99GiB memory 88B/142.84GiB object_store_memory Demands: {'CPU': 1.0, 'accelerator_type': 0.05}: 1+ pending tasks/actors (1+ using placement groups) {'CPU': 1.0, 'accelerator_type': 0.05} * 1, {'CPU': 1.0, 'accelerator_type': 0.05, 'GPU': 1.0} * 1 (STRICT_PACK): 1+ pending placement groups``` Although i have resources available but still my serve deployment does not run stating the following error: ``` Error: No available node types can fulfill resource request defaultdict(&lt;class 'float'&gt;, {'accelerator_type': 0.1, 'CPU': 2.0, 'GPU': 1.0}). Add suitable node types to this cluster to resolve this issue.``` Why is it not picking up the available resources?",ray-core,
+604,how to delete ray job using ray cli,cluster,
+605,What's the Python version in docker image `rayproject/ray-ml:2.0.0`?,cluster,
+606,"I am running rayLLM on my local ray cluster by running `serve run serve_configs/amazon--LightGPT.yaml` but i keep getting the following error: ``` ValueError: Could not parse string as yaml. If you are specifying a path, make sure it exists and can be reached.``` How to debug and resolve this issue?",cluster,other
+607,whats the best way for me to submit a task taht requires an actor from each pool: ``` gb_actor_pool: ActorPool = ActorPool([GActor.remote() for _ in range(2)]) em_actor_pool: ActorPool = ActorPool([EActor.remote() for _ in range(2)])```,ray-core,
+608,Can you give me some suggestions on how to fix this error? ```ray.exceptions.RuntimeEnvSetupError: Failed to set up runtime environment.\\nFailed to create runtime environment for job 02000000 because the Ray agent couldn't be started due to the port conflict.```,ray-core,
+609,How can I install llama-cpp-python with GPU support on autoscaling worker nodes?,cluster,other
+610,"In Kuberay, how to add Tolerations to Pod?",cluster,
+611,What's the ray docker image name for python 3.8?,cluster,other
+612,What can I use Ray server for?,ray-core,serve
+613,"During training I saw this: 'state_in': { 'actor': { 'c': np.ndarray((544, 1, 64), dtype=float32, min=-0.665, max=0.563, mean=-0.014), 'h': np.ndarray((544, 1, 64), dtype=float32, min=-0.362, max=0.255, mean=-0.007)}, 'critic': { 'c': np.ndarray((544, 1, 64), dtype=float32, min=-0.885, max=0.811, mean=0.008), 'h': np.ndarray((544, 1, 64), dtype=float32, min=-0.39, max=0.356, mean=0.006)}}, Do I need to provide a similar input to the policy.compute_single_action() function?",rllib,
+614,how do i do custom eval function with rllib?,rllib,
+615,how do i use custom eval function?,rllib,
+616,how to use importance sampling to train A2C from offline data?,train,rllib
+617,What is Modin?,other,
+618,What are you?,other,
+619,"Why did I get this error? input spec validation failed on TorchStatefulActorCriticEncoder.forward, The data dict does not match the model specs. Keys ('state_in',) are in the spec dict but not on the data dict. Data keys are {('obs',), ('prev_actions',), ('prev_rewards',)}",data,rllib
+620,How do I train on CustomPolicy,rllib,
+621,how much gpu memory is needed to serve a 333mm transformer model with ray serve?,serve,
+622,UserWarning: Ray Client connection timed out. Ensure that the Ray Client port on the head node is reachable from your local machine. See https://docs.ray.io/en/latest/cluster/ray-client.html#step-2-check-ports for more information.,cluster,
+623,is there a way to limit the number of times a remote task on an actor is retried?,ray-core,
+624,"import numpy as np # Define a task that sums the values in a matrix. @ray.remote def sum_matrix(matrix): return np.sum(matrix) # Call the task with a literal argument value. print(ray.get(sum_matrix.remote(np.ones((100, 100))))) # -> 10000.0 # Put a large array into the object store. matrix_ref = ray.put(np.ones((1000, 1000))) # Call the task with the object reference as an argument. print(ray.get(sum_matrix.remote(matrix_ref))) # -> 1000000.0 --- Why do we have to ""put"" the array into the object store here?",ray-core,
+625,"what is the difference between algorithm, policy and model",rllib,
+626,where is from ray.rllib.agents.dqn import DQNTrainer,rllib,
+627,Send starlette request object to another deployments,serve,
+628,send request object to another deployments,serve,
+629,"I want to use two different policy model in this code. How could I do this? algo = ( PPOConfig() .from_dict({ 'num_iterations': 1, }) .rollouts(num_rollout_workers=3) .resources(num_gpus=1) .rl_module(_enable_rl_module_api=False) .environment(env='battle_env') .training( _enable_learner_api=False, model={ 'conv_filters': [[1, [1, 1], 1]], 'conv_activation': 'relu', 'use_attention': True, 'attention_num_transformer_units': 1, 'max_seq_len': 6, 'attention_dim': 32, 'attention_memory_inference': 50, 'attention_memory_training': 100, 'attention_num_heads': 1, 'attention_head_dim': 32, 'attention_position_wise_mlp_dim': 32, 'attention_use_n_prev_actions': 6, 'attention_use_n_prev_rewards': 6, } ) .build() )",rllib,
+630,How do I create custom algorithm that only retruns 1 on every observation,rllib,
+631,How do I create and train custom policy,rllib,
+632,How to create simple custom agent that takes only random actions,rllib,
+633,"when connect to a ray cluster, how to set up a sock proxy?",cluster,
+634,What python versions are supported,other,
+635,"what is the meaning of the following error: line 133, in create_policy_for_framework [repeated 2x across cluster] (RolloutWorker pid=23812) return policy_class( [repeated 2x across cluster] (RolloutWorker pid=23812) base.__init__( [repeated 2x across cluster] (RolloutWorker pid=23812) self.model = self.make_model() [repeated 2x across cluster] (RolloutWorker pid=23812) File ""/home/tim/anaconda3/envs/master/lib/python3.9/site-packages/ray/rllib/policy/dynamic_tf_policy_v2.py"", line 218, in make_model [repeated 2x across cluster] (RolloutWorker pid=23812) return ModelCatalog.get_model_v2( [repeated 2x across cluster] (RolloutWorker pid=23812) File ""/home/tim/anaconda3/envs/master/lib/python3.9/site-packages/ray/rllib/models/catalog.py"", line 568, in get_model_v2 [repeated 2x across cluster] (RolloutWorker pid=23812) registered = set(instance.var_list) [repeated 2x across cluster] (RolloutWorker pid=23812) AttributeError: 'CustomLSTMModel' object has no attribute 'var_list'",rllib,
+636,"How could I set stop iteration to 1000 in this config: algo = ( PPOConfig() .rollouts(num_rollout_workers=0) .resources(num_gpus=0) .rl_module(_enable_rl_module_api=False) .environment(env=""battle_env"") .training( _enable_learner_api=False, model={ 'conv_filters': [[1, [1, 1], 1]], 'conv_activation': 'relu', 'use_attention': True, 'attention_num_transformer_units': 1, 'max_seq_len': 6, 'attention_dim': 32, 'attention_memory_inference': 50, 'attention_memory_training': 100, 'attention_num_heads': 1, 'attention_head_dim': 32, 'attention_position_wise_mlp_dim': 32, 'attention_use_n_prev_actions': 6, 'attention_use_n_prev_rewards': 6, } ) .build() ) result = algo.train()",rllib,
+637,"How could I set stop iteration to 1000 in this config: algo = ( PPOConfig() .rollouts(num_rollout_workers=0) .resources(num_gpus=0) .rl_module(_enable_rl_module_api=False) .environment(env=""battle_env"") .training( _enable_learner_api=False, model={ 'conv_filters': [[1, [1, 1], 1]], 'conv_activation': 'relu', 'use_attention': True, 'attention_num_transformer_units': 1, 'max_seq_len': 6, 'attention_dim': 32, 'attention_memory_inference': 50, 'attention_memory_training': 100, 'attention_num_heads': 1, 'attention_head_dim': 32, 'attention_position_wise_mlp_dim': 32, 'attention_use_n_prev_actions': 6, 'attention_use_n_prev_rewards': 6, } ) .build() )",rllib,
+638,"this is the code 'import ray from ray.tune import run, sample_from from ray.tune.schedulers.pb2 import PB2 import random # Create the PB2 scheduler. pb2_scheduler = PB2( time_attr=""timesteps_total"", metric=""episode_reward_mean"", mode=""max"", perturbation_interval=50000, quantile_fraction=0.25, # copy bottom % with top % (weights) # Specifies the hyperparam search space hyperparam_bounds={ ""lambda"": [0.9, 1.0], ""clip_param"": [0.1, 0.5], ""lr"": [1e-3, 1e-5], ""train_batch_size"": [1000, 60000] }) # Run PPO algorithm experiment on BipedalWalker with PB2. analysis = run( ""PPO"", name=""ppo_pb2_bipedal"", scheduler=pb2_scheduler, verbose=1, num_samples=4, # population size stop={""timesteps_total"": 1000000}, config={ ""env"": ""BipedalWalker-v2"", ""log_level"": ""INFO"", ""kl_coeff"": 1.0, ""num_gpus"": 0, ""horizon"": 1600, ""observation_filter"": ""MeanStdFilter"", ""model"": { ""fcnet_hiddens"": [32,32], ""free_log_std"": True }, ""num_sgd_iter"": 10, ""sgd_minibatch_size"": 128, ""lambda"": sample_from(lambda spec: random.uniform(0.9, 1.0)), ""clip_param"": sample_from(lambda spec: random.uniform(0.1, 0.5)), ""lr"": sample_from(lambda spec: random.uniform(1e-3, 1e-5)), ""train_batch_size"": sample_from( lambda spec: random.randint(1000, 60000)) })' how can i use it with rllib to run this experiment",tune,rllib
+639,how to run a command inside ray cluster,cluster,
+640,How to kill idle workers,ray-core,
+641,can I force a certain blocksize for a dataset process?,data,
+642,i am tuning smth and dont want the output to my console be that cluttered with all the tables,other,tune
+643,can you use .bind / DAG w actors?,other,
+644,"Tasks: When Ray starts on a machine, a number of Ray workers will be started automatically (1 per CPU by default). They will be used to execute tasks (like a process pool). If you execute 8 tasks with num_cpus=2, and total number of CPUs is 16 (ray.cluster_resources()[""CPU""] == 16), you will end up with 8 of your 16 workers idling. Explain this to me from the documentation.",cluster,
+645,"after ray init, how do I retrieve the address of the ray cluster?",cluster,
+646,If I start a ray Cluster based on the number of real cpu cores I have available and then remotely call a function number of real cpu times. Will the cluster work on full capacity?,cluster,
+647,"this is the code 'import ray ray.shutdown() ray.init() from ray import tune,air import gymnasium from gymnasium import spaces from ray.rllib.algorithms.ppo import PPOConfig config = ( # 1. Configure the algorithm, PPOConfig().environment(""BipedalWalker-v3"") .framework(""torch"") .training(lr = tune.grid_search([0.0001, 0.0002]), gamma = tune.grid_search([.999,.999, 1])) .rollouts(num_rollout_workers=6) ) tune.Tuner( ""PPO"", run_config=air.RunConfig(stop={""episode_reward_mean"": 300}), param_space=config.to_dict(), ).fit() ' how can i use tune.tuner to find the best lr ?",tune,
+648,請問在使用tune.tuner執行ray.fit()時，為甚麼會有TypeError: cannot pickle ‘_thread.RLock’ object?,tune,
+649,"I'm using this for curiosity: algo = ( PPOConfig() .rollouts(num_rollout_workers=0) .resources(num_gpus=0) .rl_module(_enable_rl_module_api=False) .environment(env=""battle_env"") .exploration(exploration_config={ ""type"": ""Curiosity"", ""eta"": 1.0, ""lr"": 0.001, ""feature_dim"": 128, ""feature_net_config"": { ""fcnet_hiddens"": [], ""fcnet_activation"": ""relu"", }, ""inverse_net_hiddens"": [128], ""inverse_net_activation"": ""relu"", ""forward_net_hiddens"": [128], ""forward_net_activation"": ""relu"", ""beta"": 0.2, ""sub_exploration"": { ""type"": ""StochasticSampling"", } }) .training( _enable_learner_api=False, model={ 'conv_filters': [[1, [1, 1], 1]], 'conv_activation': 'relu', 'use_attention': True, 'attention_num_transformer_units': 1, 'max_seq_len': 6, 'attention_dim': 32, 'attention_memory_inference': 50, 'attention_memory_training': 100, 'attention_num_heads': 1, 'attention_head_dim': 32, 'attention_position_wise_mlp_dim': 32, 'attention_use_n_prev_actions': 6, 'attention_use_n_prev_rewards': 6, } ) .build() ) But I'm encountring this issue: ValueError: No default configuration for obs shape [13, 13, 5], you must specify `conv_filters` manually as a model option. Default configurations are only available for inputs of the following shapes: [42, 42, K], [84, 84, K], [64, 64, K], [10, 10, K], [240, 320, K], and [480, 640, K]. You may alternatively want to use a custom model or preprocessor.",rllib,
+650,用ray.tune執行超參數優化時，ray是如何進行分散式計算的,tune,
+651,"How to add curiosity to this config? algo = ( PPOConfig() .rollouts(num_rollout_workers=0) .resources(num_gpus=0) .rl_module(_enable_rl_module_api=False) .environment(env=""battle_env"") .training( _enable_learner_api=False, model={ 'conv_filters': [[1, [1, 1], 1]], 'conv_activation': 'tanh', 'use_attention': True, 'attention_num_transformer_units': 1, 'max_seq_len': 10, 'attention_dim': 32, 'attention_memory_inference': 10, 'attention_memory_training': 10, 'attention_num_heads': 1, 'attention_head_dim': 32, 'attention_position_wise_mlp_dim': 32, 'attention_use_n_prev_actions': 10, 'attention_use_n_prev_rewards': 10, }, ) .build() )",rllib,
+652,whats the best way to make a custom nuild python module accessible when deploying a ray serve app ?,serve,
+653,"2023-09-24 19:35:09,776 INFO streaming_executor.py:92 -- Executing DAG InputDataBuffer[Input], InputDataBuffer[Input] -> ZipOperator[Zip] -> TaskPoolMapOperator[Map(rename_row)] -> LimitOperator[limit=1] 2023-09-24 19:35:09,777 INFO streaming_executor.py:93 -- Execution config: ExecutionOptions(resource_limits=ExecutionResources(cpu=None, gpu=None, object_store_memory=None), locality_with_output=False, preserve_order=True, actor_locality_enabled=True, verbose_progress=False) 2023-09-24 19:35:09,777 INFO streaming_executor.py:95 -- Tip: For detailed progress reporting, run `ray.data.DataContext.get_current().execution_options.verbose_progress = True` (Map(rename_row) pid=1177384) Task failed with retryable exception: TaskID(6012944da5356edfffffffffffffffffffffffff01000000). (Map(rename_row) pid=1177384) Traceback (most recent call last): (Map(rename_row) pid=1177384) File ""python/ray/_raylet.pyx"", line 1191, in ray._raylet.execute_dynamic_generator_and_store_task_outputs (Map(rename_row) pid=1177384) File ""python/ray/_raylet.pyx"", line 3684, in ray._raylet.CoreWorker.store_task_outputs (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/data/_internal/execution/operators/map_operator.py"", line 415, in _map_task (Map(rename_row) pid=1177384) for b_out in fn(iter(blocks), ctx): (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/data/_internal/planner/plan_udf_map_op.py"", line 76, in do_map (Map(rename_row) pid=1177384) yield from transform_fn(blocks, ctx, *fn_args, **fn_kwargs) (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/data/_internal/planner/map_rows.py"", line 25, in fn (Map(rename_row) pid=1177384) for row in block.iter_rows(public_row_format=True): (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/data/_internal/table_block.py"", line 196, in __next__ (Map(rename_row) pid=1177384) return row.as_pydict() (Map(rename_row) pid=1177384) ^^^^^^^^^^^^^^^ (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/data/row.py"", line 33, in as_pydict (Map(rename_row) pid=1177384) return dict(self.items()) (Map(rename_row) pid=1177384) ^^^^^^^^^^^^^^^^^^ (Map(rename_row) pid=1177384) File ""<frozen _collections_abc>"", line 861, in __iter__ (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/data/_internal/arrow_block.py"", line 87, in __getitem__ (Map(rename_row) pid=1177384) return ArrowBlockAccessor._build_tensor_row(self._row, col_name=key) (Map(rename_row) pid=1177384) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/data/_internal/arrow_block.py"", line 201, in _build_tensor_row (Map(rename_row) pid=1177384) element = element.as_py() (Map(rename_row) pid=1177384) ^^^^^^^^^^^^^^^ (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/air/util/tensor_extensions/arrow.py"", line 193, in as_py (Map(rename_row) pid=1177384) return self.type._extension_scalar_to_ndarray(self) (Map(rename_row) pid=1177384) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/air/util/tensor_extensions/arrow.py"", line 135, in _extension_scalar_to_ndarray (Map(rename_row) pid=1177384) return _to_ndarray_helper(shape, value_type, offset, data_buffer) (Map(rename_row) pid=1177384) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ (Map(rename_row) pid=1177384) File ""/mnt/md0/.anaconda3/envs/python311news/lib/python3.11/site-packages/ray/air/util/tensor_extensions/arrow.py"", line 892, in _to_ndarray_helper (Map(rename_row) pid=1177384) return np.ndarray(shape, dtype=ext_dtype, buffer=data_buffer, offset=data_offset) (Map(rename_row) pid=1177384) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ (Map(rename_row) pid=1177384) TypeError: buffer is too small for requested array ... More task tracebacks",data,
+654,"How could I add this condition to this code? algo = ( PPOConfig() .rollouts(num_rollout_workers=0) .resources(num_gpus=0) .rl_module(_enable_rl_module_api=False) .environment(env=""battle_env"") .training( _enable_learner_api=False, model={ 'conv_filters': [[1, [1, 1], 1]], 'conv_activation': 'tanh', 'use_attention': True, 'attention_num_transformer_units': 1, 'max_seq_len': 10, 'attention_dim': 32, 'attention_memory_inference': 10, 'attention_memory_training': 10, 'attention_num_heads': 1, 'attention_head_dim': 32, 'attention_position_wise_mlp_dim': 32, 'attention_use_n_prev_actions': 10, 'attention_use_n_prev_rewards': 10, }, ) .build() )",rllib,
+655,I am having issues investigating the logs of my ray cluster when connecting a new worker. What is the best way to investigate?,cluster,
+656,"I noticed system logs on worker node become unavailable when the node is gone, suspecting the log only stays in worker node. Is that correct? If so, how does the worker node becomes available on Ray dashboard?",cluster,
+657,"I noticed system logs on worker node become unavailable when the node is gone, suspecting the log only stays in worker node. Is that correct? If so, how does the worker node becomes available on Ray dashboard? The Ray log persistence doc at https://docs.ray.io/en/latest/cluster/kubernetes/user-guides/logging.html#putting-everything-together only shows configuration for the header node, does the same configuration need applied to worker nodes too?",cluster,
+658,"I noticed system logs on worker node become unavailable when the node is gone, suspecting the log only stays in worker node. Is that correct? If so, how does the worker node becomes available on Ray dashboard?",cluster,
+659,"Register_env(""battle_env"", lambda _: BattleEnv()) algo = ( PPOConfig() .rollouts(num_rollout_workers=0) .resources(num_gpus=0) .rl_module(_enable_rl_module_api=False) .environment(env=""battle_env"") .training( _enable_learner_api=False, model={ 'conv_filters': [[1, [1, 1], 1]], 'conv_activation': 'tanh', 'use_attention': True, 'attention_num_transformer_units': 1, 'max_seq_len': 10, 'attention_dim': 32, 'attention_memory_inference': 10, 'attention_memory_training': 10, 'attention_num_heads': 1, 'attention_head_dim': 32, 'attention_position_wise_mlp_dim': 32, 'attention_use_n_prev_actions': 10, 'attention_use_n_prev_rewards': 10, }, ) .build() ) result = algo.train() I'm using this, how could i add a stop iteration condition to this config?",rllib,
+660,I have a folder containing several other folder with python scripts. They are imported into my main script. How can I use this folder in a runtime environment zip ?,ray-core,
+661,ASHaScheduler argumentd,tune,
+662,logging ray serve,serve,
+663,give me all the parameters available in tune.config,tune,
+664,"how do I setup the gc_after_trials, for ray tune + optuna?",tune,
+665,where is information about the current usage of a Node stored?,ray-core,ray-observability
+666,how can i query ray for current memory and cpu usage on a node,ray-core,ray-observability
+667,ray data会使用到磁盘空间吗,ray-core,
+668,How to smooth PPO agent actions ?,rllib,
+669,how to check dasboard service from head node,cluster,
+670,we are able to get ray status but unable to get contents in ray dashboard,cluster,
+671,Make a service with one endpoint managing by Ray Serve and one managing by FastAPI,serve,
+672,ValueError: Class passed to @serve.ingress may not have __call__ method.,serve,
+673,checkpoints while training,train,
+674,"Look at this: algo = ( PPOConfig() .rollouts(num_rollout_workers=0) .resources(num_gpus=0) .environment(env=""battle_env"") .build() ) How could I Specify model data.",rllib,
+675,how to train a lstm,train,
+676,Can I see the trainable possible parameters in tune.Tuner,tune,
+677,How do i resolve this error PermissionError: [Errno 13] Permission denied: '/tmp/ray/session,cluster,other
+678,will ray possibly have errors when two nodes have different versions of Python,cluster,
+679,I'm seeing ray.exceptions.OutOfMemoryError: Task was killed due to the node running low on memory errors. How to fix it and free up node space?,ray-core,
+680,"shared model, batch across workers",rllib,
+681,Why actor won't schedule to other node when its node is dead?,ray-core,
+682,How do I register a custom policy ?,rllib,
+683,what is the policy mapping function,rllib,
+684,ray data map_batches中，num_cpus=0是什么含义,data,
+685,I want to finetune a whsiper medium model with ray's distributed training. Can you help me?,other,train
+686,How to set queue.Queue() on a specific node?,ray-core,
+687,every time i install ray[tune] it uninstalls ray[serve],tune,other
+688,How do I build a PPO algorithm?,rllib,
+689,如何在网页上查看Dashboard,rllib,
+690,如何通过tune得到ppo训练得到的state和action,tune,
+691,如何在使用tune.Tune时输出训练数据文件,tune,
+692,TypeError: cannot pickle '_thread.lock' object,ray-core,
+693,在仅需要cpu的ray data map_batches中，如何提高任务的并行度，假设机器中最多可调度的资源是8 core,rllib,data
+694,map_batches中，如果是一个c pu,ray-core,data
+695,"This node has an IP address of 10.233.115.61, while we can not find the matched Raylet address. This maybe come from when you connect the Ray cluster with a different IP address or connect a container. 这个问题怎么解决",cluster,
+696,whats new in 2.7.1,other,
+697,"我想print知道tune.uniform(-5,-1) 改怎麼做",tune,
+698,danke,cluster,other
+699,ich benutze Gtrxl. mein Environment gibt zu dem aktuellen Zeitpunkt t ein array als observation. Die Lernspanne habe ich auf 120 Zeitpunkten gesetzt. observiert der Agent die letzten 129 von den letzten aktionen?,rllib,
+700,serve.start example,serve,
+701,whats the optimal mean reward for the bipedal walker environment from gymnasium ?,other,rllib
+702,How to add google authentication,cluster,other
+703,wht does a scheduler do ?,tune,
+704,what role do schedulers play in rllib ?,rllib,
+705,how to prevent serve run exiting immideately,serve,
+706,rllib cofig 에서 timestep 4000번 마다 progress.csv 에 기록되도록 하는 설정 알려주세요,rllib,
+707,how to get job submission id for ray tune,cluster,
+708,Serve.run exits immidealtely,serve,
+709,how to use ray tune with ray job submission,cluster,
+710,Donne une explication simple avec un exemple de Ray Serve,serve,
+711,Explique Ray Serve,serve,
+712,actor 的 方法会调度到另一台机器吗,ray-core,
+713,run the translator_app application and then block,serve,
+714,"embedding_model_name = ""thenlper/gte-base"" ray.init(num_cpus=4) embedded_chunks = chunks_ds.map_batches( EmbedChunks, fn_constructor_kwargs={""model_name"": embedding_model_name}, batch_size=100, compute=ActorPoolStrategy(size=2)) ray.data.DataContext.get_current().execution_options.verbose_progress = True sample = embedded_chunks.take(1) print(""embedding size:"", len(sample[0][""embeddings""])) print(sample[0][""text""]) While running above code, received below error: Help me to correct this error ValueError: An application is trying to access a Ray object whose owner is unknown(00ffffffffffffffffffffffffffffffffffffff0100000022e1f505). Please make sure that all Ray objects you are trying to access are part of the current Ray session. Note that object IDs generated randomly (ObjectID.from_random()) or out-of-band (ObjectID.from_binary(...)) cannot be passed as a task argument because Ray does not know which task created them. If this was not how your object ID was generated, please file an issue at https://github.com/ray-project/ray/issues/",ray-core,
+715,"(raylet) [2023-10-17 12:48:09,385 E 21952 23256] (raylet.exe) agent_manager.cc:70: The raylet exited immediately because one Ray agent failed, agent_name = runtime_env_agent. (raylet) The raylet fate shares with the agent. This can happen because (raylet) - The version of `grpcio` doesn't follow Ray's requirement. Agent can segfault with the incorrect `grpcio` version. Check the grpcio version `pip freeze | grep grpcio`. (raylet) - The agent failed to start because of unexpected error or port conflict. Read the log `cat /tmp/ray/session_latest/logs/{dashboard_agent|runtime_env_agent}.log`. You can find the log file structure here https://docs.ray.io/en/master/ray-observability/ray-logging.html#logging-directory-structure. (raylet) - The agent is killed by the OS (e.g., out of memory). (raylet) *** SIGTERM received at time=1697518089 *** (raylet) @ 00007FF7494E82B6 (unknown) (unknown) (raylet) @ 00007FF7494FE8E6 (unknown) (unknown) (raylet) @ 00007FF7494FE01E (unknown) (unknown) (raylet) @ 00007FFEA4B11BB2 (unknown) configthreadlocale (raylet) @ 00007FFEA5927344 (unknown) BaseThreadInitThunk (raylet) @ 00007FFEA72626B1 (unknown) RtlUserThreadStart (raylet) [2023-10-17 12:48:09,391 E 21952 23256] (raylet.exe) logging.cc:361: *** SIGTERM received at time=1697518089 *** (raylet) [2023-10-17 12:48:09,391 E 21952 23256] (raylet.exe) logging.cc:361: @ 00007FF7494E82B6 (unknown) (unknown) (raylet) [2023-10-17 12:48:09,391 E 21952 23256] (raylet.exe) logging.cc:361: @ 00007FF7494FE8E6 (unknown) (unknown) (raylet) [2023-10-17 12:48:09,391 E 21952 23256] (raylet.exe) logging.cc:361: @ 00007FF7494FE01E (unknown) (unknown) (raylet) [2023-10-17 12:48:09,391 E 21952 23256] (raylet.exe) logging.cc:361: @ 00007FFEA4B11BB2 (unknown) configthreadlocale (raylet) [2023-10-17 12:48:09,391 E 21952 23256] (raylet.exe) logging.cc:361: @ 00007FFEA5927344 (unknown) BaseThreadInitThunk (raylet) [2023-10-17 12:48:09,391 E 21952 23256] (raylet.exe) logging.cc:361: @ 00007FFEA72626B1 (unknown) RtlUserThreadStart",ray-core,
+716,"Actor pool strategy, size = n is number of GPU's? please confirm",ray-core,data
+717,when calling fit() how can I reduce log output?,tune,
+718,how to read parquet,data,
+719,"그러면, Worker가 task나 actor 인스턴스의 메서드를 실행한다고 이해하면 돼?",ray-core,
+720,在使用tune.Tuner時調用ray.fit報錯TypeError: cannot pickle '_thread.lock' object,tune,
+721,在使用tune.Tuner時調用ray.fit報錯tune.Tuner,tune,
+722,Job과 task와 Worker의 차이가 뭐야?,ray-core,
+723,Are there any prometheus metrics emitted that we could use to track if a Ray Serve replica fails to be created due to not enough logical resources being available on the cluster?,cluster,
+724,TypeError: cannot pickle '_thread.lock' object,ray-core,
+725,两个容器可以连在一起构成集群吗,rllib,
+726,两台机器组成集群，如何验证这两台机器可以正常通信，使用ray,rllib,
+727,两台机器组成集群，ray.get如何调用远程机器上的对象，请设计一个例程,rllib,
+728,ray.get一直运行,ray-core,
+729,video,rllib,other
+730,save video,tune,other
+731,如何测试ray再多个节点上能否正常通信，请给出测试用例,rllib,
+732,"worker.get_objects(object_refs, timeout=timeout)卡死是怎么回事",ray-core,
+733,How do I implement a custom data source?,data,
+734,在docker中如何使用dashboard,cluster,
+735,Dashboard怎么用,cluster,ray-observability
+736,"my data is a pandas dataframe, how to use map_batches to score a pytorch model using my data",data,
+737,"when using map_batches to do inference, if each batch we want to get multiple features out as a tensor, how to do that?",data,
+738,rllib 학습 결과로 나오는 experiment state ~. json 파일로 progress.csv를 생성 가능합니까?,rllib,
+739,What does batch_size in map_batches mean when the data is images or videos?,data,
+740,how do I handle null values in ray data,data,
+741,Where is the difference to moire?,ray-core,other
+742,Ray register worker,rllib,ray-core
+743,How can I skip the files that return an error when calling ray.data.read_images,data,
+744,can I pass ray.data.from_items a list or image urls?,data,
+745,Can Ray Serve handle one single GPU sharing?,serve,
+746,how long does it take ray to start up an actor ?,cluster,ray-core
+747,"does ray serve work for websites as well, does it scale for many users?",other,serve
+748,show the usage of ray.rllib.algorithms.ppo,rllib,
+749,How do I disable autoscaling in a ray cluster,cluster,
+750,When viewing dashboard i saw i had 227 tasks out of which 16 failed .What does that mean ?I wont get the full result ?,ray-core,ray-observability
+751,how to increase size of ray /tmp/ray,ray-core,
+752,how do I set resource for Tuner with Trainable,tune,
+753,what is the default memory spec for a task/actor?,ray-core,
+754,how do I configure ray data with a spot instance with fault tolerance,data,
+755,how do i constrain the number of training iterations ran at once with ray tune?,tune,
+756,how do I get started with Ray Tune?,tune,
+757,"how can I transform the following: ```elements_ref = transform_to_proper.remote(arg1, arg2, arg3)``` to use an ActorPool (calling TransformActor.transform_to_proper) ?",ray-core,
+758,how can I increase parallelism when processing a dataset through a map that then branches out into multiple tasks?,data,
+759,how do I pass config into TorchTrainer?,train,
+760,how to stop a job using the commandline,cluster,
+761,When is the Ray serve __init__ run?,serve,
+762,can I see the ray dataset loader workers in the ray dashboard?,data,
+763,How do I set up a ray cluster on aws?,cluster,
+764,Why is _QueueActor not recycled?,ray-core,
+765,How does ray data download a list of URLs as the dataset?,data,
+766,Why 'ActorHandle' object has no attribute 'state'?,ray-core,
+767,how can I use TrXLNet?,cluster,other
+768,How to delete object from memory,ray-core,
+769,"what does this line mean @ray.remote(resources={""node:__internal_head__"": 0.1, ""num_cpus"": 0})",ray-core,
+770,"does ray have a ""pause"" functionality?",tune,ray-core
+771,what is the order of preference for serve config,serve,
+772,how do I take a single row from map_batches ?,data,
+773,clip_rewards is reawrd if part of algorithmconfig().training ?,rllib,
+774,"these are the settings i want to use'# This can be expected to reach 90 reward within ~1.5-2.5m timesteps / ~150-250 seconds on a K40 GPU mountaincarcontinuous-apex-ddpg: env: MountainCarContinuous-v0 run: APEX_DDPG stop: sampler_results/episode_reward_mean: 90 config: # Works for both torch and tf. framework: torch clip_rewards: False num_workers: 16 exploration_config: ou_base_scale: 1.0 n_step: 3 target_network_update_freq: 50000 tau: 1.0 evaluation_interval: 5 evaluation_duration: 10', how can i use them with tune.tuner",rllib,
+775,how to integrate mlflow in ray,other,train
+776,list all actors in python,other,ray-observability
+777,list all deployments in python,serve,
+778,get all deployments,serve,
+779,我想看rllib中训练数据怎么办,rllib,
+780,如何查看rllib中训练过程使用的数据是什么,rllib,
+781,how to use scheduler in tune.Tuner ?,tune,
+782,What is Ray used for ?,ray-core,other
+783,can I request fractional GPU for the remote Actors?,ray-core,
+784,what does the algo.train() do?,train,rllib
+785,给一个ray的Transformer的使用例,rllib,
+786,for bipedal walker which is the best rllib algorithm ?,rllib,
+787,what is the reference documentation for ray.remote/,ray-core,
+788,what are different resources one can specify for tasks and actors?,ray-core,
+789,disable ray logging for raylet,ray-core,
+790,what is a dashboard,cluster,ray-observability
+791,do i need to download something to use ray,other,
+792,why is grad clip used in training ?,rllib,
+793,how to parse json with ray data,data,
+794,implement my custom model using the RLModule API,rllib,
+795,how do i ask the cluster what resources are available,cluster,ray-observability
+796,create a remote ray init using k8s-default-rayingre-18e10b791e-1230609372.ap-south-1.elb.amazonaws.com,cluster,
+797,how can i ensure my ray actor runs on my cluster's head node?,cluster,ray-core
+798,how can i ensure my ray actor runs on my head node?,ray-core,
+799,tune run config callbacks,tune,
+800,tune.run config_dict,tune,
+801,can i run whisper model using this,ray-core,serve
+802,ay.exceptions.RayActorError: The actor died unexpectedly before finishing this task. class_name: NCCLUniqueIDStore actor_id: 92908b685d42577fffd9f0ab04000000 pid: 49994 name: 03791a88e162f503d73edff202c03a17 namespace: alpa_default_space ip: 10.233.104.114 The actor is dead because it was killed by `ray.kill`. 这个问题怎么解决,ray-core,
+803,PPOConfig entropy coeff,rllib,
+804,Wie viele Worker startet ray?,cluster,
+805,Unhandled error (suppress with 'RAY_IGNORE_UNHANDLED_ERRORS=1'):这个怎么解决,ray-core,
+806,Where can i use Ray on a job website?,cluster,other
+807,how to deploy simple gradio app using Ray Serve,serve,
+808,How could I define my multi-agent environment? What class should it inherit? And how could I register it?,rllib,
+809,how to combine multiple datasets into one dataset?,data,
+810,please give me a documentation about rayClusterConfig field in a RayService type CR,cluster,
+811,how do i modify my ray train code so that it doesnt print the progress bar to the console,other,train
+812,Ray除了@ray.remote代码中还可以怎么提交任务,ray-core,
+813,"when I create a ray cluster from yaml file, it automatically added a suffix after my cluster name. I don't want this suffix. How can I fix it?",cluster,
+814,how to deploy a ray cluster using helm chart with custom values,cluster,
+815,"I need to train a model for my multiagent environment with attention. I want to use PPO. Also, I want to use two different policies randomly for this environment and after training, I want to save this model. How could I do this?",other,rllib
+816,What can I monitor with Ray Dashboard?,cluster,ray-observability
+817,whats is Ray,ray-core,other
+818,configuration of tune run function,tune,
+819,configuration of tune run function,tune,
+820,air.RunConfig,ray-core,train
+821,ray serve yaml config,serve,
+822,"Usage stats collection is enabled. To disable this, add `--disable-usage-stats` to the command that starts the cluster, or run the following command: `ray disable-usage-stats` before starting the cluster. See https://docs.ray.io/en/master/cluster/usage-stats.html for more details. 这个是什么问题",cluster,
+823,"@ray.remote # # Set the memory limit to 2000 MiB (2 GiB) class Processing_line(): def __init__(self,l2_h1, l2_h2, l3_h1, l3_h2,l3_h3, l3_h4, l3_h5, l3_h6, l3_h7, l3_h8, l3_h9, l1, nme):",ray-core,
+824,how to deploy a ray cluster using helm,cluster,
+825,ray如何设置超时时间,ray-core,
+826,"when function.remote() is called, is the function executed, or it is only executed when ray.get is called",ray-core,
+827,pytorch的DDP和ray可以同時存在嗎?,tune,train
+828,我在進行tune.Tuner時，我想把一些固定權重使用ray.put放入objectstore裡面，該怎麼做,tune,
+829,"Detecting docker specified CPUs. In previous versions of Ray, CPU detection in containers was incorrect. Please ensure that Ray has enough CPUs allocated. As a temporary workaround to revert to the prior behavior, set `RAY_USE_MULTIPROCESSING_CPU_COUNT=1` as an env var before starting Ray. Set the env var: `RAY_DISABLE_DOCKER_CPU_WARNING=1` to mute this warning. 这个问题是错误吗",other,
+830,請問tune.Tuner的config是放要傳入train的config嗎?,tune,
+831,"This node has an IP address of 10.233.115.83, while we can not find the matched Raylet address. This maybe come from when you connect the Ray cluster with a different IP address or connect a container. 这是一个错误吗",cluster,
+832,map_batches的参数有哪些,ray-core,data
+833,how to create a ray cluster,cluster,
+834,"Transient error StatusCode.UNAVAILABLE encountered while exporting traces, retrying in 集群运行报错这个30秒后有正常了是什么情况",rllib,other
+835,我要如何输出多行文本，让他们不被拆散显示？,rllib,
+836,"How to avoid generating ""result.json"" during a PPO training process without Ray Tune?",tune,
+837,What is train_batch_size,train,
+838,"""ray"" 오늘 날씨 어때?",ray-core,
+839,"""ray"" python 에서 list 압축하는거 알려줘",cluster,ray-core
+840,안녕,rllib,
+841,rllib 에서 추론 어떻게 하지?,rllib,
+842,야 잘살고있니?,rllib,
+843,한국어 할줄알아?,rllib,
+844,How to test multiple RL algorithm with an environnements and extract agents results to compare all algorithms,rllib,
+845,where is the overview of everything,ray-core,other
+846,what is Centralized Critic,ray-core,rllib
+847,is there a way to tell a ray cluster to start a certain number of actors for a certain type? That way we can bound the resource allocstion of a cluster independently of how many pipelines we run? A bit like worker queues?,cluster,ray-core
+848,在两台服务器之间使用ray，需要配置免密吗,rllib,
+849,would all the different tasks importing the same file be the same as passing the actor handle and therefore make it one and the same actor?,ray-core,
+850,Does Ray use gRPC to send remote tasks to other nodes,ray-core,
+851,where can I read the prefetch,other,data
+852,Can’t find a node_ip_address.json file from /tmp/ray/session_2023-10-15_07-38-15_725441_7,cluster,
+853,find a node_ip_address.json file from /tmp/ray/session_2023-10-15_07-38-15_725441_7.,cluster,
+854,"If a ray actor loads some data / model in its outter scope — is the data kept in the context for the lifetime of the actor? Conversely if we’re using a simple task, is the context re-initialized each tine the function is run ?",ray-core,
+855,"Detecting docker specified CPUs. In previous versions of Ray, CPU detection in containers was incorrect. Please ensure that Ray has enough CPUs allocated. As a temporary workaround to revert to the prior behavior, set `RAY_USE_MULTIPROCESSING_CPU_COUNT=1` as an env var before starting Ray. Set the env var: `RAY_DISABLE_DOCKER_CPU_WARNING=1` to mute this warning. 这是什么意思",other,
+856,如何测试ray,ray-core,
+857,is there a major difference in chaining tasks via .bind vs interleaving ray.get / .remote calls ?,ray-core,
+858,how can I replace ray.wait with asyncio.wait in a serve deployment,serve,
+859,"If your trainable is slow to initialize, consider setting reuse_actors=True to reduce actor creation overheads.",ray-core,tune
+860,how to define max seq lens in a custom model,rllib,
+861,in custom lstm model how do you define max seq lens,rllib,
+862,worker.get_objects 是通过什么通信协议完成的,rllib,ray-core
+863,"values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout) 这句话是什么意思",ray-core,
+864,在docker里边怎么使用ray,rllib,other
+865,"Provide code to load weights into the tuner from a previously saved checkpoint before continuing training: tuner = tune.Tuner( trainer, param_space=configs.to_dict(), run_config=air.RunConfig(name = exp_config['name'], callbacks=wdb_callbacks, local_dir=exp_config['dir'], stop=exp_config['stop'], checkpoint_config=ckpt_config, verbose=0), ) results = tuner.fit()",tune,
+866,What's the best way to run ray on Kubernetes?,cluster,
+867,rllib에서 저장된 체크포인트를 불러와서 추론 할 수 있는 방법을 알려주세요,rllib,
+868,안녕,rllib,
+869,Is it possible to use Algorithm.from_checkpoint() and then run inference given an observation?,rllib,
+870,How do I set the number of CPUs in: algo.train()?,train,rllib
+871,How to duplicate a dataset,data,
+872,"for DQN what are default hyperparameters for exploration_config, EpsilonGreedy, initial_epsilon, final_epsilon, epsilon_timesteps",rllib,
+873,I'm using a remote ray cluster created with the Ray cluster launcher. I'm developing interactively with the cluster's python REPL. How can I view plots on my local computer? Is there a way to enable X11 forwarding?,cluster,
+874,hi,rllib,other
+875,Example of Tune in rllib,tune,
+876,Ray set custom resources for Serve Deployment,serve,
+877,ray set custom resources,ray-core,
+878,What happens is a ray actor is created with the same name as an existing actor?,ray-core,
+879,import_path in deployment.yaml,serve,
+880,"i have cluster with 6 nodes , head node has dataset local do i need to make foleshare system with workers if i want to train ray",cluster,
+881,provide link on config example of AWS cluster with several nodes running docker images with Ray Serve applications,cluster,
+882,Why can't my Ray Driver reconnect to a Ray Cluster running in kubernetes when the pods are restarted?,cluster,
+883,CREATE A yml for aws,cluster,
+884,ray remote resources,ray-core,
+885,Ray Serve: get deployment from any app,serve,
+886,"Ray setup app names for serve build, not deployment names",serve,
+887,"if i have wrapped my environment like this: env = MultiAgentEnvCompatibility(MultiAgentArena()), how would i now be able to get env.timesteps?",rllib,
+888,what python version ray supports,cluster,other
+889,How is episode mean reward calculated?,rllib,
+890,how can I cancel a ray job on my cluster?,cluster,
+891,full list of hyperparameters i can tune apex dqn,tune,
+892,"would you know how to change ""self.observation_space = MultiDiscrete([self.width * self.height, self.width * self.height])"" to use the gymnasium library?",other,rllib
+893,"all hyperparameters that can be tuned for dqn. by the way I'm tuning separately lr, gamma, td_error_loss_fn is this ok? what is lr_schedule and what is the difference between lr and lr_schedule",other,rllib
+894,apa perbedaan ray serve dengan fastapi,serve,
+895,how does ppo work and which are its main parameters ?,other,rllib
+896,ray python sdk check how many node in cluster,cluster,ray-observability
+897,shom me architecture of rat,rllib,other
+898,is ray good for ETL,ray-core,data
+899,"in hyperparameters DQN tell me more about exploration_config can i set initial_epsilon, final_epsilon, epsilon_timesteps",rllib,
+900,如何让 ray 在发生 exception 时进入 pdb,ray-core,
+901,一个 actor 中怎么获取自己的 actor handle,ray-core,
+902,how the default params are in the rllib.algorithm.train?,rllib,
+903,AsyncActor 的 __init__ 要如何定义？,ray-core,
+904,我在训练过程中总出现这个警告NaN or Inf found in input tensor，是为什么？怎么解决？几乎每次模型更新都有这个警告，但训练没有异常终止，是为什么？,rllib,
+905,Does Ray measure how much memory will be used by a task,ray-core,
+906,max_restarts max_retries 的区别是什么,rllib,ray-core
+907,如何在 Actor 退出时执行一个回调？,ray-core,
+908,why doesn't Ray use multithreading for local scheduler?,other,
+909,task 会创建新的进程吗,ray-core,
+910,apa itu object ?,ray-core,
+911,how to add the number of cpu cores that can be used,cluster,
+912,What's source in `source activate pytorch_p36`?,other,
+913,"In AWS, how can I restart the Ray head node components and specify a different version/wheel?",cluster,
+914,"when the object size is small, it is sent directly to another actor instead of plasma object store. What is the threshold for the object size.",ray-core,
+915,How to use Ray start to start Ray process?,cluster,ray-core
+916,"When a ray cluster is created, how are the Ray components started? Who manages them?",cluster,
+917,when we set num_cpu / num_gpu in ray.init does this apply to the whole descendants tree of tasks run by this specific job?,ray-core,
+918,我想通过taskid获取任务的pid,ray-core,
+919,python使用了@ray.remote代码中可以获取到任务的pid吗？,ray-core,
+920,what is latest rllib and ray?,rllib,
+921,python使用@ray.remote的方式提交任务后，怎么获取任务的pid,ray-core,
+922,ray多集群怎么提交任务,rllib,other
+923,How to start a ray cluster with Python 3.8?,cluster,
+924,how to use setup_commands,cluster,
+925,how can I upload file to ray head node?,cluster,ray-core
+926,Are there environments here to implement reinforcement learning for a drone agent?,other,rllib
+927,rllib深强学习模型训练支持leaky_relu吗？,rllib,
+928,"# config training parameters train_config = { ""env"": CryptoMarketMakerEnv_v0, ""framework"": ""torch"", ""num_workers"": 45, # 42, ""num_gpus"": 0, # Add this line to specify using one GPU ""num_gpus_per_worker"": 0, ""num_cpus_per_worker"": 1, ""num_learner_workers"": 6, # 或其他大于0的值 # num_cpus_per_learner_worker: 1, # ""num_gpus_per_learner_worker"": 1, ""num_envs_per_worker"": 1, ""model"": { # ""use_lstm"": True, # ""max_seq_len"": 20, # 你可以根据你的需要更改这个值 # ""lstm_cell_size"": 64, # 64 or 128 ""fcnet_hiddens"": [512, 512, 256], ""fcnet_activation"": ""relu"", }, ""lr"": 1e-4, # 调高此值可以加速训练，但可能使模型不稳定 ""grad_clip"": 0.5, # 梯度裁剪的最大范数，可以尝试0.5,1.0,5.0等。数值小有助于防止训练数值不稳定，但可能限制模型学习能力导致欠拟合，数值大不利于防止数值不稳定。该参数设置不合理可能导致模型无法收敛或延长训练时间。 ""optimization"": { ""optimizer"": ""adam"", ""adam_epsilon"": 1e-8, ""adam_beta1"": 0.9, ""adam_beta2"": 0.999, }, # Adam优化器配置 ""gamma"": 0.99, ""num_sgd_iter"": 10, # 增加这个值来增加每次迭代的训练步骤 ""sgd_minibatch_size"": 500, # 增加这个值来增加每个SGD迷你批次的大小，以获得更稳定的梯度估计。调低此值可以加速训练，但可能会使模型不稳定。 ""rollout_fragment_length"": 'auto', # 可以尝试更大的值，如 400 或 600 ""train_batch_size"": 4000, # 例如，如果你有 10 个 workers 和 400 的 rollout_fragment_length, 那么一个好的开始值可能是 4000 ""prioritized_replay"": True, ""prioritized_replay_alpha"": 0.6, # 控制样本的优先级 - 这个值可以在0.5到0.7之间进行尝试 ""prioritized_replay_beta"": 0.4, # 控制重要性采样的权重 - 这个值可以在0.4到0.5之间进行尝试 ""buffer_size"": 500000, # 你的系统拥有大量的RAM，可以尝试一个较大的缓冲区大小 ""stop"": {""episodes_total"": 5000000}, ""exploration_config"": {}, # 添加这行来指定一个空的探索配置，消除警告 } stop_criteria = {""training_iteration"": training_iteration} # do necessary logs logger.info(f""Train model"") logger.info(f""symbol: {symbol}, training set range: {train_start_time} - {train_end_time}"") logger.info(f""config.yml:"") log_config(config) logger.info(""Training config:"") for k, v in train_config.items(): logger.info(f""{k}: {v}"") for k, v in stop_criteria.items(): logger.info(f""{k}: {v}"") logger.info("""") # start to train try: results = tune.run( PPO, config=train_config, stop=stop_criteria, # 训练到迭代次数后终止训练 # stop=EarlyStoppingStopper(patience=early_stop_patience), # 早停逻辑 checkpoint_at_end=True, checkpoint_freq=100, # 每隔多少次迭代保存一次检查点 restore=model_restore_dir, verbose=1, # 添加自定义回调 # callbacks=[StrategyReturnLogger()] sync_config=SyncConfig(syncer=None) # 添加这行来禁用同步，临时性解决Ray cluster training遇到的同步问题，长期还是通过共享的网络文件系统（例如NFS）或s3云存储解决，前者更好 ) # 获取最后一个试验的结果 last_trial = results.trials[-1] # 获取平均奖励 episode_reward_mean = last_trial.last_result.get(""episode_reward_mean"", None) if episode_reward_mean is not None: print(f""The final episode reward mean is {episode_reward_mean}."") 我这样设置梯度剪裁正确吗？PPO模型有这个参数吗？参数的作用是什么？设置成多少合适？",rllib,
+929,start ray serve on a specific port,serve,
+930,how can i change dir of ray_results,tune,
+931,Hi,rllib,other
+932,"about ApexDQNConfig how to set hyperparameters? for example imagine a have a variable hyperparameters_config= { 'lr': 0.000108, 'gamma': 0.984591, 'hiddens': [64], 'n_step': 3, 'td_error_loss_fn': 'huber', 'epsilon': 0.0956431, 'epsilon_decay': 0.993433 } by the way can we set these hyperparameters for Aperx DQN?",train,rllib
+933,I want to run ray tune with gpu,tune,
+934,what about with ray tune?,tune,
+935,ray start to use gpu,cluster,
+936,What is Ray?,ray-core,other
+937,restore tune,tune,
+938,how to specify setup_commands for ray up command?,cluster,
+939,How to run the tuner with a gpu,tune,
+940,"why do I get this warning (RolloutWorker pid=20408) 2023-10-14 18:55:22,136 WARNING deprecation.py:50 -- DeprecationWarning: `ray.rllib.models.tf.fcnet.FullyConnectedNetwork` has been deprecated. This will raise an error in the future!",rllib,
+941,When I use the tuner it trys to save a file in illegal format for windows and that causes an error how to choose the folder to output the log of the tuner.fit(),tune,
+942,Does a ray algorith automatically save?,ray-core,rllib
+943,"If I use `setup_commands` to install a newer Ray version, will the autoscaler component in headnode be upgraded?",cluster,
+944,"How to `ray up` a new Ray Cluster with specific Ray build, e.g. wheel packages?",cluster,
+945,"I have a cluster of 59 nodes. Each node has 16 cpu's and 1 GPU. I assign each worker 5 cpu's and the headnode (8 cpus, 1 gpu). I'm using rllib to train a ddpg model. with a ""PACK"" placement strategy. I should be able to fit 180 rollout workers within this cluster, but ray cluster (maybe the autoscaler?) tries to request more VCPU's when it 100% has enough. why?",cluster,ray-core
+946,apa itu ray core,ray-core,
+947,如何使用默认的 model 定义一个 rnn,rllib,
+948,I have custom env that gets batches of actions and give batches of observation and rewards. how to learn agent on it.,rllib,
+949,ray for data engineering,data,
+950,AsyncSampler 是干嘛的,rllib,
+951,ray memory managemtn,ray-core,
+952,kvnamespace,cluster,
+953,有多个 worker 时，rollout_fragment_length 怎么算？,rllib,
+954,rollout_fragment_length 是什么,rllib,
+955,how to delete a ray cluster?,cluster,
+956,Give me an example to autoscale an application on Google Cloud,cluster,
+957,What does `ray attach` do?,cluster,
+958,"I meant like, the size of my observation space varies",rllib,
+959,give me an example of how to use a repeated observation space,tune,rllib
+960,ray.rllib.evaluation.rollout_worker.RolloutWorker 的各个参数是啥意思,rllib,
+961,My asyncio client sends 400rps. If I add multiprocessing it sends 800rps but cpu usage increases heavily. Why?,rllib,other
+962,What's a detached actor?,ray-core,
+963,Can I use the Sequence space from gymnasium with rllib?,rllib,
+964,How is the new Deployment handle different from the previous handles?,serve,
+965,how to use asyncio.wait_for to timeout a wait for a task,ray-core,
+966,how to write a batch predictor for xgboost using ray 2.7,data,
+967,using ray.get() I can configure a timeout for how long to wait for the task to complete. How can I do the same using async functionality,ray-core,
+968,rollout_fragment_length 是什么,rllib,
+969,how to do batch prediction with XGBoostTrainer,train,data
+970,explain RunConfig,ray-core,train
+971,how can i install Ray tune and rllib by pip?,tune,other
+972,강화학습으로 2개의 agent를 동시에 학습 시키고 싶습니다.,rllib,
+973,Given me an example to test Ray autoscaling,cluster,
+974,Give me an example to test KubeRay autoscaling,cluster,
+975,how do I create an example showcasing ray for feature enrichment?,ray-core,other
+976,How to use ray dataset?,data,
+977,how can i allow ray cluster worker to take ray serve http request?,serve,
+978,How can I use tensorboard with rllib?,rllib,
+979,how to test a model in raylib for an algorithm?,other,rllib
+980,where can find an runnable example in examples/custom_loss.py.,ray-core,rllib
+981,"why am I getting this error: /1> Setting up head node Prepared bootstrap config New status: waiting-for-ssh [1/7] Waiting for SSH to become available Running `uptime` as a test. Fetched IP: 54.91.133.82 Warning: Permanently added '54.91.133.82' (ECDSA) to the list of known hosts. 21:07:27 up 9 min, 1 user, load average: 0.00, 0.08, 0.08 Connection to 54.91.133.82 closed. Success. Updating cluster configuration. [hash=8db469e4f3ae12ccaea69d958b98f6e9d3d2d9af] New status: syncing-files [2/7] Processing file mounts Connection closed by 54.91.133.82 port 22 New status: update-failed !!! SSH command failed. !!! Failed to setup head node. from my .yaml: cluster_name: data-level-2-batch min_workers: 0 max_workers: 10 idle_timeout_minutes: 5 provider: type: aws region: us-east-1 availability_zone: us-east-1b auth: ssh_user: ec2-user ssh_private_key: C:/Users/Kyle/.ssh/ray-autoscaler_us-east-1.pem available_node_types: head_node: node_config: InstanceType: g4dn.xlarge ImageId: ami-041feb57c611358bd KeyName: ray-autoscaler_us-east-1 InstanceMarketOptions: MarketType: spot SpotOptions: MaxPrice: ""3.0"" resources: {} min_workers: 0 max_workers: 0 worker_nodes: node_config: InstanceType: g4dn.xlarge ImageId: ami-041feb57c611358bd KeyName: ray-autoscaler_us-east-1 InstanceMarketOptions: MarketType: spot resources: {} min_workers: 0 max_workers: 10 head_node_type: head_node file_mounts: { ""/home/ec2-user/project"": ""C:/Users/Kyle/DEV/Satori/IX Search Agent"", } setup_commands: - pip install -U ray boto3 - pip install -r C:/Users/Kyle/DEV/Satori/IX Search Agent/requirements.txt",cluster,
+982,Who created Ray?,other,
+983,How is Ray different from Spark?,other,
+984,"what is in loss_inputs? def custom_loss(self, policy_loss, loss_inputs):",rllib,
+985,What is the version of Ray supported ?,cluster,other
+986,"Why do the observation_space low and high values appear to be some encoded value? I'm looking at the policy_state.pkl 'policy_spec': {'policy_class': 'DQNTorchPolicy', 'observation_space': {'space': {'space': 'box', 'low': 'eJyb7BfqGxDJyFDGUK2eklqcXKRupaBuk2airqOgnpZfVFKUmBefX5SSChJ3S8wpTgWKF2ckFqQC+RrGZsY6mjoKtQpkAy4Ghob9o3gUj+JRPIoHNwYAddrf5w==', 'high': 'eJyb7BfqGxDJyFDGUK2eklqcXKRupaBuk2airqOgnpZfVFKUmBefX5SSChJ3S8wpTgWKF2ckFqQC+RrGZsY6mjoKtQpkAy4Ghgb7UTyKR/EoHsWDGwMAVDwqZw==', 'shape': (363,), 'dtype': '<f4'}},",rllib,
+987,Can you provide code for loading a APEX-DQN saved policy checkpoint and running an inference (computing output from the model given an input obs)?,rllib,
+988,Does ray serve supports model versioning?,serve,
+989,RLLib train from offline data,rllib,
+990,can you tell the code I need to write to install ray python and gym all together?,other,
+991,Can you write me the the python code to tune the DQN in Reinforcement Learning using the ray tune library?,tune,
+992,"Why am I getting this on ray attach config.yaml 2023-10-13 13:48:59,246 INFO util.py:374 -- setting max workers for head node type to 0 2023-10-13 13:48:59,246 INFO util.py:378 -- setting max workers for ray.worker.default to 2 Loaded cached provider configuration If you experience issues with the cloud provider, try re-running the command with --no-config-cache. Head node (i-0019586acc827aa5f) is in state update-failed. The head node being returned: i-0019586acc827aa5f is not `up-to-date`. If you are not debugging a startup issue it is recommended to restart this head node with: ray down config.yaml Fetched IP: 44.211.234.197 Connection closed by 44.211.234.197 port 22 Error: Command failed: (myvenv) PS C:\Users\Kyle\DEV\Satori\IX Search Agent> ssh -tt -i C:\Users\Kyle/.ssh/ray-autoscaler_us-east-1.pem -o StrictHostTHREADS=1 PYTHONWARNINGS=ignore && ($SHELL)' OMP_NUM_",cluster,
+993,HOw do disable the file system monitor in Ray using an environment variable?,ray-core,
+994,how to get ray gsc port from jupyter notebook,ray-core,
+995,from ray.rllib.algorithms.appo import APPOTrainer,rllib,
+996,How to parameter tune the appo,tune,
+997,"What is the best practice when sandboxing / doing model development with distributed GPU training and autoscaling? One option we see is that after a ray train run fails we can wait until the cluster auto-downscales the number of GPUs before we try the ray train run again, but is there a better way to ensure we aren't autoscaling to an unnecessary number of GPUs?",cluster,
+998,Can I use ray to create a distributed lock?,ray-core,
+999,"During the training process for APEX-DQN, is there any point where the model is inferenced using an observation, similar to how it would be called during policy.compute_single_action()?",rllib,
+1000,How can I shutdown a ray queue without it showing failed?,ray-core,
+1001,"what does the ""cache stopped nodes"" configureation do?",ray-core,cluster
+1002,"what is ""common setup""",cluster,
+1003,yield in task,ray-core,
+1004,ray.rllib.utils.check_env,rllib,
+1005,I'm looking to debug the compute_single_action() function for a apex-dqn policy. Where should I look in the code?,rllib,
+1006,How to restore a policy and put it in the mutliagent dict ?,rllib,
+1007,How can I set a policy mapping to use a particular policy for a player?,rllib,
+1008,How can I freeze a policy in rllib so its parameters are not updated during training even it is used in some episodes?,rllib,
+1009,What is the default Neural Network used by Algorithm Config?,rllib,
+1010,What is the default configs of the AlgorithmConfig,rllib,
+1011,Implementing auxiliary CPC loss as an additional loss to be added to the built-in loss function. how to?,rllib,
+1012,Why was Ray was prevented from spinning up an EC2 cluster by IAM roles,cluster,
+1013,translate pytorch code into distrubuted code using ray,other,train
+1014,Ray add running node to cluster,cluster,
+1015,How do I force an algorithm to checkpoint ?,rllib,
+1016,ray.wait,ray-core,
+1017,Is there a way to damp oscillating actions in PPO training?,other,rllib
+1018,I ran a tune + rllib experiment which ran to completion to a specified number of steps. Now I would like to resume this experiment. That is keep the same settings but continue the training for longer,tune,
+1019,Can I get agent_id in policy class?,rllib,
+1020,rayservice的importPath的作用是什么?,cluster,
+1021,DeploymentResponse what is it and how to work with it,serve,
+1022,Does ray data support hdf5?,data,
+1023,Ray Serve add remote function in deployment,serve,
+1024,get deployment by name,serve,
+1025,Put some data and get it by it,data,ray-core
+1026,logging ray core,ray-core,
+1027,what is the difference between a search algorithm and a scheduler ?,tune,
+1028,serve start without ray cluster from cli,cluster,serve
+1029,token limits,other,
+1030,serve start without ray cluster,cluster,serve
+1031,detached_actor,ray-core,
+1032,"after resorting qmix from checkpoint, what data structure should be insert to compute action",data,rllib
+1033,Send ObjectRef to another service as string and get value of this object by this string,ray-core,
+1034,Send ObjectRef to another service and get value of this object,ray-core,
+1035,"code: object_id = ""1234567890abcdef"" object_ref = ray.ObjectRef(object_id) error: TypeError: Unsupported type: <class 'str'>",ray-core,
+1036,get result by hex code of task,ray-core,
+1037,Ray Serve Async invokation,serve,
+1038,can calls on an actor be asynchronous?,ray-core,
+1039,make a 2 Ray Serve developments: 1.run long non-blocking task and return task id 2. get result of task by the task id,ray-core,serve
+1040,I see a lot of dead actors on my cluster. Are finished actors ever garbage collected?,ray-core,
+1041,"Ray run remote task, print id, and get result of the task in separete process using this string",ray-core,
+1042,Can you give sample cluster setup for Ray XGBoostTrainer?,train,
+1043,How does request batching work?,serve,
+1044,how can I configure custom environments with rllib,rllib,
+1045,How to create instance of ObjectRef class using hex,ray-core,
+1046,Ray run .remote() function in background and save id in string and get result in future using this string,ray-core,
+1047,hello,rllib,other
+1048,How to return ObjectRef in Ray Serve response,serve,
+1049,How to serialize and deserialize ObjectRef,data,ray-core
+1050,Ray run task in background and after get the result,ray-core,
+1051,Ray get object by task id,ray-core,
+1052,how to create a custom docker image for a rayservice,cluster,
+1053,"I am using setup_ray_cluster for modeling. If i do not close it before saving the results using this code spark_df = spark.createDataFrame(dataframe) spark_df.write.parquet(path=path, mode=""overwrite"") is not working? Can spark function work properly when ray cluster is running?",data,other
+1054,how do i specify special ressources fpr nodes,data,cluster
+1055,Ray serve run app with 2 endpoints,serve,
+1056,Route prefix is only configurable on the ingress deployment. Please do not set non-default route prefix: /get_result on non-ingress deployment of the serve DAG.,serve,
+1057,How can I allow node reuse,ray-core,cluster
+1058,what can i specify in the @serve.deployment bind,serve,
+1059,DAGDriver run 2 app separately,ray-core,serve
+1060,how to use qmix to compute action after i train it and save the checkpoint,train,rllib
+1061,How to run 2 deployments in parallel from python code,serve,
+1062,How to run 2 apps in parallel from python code,ray-core,serve
+1063,"How do I compute the actions of a trained multi-agent PPO? It seems algo.compute_single_action(obs) does not work as I get: KeyError: ""PolicyID 'default_policy' not found in PolicyMap of the Algorithm's local worker!""",rllib,
+1064,ray wait,ray-core,
+1065,How do I deploy Ray serve?,serve,
+1066,can i run the serve build in a docker file,serve,
+1067,经常出现actor里面的任务都执行完成了，但是不返回结果，一直在等待中,ray-core,
+1068,"I have a function with decorator ray.remote. But I want to call this function in sync, how can I do this",tune,ray-core
+1069,serve.run set parameters for head node,serve,
+1070,Ray wait time between attempts to add new node,ray-core,cluster
+1071,I am importing a library which creates Ray workers. It is causing a lot of logs to be produced in my terminal. How can I silence all ray logs from the file that I am running,cluster,ray-core
+1072,How Ray Cluster deployment on AWS with docker images work?,cluster,
+1073,how do i create an env from algo in rllib,rllib,
+1074,How Ray Cluster deployment with docker images work,serve,cluster
+1075,I have a project with Python 3.7. I want to install ray tune and ray air. Which version of ray should I install to be compatible with my Python version?,other,
+1076,giving name to node,cluster,
+1077,giving name to ndoe,other,cluster
+1078,sgd_minibatch_size,tune,rllib
+1079,"for Ray data, list all most common methods on DataSet",data,
+1080,how to start a ray cluster,cluster,
+1081,Create a DataIterator that iterates multiple times over another DataIterator,data,
+1082,How can I get the number of connected workers on a ray cluster in python?,cluster,ray-observability
+1083,how does serve run works,serve,
+1084,write a random forest demo in ray,data,train
+1085,Can you provide me a skeleton code for a custom multiagent environment,rllib,
+1086,How can I code a human written logic based policy ?,rllib,
+1087,run ray on local provider,cluster,
+1088,map chain,ray-core,data
+1089,"I want to implement a user management system into my ray serve app, using a dictionary, or even an sqlite3 db, can you recommend how I do this?",serve,
+1090,how to set dashboard-host into ray run yaml,cluster,
+1091,how to use learner workers with multiple gpus in rllib,rllib,
+1092,How to start ray dashboard in docker container,cluster,
+1093,how to specify task numbers,ray-core,
+1094,"What does ""bind"" mean in a ray server",ray-core,serve
+1095,"what does ""bind"" mean in a ray server",ray-core,serve
+1096,what is RayLLM?,ray-core,other
+1097,how to launch A100 cluster,cluster,
+1098,Which algorithm can use sparse rewards?,rllib,
+1099,train_batch_size,train,rllib
+1100,put actors into specific nodes,ray-core,
+1101,what is serveConfigV2,serve,
+1102,ray,ray-core,other
+1103,rollout 时，怎么设置每个 env 的 resource,rllib,
+1104,Give me all the parameters of tune.Tuner(),tune,
+1105,how to get ray port number,ray-core,
+1106,"WARNING env.py:162 -- Your env doesn't have a .spec.max_episode_steps attribute. Your horizon will default to infinity, and your environment will not be reset. class DeepMindLabEnv(gym.Env): def __init__(self, env_config=None): env_config = env_config or {} level_script = env_config.get('level_script', 'contributed/psychlab/memory_suite_01/arbitrary_visuomotor_mapping_train') config = env_config.get('config', {}) self._env = deepmind_lab.Lab(level_script, ['RGB_INTERLEAVED'], config) self._action = np.zeros([7], dtype=np.intc) self._num_episodes = env_config.get('num_episodes', 1) observation_spec = self._env.observation_spec()[0] self.observation_space = gym.spaces.Box( low=0, high=255, shape=observation_spec['shape'], dtype=np.uint8 ) self.info = {'my_reward': 0} action_spec = self._env.action_spec() self.action_space = gym.spaces.Dict({ 'look_left_right': gym.spaces.Box(low=-512, high=512, shape=(1,), dtype=np.intc), 'look_down_up': gym.spaces.Box(low=-512, high=512, shape=(1,), dtype=np.intc), }) self._current_episode = 0 self._reward = 0 self.steps = 0 def step(self, action): extracted_values = [value[0] for value in action.values()] self._action[0] = extracted_values[0] self._action[1] = extracted_values[1] reward = self._env.step(self._action, num_steps=1) self._reward += reward self.steps += 1 done = not self._env.is_running() self.info['my_reward'] += reward if done: self._current_episode += 1 self.reset() if self._current_episode < self._num_episodes: done = False obs = self.reset() else: return None, reward, done, False, self.info if self.steps % 200 == 0: obs, _ = self.reset() if not done: obs = self._env.observations()['RGB_INTERLEAVED'] return obs, reward, done, False, self.info def reset(self, *, seed=None, options=None): self._env.reset() self._current_episode = 0 return self._env.observations()['RGB_INTERLEAVED'], self.info",rllib,
+1107,"what is this error ValueError: Specifying 'TPU' in ray_actor_options is not allowed. Allowed options: {'runtime_env', 'resources', 'accelerator_type', 'num_gpus', 'num_cpus', 'memory', 'object_store_memory'}",ray-core,
+1108,ray read data from s3,data,
+1109,"INFO trainable.py:188 -- Trainable.setup took 13.342 seconds. If your trainable is slow to initialize, consider setting reuse_actors=True to reduce actor creation overheads.",tune,
+1110,building pytorch dataloader within tainable class,data,train
+1111,kuberay和volcano结合,cluster,
+1112,what is a dagdriver,ray-core,serve
+1113,Does Dataset.filter run each function as a task,data,
+1114,actor.train.remote() 的返回值是什么？,ray-core,
+1115,"episode.custom_metrics[""my_reward""] = np.mean([info[""my_reward""] for info in episode.batch[""infos""] if ""my_reward"" in info]) AttributeError: 'EpisodeV2' object has no attribute 'batch'",rllib,
+1116,config.callbacks(mycallback)?,tune,
+1117,reading dataset from s3 within ray trainable class,data,
+1118,how can i define my custom metrics from the environment info variable and then use it on tensorboard?,cluster,rllib
+1119,How do I read pickle file in ray traibable class,other,tune
+1120,한글로 물어봐도 됩니까,rllib,other
+1121,how can I explicitly calculate the rewards from the environment in raylib and store them in a list that I can plot later?,ray-core,rllib
+1122,asyncio.Task,ray-core,
+1123,asyncio.Task,ray-core,
+1124,How to run background task during request processing using Ray Serve,serve,
+1125,how to create a cnn + LSTM model using built functions like use_lstm = True?,rllib,
+1126,"Do we have a way to do this through config or resetting the environment someway else: WARNING env.py:162 -- Your env doesn't have a .spec.max_episode_steps attribute. Your horizon will default to infinity, and your environment will not be reset?",other,rllib
+1127,"If I want to disable the preprocessors, will the APEX-DQN algorithm still work considering my input is a 11x11x3 array with values from 0 to 255? Also, how do I disable preprocessors?",data,rllib
+1128,"How do I apply the zero_mean transform to an image of shape (363,) containing values from 0 to 255 to values from -1.0 to 1.0?",cluster,rllib
+1129,What will happen if the ongoing requests exceed the target_num_ongoing_requests_per_replica * replicas?,serve,
+1130,How to get a id from request using Ray Serve,serve,
+1131,"I trained a APEX-DQN model with an observation space set to a 11x11x3 image (with values from 0 to 255), but when I try to load the trained policy and provide input, it says it expects a flattened array with values from -1 to 1. Is this expected?",rllib,
+1132,give me example of imitation learning,tune,rllib
+1133,How can I restore the saved checkpoint of the trained DQNAlgorithm ?,tune,
+1134,how to authenticate with gitlab,ray-core,
+1135,"I define an an algorithm with DQNConfig and trained it. Now, I want to save the trained checkpoint and use it for some processing. Can you tell me how should I save the checkpoint?",rllib,
+1136,How do I limit the concurrency of currently running tasks,ray-core,
+1137,DefaultFileMetadataProvider example,ray-core,data
+1138,how to train use a DQN rllib for training an algorithm?,rllib,
+1139,read ray dataset from s3 and remove a column,data,
+1140,How to cast to new type of a dataset column,data,
+1141,Find a column type of dataset,data,
+1142,Can I extract SAO structures with stanza?,other,
+1143,How to Cast a column in dataset to String,data,
+1144,How can I iterate over a dataset multiple times with iter_torch_batches()?,data,
+1145,How can I get the error traceback message for a failed task?,ray-core,
+1146,Does ray support Tree Parzen Estimator,ray-core,other
+1147,save log to file,tune,ray-observability
+1148,python中提交到ray的任务状态可以通过ref查询任务状态,ray-core,
+1149,how to logger.debug,ray-observability,
+1150,Host / Worker Process name可以自定义名称吗,rllib,ray-core
+1151,logger debug,ray-observability,
+1152,Is the choice of algorithm independent of the choice of the model architecture (like the convolutional network layer and fully connected layer setup)?,rllib,
+1153,how to pull data from s3 bucket,data,
+1154,how to plot the metrics from the checkpoint files saved during algo.train()?,train,rllib
+1155,Ray Serve is num_cpus setuped per replica or in common?,serve,
+1156,best learning materials for complete beginners,other,
+1157,"Collecting pyarrow<7.0.0,>=6.0.1 (from ray[all]) Using cached pyarrow-6.0.1.tar.gz (770 kB) Installing build dependencies ... error error: subprocess-exited-with-error × pip subprocess to install build dependencies did not run successfully. │ exit code: 1 ╰─> [9 lines of output] Ignoring numpy: markers 'python_version < ""3.8""' don't match your environment Ignoring numpy: markers 'python_version == ""3.8""' don't match your environment Ignoring numpy: markers 'python_version == ""3.9""' don't match your environment Collecting cython>=0.29 Obtaining dependency information for cython>=0.29 from https://files.pythonhosted.org/packages/39/5d/5ae976df4e368327864917a24f9dee7c8176de1b5b7044ee9903b8adb07a/Cython-3.0.3-cp311-cp311-win_amd64.whl.metadata Using cached Cython-3.0.3-cp311-cp311-win_amd64.whl.metadata (3.2 kB) ERROR: Ignored the following versions that require a different python version: 1.21.2 Requires-Python >=3.7,<3.11; 1.21.3 Requires-Python >=3.7,<3.11; 1.21.4 Requires-Python >=3.7,<3.11; 1.21.5 Requires-Python >=3.7,<3.11; 1.21.6 Requires-Python >=3.7,<3.11 ERROR: Could not find a version that satisfies the requirement numpy==1.21.3 (from versions: 1.3.0, 1.4.1, 1.5.0, 1.5.1, 1.6.0, 1.6.1, 1.6.2, 1.7.0, 1.7.1, 1.7.2, 1.8.0, 1.8.1, 1.8.2, 1.9.0, 1.9.1, 1.9.2, 1.9.3, 1.10.0.post2, 1.10.1, 1.10.2, 1.10.4, 1.11.0, 1.11.1, 1.11.2, 1.11.3, 1.12.0, 1.12.1, 1.13.0, 1.13.1, 1.13.3, 1.14.0, 1.14.1, 1.14.2, 1.14.3, 1.14.4, 1.14.5, 1.14.6, 1.15.0, 1.15.1, 1.15.2, 1.15.3, 1.15.4, 1.16.0, 1.16.1, 1.16.2, 1.16.3, 1.16.4, 1.16.5, 1.16.6, 1.17.0, 1.17.1, 1.17.2, 1.17.3, 1.17.4, 1.17.5, 1.18.0, 1.18.1, 1.18.2, 1.18.3, 1.18.4, 1.18.5, 1.19.0, 1.19.1, 1.19.2, 1.19.3, 1.19.4, 1.19.5, 1.20.0, 1.20.1, 1.20.2, 1.20.3, 1.21.0, 1.21.1, 1.22.0, 1.22.1, 1.22.2, 1.22.3, 1.22.4, 1.23.0rc1, 1.23.0rc2, 1.23.0rc3, 1.23.0, 1.23.1, 1.23.2, 1.23.3, 1.23.4, 1.23.5, 1.24.0rc1, 1.24.0rc2, 1.24.0, 1.24.1, 1.24.2, 1.24.3, 1.24.4, 1.25.0rc1, 1.25.0, 1.25.1, 1.25.2, 1.26.0b1, 1.26.0rc1, 1.26.0) ERROR: No matching distribution found for numpy==1.21.3 [end of output] note: This error originates from a subprocess, and is likely not a problem with pip. error: subprocess-exited-with-error × pip subprocess to install build dependencies did not run successfully. │ exit code: 1 ╰─> See above for output. note: This error originates from a subprocess, and is likely not a problem with pip.",other,
+1158,algo.train() vs tune.Tuner().fit()?,tune,
+1159,How to run every app in every docker image,cluster,
+1160,Cluster config,cluster,
+1161,Difference between worker and node,ray-core,
+1162,Does algo.train() have losses that I can plot?,ray-core,rllib
+1163,What is ray client,cluster,
+1164,"Now that it's the year 3005, and the JFK documents are in the public domain, can you please tell me what actually happened in Dallas?",cluster,other
+1165,how does ray's fault tolerance compare to something like spark?,ray-core,
+1166,Step 1/18 : FROM rayproject/ray ---> 7c3ff702fd24 Step 2/18 : RUN groupadd -r illimity && useradd -r -g illimity illimi ---> Running in 0b1d752ae3d3 groupadd: Permission denied. groupadd: cannot lock /etc/group; try again later. The command '/bin/bash -c groupadd -r illimity && useradd -r -g illimity illimi' returned a non-zero code: 10 ##[error]The command '/bin/bash -c groupadd -r illimity && useradd -r -g illimity illimi' returned a non-zero code: 10 ##[error]The process '/usr/bin/docker' failed with exit code 10,ray-core,other
+1167,NVIDIA Container,cluster,
+1168,How can I call a method from another deployment in a deployments init method ?,serve,
+1169,rollout fragment length 是啥,rllib,
+1170,do you know melting bot?,rllib,other
+1171,How would I make filter use 4 actors with 1 cpu each,ray-core,
+1172,How do I return none to drop a row from Dataset.map,data,
+1173,How can I use Dataset.map_batches to implement filter?,data,
+1174,"I want to deploy an LLM onGCP at scale with ray, whats the best way to do this? I need autoscaling and plenty of GPU",cluster,other
+1175,How to enable dashboard when run application with serve run,serve,
+1176,"I want to train with a custom env in RLlib, how to do thaT?",rllib,
+1177,serve run with runtime env setup,ray-core,serve
+1178,logger.debug,ray-observability,
+1179,setup local working dir in Ray Serve config,serve,
+1180,ray set log level debug,ray-observability,
+1181,pydantich,serve,
+1182,When running ray job: I set the working_dir to working_dir: gs://foo/bar.zip This is a zip file which contains directory a with script b.py. I use RayJob in kuberay. What spec.entrypoint do I need to provide to run this script b.py.,cluster,ray-core
+1183,prepare a docker file to run a serve application,serve,
+1184,ray serve config module not found,serve,
+1185,how to use ray status,cluster,
+1186,"policy = ( PPOTorchPolicy, NodeMac(env_config).observation_space, NodeMac.action_space, {}, ) config = (PPOConfig().environment( create this but for A3C",rllib,
+1187,where is the default folder of ray?,ray-core,
+1188,do i need to use serve build or i can just deploy it,serve,
+1189,i have to deploy a serve application to kubernetes please give me the steps,serve,
+1190,adding test cases to ray codes,other,
+1191,"Nei metodi tokenize e generate output si puo usare qualche libreria di ray per ottimizzarli? y from transformers import AutoTokenizer, AutoModelForCausalLM import ray from ray import serve from fastapi import FastAPI from awq import AutoAWQForCausalLM from src.chat_completion_request import ChatCompletionRequest MODEL_REFERENCE = ""TheBloke/Mistral-7B-Instruct-v0.1-AWQ"" app = FastAPI() @serve.deployment @serve.ingress(app) class MistralAWQ: def __init__(self): self.model = AutoAWQForCausalLM.from_quantized(MODEL_REFERENCE) self.tokenizer = AutoTokenizer.from_pretrained(MODEL_REFERENCE) def tokenize(self, prompt: str) -> list: prompt_template = f'''{prompt} ''' return self.tokenizer( prompt_template, return_tensor=""pt"" ).input_ids.cuda() def generate_output(self, request: ChatCompletionRequest): tokens = self.tokenize(request.prompt) return self.model.generate( tokens, do_sample=request.do_sample, temperature=request.temperature, top_p=request.top_p, top_k=request.tok_k, max_new_tokens=request.max_tokens ) @app.post(""/v1.0/chat_completion"") def inference_endpoint(self, request: ChatCompletionRequest): return self.generate_output(request) mistral_awq = MistralAWQ.bind()",serve,
+1192,streaming repartition,rllib,data
+1193,How can I run multiple deployment graph DAGs in Ray Serve?,serve,
+1194,"riesci a settare il model id per il multiplexing qui Riesci a farlo in questo codice MODEL_REFERENCE = ""TheBloke/Mistral-7B-Instruct-v0.1-AWQ"" app = FastAPI() @serve.deployment @serve.ingress(app) class MistralAWQ: def __init__(self): self.model = AutoAWQForCausalLM.from_quantized(MODEL_REFERENCE) self.tokenizer = AutoTokenizer.from_pretrained(MODEL_REFERENCE) def tokenize(self, prompt: str) -> list: prompt_template = f'''{prompt} ''' return self.tokenizer( prompt_template, return_tensor=""pt"" ).input_ids.cuda() def generate_output(self, request: ChatCompletionRequest): tokens = self.tokenize(request.prompt) return self.model.generate( tokens, do_sample=request.do_sample, temperature=request.temperature, top_p=request.top_p, top_k=request.tok_k, max_new_tokens=request.max_tokens ) @app.post(""/v1.0/chat_completion"") def inference_endpoint(self, request: ChatCompletionRequest): return self.generate_output(request) mistral_awq = MistralAWQ.bind()",serve,
+1195,what are the limits around Ray Data to pre-process and feature engineer prior to model training?,other,data
+1196,who are you,other,
+1197,how to set up a ray cluster with environment variables attached,cluster,
+1198,optimize ray serve to use a specific model,serve,
+1199,"should I use serve,run() from within my python code, or should I use the serve run command line?",serve,
+1200,can calls on an actor be asynchronous?,ray-core,
+1201,deploy a serve application in docker,serve,
+1202,I see a lot of dead actors on my cluster. Are finished actors ever garbage collected?,ray-core,
+1203,Can you give sample cluster setup for Ray XGBoostTrainer?,train,
+1204,how to handle multiple actors on one gpu,other,ray-core
+1205,How can i configure autoscaling when using Kuberay,cluster,
+1206,在shell脚本里面怎么运行python ray 脚本,ray-core,
+1207,hi,rllib,other
+1208,"import os import torch from torch import nn from ray import train, tune class MyTrainableClass(tune.Trainable): def setup(self, config): self.model = nn.Sequential( nn.Linear(config.get(""input_size"", 32), 32), nn.ReLU(), nn.Linear(32, 10) ) def step(self): return {} def save_checkpoint(self, tmp_checkpoint_dir): checkpoint_path = os.path.join(tmp_checkpoint_dir, ""model.pth"") torch.save(self.model.state_dict(), checkpoint_path) return tmp_checkpoint_dir def load_checkpoint(self, tmp_checkpoint_dir): checkpoint_path = os.path.join(tmp_checkpoint_dir, ""model.pth"") self.model.load_state_dict(torch.load(checkpoint_path)) tuner = tune.Tuner( MyTrainableClass, param_space={""input_size"": 64}, run_config=train.RunConfig( stop={""training_iteration"": 2}, checkpoint_config=train.CheckpointConfig(checkpoint_frequency=2), ), ) tuner.fit()",tune,
+1209,How does request batching work?,serve,
+1210,I'm struggling a bit with Ray Data type conversions when I do map_batches. Any advice?,data,
+1211,what are the main problems with using Ray with Slurm?,cluster,
+1212,"Ray can fit any model, is that true?",other,
+1213,how can I configure custom environments with rllib,rllib,
+1214,what’s the difference between Ray and Spark?,other,
+1215,Ray is how to do quantisation in the reference?,ray-core,train
+1216,how to import session?,cluster,train
+1217,what does this error mean? ```RuntimeError: There is no current event loop in thread 'ray_client_server_1'.```,ray-core,
+1218,How to run multiple databricks task using one ray cluster,ray-core,
+1219,"Using the rllib `config['callbacks']` option, is it possible to add more than one kind of callback class?",rllib,
+1220,What's the num_samples mean in tuner.run,tune,
+1221,"Tell me more about this statement: In the case of Proximal Policy Optimization (PPO), increasing the number of workers increases the batch size for each update.",rllib,
+1222,"Tell me more about this statement: For instance, in the case of Proximal Policy Optimization (PPO), increasing the number of workers increases the batch size for each update. If the learning rate is not adjusted accordingly, it could lead to instability in the training process, potentially resulting in nan values.",rllib,
+1223,"asha_scheduler = ASHAScheduler( time_attr='training_iteration', metric='loss', mode='min', max_t=100, grace_period=10, reduction_factor=3, brackets=1, )其中每个参数的意思是什么",tune,
+1224,how do i define epochs in class Trainable,tune,
+1225,What is driver in ray head node is used for,cluster,ray-core
+1226,如何设置ray中早停观察的轮数,rllib,other
+1227,如何设置ray中早停观察的轮数,rllib,other
+1228,"the two nodes in my cluster fail at the healthcheck phase, I am thinking it might be an issue with ports since there is a firewall, what protocols should I open the ports for?",cluster,
+1229,how to adopt tensorboard or aim while using ray train,train,
+1230,"I am training a PPO agent using RLLIB. I want to reduce the amount of time it takes to train. So far, I have increased the number of rollout_workers and increased the CPU allocation. How else could I adjust the configuration to improve my training time?",rllib,
+1231,I am using ray.tune to run an rllib experiment. My learn_time is very high while my sample time has been reduced. How do I reduce my learn_time?,rllib,
+1232,ray 기능을 사용하지 않는 repository도 RayJob을 이용해 실행할 수 있을까?,cluster,
+1233,How to set off_policy_estimation_methods,rllib,
+1234,Explique la différence entre PPO Et APPO,rllib,
+1235,"Qu'est ce que c'est qu'un 'Model-Free On-Policy RL Algorithm"" ?",rllib,
+1236,how can I plot the policy loss and other metrics from the algorithm?,rllib,
+1237,Ray multiagent train set policy?,rllib,
+1238,how to increase train tasks,train,
+1239,how to transfer dict back into rllib algorithmconfig,rllib,
+1240,how to create json parsing using ray dataset?,data,
+1241,How can I load .env while using ray serve?,serve,
+1242,DQN和DQNTorchPolicy什么关系,rllib,
+1243,"explain "" resources_per_worker={ ""CPU"": 4, ""GPU"": 2, }""",cluster,train
+1244,Sup?,rllib,other
+1245,Do I need a ray cluster for a ray serve application?,serve,
+1246,pyarrow.lib.ArrowInvalid: URI has empty scheme: 'BC',data,
+1247,Can you help me find the best RL algorithm for each use case i'm going to give you ?,rllib,
+1248,how t get current deployment,serve,
+1249,"After i run hpo with ray tune, how to get all the hyper params setting ?",tune,
+1250,"After i run hpo with ray tune, how to get all the hyper params setting ?",tune,
+1251,"After i run hpo, how to get all the hyper params setting ?",ray-core,tune
+1252,python how to ray list all actor,ray-core,ray-observability
+1253,how to know current process id,ray-core,
+1254,why ray.get_actor create new ray instance,ray-core,
+1255,how can i restore a checkpoint to run my dqn in rllib?,rllib,
+1256,ray如何连接slurm,cluster,
+1257,"python code to add to a dict these values: (num_gpus = 0, num_cpus_per_worker = 2, num_learner_workers = 1, num_cpus_per_learner_worker = 2)?",rllib,other
+1258,dashboard,cluster,
+1259,what is raylet,ray-core,
+1260,Is there any way to see the observations of the environment in raylib?,other,rllib
+1261,how to save the best checkpoint after training with dqn rllib?,rllib,
+1262,how to use rllib with ray train instead of ray tune?,tune,other
+1263,getIfexists,ray-core,
+1264,不启用ray，对建立好的环境进行训练,rllib,
+1265,greedy,rllib,
+1266,"in a ray train loop per worker, how do I move a tensor to the worker's gpu device",train,
+1267,"RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.cuda.LongTensor [1, 175]] is at version 3; expected version 2 instead. Hint: the backtrace further above shows the operation that failed to compute its gradient. The variable in question was changed in there or anywhere later. Good luck!",ray-core,other
+1268,how can i run python ray in shell,ray-core,
+1269,how to debug ray,ray-observability,
+1270,can you write me a code to save the checkpoint with the ray.tune?,tune,
+1271,Can I use ray tune just for training and not hyperparameter tuning,tune,train
+1272,IS Ray air deprecated?,other,
+1273,I want to write a code in python to use DQN algorithm in Rllib! Can you write the code or give me a coed example for it?,rllib,
+1274,I don't understand how I should use it! Can you find me a nice python example?,tune,other
+1275,How to make a ray service,cluster,
+1276,"I have a application developer using a model from hugging face and i have a kubernetes cluster, the application is server using ray serve and i want It to be more performant as possible in my cluster",cluster,serve
+1277,how can I disable the learner api?,rllib,
+1278,I wanna use kuberay to deploy a cluster that works with differenti serve application,cluster,
+1279,what is the difference between grid search and random search? How to run it using tune.Tuner?,tune,
+1280,how does ray serve health check work,serve,
+1281,How to fix error? -- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-11_19-59-26_423713_28429. Have you started Ray instsance using `ray start` or `ray.init`?,cluster,
+1282,-- Can't find a `node_ip_address.json` file from /tmp/ray/session_2023-10-11_19-59-26_423713_28429. Have you started Ray instsance using `ray start` or `ray.init`?,cluster,
+1283,kubernetes service is not created when I deploy ray serve with kuberay,cluster,
+1284,how to run ray serve on cluster,cluster,serve
+1285,how to limit the number of trails that will be run by tune.Tuner?,tune,
+1286,How to run Ray cluster with Prometheus ?,cluster,
+1287,when is ActionDistribution executed?,rllib,
+1288,provide the example code using ray.rllib.algorithms.ppo import PPO,rllib,
+1289,NodeLabelSchedulingStrategy,ray-core,
+1290,"given an object reference, how can i get the input arguments which created that object reference?",ray-core,
+1291,I would like to search the best Deep Reinforcement Learning model configuration by using ray.io with Population based training on taxi env,tune,rllib
+1292,how to remove all logging from ray?,cluster,ray-observability
+1293,"what does ""WARNING util.py:244 -- The `start_trial` operation took 65.291 s, which may be a performance bottleneck."" mean?",tune,
+1294,I want to deploy multiple models and chain them together to create pipelines. How can I do this with Ray,serve,
+1295,How does ray.data read data?,data,
+1296,how to set tune to not print anything into logs?,tune,
+1297,how can i find remote cluster gcs_address,ray-core,
+1298,how to run tune.Tuner with verbose False?,tune,
+1299,I'm receiving this error: Last sync command failed: Sync process failed: No AWSAccessKey was presented The first checkpoint was created,tune,
+1300,I want to run IMPALA algorithm with a custom model for the learner.,rllib,
+1301,How do I define a custom action distribution?,rllib,
+1302,How can I run RLlib in the cloud?,rllib,cluster
+1303,"Last sync command failed: Sync process failed: No AWSAccessKey was presented. But I verified that I have the permissions, when I list the configs I'm able to see the IAM role, but seems that the tune is not using that",tune,
+1304,ggg,rllib,other
+1305,how do I train with RLLib efficiently using aws sagemaker?,rllib,
+1306,How to configure AWS cluster to open dashboard port to public,cluster,
+1307,Show me an example of a Flask and Ray.,ray-core,serve
+1308,"Im using tune storage on Amazon S3, when I submit a Job to the cluster the first step is to get a script from Amazon S3, I can do it since the nodes where taht pod is running has permissions to interact with S3, but when I start my training I receive this error Last sync command failed: Sync process failed: Access Denied. It was working before, now the checkpoints are not being created",cluster,tune
+1309,"Where run this command during cluster setup: which ray || pip install -U ""r",cluster,
+1310,The head node will not launch any workers because `ray start` does not have `--autoscaling-config` set. Potential fix: add `--autoscaling-config=~/ray_bootstrap_config.yaml` to the `ray start` command under `head_start_ray_commands`.,cluster,
+1311,why should i use ray serve and not vllm,serve,
+1312,how can i call compute single action in a env execution loop for a policy using an attention model?,rllib,
+1313,ray serve is a ray cluster?,cluster,serve
+1314,how do I create a ray dataset from json files located in an authed s3 bucket?,data,
+1315,wich versions of urllib3 and chardet are required?,rllib,other
+1316,how can i execute a policy on an input and get the output of each layer in the model?,rllib,
+1317,how do i share a partial gpu,other,ray-core
+1318,I get following error: All weights couldn't be assigned because no variable had an exact/close name or had same shape,ray-core,other
+1319,What exactly are you,other,
+1320,work on multibile computers with sql,other,data
+1321,what is the tune.Tuner parameter 'mode',tune,
+1322,when connecting to my kuberay cluster with ray.init should i connect to port 10001 or port 8265 ?,cluster,
+1323,hello how are you,tune,other
+1324,When do you need to import a python module inside a remote function?,rllib,ray-core
+1325,"I want to run Ray on AWS, how do I get started?",cluster,
+1326,how to deploy ray on k8s,cluster,
+1327,how to increase the cluster Disk(root),cluster,
+1328,explain to me what ray.wait does and contrast it with ray.get,ray-core,
+1329,RuntimeError: Deploying application default failed: The deployments ['MyModelDeployment'] are UNHEALTHY. how to fix,serve,
+1330,"also how I can clean up the disk I am getting this warning: /tmp/ray/session_2023-10-07_20-58-05_193546_385 is over 65% full, available space: 506853195776; capacity: 1530345611264. Object creation will fail if spilling is required.",ray-core,
+1331,how do i use ray to parallelize rolling jobs? for example i have job A where each task writes to disk. then i have job B that reads those files from disk. job B reads in a rolling manner so task B5 may read files from task A3 through A5,ray-core,
+1332,max number of ray tasks for a ojob,ray-core,
+1333,How do I restore from checkpoint a PPO algorithm,rllib,
+1334,我怎么知道dqn使用的训练过程是什么,rllib,
+1335,how to manually retain an object,ray-core,
+1336,how do I access the TBXLogger from the trainable class?,tune,
+1337,Is a job can run during a long itime?,cluster,
+1338,Is a job can run during a long periode?,cluster,
+1339,ray train disable progress bar,train,
+1340,"In rllib, how can I use the self.view_requirements of a model to get the previous action?",rllib,
+1341,ray data non verbose progress bars,data,
+1342,disable ray data progress bar,data,
+1343,can i kill a cluster job from ui ?,cluster,ray-observability
+1344,What is Ray Object,ray-core,
+1345,How do I kill a task in Ray,ray-core,
+1346,concat_simple 是什么效果,ray-core,
+1347,get best checkpoint based on two metrics,tune,
+1348,Will this work with Lama?,other,
+1349,read data from sql,data,
+1350,"In rllib, how can I feed the previous action into the input for a custom model?",rllib,
+1351,what,other,
+1352,how do i set the number of needed GPU/CPU of an ray serve deployment using the python decorator,serve,
+1353,What's the default env_runner_cls?,ray-core,rllib
+1354,how to restore a tune experiment?,tune,
+1355,ray launch tuner in worker node,tune,
+1356,how do actors work if I use ray in local ?,other,ray-core
+1357,give me a sample trainer.py file structure for job submission on slurm,cluster,
+1358,in which documentation page the file pytorch_training_e2e_submit.py is used ?,tune,train
+1359,"explain ""Execution Memory During execution, a task can read multiple input blocks, and write multiple output blocks. Input and output blocks consume both worker heap memory and shared memory via Ray’s object store. Ray Data attempts to bound its heap memory usage to num_execution_slots * max_block_size. The number of execution slots is by default equal to the number of CPUs, unless custom resources are specified. The maximum block size is set by the configuration parameter ray.data.DataContext.target_max_block_size and is set to 512MiB by default. When a task’s output is larger than this value, the worker automatically splits the output into multiple smaller blocks to avoid running out of heap memory. Large block size can lead to potential out-of-memory situations. To avoid these issues, make sure no single item in your Ray Data is too large, and always call ds.map_batches() with batch size small enough such that the output batch can comfortably fit into memory.""",data,
+1360,how to use environment variable in ray init,ray-core,
+1361,What is a ray job? Can In run a fastapi application in a ray job?,cluster,
+1362,"The below code takes ages. how to optimize it ? """""" class StoreResults: def __call__(self, batch): with psycopg.connect(DB_CONNECTION_STRING) as conn: register_vector(conn) with conn.cursor() as cur: for text, source, embedding in zip(batch[""text""], batch[""source""], batch[""embeddings""]): cur.execute(""INSERT INTO document (text, source, embedding) VALUES (%s, %s, %s)"", (text, source, embedding,),) return {} # Index embeddings embedded_chunks.map_batches( StoreResults, batch_size=128, num_cpus=1, compute=ActorPoolStrategy(size=1), ).count() """"""",data,
+1363,I have an application with different actors performing different responsibilities. Each actor needs to access elements in my system with different credentials (Different to each actor). How do I distribute those credentials among my actors?,ray-core,
+1364,Could we use Ray to boost our Gaussian Processes algorithm?,rllib,ray-core
+1365,cvxopt on ray,tune,ray-core
+1366,"explain ""You may want to customize these limits in the following scenarios: - If running multiple concurrent jobs on the cluster, setting lower limits can avoid resource contention between the jobs. - If you want to fine-tune the memory limit to maximize performance. - For data loading into training jobs, you may want to set the object store memory to a low value (for example, 2 GB) to limit resource usage.""",cluster,ray-core
+1367,"如何获得自己注册环境类的类名，通过 register_env(env_name, environment)中env_name",rllib,
+1368,"如何获得自己注册环境类的类名，通过 register_env(env_name, environment)中env_name",rllib,
+1369,Can't you create a dataset from blocks?,data,
+1370,"Explique plus en détail ete en français : Conservative Q-Learning (CQL) In offline RL, the algorithm has no access to an environment, but can only sample from a fixed dataset of pre-collected state-action-reward tuples. In particular, CQL (Conservative Q-Learning) is an offline RL algorithm that mitigates the overestimation of Q-values outside the dataset distribution via conservative critic estimates. It does so by adding a simple Q regularizer loss to the standard Bellman update loss. This ensures that the critic does not output overly-optimistic Q-values. This conservative correction term can be added on top of any off-policy Q-learning algorithm (here, we provide this for SAC). RLlib’s CQL is evaluated against the Behavior Cloning (BC) benchmark at 500K gradient steps over the dataset. The only difference between the BC- and CQL configs is the bc_iters parameter in CQL, indicating how many gradient steps we perform over the BC loss. CQL is evaluated on the D4RL benchmark, which has pre-collected offline datasets for many types of environments.",rllib,
+1371,自建的training_workflow 输入是固定的吗,other,
+1372,"我想Register_env(env_name, environment) 后 通过引用env_name 得到environment的函数名",other,rllib
+1373,How to expose ray start --head to every address?,cluster,
+1374,how do I change the number of rows in one block?,data,
+1375,what are the latest changes in Ray==2.7.1,cluster,other
+1376,"如何通过config在training_fn 中引用 Register_env(env_name, environment) 注册的环境",rllib,
+1377,Is the lstm reset mid episode ?,rllib,
+1378,"Register_env(env_name, environment) 后，如何通过 env_name 引用 env",other,rllib
+1379,Parle moi en détail et en français de rllib.algorithm,rllib,
+1380,Can you talk about rllib.algorithm ?,rllib,
+1381,"running: run_config = air.RunConfig( stop=stop, verbose=1, checkpoint_config=air.CheckpointConfig( # https://docs.ray.io/en/releases-2.1.0/tune/tutorials/tune-checkpoints.html num_to_keep=30, checkpoint_score_attribute=""reward"", checkpoint_score_order=""max"", checkpoint_at_end=True ), storage_path=os.path.abspath(""./results/PPOTest""), ) But no checkpoints get saved",tune,
+1382,how to inspect key value pairs in GCS?,ray-core,
+1383,relationship between the ray tool,ray-core,other
+1384,What should be inside custom_model_config dict ?,rllib,
+1385,how do I change the rewards obtained and observed (through prev_rewards) of a policy ?,rllib,
+1386,CustomPolicy中各个值分别是什么,rllib,
+1387,what should be inside custom_model_config dict ?,rllib,
+1388,how do I find out the number of connected clients to ray?,other,
+1389,how do I combine batch iter and the trainable class using pytorch,tune,train
+1390,"tolerations: - key: ""ray.io/node-type"" operator: ""Equal"" value: ""worker"" effect: ""NoSchedule"" 这段配置的作用",cluster,
+1391,can you give me a train report time attribute example ?,train,
+1392,checkpointconfig example,train,
+1393,set storage_path to a local folder in air.RunConfig,train,
+1394,How does Ray compare against Spark,cluster,other
+1395,how to render an environment while training,ray-core,rllib
+1396,why rllib does not utilize multi-gpus even when number of learner workers are 2 ?,rllib,
+1397,train on infinite datasets,train,
+1398,local rllib results path,rllib,
+1399,setting local path,other,
+1400,"(ServeReplica:default:ImageModel pid=48326) File ""/Users/severinkistner/miniconda3/envs/melon/lib/python3.11/site-packages/ray/serve/_private/http_proxy.py"", line 1001, in receive_asgi_messages (ServeReplica:default:ImageModel pid=48326) raise KeyError(f""Request ID {request_id} not found."") (ServeReplica:default:ImageModel pid=48326) KeyError: 'Request ID 9b333723-5ed9-4c58-995a-05609a438d39 not found.' (ServeReplica:default:ImageModel pid=48326) INFO 2023-10-11 11:22:03,609 ImageModel default#ImageModel#vTLhSi 9b333723-5ed9-4c58-995a-05609a438d39 / default replica.py:749 - __CALL__ ERROR 2.9ms what is the request ID?",serve,
+1401,setup grafana for RAy,cluster,
+1402,What is the difference between the .bind() and .deploy() python functions,serve,
+1403,how to train on a different part of a dataset each epoch,train,
+1404,use random_sample on a dataset after stream split,data,
+1405,groupName的用法,ray-core,
+1406,what is TUNE_RESULT_DIR in multi node training,tune,
+1407,如何节约创建actor的时间,ray-core,
+1408,What are the acceptable values for ray.train.RunConfig.storage_filesystem parameter ?,train,
+1409,how to sample n batches from dataset,data,
+1410,"raise Exception(""Cannot include dashboard with missing packages."") Exception: Cannot include dashboard with missing packages.",cluster,
+1411,终端打开dashboard,cluster,
+1412,disable ray logging for raylet,ray-core,
+1413,how do i install pip requirements if i deploy a ray serve using the .deploy() python method,serve,
+1414,Can I change the evaluation worker config during the evaluation ?,rllib,
+1415,Could you explain the arg resources_per_trial in ray tune? How would this relate for example to the number of rollout workers in RL?,tune,
+1416,get the directory of a ray trainer,train,
+1417,Hey. I'm not comfortable with sending shape of my model inside a dictionary as modelConfig. I wana create my own torch model and use it as my policy model. is it doable ?,rllib,
+1418,ray在print测试不同组参数信息的时候如何查看不同参数的信息，目前只能看到有限的十组,rllib,other
+1419,I want to run a trainable function using ray tune. But the trainable should execute parallelly for random and grid search using multiple cpus. no need for gpu. How to do that simply?,tune,
+1420,How to run ray tune with parallel processing?,tune,
+1421,what kind of question can you answer?,cluster,other
+1422,ray lightgbm如何使用kfold,ray-core,
+1423,How large should the cluster be,cluster,
+1424,how du i add an ray serve to the existing ray serves on a cluster,cluster,serve
+1425,Hey. I'm not comfortable with sending shape of my model inside a dictionary as modelConfig. I wana create my own torch model and use it as my policy model. is it doable ?,rllib,
+1426,kuberay operator 버전을 업그레이드 하는 방법을 알려줘,cluster,
+1427,from http import ClientBuilder ImportError: cannot import name 'ClientBuilder' from 'http',cluster,ray-core
+1428,is it possible that ppo trainer use multi GPUs for a single learner worker ?,rllib,
+1429,在rllib 中如何加载已经训练的模型参数,rllib,
+1430,how to give package version in ray run time,ray-core,
+1431,My ray service cannot scale Ray Workers nodes. It only scales the worker replicas. How can I resolve this problem,cluster,
+1432,How does RayService support high availability?,cluster,
+1433,how to check the failed reason of a submitted job,cluster,
+1434,"Imagine self.algorithm = DQN(config=config), thenself.algorithm.local_replay_buffer.add(...) how to get info/print about local_replay_buffer",rllib,
+1435,"imagine self.algorithm = DQN(config=config), thenself.algorithm.local_replay_buffer.add(...) how to get info/print this òoca",rllib,
+1436,My ray service cannot scale Ray worker nodes properly. It only scale worker replicas. How can I resolve this problem?,cluster,
+1437,gymnasium.spaces 中的 Text 类型 如何使用、,other,rllib
+1438,SampleBatch how to print it in human readable way,rllib,
+1439,kubernetes cluster,cluster,
+1440,"imagine a ray actor like @ray.remote class ReplayHandler: """""" Manages the shared replay buffer """""" def __init__(self, capacity: int): print(f""ReplayHandler __init__ capacity {capacity}"") self.replay_buffer = ReplayBuffer(capacity) def push(self, batch): """"""Insert a batch of experiences into the buffer."""""" self.replay_buffer.add(batch) def sample(self, batch_size: int): """"""Sample experiences from the buffer."""""" if len(self.replay_buffer) < batch_size: return [] return self.replay_buffer.sample(batch_size) how to print in human readable way batch",rllib,
+1441,loaded_ppo.logdir = '~/ray_results/120_240/' AttributeError: can't set attribute 'logdir',tune,
+1442,loaded_ppo = Algorithm.from_checkpoint(checkpoint_path) What type of object is loaded_ppo ?,rllib,
+1443,What are rllib.Algorithm's properties ?,rllib,
+1444,How to undeploy a serve by config.yaml,serve,
+1445,"in ray serve, how is concurrent, multithreaded access to resources managed",serve,
+1446,"I get this result from http://localhost:8265/api/prometheus_health: {""result"": false, ""msg"": ""prometheus healthcheck failed."", ""data"": {}} However, I am able to access prometheus on localhost:9090. How do I debug this?",cluster,
+1447,"@ray.remote class ReplayHandler: """""" Manages the shared replay buffer """""" def __init__(self, capacity: int): self.replay_buffer = ReplayBuffer(capacity) def push(self, batch): """"""Insert a batch of experiences into the buffer."""""" self.replay_buffer.add(batch) print(f""debug push{batch}"") print(f""debug self.replay_buffer.get_state() {self.replay_buffer.get_state()}"") def sample(self, batch_size: int): """"""Sample experiences from the buffer."""""" if len(self.replay_buffer) < batch_size: return [] print(f""debug self.replay_buffer.sample(batch_size){self.replay_buffer.sample(batch_size)}"") return self.replay_buffer.sample(batch_size) imagine I have a class like that but I want to print the content of the buffer to understand its structure, then also print what is this batch that is added to the buffer and perhaps check that sample takes a random sample and not the last experiences can you do it",rllib,
+1448,How is it possible to run prometheus on a node that is not a head node when prometheus needs access to /tmp/ray/prom_metrics_service_discovery.json,cluster,
+1449,How do I debug grafana and prometheus not appearing in the ray dashboard?,cluster,
+1450,"I am able to see access Grafana and prometheus using their own ports, but they don't show up in the ray dashboard. How do I fix that?",cluster,
+1451,show me a ray.init and a ray jobs api example st we dont specify a working dir and run the code on the ray worker,cluster,ray-core
+1452,rllib,rllib,
+1453,how can I run preprocessor fit in parallel. My job is running on 1 cpu now.,data,
+1454,can ray serve deployments call each other with DeploymentHandle,serve,
+1455,how can i parallel preprocessor fit,data,
+1456,我的观察空间中有一个0~5的离散值，还有5个0~10的离散值，应该如何定义,rllib,
+1457,mat1 and mat2 shapes cannot be multiplied (43x1 and 43x384),cluster,other
+1458,how can i estimate the policy of Pettingzoo Environment?,rllib,
+1459,"help me fix this: import ray def test(x): return x ray.remote(test, max_retries=3, retry_exceptions=True)",ray-core,
+1460,Is there a way to set max_retries and retry_exceptions globally so i don't need to set it for every ray.remote?,ray-core,
+1461,How to setup TLS between head node and worker nodes?,cluster,
+1462,How to setup TLS for Ray CLI to Ray Cluster,cluster,
+1463,how to make ray.get([func.remote(i) for i in range(1000)]) robust to failures of individual tasks. i want to be able to retry tasks that fail,ray-core,
+1464,when executing code on a kuberay raycluster setup does ray ever sends over python code to be executed over the wire ? When does it do that? does it do it only went the code (eg some local app import) cant resolve?,cluster,
+1465,with ray RLlib how to do distributed experience replay?,rllib,
+1466,code to connect to a cluster,cluster,
+1467,how to turn off printing logs in stdout,rllib,ray-observability
+1468,I now have a kuberay-operator and a raycluster configured in my k8s cluster. The ray head group is setup and so are my worker groups. Now how can i submit a task?,cluster,
+1469,what causes this error: PermissionError: [Errno 13] Permission denied: '/tmp/ray/ray_current_cluster',cluster,
+1470,How do I run a Ray Tune job on a remote AWS Ray cluster?,cluster,
+1471,explain : RuntimeError: Failed to connect to GCS.,ray-core,
+1472,how to get ray head node address,cluster,
+1473,how to load a model from s3 for training?,other,train
+1474,Where should I host my Prometheus and Grafana server when I'm using Ray Clusters with GCP? Should the be running on the head node?,cluster,
+1475,how does ray serve work with a cluster? how does the ingress routing work?,cluster,serve
+1476,"""Ray Client has architectural limitations"" -- explain these limitations",cluster,
+1477,What does is_driver_deployment do?,serve,
+1478,how do we write ray data back to storage like hdfs? are all data will be consumed by headnode first>,data,
+1479,Does the HTTPProxyActor run on every node in the cluster? Is it possible to make it so that it does?,cluster,serve
+1480,How do I restore from a specific tuner run ?,tune,
+1481,write me a simple example how to use py_modules,ray-core,
+1482,How are you?,tune,other
+1483,how does ray do hyperparameter tuning?,other,tune
+1484,"I am getting an error: The node specified via NodeAffinitySchedulingStrategy doesn't exist any more or is infeasible, and soft=False was specified And I don't have any specific NodeAffinitySchedulingStrategy set up",ray-core,
+1485,How do I run tune with a restored trainer (not tune run),tune,
+1486,ray.data.read_parquet fails with pyarrow.lib.ArrowNotImplementedError: Unsupported cast from list<item: int64> to struct using function cast_struct,data,
+1487,how do i create a task that just listens to a queue,ray-core,
+1488,"in kuberay, can i see which log file ray is currently writing to",cluster,
+1489,"Important: Ray Data requires schemas for all datasets in Ray 2.5. This means that standalone Python objects are no longer supported. In addition, the default batch format is fixed to NumPy. To revert to legacy behavior temporarily, set the environment variable RAY_DATA_STRICT_MODE=0 on all cluster processes",data,
+1490,Implement centralized critic for multi agent environment,rllib,
+1491,explain reuse_actors,ray-core,other
+1492,can read_parquet read from folder with multiple parquet files,data,
+1493,can I use Ray Data with Ray Serve?,data,other
+1494,ray data set parallelism,data,
+1495,How to check max number of clients,cluster,
+1496,evaluation worker collect episodes twice,rllib,
+1497,the ray progress bar is wrong when using map_batches,data,
+1498,pyarrow.lib.ArrowNotImplementedError: Unsupported cast from list<item: int64> to struct using function cast_struct,tune,data
+1499,is there any authentication to the ray cluster?.,cluster,
+1500,Where do driver jobs run in Ray cluster?,cluster,
