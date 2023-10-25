@@ -4,7 +4,7 @@ import pickle
 import re
 import time
 from pathlib import Path
-
+from litellm import completion
 import numpy as np
 import openai
 import psycopg
@@ -48,7 +48,7 @@ def generate_response(
     api_base, api_key = get_credentials(llm=llm)
     while retry_count < max_retries:
         try:
-            response = openai.ChatCompletion.create(
+            response = completion(
                 model=llm,
                 temperature=temperature,
                 stream=stream,
