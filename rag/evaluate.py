@@ -7,6 +7,7 @@ from IPython.display import JSON, clear_output, display
 from tqdm import tqdm
 
 from rag.generate import generate_response
+from rag.utils import get_num_tokens, trim
 
 
 def get_retrieval_score(references, generated):
@@ -67,16 +68,19 @@ def evaluate_responses(
 
     # Quality score
     results = []
-    context_length = max_context_length - len(system_content + assistant_content)
+    context_length = max_context_length - get_num_tokens(system_content + assistant_content)
     for ref, gen in tqdm(zip(references, generated), total=len(references)):
         assert ref["question"] == gen["question"]
-        user_content = str(
-            {
-                "question": gen["question"],
-                "generated_answer": gen["answer"],
-                "reference_answer": ref["answer"],
-            }
-        )[:context_length]
+        user_content = trim(
+            str(
+                {
+                    "question": gen["question"],
+                    "generated_answer": gen["answer"],
+                    "reference_answer": ref["answer"],
+                }
+            ),
+            context_length,
+        )
 
         # Generate response
         response = generate_response(

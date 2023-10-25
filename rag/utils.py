@@ -26,14 +26,3 @@ def execute_bash(command):
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
     return results
-
-
-def lexical_search(index, query, chunks, k):
-    query_tokens = query.lower().split()  # preprocess query
-    scores = index.get_scores(query_tokens)  # get best matching (BM) scores
-    indices = sorted(range(len(scores)), key=lambda i: -scores[i])[:k]  # sort and get top k
-    results = [
-        {"id": chunks[i][0], "text": chunks[i][1], "source": chunks[i][2], "score": scores[i]}
-        for i in indices
-    ]  # top-k with scores with the text
-    return results
