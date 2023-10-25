@@ -19,5 +19,6 @@ MAX_CONTEXT_LENGTHS = {
     "meta-llama/Llama-2-7b-chat-hf": 4096,
     "meta-llama/Llama-2-13b-chat-hf": 4096,
     "meta-llama/Llama-2-70b-chat-hf": 4096,
-    "codellama/CodeLlama-34b-Instruct-hf": 4096,
+    "codellama/CodeLlama-34b-Instruct-hf": 16384,
+    "mistralai/Mistral-7B-Instruct-v0.1": 65536,
 }

@@ -1,15 +1,11 @@
 import json
-import os
 import pickle
 import re
 import time
 from pathlib import Path
 
-import numpy as np
 import openai
-import psycopg
 from IPython.display import JSON, clear_output, display
-from pgvector.psycopg import register_vector
 from rank_bm25 import BM25Okapi
 from tqdm import tqdm
 
@@ -17,7 +13,8 @@ from rag.config import EFS_DIR, ROOT_DIR
 from rag.embed import get_embedding_model
 from rag.index import build_index
 from rag.rerank import custom_predict, get_reranked_indices
-from rag.utils import get_credentials, get_num_tokens, lexical_search, trim
+from rag.search import lexical_search, semantic_search
+from rag.utils import get_credentials, get_num_tokens, trim
 
 
 def response_stream(response):
@@ -35,21 +32,23 @@ def prepare_response(response, stream):
 
 def generate_response(
     llm,
+    max_tokens=None,
     temperature=0.0,
     stream=False,
     system_content="",
     assistant_content="",
     user_content="",
-    max_retries=3,
+    max_retries=1,
     retry_interval=60,
 ):
     """Generate response from an LLM."""
     retry_count = 0
     api_base, api_key = get_credentials(llm=llm)
-    while retry_count < max_retries:
+    while retry_count <= max_retries:
         try:
             response = openai.ChatCompletion.create(
                 model=llm,
+                max_tokens=max_tokens,
                 temperature=temperature,
                 stream=stream,
                 api_base=api_base,
@@ -67,22 +66,6 @@ def generate_response(
             time.sleep(retry_interval)  # default is per-minute rate limits
             retry_count += 1
     return ""
-
-
-def get_sources_and_context(query, embedding_model, num_chunks):
-    embedding = np.array(embedding_model.embed_query(query))
-    with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
-        register_vector(conn)
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT * FROM document ORDER BY embedding <=> %s LIMIT %s",
-                (embedding, num_chunks),
-            )
-            rows = cur.fetchall()
-            document_ids = [row[0] for row in rows]
-            context = [{"text": row[1]} for row in rows]
-            sources = [row[2] for row in rows]
-    return document_ids, sources, context
 
 
 class QueryAgent:
@@ -115,10 +98,14 @@ class QueryAgent:
         # LLM
         self.llm = llm
         self.temperature = temperature
-        max_context_length = int(0.5 * max_context_length)  # 50% of total context
-        self.context_length = max_context_length - get_num_tokens(
+        self.context_length = int(
+            0.5 * max_context_length
+        ) - get_num_tokens(  # 50% of total context reserved for input
             system_content + assistant_content
         )
+        self.max_tokens = int(
+            0.5 * max_context_length
+        )  # max sampled output (the other 50% of total context)
         self.system_content = system_content
         self.assistant_content = assistant_content
 
@@ -131,9 +118,9 @@ class QueryAgent:
         rerank_k=7,
         stream=True,
     ):
-        # Get sources and context
-        document_ids, sources, context = get_sources_and_context(
-            query=query, embedding_model=self.embedding_model, num_chunks=num_chunks
+        # Get top_k context
+        context_results = semantic_search(
+            query=query, embedding_model=self.embedding_model, k=num_chunks
         )
 
         # Add lexical search results
@@ -141,10 +128,8 @@ class QueryAgent:
             lexical_context = lexical_search(
                 index=self.lexical_index, query=query, chunks=self.chunks, k=lexical_search_k
             )
-            for item in lexical_context:
-                document_ids.append(item["id"])
-                context.append({"text": item["text"]})
-                sources.append(item["source"])
+            # Insert after <lexical_search_k> worth of semantic results
+            context_results[lexical_search_k:lexical_search_k] = lexical_context
 
         # Rerank
         if self.reranker:
@@ -152,18 +137,19 @@ class QueryAgent:
                 inputs=[query], classifier=self.reranker, threshold=rerank_threshold
             )[0]
             if predicted_tag != "other":
+                sources = [item["source"] for item in context_results]
                 reranked_indices = get_reranked_indices(sources, predicted_tag)
-                document_ids = [document_ids[i] for i in reranked_indices]
-                context = [context[i] for i in reranked_indices]
-                sources = [sources[i] for i in reranked_indices]
-            document_ids = document_ids[:rerank_k]
-            context = context[:rerank_k]
-            sources = sources[:rerank_k]
+                context_results = [context_results[i] for i in reranked_indices]
+            context_results = context_results[:rerank_k]
 
         # Generate response
+        document_ids = [item["id"] for item in context_results]
+        context = [item["text"] for item in context_results]
+        sources = [item["source"] for item in context_results]
         user_content = f"query: {query}, context: {context}"
         answer = generate_response(
             llm=self.llm,
+            max_tokens=self.max_tokens,
             temperature=self.temperature,
             stream=stream,
             system_content=self.system_content,
