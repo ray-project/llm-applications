@@ -92,7 +92,7 @@ def evaluate_responses(
         )
 
         # Extract from response
-        score, reasoning = response.split("\n", 1)
+        score, reasoning = response.split("\n", 1) if "\n" in response else (0, "")
         result = {
             "question": gen["question"],
             "generated_answer": gen["answer"],
