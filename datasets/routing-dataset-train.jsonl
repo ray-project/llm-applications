@@ -1796,3 +1796,6 @@
 {"question": "How to deploy using ray", "target": 1}
 {"question": "oslo with ray , how to make it work", "target": 0}
 {"question": "RuntimeError: The remote function failed to import on the worker. This may be because needed library dependencies are not installed in the worker enviroment", "target": 0}
+{"question": "Generate code for fine-tuning BERT models", "target": 0}
+{"question": "Give me code for pretraining stable diffusion models", "target": 0}
+{"question": "Convert this function into a distributed one with Ray data", "target": 0}

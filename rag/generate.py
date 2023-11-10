@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 from rag.config import EFS_DIR, ROOT_DIR
 from rag.embed import get_embedding_model
-from rag.index import build_index
+from rag.index import build_or_load_index
 from rag.rerank import custom_predict, get_reranked_indices
 from rag.search import lexical_search, semantic_search
 from rag.utils import get_credentials, get_num_tokens, trim
@@ -114,7 +114,7 @@ class QueryAgent:
         query,
         num_chunks=5,
         lexical_search_k=1,
-        rerank_threshold=0.3,
+        rerank_threshold=0.2,
         rerank_k=7,
         stream=True,
     ):
@@ -175,6 +175,7 @@ def generate_responses(
     chunk_overlap,
     num_chunks,
     embedding_model_name,
+    embedding_dim,
     use_lexical_search,
     lexical_search_k,
     use_reranking,
@@ -192,8 +193,9 @@ def generate_responses(
     sql_dump_fp=None,
 ):
     # Build index
-    chunks = build_index(
+    chunks = build_or_load_index(
         embedding_model_name=embedding_model_name,
+        embedding_dim=embedding_dim,
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
         docs_dir=docs_dir,
