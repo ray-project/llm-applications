@@ -20,6 +20,15 @@ def split_camel_case_in_sentences(sentences):
 
 
 def preprocess(texts):
+    texts = [re.sub(r"(?<=\w)([?.,!])(?!\s)", r" \1", text) for text in texts]
+    texts = [
+        text.replace("_", " ")
+        .replace("-", " ")
+        .replace("#", " ")
+        .replace(".html", "")
+        .replace(".", " ")
+        for text in texts
+    ]
     texts = split_camel_case_in_sentences(texts)  # camelcase
     texts = [tokenizer.tokenize(text) for text in texts]  # subtokens
     texts = [" ".join(word for word in text) for text in texts]
@@ -30,11 +39,7 @@ def get_tag(url):
     return re.findall(r"docs\.ray\.io/en/master/([^/]+)", url)[0].split("#")[0]
 
 
-def reorder_by_tag(items, tag):
-    return sorted(range(len(items)), key=lambda i: (items[i] != tag, i))
-
-
-def custom_predict(inputs, classifier, threshold=0.3, other_label="other"):
+def custom_predict(inputs, classifier, threshold=0.2, other_label="other"):
     y_pred = []
     for item in classifier.predict_proba(inputs):
         prob = max(item)
