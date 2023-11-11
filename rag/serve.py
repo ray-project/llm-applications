@@ -136,7 +136,7 @@ class RayAssistantDeployment:
         self.rerank_threshold = rerank_threshold
         self.rerank_k = rerank_k
         if use_reranking:
-            reranker_fp = Path(EFS_DIR, "reranker.pkl")
+            reranker_fp = Path(os.environ["RAY_ASSISTANT_RERANKER_MODEL"])
             with open(reranker_fp, "rb") as file:
                 reranker = pickle.load(file)
 
@@ -167,7 +167,7 @@ class RayAssistantDeployment:
         )
 
         # Router
-        router_fp = Path(EFS_DIR, "router.pkl")
+        router_fp = Path(os.environ["RAY_ASSISTANT_ROUTER_MODEL"])
         with open(router_fp, "rb") as file:
             self.router = pickle.load(file)
 
@@ -226,7 +226,7 @@ deployment = RayAssistantDeployment.bind(
     chunk_size=700,
     chunk_overlap=50,
     num_chunks=9,
-    embedding_model_name="/efs/shared_storage/goku/gte-large-fine-tuned-el",  # fine-tuned gte-large
+    embedding_model_name=os.environ["RAY_ASSISTANT_EMBEDDING_MODEL"],
     embedding_dim=EMBEDDING_DIMENSIONS["thenlper/gte-large"],
     use_lexical_search=False,
     lexical_search_k=0,
@@ -234,7 +234,7 @@ deployment = RayAssistantDeployment.bind(
     rerank_threshold=0.9,
     rerank_k=9,
     llm="codellama/CodeLlama-34b-Instruct-hf",
-    sql_dump_fp="/efs/shared_storage/goku/sql_dumps/gte-large-fine-tuned-el_700_50.sql",
+    sql_dump_fp=Path(os.environ["RAY_ASSISTANT_INDEX"]),
 )
 
 
