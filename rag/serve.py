@@ -185,7 +185,7 @@ class RayAssistantDeployment:
             lexical_search_k=self.lexical_search_k,
             rerank_threshold=self.rerank_threshold,
             rerank_k=self.rerank_k,
-            stream=False,
+            stream=stream,
         )
         return result
 
