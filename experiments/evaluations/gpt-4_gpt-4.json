@@ -11,7 +11,7 @@
         "responses_fp": "/home/ray/ray-assistant/notebooks/../experiments/responses/gpt-4.json"
     },
     "retrieval_score": 0.7288135593220338,
-    "quality_score": 3.824858757062147,
+    "quality_score": 3.7457627118644066,
     "results": [
         {
             "question": "I\u2019m struggling a bit with Ray Data type conversions when I do map_batches. Any advice?",
