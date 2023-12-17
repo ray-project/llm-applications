@@ -2,6 +2,7 @@ import os
 import subprocess
 
 import numpy as np
+import openai
 import tiktoken
 import torch
 import torch.nn.functional as F
@@ -17,11 +18,15 @@ def trim(text, max_context_length):
     return enc.decode(enc.encode(text)[:max_context_length])
 
 
-def get_credentials(llm):
+def get_client(llm):
     if llm.startswith("gpt"):
-        return os.environ["OPENAI_API_BASE"], os.environ["OPENAI_API_KEY"]
+        base_url = os.environ["OPENAI_API_BASE"]
+        api_key = os.environ["OPENAI_API_KEY"]
     else:
-        return os.environ["ANYSCALE_API_BASE"], os.environ["ANYSCALE_API_KEY"]
+        base_url = os.environ["ANYSCALE_API_BASE"]
+        api_key = os.environ["ANYSCALE_API_KEY"]
+    client = openai.OpenAI(base_url=base_url, api_key=api_key)
+    return client
 
 
 def execute_bash(command):

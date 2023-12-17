@@ -18,7 +18,7 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from starlette.responses import StreamingResponse
 
-from rag.config import EFS_DIR, EMBEDDING_DIMENSIONS, MAX_CONTEXT_LENGTHS
+from rag.config import EMBEDDING_DIMENSIONS, MAX_CONTEXT_LENGTHS
 from rag.generate import QueryAgent
 from rag.index import build_or_load_index
 
