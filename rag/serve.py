@@ -209,6 +209,7 @@ class RayAssistantDeployment:
             "finished streaming query",
             query=query,
             document_ids=result["document_ids"],
+            predicted_tag=result["predicted_tag"],
             llm=result["llm"],
             answer="".join(answer),
         )
@@ -231,7 +232,7 @@ deployment = RayAssistantDeployment.bind(
     use_lexical_search=False,
     lexical_search_k=0,
     use_reranking=True,
-    rerank_threshold=0.9,
+    rerank_threshold=0.5,
     rerank_k=9,
     llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
     sql_dump_fp=Path(os.environ["RAY_ASSISTANT_INDEX"]),
