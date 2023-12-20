@@ -135,6 +135,7 @@ class QueryAgent:
             context_results[lexical_search_k:lexical_search_k] = lexical_context
 
         # Rerank
+        predicted_tag = None
         if self.reranker:
             predicted_tag = custom_predict(
                 inputs=[query], classifier=self.reranker, threshold=rerank_threshold
@@ -165,6 +166,7 @@ class QueryAgent:
             "question": query,
             "sources": sources,
             "document_ids": document_ids,
+            "predicted_tag": predicted_tag,
             "answer": answer,
             "llm": self.llm,
         }
