@@ -225,16 +225,15 @@ class RayAssistantDeployment:
 deployment = RayAssistantDeployment.bind(
     chunk_size=700,
     chunk_overlap=50,
-    num_chunks=50, # these will be filtered by rerank_k below
+    num_chunks=30,
     embedding_model_name=os.environ["RAY_ASSISTANT_EMBEDDING_MODEL"],
     embedding_dim=EMBEDDING_DIMENSIONS["thenlper/gte-large"],
-    use_lexical_search=False,
-    lexical_search_k=0,
+    use_lexical_search=True,
+    lexical_search_k=1,
     use_reranking=True,
     rerank_threshold=0.9,
-    rerank_k=9,
+    rerank_k=13,
     llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
-    sql_dump_fp=Path(os.environ["RAY_ASSISTANT_INDEX"]),
 )
 
 
@@ -242,13 +241,13 @@ deployment = RayAssistantDeployment.bind(
 # deployment = RayAssistantDeployment.bind(
 #     chunk_size=700,
 #     chunk_overlap=50,
-#     num_chunks=9,
+#     num_chunks=30,
 #     embedding_model_name="thenlper/gte-large",  # fine-tuned is slightly better
 #     embedding_dim=EMBEDDING_DIMENSIONS["thenlper/gte-large"],
-#     use_lexical_search=False,
-#     lexical_search_k=0,
+#     use_lexical_search=True,
+#     lexical_search_k=1,
 #     use_reranking=True,
 #     rerank_threshold=0.9,
-#     rerank_k=9,
-#     llm="codellama/CodeLlama-34b-Instruct-hf",
+#     rerank_k=13,
+#     llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
 # )
