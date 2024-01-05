@@ -10,7 +10,7 @@ ray_serve_config:
     env_vars:
       RAY_ASSISTANT_SECRET: "ray-assistant-prod"
       RAY_ASSISTANT_LOGS: "/mnt/shared_storage/ray-assistant-logs/info.log"
-      RAY_ASSISTANT_INDEX: "/mnt/shared_storage/ray-assistant-data/gte-large-fine-tuned-el_700_50.sql"
-      RAY_ASSISTANT_EMBEDDING_MODEL: "/mnt/shared_storage/ray-assistant-data/gte-large-fine-tuned-el"
+      RAY_ASSISTANT_INDEX: "/mnt/shared_storage/ray-assistant-data/jan-4-2024-index.sql"
+      RAY_ASSISTANT_EMBEDDING_MODEL: "thenlper/gte-large"
       RAY_ASSISTANT_ROUTER_MODEL: "/mnt/shared_storage/ray-assistant-data/router.pkl"
       RAY_ASSISTANT_RERANKER_MODEL: "/mnt/shared_storage/ray-assistant-data/reranker.pkl"
