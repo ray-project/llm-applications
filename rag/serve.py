@@ -234,6 +234,7 @@ deployment = RayAssistantDeployment.bind(
     rerank_threshold=0.9,
     rerank_k=13,
     llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
+    sql_dump_fp=Path(os.environ["RAY_ASSISTANT_INDEX"]),
 )
 
 
