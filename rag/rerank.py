@@ -36,7 +36,7 @@ def preprocess(texts):
 
 
 def get_tag(url):
-    return re.findall(r"docs\.ray\.io/en/master/([^/]+)", url)[0].split("#")[0]
+    return re.findall(r"docs\.ray\.io/en/latest/([^/]+)", url)[0].split("#")[0]
 
 
 def custom_predict(inputs, classifier, threshold=0.2, other_label="other"):
