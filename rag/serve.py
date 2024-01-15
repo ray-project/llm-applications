@@ -11,7 +11,7 @@ import requests
 import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from rank_bm25 import BM25Okapi
 from ray import serve
 from slack_bolt import App
@@ -19,7 +19,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from starlette.responses import StreamingResponse
 
 from rag.config import EMBEDDING_DIMENSIONS, MAX_CONTEXT_LENGTHS
-from rag.generate import QueryAgent
+from rag.generate import QueryAgent, send_request
 from rag.index import build_or_load_index
 
 app = FastAPI()
@@ -65,6 +65,15 @@ class SlackApp:
 
 class Query(BaseModel):
     query: str
+
+
+class Message(BaseModel):
+    role: str = Field(..., description="The role of the author of the message, typically 'user', or 'assistant'.")
+    content: str = Field(..., description="The content of the message.")
+
+
+class Request(BaseModel):
+    messages: List[Message] = Field(..., description="A list of messages that make up the conversation.")
 
 
 class Answer(BaseModel):
@@ -219,6 +228,26 @@ class RayAssistantDeployment:
         return StreamingResponse(
             self.produce_streaming_answer(query.query, result), media_type="text/plain"
         )
+
+    @app.post("/chat")
+    def chat(self, request: Request) -> StreamingResponse:
+        print("messages", request.messages)
+        if len(request.messages) == 1:
+            query = Query(query=request.messages[0].content)
+            result = self.predict(query, stream=True)
+            return StreamingResponse(
+                self.produce_streaming_answer(query.query, result)
+            )
+        else:
+            # For now, we always use the OSS agent for follow up questions
+            agent = self.oss_agent
+            result = send_request(
+                llm=agent.llm,
+                messages=request.messages,
+                max_tokens=agent.max_tokens,
+                temperature=agent.temperature,
+                stream=True)
+            return StreamingResponse(result, media_type="text/plain")
 
 
 # Deploy the Ray Serve app

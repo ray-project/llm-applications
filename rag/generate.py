@@ -30,29 +30,17 @@ def prepare_response(chat_completion, stream):
         return chat_completion.choices[0].message.content
 
 
-def generate_response(
+def send_request(
     llm,
+    messages,
     max_tokens=None,
     temperature=0.0,
     stream=False,
-    system_content="",
-    assistant_content="",
-    user_content="",
     max_retries=1,
     retry_interval=60,
 ):
-    """Generate response from an LLM."""
     retry_count = 0
     client = get_client(llm=llm)
-    messages = [
-        {"role": role, "content": content}
-        for role, content in [
-            ("system", system_content),
-            ("assistant", assistant_content),
-            ("user", user_content),
-        ]
-        if content
-    ]
     while retry_count <= max_retries:
         try:
             chat_completion = client.chat.completions.create(
@@ -69,6 +57,30 @@ def generate_response(
             time.sleep(retry_interval)  # default is per-minute rate limits
             retry_count += 1
     return ""
+
+
+def generate_response(
+    llm,
+    max_tokens=None,
+    temperature=0.0,
+    stream=False,
+    system_content="",
+    assistant_content="",
+    user_content="",
+    max_retries=1,
+    retry_interval=60,
+):
+    """Generate response from an LLM."""
+    messages = [
+        {"role": role, "content": content}
+        for role, content in [
+            ("system", system_content),
+            ("assistant", assistant_content),
+            ("user", user_content),
+        ]
+        if content
+    ]
+    return send_request(llm, messages, max_tokens, temperature, stream, max_retries, retry_interval)
 
 
 class QueryAgent:
