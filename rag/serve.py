@@ -244,7 +244,7 @@ class RayAssistantDeployment:
 
         self.logger.info(
             "finished chat query",
-            messages=request.messages,
+            request=request.dict(),
             document_ids=result["document_ids"],
             llm=result["llm"],
             answer="".join(answer),
