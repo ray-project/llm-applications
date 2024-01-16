@@ -203,6 +203,7 @@ class RayAssistantDeployment:
         result = self.predict(query, stream=False)
         return Answer.parse_obj(result)
 
+    # This will be removed after all traffic is migrated to the /chat endpoint
     def produce_streaming_answer(self, query, result):
         answer = []
         for answer_piece in result["answer"]:
@@ -222,6 +223,7 @@ class RayAssistantDeployment:
             answer="".join(answer),
         )
 
+    # This will be removed after all traffic is migrated to the /chat endpoint
     @app.post("/stream")
     def stream(self, query: Query) -> StreamingResponse:
         result = self.predict(query, stream=True)
@@ -229,25 +231,44 @@ class RayAssistantDeployment:
             self.produce_streaming_answer(query.query, result), media_type="text/plain"
         )
 
+    def produce_chat_answer(self, request, result):
+        answer = []
+        for answer_piece in result["answer"]:
+            answer.append(answer_piece)
+            yield answer_piece
+
+        if result["sources"]:
+            yield "\n\n**Sources:**\n"
+            for source in result["sources"]:
+                yield "* " + source + "\n"
+
+        self.logger.info(
+            "finished chat query",
+            messages=request.messages,
+            document_ids=result["document_ids"],
+            llm=result["llm"],
+            answer="".join(answer),
+        )
+
     @app.post("/chat")
     def chat(self, request: Request) -> StreamingResponse:
-        print("messages", request.messages)
         if len(request.messages) == 1:
             query = Query(query=request.messages[0].content)
             result = self.predict(query, stream=True)
-            return StreamingResponse(
-                self.produce_streaming_answer(query.query, result)
-            )
         else:
             # For now, we always use the OSS agent for follow up questions
             agent = self.oss_agent
-            result = send_request(
+            answer = send_request(
                 llm=agent.llm,
                 messages=request.messages,
                 max_tokens=agent.max_tokens,
                 temperature=agent.temperature,
                 stream=True)
-            return StreamingResponse(result, media_type="text/plain")
+            result = {"answer": answer, "llm": agent.llm, "sources": [], "document_ids": []}
+
+        return StreamingResponse(
+            self.produce_chat_answer(request, result),
+            media_type="text/plain")
 
 
 # Deploy the Ray Serve app
