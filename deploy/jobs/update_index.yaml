@@ -1,0 +1,8 @@
+name: update_index
+project_id: prj_s4ly4hap5jv1pqqdfk1x5un3e4
+cluster_env: ray-assistant
+compute_config: ray-assistant-g5.2xlarge
+runtime_env:
+  working_dir: .
+entrypoint: bash update-index.sh
+max_retries: 0
