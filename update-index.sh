@@ -1,11 +1,25 @@
 #!/bin/bash
 
-# Load documents
-# export EFS_DIR=$(python -c "from rag.config import EFS_DIR; print(EFS_DIR)")
-# wget -e robots=off --recursive --no-clobber --page-requisites \
-#   --html-extension --convert-links --restrict-file-names=windows \
-#   --domains docs.ray.io --no-parent --accept=html --retry-on-http-error=429 \
-#   -P $EFS_DIR https://docs.ray.io/en/master/
+# Initialize a flag variable
+load_docs=false
+
+# Loop through arguments and check for the --do-it flag
+for arg in "$@"
+do
+  if [ "$arg" == "--load-docs" ]; then
+      load_docs=true
+      break
+  fi
+done
+
+# If the flag is true, execute the commands inside the if block
+if [ "$load_docs" = true ]; then
+  export EFS_DIR=$(python -c "from rag.config import EFS_DIR; print(EFS_DIR)")
+  wget -e robots=off --recursive --no-clobber --page-requisites \
+    --html-extension --convert-links --restrict-file-names=windows \
+    --domains docs.ray.io --no-parent --accept=html --retry-on-http-error=429 \
+    -P $EFS_DIR https://docs.ray.io/en/master/
+fi
 
 # Drop and create table
 export DB_CONNECTION_STRING="dbname=postgres user=postgres host=localhost password=postgres"  # TODO: move to CI/CD secrets manager
