@@ -1,10 +1,10 @@
 from pathlib import Path
 
 # Directories
-EFS_DIR = Path("/efs/shared_storage/goku")
+EFS_DIR = Path("/mnt/shared_storage/ray-assistant-data")
 ROOT_DIR = Path(__file__).parent.parent.absolute()
 
-# Mappings
+# Embedding dimensions
 EMBEDDING_DIMENSIONS = {
     "thenlper/gte-base": 768,
     "thenlper/gte-large": 1024,
@@ -12,6 +12,8 @@ EMBEDDING_DIMENSIONS = {
     "text-embedding-ada-002": 1536,
     "gte-large-fine-tuned": 1024,
 }
+
+# Maximum context lengths
 MAX_CONTEXT_LENGTHS = {
     "gpt-4": 8192,
     "gpt-3.5-turbo": 4096,
