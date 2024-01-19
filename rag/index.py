@@ -16,7 +16,9 @@ from rag.utils import execute_bash
 
 class StoreResults:
     def __call__(self, batch):
-        with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+        with psycopg.connect(
+            "dbname=postgres user=postgres host=localhost password=postgres"
+        ) as conn:
             register_vector(conn)
             with conn.cursor() as cur:
                 for text, source, embedding in zip(
@@ -46,7 +48,38 @@ def chunk_section(section, chunk_size, chunk_overlap):
     return [{"text": chunk.page_content, "source": chunk.metadata["source"]} for chunk in chunks]
 
 
-def build_or_load_index(
+def build_index(docs_dir, chunk_size, chunk_overlap, embedding_model_name, sql_dump_fp):
+    # docs -> sections -> chunks
+    ds = ray.data.from_items(
+        [{"path": path} for path in docs_dir.rglob("*.html") if not path.is_dir()]
+    )
+    sections_ds = ds.flat_map(extract_sections)
+    chunks_ds = sections_ds.flat_map(
+        partial(chunk_section, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    )
+
+    # Embed chunks
+    embedded_chunks = chunks_ds.map_batches(
+        EmbedChunks,
+        fn_constructor_kwargs={"model_name": embedding_model_name},
+        batch_size=100,
+        num_gpus=1,
+        compute=ActorPoolStrategy(size=1),
+    )
+
+    # Index data
+    embedded_chunks.map_batches(
+        StoreResults,
+        batch_size=128,
+        num_cpus=1,
+        compute=ActorPoolStrategy(size=6),
+    ).count()
+
+    # Save to SQL dump
+    execute_bash(f"sudo -u postgres pg_dump -c > {sql_dump_fp}")
+
+
+def load_index(
     embedding_model_name, embedding_dim, chunk_size, chunk_overlap, docs_dir=None, sql_dump_fp=None
 ):
     # Drop current Vector DB and prepare for new one
@@ -63,36 +96,13 @@ def build_or_load_index(
     if sql_dump_fp.exists():  # Load from SQL dump
         execute_bash(f'psql "{os.environ["DB_CONNECTION_STRING"]}" -f {sql_dump_fp}')
     else:  # Create new index
-        # Sections
-        ds = ray.data.from_items(
-            [{"path": path} for path in docs_dir.rglob("*.html") if not path.is_dir()]
+        build_index(
+            docs_dir=docs_dir,
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+            embedding_model_name=embedding_model_name,
+            sql_dump_fp=sql_dump_fp,
         )
-        sections_ds = ds.flat_map(extract_sections)
-
-        # Create chunks dataset
-        chunks_ds = sections_ds.flat_map(
-            partial(chunk_section, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-        )
-
-        # Embed chunks
-        embedded_chunks = chunks_ds.map_batches(
-            EmbedChunks,
-            fn_constructor_kwargs={"model_name": embedding_model_name},
-            batch_size=100,
-            num_gpus=1,
-            compute=ActorPoolStrategy(size=1),
-        )
-
-        # Index data
-        embedded_chunks.map_batches(
-            StoreResults,
-            batch_size=128,
-            num_cpus=1,
-            compute=ActorPoolStrategy(size=6),
-        ).count()
-
-        # Save to SQL dump
-        execute_bash(f"sudo -u postgres pg_dump -c > {sql_dump_fp}")
 
     # Chunks
     with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:

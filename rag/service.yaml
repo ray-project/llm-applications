@@ -8,9 +8,9 @@ ray_serve_config:
   runtime_env:
     working_dir: "."
     env_vars:
-      RAY_ASSISTANT_SECRET: "ray-assistant-prod"
+      RAY_ASSISTANT_SECRET: "ray-assistant-prod"  # pragma: allowlist secret
       RAY_ASSISTANT_LOGS: "/mnt/shared_storage/ray-assistant-logs/info.log"
-      RAY_ASSISTANT_INDEX: "/mnt/shared_storage/ray-assistant-data/jan-4-2024-index.sql"
+      RAY_ASSISTANT_INDEX: "/mnt/shared_storage/ray-assistant-data/index.sql"
       RAY_ASSISTANT_EMBEDDING_MODEL: "thenlper/gte-large"
       RAY_ASSISTANT_ROUTER_MODEL: "/mnt/shared_storage/ray-assistant-data/router.pkl"
       RAY_ASSISTANT_RERANKER_MODEL: "/mnt/shared_storage/ray-assistant-data/reranker.pkl"
