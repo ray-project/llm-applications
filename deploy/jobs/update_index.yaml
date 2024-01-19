@@ -4,5 +4,5 @@ cluster_env: ray-assistant
 compute_config: ray-assistant-g5.8xlarge
 runtime_env:
   working_dir: "https://github.com//ray-project/llm-applications/archive/refs/heads/main.zip"
-entrypoint: bash update-index.sh
+entrypoint: bash update-index.sh --load-docs
 max_retries: 0
