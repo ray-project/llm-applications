@@ -77,6 +77,7 @@ def build_index(docs_dir, chunk_size, chunk_overlap, embedding_model_name, sql_d
 
     # Save to SQL dump
     execute_bash(f"sudo -u postgres pg_dump -c > {sql_dump_fp}")
+    print("Updated the index!")
 
 
 def load_index(
