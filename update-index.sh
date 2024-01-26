@@ -18,7 +18,7 @@ if [ "$load_docs" = true ]; then
   wget -e robots=off --recursive --no-clobber --page-requisites \
     --html-extension --convert-links --restrict-file-names=windows \
     --domains docs.ray.io --no-parent --accept=html --retry-on-http-error=429 \
-    -P $EFS_DIR https://docs.ray.io/en/master/
+    -P $EFS_DIR https://docs.ray.io/en/latest/
 fi
 
 # Drop and create table
@@ -36,7 +36,7 @@ from pathlib import Path
 from rag.config import EFS_DIR
 from rag.index import build_index
 build_index(
-    docs_dir=Path(EFS_DIR, "docs.ray.io/en/master/"),
+    docs_dir=Path(EFS_DIR, "docs.ray.io/en/latest/"),
     chunk_size=700,
     chunk_overlap=50,
     embedding_model_name=os.environ["EMBEDDING_MODEL_NAME"],
