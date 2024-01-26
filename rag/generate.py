@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 from rag.config import EFS_DIR, ROOT_DIR
 from rag.embed import get_embedding_model
-from rag.index import build_or_load_index
+from rag.index import load_index
 from rag.rerank import custom_predict, get_reranked_indices
 from rag.search import lexical_search, semantic_search
 from rag.utils import get_client, get_num_tokens, trim
@@ -160,7 +160,7 @@ class QueryAgent:
         # Generate response
         document_ids = [item["id"] for item in context_results]
         context = [item["text"] for item in context_results]
-        sources = [item["source"] for item in context_results]
+        sources = set([item["source"] for item in context_results])
         user_content = f"query: {query}, context: {context}"
         answer = generate_response(
             llm=self.llm,
@@ -208,7 +208,7 @@ def generate_responses(
     sql_dump_fp=None,
 ):
     # Build index
-    chunks = build_or_load_index(
+    chunks = load_index(
         embedding_model_name=embedding_model_name,
         embedding_dim=embedding_dim,
         chunk_size=chunk_size,

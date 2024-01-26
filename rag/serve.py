@@ -20,7 +20,7 @@ from starlette.responses import StreamingResponse
 
 from rag.config import EMBEDDING_DIMENSIONS, MAX_CONTEXT_LENGTHS
 from rag.generate import QueryAgent, send_request
-from rag.index import build_or_load_index
+from rag.index import load_index
 
 app = FastAPI()
 
@@ -125,7 +125,7 @@ class RayAssistantDeployment:
         os.environ["DB_CONNECTION_STRING"] = get_secret("DB_CONNECTION_STRING")
 
         # Set up
-        chunks = build_or_load_index(
+        chunks = load_index(
             embedding_model_name=embedding_model_name,
             embedding_dim=embedding_dim,
             chunk_size=chunk_size,
@@ -277,7 +277,7 @@ deployment = RayAssistantDeployment.bind(
     chunk_overlap=50,
     num_chunks=30,
     embedding_model_name=os.environ["RAY_ASSISTANT_EMBEDDING_MODEL"],
-    embedding_dim=EMBEDDING_DIMENSIONS["thenlper/gte-large"],
+    embedding_dim=EMBEDDING_DIMENSIONS[os.environ["RAY_ASSISTANT_EMBEDDING_MODEL"]],
     use_lexical_search=True,
     lexical_search_k=1,
     use_reranking=True,
@@ -286,19 +286,3 @@ deployment = RayAssistantDeployment.bind(
     llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
     sql_dump_fp=Path(os.environ["RAY_ASSISTANT_INDEX"]),
 )
-
-
-# Simpler, non-fine-tuned version
-# deployment = RayAssistantDeployment.bind(
-#     chunk_size=700,
-#     chunk_overlap=50,
-#     num_chunks=30,
-#     embedding_model_name="thenlper/gte-large",  # fine-tuned is slightly better
-#     embedding_dim=EMBEDDING_DIMENSIONS["thenlper/gte-large"],
-#     use_lexical_search=True,
-#     lexical_search_k=1,
-#     use_reranking=True,
-#     rerank_threshold=0.9,
-#     rerank_k=13,
-#     llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
-# )
