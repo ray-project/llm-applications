@@ -11,7 +11,7 @@ import requests
 import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from rank_bm25 import BM25Okapi
 from ray import serve
 from slack_bolt import App
@@ -19,7 +19,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from starlette.responses import StreamingResponse
 
 from rag.config import EMBEDDING_DIMENSIONS, MAX_CONTEXT_LENGTHS
-from rag.generate import QueryAgent
+from rag.generate import QueryAgent, send_request
 from rag.index import load_index
 
 app = FastAPI()
@@ -65,6 +65,15 @@ class SlackApp:
 
 class Query(BaseModel):
     query: str
+
+
+class Message(BaseModel):
+    role: str = Field(..., description="The role of the author of the message, typically 'user', or 'assistant'.")
+    content: str = Field(..., description="The content of the message.")
+
+
+class Request(BaseModel):
+    messages: List[Message] = Field(..., description="A list of messages that make up the conversation.")
 
 
 class Answer(BaseModel):
@@ -194,6 +203,7 @@ class RayAssistantDeployment:
         result = self.predict(query, stream=False)
         return Answer.parse_obj(result)
 
+    # This will be removed after all traffic is migrated to the /chat endpoint
     def produce_streaming_answer(self, query, result):
         answer = []
         for answer_piece in result["answer"]:
@@ -213,12 +223,52 @@ class RayAssistantDeployment:
             answer="".join(answer),
         )
 
+    # This will be removed after all traffic is migrated to the /chat endpoint
     @app.post("/stream")
     def stream(self, query: Query) -> StreamingResponse:
         result = self.predict(query, stream=True)
         return StreamingResponse(
             self.produce_streaming_answer(query.query, result), media_type="text/plain"
         )
+
+    def produce_chat_answer(self, request, result):
+        answer = []
+        for answer_piece in result["answer"]:
+            answer.append(answer_piece)
+            yield answer_piece
+
+        if result["sources"]:
+            yield "\n\n**Sources:**\n"
+            for source in result["sources"]:
+                yield "* " + source + "\n"
+
+        self.logger.info(
+            "finished chat query",
+            request=request.dict(),
+            document_ids=result["document_ids"],
+            llm=result["llm"],
+            answer="".join(answer),
+        )
+
+    @app.post("/chat")
+    def chat(self, request: Request) -> StreamingResponse:
+        if len(request.messages) == 1:
+            query = Query(query=request.messages[0].content)
+            result = self.predict(query, stream=True)
+        else:
+            # For now, we always use the OSS agent for follow up questions
+            agent = self.oss_agent
+            answer = send_request(
+                llm=agent.llm,
+                messages=request.messages,
+                max_tokens=agent.max_tokens,
+                temperature=agent.temperature,
+                stream=True)
+            result = {"answer": answer, "llm": agent.llm, "sources": [], "document_ids": []}
+
+        return StreamingResponse(
+            self.produce_chat_answer(request, result),
+            media_type="text/plain")
 
 
 # Deploy the Ray Serve app
