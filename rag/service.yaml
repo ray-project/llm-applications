@@ -1,5 +1,7 @@
+project_id: prj_DKZuDR2pUwMzpVZD6PybXaUK
 name: "ray-assistant-public"
 cluster_env: ray-assistant
+compute_config_id: cpt_waeba7v8yurzlh42us6cy619ha
 config:
   access:
     use_bearer_token: False
