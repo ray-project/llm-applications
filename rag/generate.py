@@ -80,7 +80,9 @@ def generate_response(
         ]
         if content
     ]
-    return send_request(llm, messages, max_tokens, temperature, stream, max_retries, retry_interval)
+    return send_request(
+        llm, messages, max_tokens, temperature, stream, max_retries, retry_interval
+    )
 
 
 class QueryAgent:

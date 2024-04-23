@@ -17,7 +17,7 @@ data = {
     "messages": [
         {
             "content": "What is the default batch size for map_batches?",
-            "role": "user"  # Assuming 'user' is the correct role value. Adjust if necessary.
+            "role": "user",  # Assuming 'user' is the correct role value. Adjust if necessary.
         }
     ]
 }
