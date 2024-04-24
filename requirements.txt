@@ -16,6 +16,9 @@ structlog
 typer
 tiktoken
 
+# Tracing
+lastmile-eval
+
 # Vector DB
 asyncpg
 pgvector
