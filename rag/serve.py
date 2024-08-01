@@ -68,12 +68,16 @@ class Query(BaseModel):
 
 
 class Message(BaseModel):
-    role: str = Field(..., description="The role of the author of the message, typically 'user', or 'assistant'.")
+    role: str = Field(
+        ..., description="The role of the author of the message, typically 'user', or 'assistant'."
+    )
     content: str = Field(..., description="The content of the message.")
 
 
 class Request(BaseModel):
-    messages: List[Message] = Field(..., description="A list of messages that make up the conversation.")
+    messages: List[Message] = Field(
+        ..., description="A list of messages that make up the conversation."
+    )
 
 
 class Answer(BaseModel):
@@ -263,12 +267,13 @@ class RayAssistantDeployment:
                 messages=request.messages,
                 max_tokens=agent.max_tokens,
                 temperature=agent.temperature,
-                stream=True)
+                stream=True,
+            )
             result = {"answer": answer, "llm": agent.llm, "sources": [], "document_ids": []}
 
         return StreamingResponse(
-            self.produce_chat_answer(request, result),
-            media_type="text/plain")
+            self.produce_chat_answer(request, result), media_type="text/plain"
+        )
 
 
 # Deploy the Ray Serve app
