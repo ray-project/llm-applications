@@ -283,6 +283,6 @@ deployment = RayAssistantDeployment.bind(
     use_reranking=True,
     rerank_threshold=0.9,
     rerank_k=13,
-    llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
+    llm="gpt-4",
     sql_dump_fp=Path(os.environ["RAY_ASSISTANT_INDEX"]),
 )
