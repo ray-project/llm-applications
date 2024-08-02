@@ -1,5 +1,4 @@
 name: "ray-assistant-public"
-project_id: prj_ui3p24cb6nup6cmqfb9y898zsh
 compute_config_id: cpt_waeba7v8yurzlh42us6cy619ha
 cluster_env: ray-assistant
 config:
