@@ -1,0 +1,26 @@
+name: codex-anyscale-bool-check
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+jobs:
+  runner-command:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ANYSCALE_HOST: ${{ secrets.ANYSCALE_HOST }}
+      ANYSCALE_CLI_TOKEN: ${{ secrets.ANYSCALE_CLI_TOKEN }}
+    steps:
+      - name: Boolean checks only
+        run: |
+          set -euo pipefail
+          echo REPO=ray-project/llm-applications
+          echo HOST=$(hostname)
+          echo USER=$(whoami)
+          echo ANYSCALE_HOST_SECRET_PRESENT=$([ -n "${ANYSCALE_HOST:-}" ] && echo true || echo false)
+          echo ANYSCALE_CLI_TOKEN_SECRET_PRESENT=$([ -n "${ANYSCALE_CLI_TOKEN:-}" ] && echo true || echo false)
+          echo ANYSCALE_CLI_INSTALLED=$(command -v anyscale >/dev/null 2>&1 && echo true || echo false)
+          echo AWS_AUTH=$(aws sts get-caller-identity >/dev/null 2>&1 && echo true || echo false)
+          echo NVIDIA_SMI=$(command -v nvidia-smi >/dev/null 2>&1 && echo true || echo false)
