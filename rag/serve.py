@@ -205,7 +205,7 @@ class RayAssistantDeployment:
     @app.post("/query")
     def query(self, query: Query) -> Answer:
         result = self.predict(query, stream=False)
-        return Answer.parse_obj(result)
+        return Answer.model_validate(result)
 
     # This will be removed after all traffic is migrated to the /chat endpoint
     def produce_streaming_answer(self, query, result):
